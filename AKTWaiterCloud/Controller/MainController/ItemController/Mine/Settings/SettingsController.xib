@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsController">
+            <connections>
+                <outlet property="logoffBtn" destination="ppS-TQ-EZ4" id="O3g-qb-Dmd"/>
+                <outlet property="settingTableView" destination="Re8-Tg-lSt" id="bLn-RY-XBh"/>
+                <outlet property="tabletTOP" destination="yAd-KH-Ehg" id="Sz3-1U-EPS"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppS-TQ-EZ4">
+                    <rect key="frame" x="30" y="297" width="315" height="62.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="62.5" id="mh6-YZ-3q5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                    <inset key="titleEdgeInsets" minX="0.0" minY="-4" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="退出登录" backgroundImage="btn_bg">
+                        <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="logoffUser:" destination="-1" eventType="touchUpInside" id="tDy-pw-0e4"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Re8-Tg-lSt">
+                    <rect key="frame" x="0.0" y="64" width="375" height="213"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="213" id="NTm-M1-RCP"/>
+                    </constraints>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Re8-Tg-lSt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LdP-dL-axb"/>
+                <constraint firstItem="ppS-TQ-EZ4" firstAttribute="top" secondItem="Re8-Tg-lSt" secondAttribute="bottom" constant="20" id="bCp-X4-ta1"/>
+                <constraint firstItem="ppS-TQ-EZ4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mpo-yg-QG0"/>
+                <constraint firstAttribute="trailing" secondItem="Re8-Tg-lSt" secondAttribute="trailing" id="pDI-fk-8RA"/>
+                <constraint firstAttribute="trailing" secondItem="ppS-TQ-EZ4" secondAttribute="trailing" constant="30" id="viC-j7-pgF"/>
+                <constraint firstItem="Re8-Tg-lSt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="yAd-KH-Ehg"/>
+                <constraint firstItem="ppS-TQ-EZ4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="zIa-XU-QvS"/>
+            </constraints>
+            <point key="canvasLocation" x="32.5" y="103.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_bg" width="291.5" height="62.5"/>
+    </resources>
+</document>

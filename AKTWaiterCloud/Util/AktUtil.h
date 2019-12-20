@@ -1,0 +1,34 @@
+//
+//  AktUtil.h
+//  AKTWaiterCloud
+//
+//  Created by 常永梅 on 2019/7/26.
+//  Copyright © 2019 孙嘉斌. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface AktUtil : NSObject
++ (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName;  // 转换录音格式 mp3
+
+// 获取当前时间
++(NSString *)getNowDateAndTime;
+// 获取当前日期
++(NSString *)getNowDate;
+// 截取日期格式
++(NSString *)rangeDate:(NSString *)Olddate;
+// 截取日期和时间格式
++(NSString *)rangeDateAndTime:(NSString *)oldDateAndTime;
+
+// 获取资源
++ (UIColor *)getColorFormResouce:(NSString *)key;
++ (UIFont *)getFontFormResouce:(NSString *)key;
+// 对比版本号
++(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode;
+
+
+@end
+
+NS_ASSUME_NONNULL_END

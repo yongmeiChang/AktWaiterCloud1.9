@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/AktHome/!svn/ver/11345/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud
+END
+PrefixHeader.pch
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/AktHome/!svn/ver/11341/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/PrefixHeader.pch
+END
+main.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/main.m
+END
+AppDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/AktHome/!svn/ver/11324/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/AppDelegate.h
+END
+Info.plist
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/AktHome/!svn/ver/11323/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Info.plist
+END
+AppDelegate.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/AktHome/!svn/ver/11341/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/AppDelegate.m
+END
+china_city_data.json
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/AktHome/!svn/ver/8606/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/china_city_data.json
+END
+AKTWaiterCloud.entitlements
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/AKTWaiterCloud.entitlements
+END
+AKTColorString.strings
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/AktHome/!svn/ver/11354/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/AKTColorString.strings
+END

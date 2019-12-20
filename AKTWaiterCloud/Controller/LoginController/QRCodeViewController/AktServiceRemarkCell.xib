@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="163" id="KGk-i7-Jjw" customClass="AktServiceRemarkCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="163"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="163"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sv8-PB-wEh">
+                        <rect key="frame" x="10.5" y="0.0" width="300" height="163"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V08-4N-oGT">
+                                <rect key="frame" x="15" y="15" width="57.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uga-rq-0MG">
+                                <rect key="frame" x="15" y="44" width="275.5" height="109"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="请输入内容..."/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Uga-rq-0MG" firstAttribute="top" secondItem="V08-4N-oGT" secondAttribute="bottom" constant="12" id="1wZ-i7-oMv"/>
+                            <constraint firstItem="V08-4N-oGT" firstAttribute="top" secondItem="Sv8-PB-wEh" secondAttribute="top" constant="15" id="Bbw-y4-IfH"/>
+                            <constraint firstAttribute="bottom" secondItem="Uga-rq-0MG" secondAttribute="bottom" constant="10" id="CGC-BG-vbq"/>
+                            <constraint firstItem="V08-4N-oGT" firstAttribute="leading" secondItem="Sv8-PB-wEh" secondAttribute="leading" constant="15" id="TBh-t4-xY1"/>
+                            <constraint firstItem="Uga-rq-0MG" firstAttribute="leading" secondItem="V08-4N-oGT" secondAttribute="leading" id="sgp-nx-qby"/>
+                            <constraint firstAttribute="trailing" secondItem="Uga-rq-0MG" secondAttribute="trailing" constant="9.5" id="w8Q-CH-5vp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Sv8-PB-wEh" secondAttribute="trailing" constant="9.5" id="6P7-yr-j8b"/>
+                    <constraint firstItem="Sv8-PB-wEh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7fP-ed-JsT"/>
+                    <constraint firstAttribute="bottom" secondItem="Sv8-PB-wEh" secondAttribute="bottom" id="JVM-j7-zah"/>
+                    <constraint firstItem="Sv8-PB-wEh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10.5" id="ku5-uU-ycv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="tvRemark" destination="Uga-rq-0MG" id="WHv-qs-MHd"/>
+                <outlet property="viewBg" destination="Sv8-PB-wEh" id="Wlf-jV-BFD"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="193.19196428571428"/>
+        </tableViewCell>
+    </objects>
+</document>

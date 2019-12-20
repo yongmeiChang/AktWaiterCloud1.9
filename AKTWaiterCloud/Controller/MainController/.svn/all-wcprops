@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/AktHome/!svn/ver/11341/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController
+END
+WorkBaseViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AktHome/!svn/ver/11325/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/WorkBaseViewController.h
+END
+PlanTaskCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/AktHome/!svn/ver/11349/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/PlanTaskCell.h
+END
+MainController.m
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/AktHome/!svn/ver/11325/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/MainController.m
+END
+WorkBaseViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AktHome/!svn/ver/11325/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/WorkBaseViewController.m
+END
+PlanTaskCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/AktHome/!svn/ver/11349/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/PlanTaskCell.m
+END
+MainController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/MainController.xib
+END
+MyGaodeMap.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/MyGaodeMap.h
+END
+PlanTaskCell.xib
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/AktHome/!svn/ver/11349/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/PlanTaskCell.xib
+END
+MainController.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/MainController.h
+END
+MyGaodeMap.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/MainController/MyGaodeMap.m
+END

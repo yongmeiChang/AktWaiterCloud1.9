@@ -1,0 +1,584 @@
+//
+//  UnfinifshController.m
+//  AKTWaiterCloud
+//
+//  Created by 孙嘉斌 on 2017/11/22.
+//  Copyright © 2017年 孙嘉斌. All rights reserved.
+//
+
+#import "UnfinifshController.h"
+#import "OrderTaskFmdb.h"
+#import "PlanTaskCell.h"
+#import "MinuteTaskController.h"
+#import "SearchDateController.h"
+#import <FSCalendar.h>
+#import "AKTSearchInfoVC.h"
+
+@interface UnfinifshController ()<UITableViewDataSource,UITableViewDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance,AktSearchDelegate>{
+    int pageSize;
+    BOOL ishidden;
+    int tableviewtype;//是显示全部数据还是某天数据  0全部 1某天
+     NSString *searchKey;
+}
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableTop;
+@property(weak,nonatomic) IBOutlet UITableView * taskTableview;
+@property(nonatomic,strong) NSMutableArray * dataArray;//数据源
+@property(nonatomic,strong) NSMutableArray * dateArray;//日历选中某天的数据源
+
+@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
+@property(nonatomic) int b;
+
+
+@property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
+@property (weak, nonatomic) IBOutlet FSCalendar *calendar;
+@end
+
+@implementation UnfinifshController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.tableTop.constant = AktNavAndStatusHight;
+    searchKey = [NSString stringWithFormat:@""];
+    self.taskTableview.delegate = self;
+    self.taskTableview.dataSource = self;
+    self.calendar.hidden = YES;
+    pageSize = 1;
+    self.dataArray = [NSMutableArray array];
+    self.dateArray = [NSMutableArray array];
+    //显示的title
+    NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务",@"待提交任务"];
+    if(self.bid==0||self.bid==2){
+        [self setLeftNavTilte:@"back.png" RightNavTilte:@"calendar.png" RightTitleTwo:@"search.png"];
+    }else if(self.bid==1){
+        [self setLeftNavTilte:@"back.png" RightNavTilte:@"nil.png" RightTitleTwo:@"search.png"];
+    }
+    if(self.bid==0){
+        [self initCalender];
+        self.calendar.delegate = self;
+        self.calendar.dataSource = self;
+        self.calendar.layer.shadowOpacity = 0.56f;
+        self.calendar.layer.shadowRadius = 4.f;
+        self.calendar.layer.shadowOffset = CGSizeMake(0,0);
+        self.calendar.layer.shadowColor = RGB(198,198,198).CGColor;
+    }
+
+    self.topConstant.constant = [[UIApplication sharedApplication] statusBarFrame].size.height +   self.navigationController.navigationBar.frame.size.height;
+    
+    if([ReachbilityTool.internetStatus isEqualToString:@"notReachable"]){
+        [self.view bringSubviewToFront:self.netWorkErrorView];
+        [self.view bringSubviewToFront:self.calendar];
+    }else{
+        [self.view sendSubviewToBack:self.netWorkErrorView];
+    }
+    
+    self.navigationItem.title = titleArr[_bid];
+    [self.view bringSubviewToFront:self.netWorkErrorView];
+    self.taskTableview.hidden = YES;
+    self.netWorkErrorView.hidden = YES;
+    [self setLeftBarItem];
+    if(self.bid==3){
+        return;
+    }
+    [self initTableview];
+    [self requestTask];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    DDLogInfo(@"点击了待办任务item");
+    ishidden = YES;
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+#pragma mark - 初始化日历控件
+-(void)initCalender{
+    _calendar.dataSource = self;
+    _calendar.delegate = self;
+    _calendar.firstWeekday = 2;     //设置周一为第一天
+    _calendar.appearance.weekdayTextColor = [UIColor blackColor];
+    _calendar.appearance.weekdayFont = [UIFont systemFontOfSize:18];
+    _calendar.appearance.headerTitleColor = [UIColor darkGrayColor];
+    _calendar.appearance.titleDefaultColor = [UIColor darkGrayColor];
+    _calendar.appearance.titleFont = [UIFont systemFontOfSize:18];
+    
+    _calendar.appearance.eventDefaultColor = [UIColor colorWithHexString:@"#900000"];//事件点的颜色
+    _calendar.appearance.titleSelectionColor = [UIColor darkGrayColor];//点击日期的字体颜色
+    _calendar.appearance.headerDateFormat = @"yyyy年MM月";
+    _calendar.appearance.todayColor = nil;//今日的颜色
+    _calendar.appearance.titleTodayColor = [UIColor lightGrayColor];
+    _calendar.appearance.borderRadius = 1.0;  // 设置当前选择是圆形,0.0是正方形
+    _calendar.appearance.headerMinimumDissolvedAlpha = 0.0;
+    _calendar.backgroundColor = [UIColor whiteColor];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+    _calendar.locale = locale;  // 设置周次是中文显示
+    _calendar.placeholderType = FSCalendarPlaceholderTypeNone; //月份模式时，只显示当前月份
+    
+    UIButton *showAllBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    showAllBtn.frame = CGRectMake(SCREEN_WIDTH-105, 5, 95, 34);
+    showAllBtn.backgroundColor = [UIColor colorWithHexString:@"##1878C0"];
+    [showAllBtn setTitle:@"显示全部" forState:UIControlStateNormal];
+    [showAllBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    showAllBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [showAllBtn addTarget:self action:@selector(showAllBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.calendar addSubview:showAllBtn];
+}
+
+- (void)showAllBtnClicked:(id)sender
+{
+    tableviewtype = 0;
+    [self RightBarClick];
+    [self requestTask];
+}
+
+-(void)RightBarClick{
+    if(self.bid==1){
+        return;
+    }else if(self.bid==0){
+        if(ishidden){
+            self.calendar.hidden = NO;
+            [self downLayoutAnimate];
+            ishidden = NO;
+        }else{
+            [self upLayoutAnimate];
+            ishidden = YES;
+        }
+        
+    }else if(self.bid==2){
+        SearchDateController * sdController = [[SearchDateController alloc] init];
+        sdController.hidesBottomBarWhenPushed = YES;
+        sdController.type = _bid;
+        [self.navigationController pushViewController:sdController animated:YES];
+    }
+}
+-(void)SearchBarClick{
+    NSLog(@"搜索按钮");
+    AKTSearchInfoVC *searvc = [AKTSearchInfoVC new];
+    searvc.delegate = self;
+    searvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self.navigationController presentViewController:searvc animated:YES completion:nil];
+}
+#pragma mark - search delegate
+-(void)searchKey:(NSString *)search Sender:(NSInteger)sender{
+    if (sender == 1) {
+       searchKey = search;
+       [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+       [self.taskTableview.mj_header beginRefreshing];
+    }else{
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+#pragma mark - mj
+-(void)initTableview{
+    //去除没有数据时的分割线
+    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    //去除右侧滚动条
+    self.taskTableview.showsVerticalScrollIndicator = NO;
+    
+    self.taskTableview.mj_header = self.mj_header;
+    self.taskTableview.mj_footer = self.mj_footer;
+}
+-(void)loadHeaderData:(MJRefreshGifHeader*)mj{
+    [self.taskTableview.mj_header beginRefreshing];
+    pageSize = 1;
+    [self requestTask];
+    [self.taskTableview.mj_header endRefreshing];
+}
+-(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+    [self.taskTableview.mj_footer beginRefreshing];
+    pageSize = pageSize+1;
+    [self requestTask];
+    [self.taskTableview.mj_footer endRefreshing];
+}
+#pragma mark - left item
+-(void)setLeftBarItem{
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(LeftBarClick) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton setFrame:CGRectMake(0, 0, 60, 40)];
+    [leftButton setTitle:@"返回" forState:UIControlStateNormal];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
+    [leftButton.titleLabel setTextColor:[UIColor whiteColor]];
+    leftButton.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0];
+    UIEdgeInsets titlecg = leftButton.titleEdgeInsets;
+    titlecg.left = 10;
+    leftButton.titleEdgeInsets = titlecg;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+}
+#pragma mark - request
+-(void)requestTask{
+    //网络状态判断
+    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
+        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
+            if(appDelegate.netWorkType==Off_line){
+                [self showMessageAlertWithController:self Message:ContinueError];
+            }else{
+                [self showMessageAlertWithController:self Message:LoadingError];
+            }
+            appDelegate.netWorkType = Off_line;
+            self.orderfmdb = [[OrderTaskFmdb alloc] init];
+            _dataArray = [self.orderfmdb findAllOrderInfo];
+            if(_dataArray.count==0){
+                self.netWorkErrorView.hidden = NO;
+            }else{
+                self.netWorkErrorView.hidden = YES;
+                [self.taskTableview reloadData];
+            }
+        }else{
+            [self showMessageAlertWithController:self Message:NetWorkMessage];
+        }
+    }else{
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD setStatus:Loading];
+    }
+    tableviewtype = 0;
+    //status：状态(1：未完成 2：服务中 3：已完成)
+    NSArray * typeArr = @[@"1",@"2",@"3",@""];
+    if (pageSize == 1) {
+        [self.dataArray removeAllObjects];
+    }
+    NSLog(@"%@",appDelegate.userinfo);
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey)};
+    [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dic = responseObject;
+        NSString * message = [dic objectForKey:@"message"];
+        NSNumber * code = [dic objectForKey:@"code"];
+        if([code intValue]==1){
+            NSArray * arr = [NSArray array];
+            NSDictionary * obj = [dic objectForKey:@"object"];
+            arr = obj[@"result"];
+            if([message isEqualToString:@"当前没有工单任务!"]){
+                [self showOffLineAlertWithTime:1.0  message:@"当前没有工单任务!" DoSomethingBlock:^{
+                    self.netWorkErrorView.hidden = NO;
+                }];
+            }else{
+                if(arr&&arr.count>0){
+                    self.taskTableview.hidden = NO;
+                    self.netWorkErrorView.hidden = YES;
+
+                    for (NSMutableDictionary * dicc in arr) {
+                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
+                        NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
+                        NSString * createBy = [createBydic objectForKey:@"id"];
+                        NSString * updateBy = [updateBydic objectForKey:@"id"];
+                        [dicc removeObjectForKey:@"createBy"];
+                        [dicc removeObjectForKey:@"updateBy"];
+                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
+                        [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
+                        NSDictionary * objdic = (NSDictionary*)dicc;
+                        self.orderfmdb = [[OrderTaskFmdb alloc]init];
+                        OrderInfo * orderinfo;
+                        orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+                        if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil||!orderinfo.tid){
+                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                            orderinfo.tid = orderinfo.id;
+                            [_dataArray addObject:orderinfo];
+                            [self.orderfmdb saveOrderTask:orderinfo];
+                            
+                        }else{
+                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                            orderinfo.tid = orderinfo.id;
+                            [_dataArray addObject:orderinfo];
+                            [self.orderfmdb updateObject:orderinfo];
+                        }
+                    }
+                    
+                    [self.taskTableview reloadData];
+                    [SVProgressHUD dismiss];
+                    self.netWorkErrorView.userInteractionEnabled = YES;
+                }else{
+                    self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
+                    self.netWorkErrorView.hidden = NO;
+                    [SVProgressHUD dismiss];
+                    self.netWorkErrorView.userInteractionEnabled = YES;
+                }
+            }
+        }else if(pageSize == 1){
+            self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
+            [self showMessageAlertWithController:self Message:@"暂无数据"];
+            self.taskTableview.hidden = YES;
+            self.netWorkErrorView.hidden = NO;
+            self.netWorkErrorView.userInteractionEnabled = YES;
+        }
+
+        if(appDelegate.netWorkType == Off_line){
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
+                }];
+                appDelegate.netWorkType = On_line;
+            });
+        }
+        [SVProgressHUD dismiss];
+        [self.calendar reloadData];
+    }
+        failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld",(long)error.code]];
+            [self.calendar reloadData];
+            self.netWorkErrorView.hidden = NO;
+            self.netWorkErrorView.userInteractionEnabled = YES;
+        }];
+}
+
+-(void)labelClick{
+    pageSize=0;
+    DDLogInfo(@"点击了刷新按钮");
+    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
+        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
+            if(appDelegate.netWorkType==Off_line){
+                [self showOffLineAlertWithTime:1.0  message:ContinueError DoSomethingBlock:^{
+                    self.netWorkErrorView.hidden = NO;
+                }];
+            }else{
+                [self showOffLineAlertWithTime:1.0  message:LoadingError DoSomethingBlock:^{
+                    self.netWorkErrorView.hidden = NO;
+                }];
+            }
+            appDelegate.netWorkType = Off_line;
+            return;
+        }else{
+            [self showMessageAlertWithController:self Message:NetWorkMessage];
+        }
+    }
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setStatus:Loading];
+    self.netWorkErrorLabel.text = Loading;
+    [self requestTask];
+    self.netWorkErrorView.userInteractionEnabled = NO;
+}
+
+#pragma mark - tableview设置
+/**段数*/
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if(tableviewtype==0){
+        return _dataArray.count;
+    }else{
+        return _dateArray.count;
+    }
+}
+
+/**行数*/;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 200;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+    return 0.0f;
+}
+
+/**Cell生成*/
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellidentify = @"PlanTaskCell";
+    PlanTaskCell *cell = (PlanTaskCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"PlanTaskCell" owner:self options:nil] objectAtIndex:0];
+    }
+    NSArray * arr = [NSArray array];
+    if(tableviewtype==0){
+        arr = _dataArray;
+    }else{
+        arr = _dateArray;
+    }
+    if(arr.count>0){
+        OrderInfo * orderinfo = arr[indexPath.section];
+        [cell setOrderList:orderinfo];
+        
+//        cell.namelabel.text = orderinfo.customerName;
+//        [cell.namelabel setTag:indexPath.section+1];
+//        cell.phonelabel.text = orderinfo.customerPhone;
+//        NSString * serviceBeg = [orderinfo.serviceBegin substringToIndex:orderinfo.serviceBegin.length-3];
+//        cell.datelabel.text = serviceBeg;
+//
+//        NSString * serviceEn = [orderinfo.serviceEnd substringToIndex:orderinfo.serviceEnd.length-3];
+//        cell.datetimelabel.text = [NSString stringWithFormat:@"%@",serviceEn];
+//        cell.workNolabel.text = [NSString stringWithFormat:@"订单号:%@",orderinfo.workNo];
+//        NSString * itemName = orderinfo.serviceItemName;
+//        itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  ▶  "];
+//        if([orderinfo.workNo isEqualToString:@"D201709226459"]){
+//            NSLog(@"类型！%@",orderinfo.workStatus);
+//        }
+//
+//        if([orderinfo.workStatus isEqualToString:@"3"]||[orderinfo.workStatus isEqualToString:@"7"]){
+//            cell.bgimageview.image = [UIImage imageNamed:@"undo"];
+//        }else if([orderinfo.workStatus isEqualToString:@"4"]){
+//            cell.bgimageview.image = [UIImage imageNamed:@"doing"];
+//        }else if([orderinfo.workStatus isEqualToString:@"6"]||[orderinfo.workStatus isEqualToString:@"8"]||[orderinfo.workStatus isEqualToString:@"10"]){
+//            cell.bgimageview.image = [UIImage imageNamed:@"finish"];
+//        }else if([orderinfo.workStatus isEqualToString:@"11"]){
+//            cell.bgimageview.image = [UIImage imageNamed:@"editorder"];
+//        }
+//
+//        cell.titlelabel.text = itemName;
+//        cell.addresslabel.text = orderinfo.serviceAddress;
+    }
+    cell.grabSingleBtn.hidden = YES;
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
+    MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
+    minuteTaskContoller.type = @"1";
+    minuteTaskContoller.hidesBottomBarWhenPushed = YES;
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.navigationController pushViewController:minuteTaskContoller animated:YES];
+}
+
+#pragma mark - left click
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//上拉动画
+-(void)upLayoutAnimate{
+    [UIView animateWithDuration:1.0 // 动画时长
+                          delay:0.0 // 动画延迟
+         usingSpringWithDamping:1.0 // 类似弹簧振动效果 0~1
+          initialSpringVelocity:4.0 // 初始速度
+                        options:UIViewAnimationOptionCurveEaseInOut // 动画过渡效果
+                     animations:^{
+                         CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+                         CGPoint point = self.calendar.center;
+                         point.y = -rectStatus.size.height-self.navigationController.navigationBar.frame.size.height-self.calendar.frame.size.height*0.4;
+                         [self.calendar setCenter:point];
+                         
+                     } completion:^(BOOL finished) {
+                         // 动画完成后执行
+                         [self.calendar setAlpha:1];
+                         [self.taskTableview reloadData];
+                     }];
+}
+
+//下拉动画
+-(void)downLayoutAnimate{
+    [UIView animateWithDuration:1.0 // 动画时长
+                          delay:0.0 // 动画延迟
+         usingSpringWithDamping:1.0 // 类似弹簧振动效果 0~1
+          initialSpringVelocity:3.0 // 初始速度
+                        options:UIViewAnimationOptionCurveEaseInOut // 动画过渡效果
+                     animations:^{
+                         CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+                         CGPoint point = self.calendar.center;
+                         point.y = rectStatus.size.height+self.navigationController.navigationBar.frame.size.height+SCREEN_HEIGHT*0.4*0.5;
+                         [self.calendar setCenter:point];
+                         
+                     } completion:^(BOOL finished) {
+                         // 动画完成后执行
+                         [self.calendar setAlpha:1];
+                     }];
+}
+
+-(void)RequestgetWorkByDay:(NSString *)dateStr{
+    //NSString * date = [NSString stringWithFormat:@"%@ 00:00:00",dateStr];
+    //type=doing  进行中工单   type=undo 未开始工单  type=done 已完成工单
+    NSDictionary * dic =  @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":dateStr,@"type":@"undo"};
+    [[AFNetWorkingRequest sharedTool] requestgetWorkByDay:dic type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dicc = responseObject;
+        NSLog(@"%@",dicc);
+        int code = [dicc[@"code"] intValue];
+        if(code==1){
+            tableviewtype = 1;
+            [self.dateArray removeAllObjects];
+            NSArray * arr = dicc[@"object"];
+            if(arr.count>0){
+                for(NSMutableDictionary * ordrerDic in arr){
+                    NSDictionary * createBydic = [ordrerDic objectForKey:@"createBy"];
+                    NSDictionary * updateBydic = [ordrerDic objectForKey:@"updateBy"];
+                    NSString * createBy = [createBydic objectForKey:@"id"];
+                    NSString * updateBy = [updateBydic objectForKey:@"id"];
+                    [ordrerDic removeObjectForKey:@"createBy"];
+                    [ordrerDic removeObjectForKey:@"updateBy"];
+                    [ordrerDic setObject:createBy forKeyedSubscript:@"createBy"];
+                    [ordrerDic setObject:updateBy forKeyedSubscript:@"updateBy"];
+                    OrderInfo * order = [[OrderInfo alloc] initWithDictionary:ordrerDic error:nil];
+                    [self.dateArray addObject:order];
+                }
+                [self.taskTableview reloadData];
+            }
+        }else{
+//            [self showMessageAlertWithController:self Message:[dicc objectForKey:@"message"]];
+            self.netWorkErrorLabel.text = [dicc objectForKey:@"message"];
+            [self showMessageAlertWithController:self Message:@"暂无数据"];
+            self.taskTableview.hidden = YES;
+            self.netWorkErrorView.hidden = NO;
+            self.netWorkErrorView.userInteractionEnabled = NO;
+        }
+        [SVProgressHUD dismiss];
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
+}
+
+
+#pragma mark FSCalendarDelegateAppearance
+//日历点击事件
+- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
+    dateFormatter.dateFormat=@"yyyy-MM-dd";//指定转date得日期格式化形式
+    NSLog(@"选择查看了====%@",[dateFormatter stringFromDate:date]);
+    [self RightBarClick];
+    NSString * dateStr = [dateFormatter stringFromDate:date];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setStatus:Loading];
+    [self RequestgetWorkByDay:dateStr];
+
+}
+
+//在未选中的状态中填写特定日期的填充颜色
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillDefaultColorForDate:(NSDate *)date{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString * orderStr = @"";
+    for(OrderInfo * order in self.dataArray){
+        orderStr = order.serviceDate;
+        NSDate *orderDate = [formatter dateFromString:orderStr];
+        if([date isEqualToDate:orderDate]){
+            //日期上的按钮背景色
+            UIColor * color = [UIColor colorWithHexString:@"#1878C0"];
+            return color;
+        }else{
+            continue;
+        }
+    }
+    return nil;
+}
+
+- (NSArray<UIColor *> *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance eventDefaultColorsForDate:(NSDate *)date{
+
+    return nil;
+}
+
+//显示下面的事件点的数量
+- (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString * dateStr = [formatter stringFromDate:date];
+    int count = 0;
+    for(OrderInfo * info in self.dataArray){
+        if([dateStr isEqualToString:info.serviceDate]){
+            count++;
+        }
+    }
+    if(count>3){
+        return 3;
+    }
+    return count;
+}
+
+//每次切换月份日期时的事件
+- (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSLog(@"did change to page %@",[formatter stringFromDate:calendar.currentPage]);
+}
+
+@end

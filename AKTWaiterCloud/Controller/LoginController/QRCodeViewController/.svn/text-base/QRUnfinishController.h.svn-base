@@ -1,0 +1,13 @@
+//
+//  QRUnfinishController.h
+//  AKTWaiterCloud
+//
+//  Created by 孙嘉斌 on 2017/12/20.
+//  Copyright © 2017年 孙嘉斌. All rights reserved.
+//
+
+#import "WorkBaseViewController.h"
+
+@interface QRUnfinishController : WorkBaseViewController
+
+@end

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/AktHome/!svn/ver/11325/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/LoginController/service
+END
+QRCodeService.h
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/LoginController/service/QRCodeService.h
+END
+LoginRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/LoginController/service/LoginRequest.h
+END
+QRCodeService.m
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AktHome/!svn/ver/11325/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/LoginController/service/QRCodeService.m
+END
+LoginRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/AktHome/!svn/ver/8015/akt-app/ios/AKTWaiterCloud/AKTWaiterCloud/Controller/LoginController/service/LoginRequest.m
+END
