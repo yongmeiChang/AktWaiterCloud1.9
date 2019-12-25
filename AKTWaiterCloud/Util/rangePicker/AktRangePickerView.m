@@ -90,6 +90,7 @@
     calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
     calendar.appearance.titleDefaultColor = [UIColor blackColor]; // 日历 文字颜色
     calendar.appearance.headerTitleColor = [UIColor blackColor]; // 标题颜色
+    calendar.appearance.headerDateFormat = @"yyyy年MM月";
     calendar.appearance.titleFont = [UIFont systemFontOfSize:16];
     calendar.weekdayHeight = 50; // 星期 的高度
     calendar.appearance.weekdayTextColor = [UIColor blackColor]; // 星期 字体颜色

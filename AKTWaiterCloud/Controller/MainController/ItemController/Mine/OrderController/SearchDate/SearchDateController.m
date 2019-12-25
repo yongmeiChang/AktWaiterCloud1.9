@@ -314,7 +314,7 @@
     _bTime = [NSString stringWithFormat:@"%@ 00:00:00",firstdate];
     _eTime = [NSString stringWithFormat:@"%@ 23:59:59",lastdate];
     
-    if (_bTime.length>1 &&_eTime.length>1) {
+    if (firstdate.length>1 && lastdate.length>1) {
         self.labStartData.text = _bTime;
         self.labEndData.text = _eTime;
     }else{
