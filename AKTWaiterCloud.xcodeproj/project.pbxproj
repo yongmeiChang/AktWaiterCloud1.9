@@ -20,6 +20,12 @@
 		4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
+		4C4AD90923B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
+		4C4AD90A23B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
 		4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */; };
 		4C59615823A8A35300969CB5 /* AktServiceRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */; };
 		4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615A23A8D60700969CB5 /* AktDateView.m */; };
@@ -271,6 +277,9 @@
 		4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangePickerCell.m; sourceTree = "<group>"; };
 		4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktRangePickerView.m; sourceTree = "<group>"; };
 		4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangePickerCell.h; sourceTree = "<group>"; };
+		4C4AD90223B366D8005DEDE4 /* AktWSigninListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktWSigninListVC.h; sourceTree = "<group>"; };
+		4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktWSigninListVC.m; sourceTree = "<group>"; };
+		4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktWSigninListVC.xib; sourceTree = "<group>"; };
 		4C59615423A8A35300969CB5 /* AktServiceRemarkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServiceRemarkCell.h; sourceTree = "<group>"; };
 		4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServiceRemarkCell.m; sourceTree = "<group>"; };
 		4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServiceRemarkCell.xib; sourceTree = "<group>"; };
@@ -884,6 +893,9 @@
 				4C89D66423A769A70024456F /* SignInVC.h */,
 				4C89D66523A769A70024456F /* SignInVC.m */,
 				4C89D66623A769A70024456F /* SignInVC.xib */,
+				4C4AD90223B366D8005DEDE4 /* AktWSigninListVC.h */,
+				4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */,
+				4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */,
 			);
 			path = LoginController;
 			sourceTree = "<group>";
@@ -1424,6 +1436,7 @@
 				ADBE01641FE7C53B00B30488 /* EditUserInfoController.xib in Resources */,
 				AD472F321FC550050065C934 /* UnfinifshController.xib in Resources */,
 				AD4DAACE1F8F093800610281 /* AboutUsController.xib in Resources */,
+				4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
 				AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */,
 				ADD836062057C0140003A1C5 /* NotifyCell.xib in Resources */,
@@ -1484,6 +1497,7 @@
 				4C89D66B23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F022E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
+				4C4AD90923B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,6 +1509,7 @@
 				4C89D66C23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F122E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
+				4C4AD90A23B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1619,6 +1634,7 @@
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
 				AD552F481F8F651E001FFE1C /* DicToString.m in Sources */,
+				4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				ADDCEDE91FAB202800BB14A6 /* UnfinishOrderTaskController.m in Sources */,
 				AD6410742086DF3D003916D9 /* AddressView.m in Sources */,
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
@@ -1691,6 +1707,7 @@
 				4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */,
+				4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
@@ -1723,6 +1740,7 @@
 				4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */,
+				4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);

@@ -48,6 +48,7 @@
 }
 
 -(IBAction)clickRightBtn:(id)sender{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     if(![Vaildate isMobileNumber:self.mobleField.text]){
         [self showMessageAlertWithController:self Message:@"手机格式不符合"];
         return;
@@ -56,8 +57,6 @@
         [self showMessageAlertWithController:self Message:@"唯一码不能为空"];
         return;
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"发送中..."];
     NSDictionary * dic = @{@"mobile":self.mobleField.text,@"waiterUkey":self.waiterField.text};
     [[AFNetWorkingRequest sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -65,13 +64,13 @@
         if([code intValue] == 1){
             self.waiterField.text = @"";
             self.mobleField.text = @"";
-            [SVProgressHUD showWithStatus:@"发送成功!"];
+            [[AppDelegate sharedDelegate] showTextOnly:@"发送成功!"];
         }else{
             [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
     }];
 }
@@ -81,7 +80,7 @@
 {
     
     if ([[[UIApplication sharedApplication]textInputMode].primaryLanguage isEqualToString:@"emoji"]) {
-        [SVProgressHUD showErrorWithStatus:@"不支持表情符号"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"不支持表情符号"];
         return NO;
     }
     return YES;

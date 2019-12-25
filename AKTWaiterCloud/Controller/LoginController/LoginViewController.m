@@ -106,8 +106,6 @@
         [self showMessageAlertWithController:self Message:NetWorkMessage];
         appDelegate.netWorkType = On_line;
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Logining];
     [self Userlogin];
 }
 
@@ -127,24 +125,25 @@
     [self.view endEditing:YES];
     
     if(self.unameText.text == nil || self.unameText.text.length == 0){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"请输账号!"];
+
+        [[AppDelegate sharedDelegate] showTextOnly:@"请输账号!"];
         return;
     }
     if(self.unameText.text == nil || self.unameText.text.length < 3){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"账号长度不符合规定!"];
+       
+         [[AppDelegate sharedDelegate] showTextOnly:@"账号长度不符合规定!"];
         return;
     }
     if(self.upswText.text == nil || self.upswText.text.length == 0){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"请输入密码!"];
+
+         [[AppDelegate sharedDelegate] showTextOnly:@"请输入密码!"];
         return;
     }
     [self RequestLogin];
 }
 
 -(void)RequestLogin{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     //返回极光的id
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
@@ -176,7 +175,7 @@
                     }
                     appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    [SVProgressHUD dismiss];
+            
                     //获取各类工单数量
                     NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
@@ -191,11 +190,11 @@
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];
-                    [SVProgressHUD dismiss];
                 }
-                
+               
+                 [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                 [[AppDelegate sharedDelegate] hidHUD];
                 NSLog(@"请求错误，code==%lu",error.code);
                 [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
             }];
@@ -228,7 +227,6 @@
                     }
                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    [SVProgressHUD dismiss];
                     //获取各类工单数量
                     NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
@@ -242,13 +240,11 @@
                     }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [SVProgressHUD dismiss];
                     [self showMessageAlertWithController:self Message:messageDic];
-                    [SVProgressHUD dismiss];
                 }
-                
+                 [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                 [[AppDelegate sharedDelegate] hidHUD];
                 NSLog(@"请求错误，code==%lu",error.code);
                 [self showMessageAlertWithController:self Message:@"登陆失败，请稍后再试"];
             }];
@@ -262,7 +258,7 @@
 {
     
     if ([[[UIApplication sharedApplication]textInputMode].primaryLanguage isEqualToString:@"emoji"]) {
-        [SVProgressHUD showErrorWithStatus:@"不支持表情符号"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"不支持表情符号"];
         return NO;
     }
     return YES;
