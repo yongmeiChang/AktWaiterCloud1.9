@@ -14,6 +14,12 @@
 		4C4AD7AF23B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
 		4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
 		4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
+		4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */; };
 		4C59615823A8A35300969CB5 /* AktServiceRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */; };
 		4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615A23A8D60700969CB5 /* AktDateView.m */; };
@@ -261,6 +267,10 @@
 		4C4AD7A923B08962005DEDE4 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
 		4C4AD7AB23B08962005DEDE4 /* DateAndTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateAndTimePickerView.h; sourceTree = "<group>"; };
+		4C4AD8F823B34350005DEDE4 /* AktRangePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AktRangePickerView.h; sourceTree = "<group>"; };
+		4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangePickerCell.m; sourceTree = "<group>"; };
+		4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktRangePickerView.m; sourceTree = "<group>"; };
+		4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangePickerCell.h; sourceTree = "<group>"; };
 		4C59615423A8A35300969CB5 /* AktServiceRemarkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServiceRemarkCell.h; sourceTree = "<group>"; };
 		4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServiceRemarkCell.m; sourceTree = "<group>"; };
 		4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServiceRemarkCell.xib; sourceTree = "<group>"; };
@@ -620,6 +630,17 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
+		4C4AD8F723B34350005DEDE4 /* rangePicker */ = {
+			isa = PBXGroup;
+			children = (
+				4C4AD8F823B34350005DEDE4 /* AktRangePickerView.h */,
+				4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */,
+				4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */,
+				4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */,
+			);
+			path = rangePicker;
+			sourceTree = "<group>";
+		};
 		4C89D65123A74E560024456F /* AktSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,6 +891,7 @@
 		AD4A446B1F8C6FB700D6E5C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4C4AD8F723B34350005DEDE4 /* rangePicker */,
 				4C4AD7A723B08962005DEDE4 /* DatePicker */,
 				4CD6753122EAF97400AB76AF /* mp3 */,
 				4CD674C222E94CDF00AB76AF /* UpImage */,
@@ -1553,6 +1575,7 @@
 				AD4DAAD31F8F093800610281 /* SettingsController.m in Sources */,
 				4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */,
 				ADF511BF2060A4EC008FCAFE /* NoDateCell.m in Sources */,
+				4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 				AD63865E1FD0EB4F00265AAB /* NSMutableDictionary+Utuks.m in Sources */,
 				ADE657C81F9D9D2F008E20A6 /* PhoneSize.m in Sources */,
 				AD9264051F94B69C00C43972 /* GroupShadowTableView.m in Sources */,
@@ -1619,6 +1642,7 @@
 				AD4DAAD11F8F093800610281 /* EditPassWordController.m in Sources */,
 				ADF8963F1FD9A693008CCE1E /* DownOrderCell.m in Sources */,
 				ADBB6A271F988D7900DDC01C /* Vaildate.m in Sources */,
+				4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				ADF1A4411FE92A4500A572CE /* UIButton+Badge.m in Sources */,
 				4CD674E922E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				AD4DAAC51F8F093800610281 /* DownOrdersController.m in Sources */,
@@ -1654,6 +1678,7 @@
 				4CD6752F22EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CD674FF22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
+				4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E422E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4CD674F922E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD789301F7DF731008DEC55 /* AKTWaiterCloudTests.m in Sources */,
@@ -1667,6 +1692,7 @@
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1710,7 @@
 				4CD6753022EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CD6750022E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
+				4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E522E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4CD674FA22E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD7893B1F7DF731008DEC55 /* AKTWaiterCloudUITests.m in Sources */,
@@ -1697,6 +1724,7 @@
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1859,6 +1887,8 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;
@@ -1957,6 +1987,7 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;

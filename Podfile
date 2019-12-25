@@ -8,7 +8,7 @@ target 'AKTWaiterCloud' do
     pod 'Masonry', '~> 1.1.0'
     pod 'MBProgressHUD', '~> 1.1.0'
     pod 'JSONModel'
-    pod 'FSCalendar'
+    pod 'FSCalendar'  #日历
     pod 'JPush'
     pod 'SVProgressHUD', '~> 1.1.3'
     pod 'FMDB'
