@@ -107,8 +107,9 @@
 -(void)saveClick{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
-    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"images":_headBaseStr};
-    [[AFNetWorkingRequest sharedTool] requestupdateWaiterInfo:params type:HttpRequestTypePost success:^(id responseObject) {
+    NSDictionary * params = @{@"id":appDelegate.userinfo.id,@"sex":appDelegate.userinfo.sex,@"iconData":_headBaseStr};
+     
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"appService/waiterEdit" parameters:params type:HttpRequestTypePost success:^(id responseObject) {
         self.minecontroller.headimage = self.himage;
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];
         [self.tableUser reloadData];

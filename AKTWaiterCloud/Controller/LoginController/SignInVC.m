@@ -8,6 +8,7 @@
 
 #import "SignInVC.h"
 #import "AktWSigninListVC.h"
+#import "LoginViewController.h"
 
 @interface SignInVC ()
 {
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) NSTimer *coldTimer; // 定时器
 
 @property(nonatomic,copy) SigninDetailsInfo * selectZuhuDetailsInfo; // 选择的租户详情
+@property (nonatomic,strong) LoginViewController * loginController;
 
 @end
 
@@ -76,6 +78,7 @@
 
 #pragma mark - click
 -(void)LeftBarClick{
+    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -170,6 +173,7 @@
        NSString * url = @"appService/waiterRegister";
        [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
+           [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
            [self.navigationController popViewControllerAnimated:YES];
        } failure:^(NSError *error) {
            [[AppDelegate sharedDelegate] showTextOnly:error.domain];
