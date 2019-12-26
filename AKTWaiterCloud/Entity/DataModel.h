@@ -207,3 +207,33 @@
 @property (strong, nonatomic) NSString<Optional>* serviceEnd; // 服务结束时间
 
 @end
+
+
+#pragma mark - 注册租户列表
+@protocol SigninDetailsInfo
+@end
+
+@interface SigninListInfo : JSONModel
+@property (strong, nonatomic) NSString<Optional>* pid;
+@property (strong, nonatomic) NSString<Optional>* pname;
+@property (strong, nonatomic) NSArray <SigninDetailsInfo> *tenantsList;
+@end
+
+@interface SigninDetailsInfo : JSONModel
+@property (strong, nonatomic) NSString<Optional>* id;
+@property (strong, nonatomic) NSString<Optional>* affixFlag;
+@property (strong, nonatomic) NSString<Optional>* areaCode;
+@property (strong, nonatomic) NSString<Optional>* areaId;
+@property (strong, nonatomic) NSString<Optional>* classId;
+@property (strong, nonatomic) NSString<Optional>* ctiPlatformId;
+@property (strong, nonatomic) NSString<Optional>* dataSourceId;
+@property (strong, nonatomic) NSString<Optional>* delFlag;
+@property (strong, nonatomic) NSString<Optional>* isAdmin;
+@property (strong, nonatomic) NSString<Optional>* jspPath;
+@property (strong, nonatomic) NSString<Optional>* name;
+@property (strong, nonatomic) NSString<Optional>* prefix;
+@property (strong, nonatomic) NSString<Optional>* sort;
+@property (strong, nonatomic) NSString<Optional>* spread;
+@property (strong, nonatomic) NSString<Optional>* state;
+@property (strong, nonatomic) NSString<Optional>* tenantsCode;
+@end

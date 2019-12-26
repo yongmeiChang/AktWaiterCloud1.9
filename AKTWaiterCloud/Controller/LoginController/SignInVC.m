@@ -7,7 +7,7 @@
 //
 
 #import "SignInVC.h"
-#import ""
+#import "AktWSigninListVC.h"
 
 @interface SignInVC ()
 {
@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCode;
 @property (nonatomic, assign) int second; // 倒计时
 @property (nonatomic, strong) NSTimer *coldTimer; // 定时器
+
+@property(nonatomic,copy) SigninDetailsInfo * selectZuhuDetailsInfo; // 选择的租户详情
+
 @end
 
 @implementation SignInVC
@@ -32,16 +35,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"注册";
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     self.topNavH.constant = AktNavAndStatusHight;
     self.btnCode.layer.masksToBounds = YES;
     self.btnCode.layer.cornerRadius = 5;
-    
     UITapGestureRecognizer *tapZuhu = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkZuhuList:)];
     [_checkZuhu addGestureRecognizer:tapZuhu];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectZuhuInfoDetails:) name:@"selectZuhu" object:nil];
+   
+}
+#pragma mark - notice
+-(void)selectZuhuInfoDetails:(NSNotification *)info{
+    if (info) {
+        _selectZuhuDetailsInfo = [info object];
+        self.tfzuhu.text = kString(_selectZuhuDetailsInfo.name);
+       }
+}
 #pragma mark - timer
 - (void)doTimer{
     self.second --;
@@ -58,6 +73,7 @@
         [self.btnCode setTitle:[NSString stringWithFormat:@"%d",self.second] forState:UIControlStateNormal];
     }
 }
+
 #pragma mark - click
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
@@ -150,20 +166,22 @@
             return;
         }
     
-    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537",@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
        NSString * url = @"appService/waiterRegister";
        [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
-           [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
+           [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
+           [self.navigationController popViewControllerAnimated:YES];
        } failure:^(NSError *error) {
            [[AppDelegate sharedDelegate] showTextOnly:error.domain];
        }];
-    
     
 }
 
 #pragma mark - tap
 -(void)checkZuhuList:(UITapGestureRecognizer *)tap{ // 选择租户
-    
+    AktWSigninListVC *listvc = [[AktWSigninListVC alloc] init];
+    listvc.selectZuhuInfo = self.selectZuhuDetailsInfo;
+    [self.navigationController pushViewController:listvc animated:YES];
 }
 
 

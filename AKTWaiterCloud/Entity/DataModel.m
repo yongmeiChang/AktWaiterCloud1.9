@@ -219,3 +219,8 @@
 @implementation ServicePojInfo
 @end
 
+#pragma mark - 注册列表租户信息
+@implementation SigninListInfo
+@end
+@implementation SigninDetailsInfo
+@end

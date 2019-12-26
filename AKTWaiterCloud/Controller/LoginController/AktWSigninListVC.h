@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseControllerViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AktWSigninListVC : UIViewController
+@interface AktWSigninListVC : BaseControllerViewController
+
+@property(nonatomic,copy) SigninDetailsInfo *selectZuhuInfo; // model
 
 @end
 
