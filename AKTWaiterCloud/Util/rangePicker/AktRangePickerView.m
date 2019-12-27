@@ -81,13 +81,13 @@
     calendar.pagingEnabled = YES; // 翻页
     calendar.allowsMultipleSelection = YES;
     calendar.rowHeight = 60;
-    calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 六行
+//    calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 六行
     calendar.scrollDirection = FSCalendarScrollDirectionHorizontal;  // 横行滑动
     [viewWhite addSubview:calendar];
     self.calendar = calendar;
-
+    self.calendar.appearance.separators = FSCalendarSeparatorInterRows; // 横线
     calendar.appearance.headerMinimumDissolvedAlpha = 0;
-    calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
+//    calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
     calendar.appearance.titleDefaultColor = [UIColor blackColor]; // 日历 文字颜色
     calendar.appearance.headerTitleColor = [UIColor blackColor]; // 标题颜色
     calendar.appearance.headerDateFormat = @"yyyy年MM月";
@@ -109,26 +109,26 @@
     UIButton *previousButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [previousButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     previousButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    [previousButton setTitle:@"<" forState:UIControlStateNormal];
+    [previousButton setImage:[UIImage imageNamed:@"left"] forState:UIControlStateNormal];
     [previousButton addTarget:self action:@selector(previousClicked:) forControlEvents:UIControlEventTouchUpInside];
     [viewWhite addSubview:previousButton];
     [previousButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self);
         make.top.mas_equalTo(calendar.mas_top);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(64);
         make.height.mas_equalTo(44);
     }];
              
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [nextButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     nextButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    [nextButton setTitle:@">" forState:UIControlStateNormal];
+    [nextButton setImage:[UIImage imageNamed:@"time_right"] forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];
     [viewWhite addSubview:nextButton];
     [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self);
         make.top.mas_equalTo(calendar.mas_top);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(64);
         make.height.mas_equalTo(44);
     }];
     
