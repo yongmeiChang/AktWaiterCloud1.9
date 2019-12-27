@@ -108,8 +108,8 @@ static const int ddLogLevel = DDLogLevelError;
 //正式环境
 //#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service"
 // 测试环境
-//#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service"
-#define SERVICEURL @"http://172.16.30.32:8081/ankangtong-outwork"
+//#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service/appNewService"
+#define SERVICEURL @"http://172.16.30.32:8081/ankangtong-outwork/appService"
 // App Store
 #define appstoreURl @"https://itunes.apple.com/cn/"
 

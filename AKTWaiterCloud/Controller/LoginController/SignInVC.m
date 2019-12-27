@@ -84,7 +84,7 @@
 
 - (IBAction)getCodeClick:(UIButton *)sender {
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
-    NSString * url = @"appService/getCheckCode";
+    NSString * url = @"getCheckCode";
     [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;
@@ -170,7 +170,7 @@
         }
     
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
-       NSString * url = @"appService/waiterRegister";
+       NSString * url = @"waiterRegister";
        [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
            [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];

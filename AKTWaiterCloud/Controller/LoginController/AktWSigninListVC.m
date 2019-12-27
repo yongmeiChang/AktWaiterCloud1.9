@@ -37,7 +37,7 @@
 }
 #pragma mark - request
 -(void)reloadListZuhu{
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"appService/getTenantsTree" parameters:@{} type:HttpRequestTypePost success:^(id responseObject) {
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getTenantsTree" parameters:@{} type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *code = [dic objectForKey:@"code"];
         NSString *msg = [dic objectForKey:@"message"];

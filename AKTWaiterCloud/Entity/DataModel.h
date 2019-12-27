@@ -20,7 +20,7 @@
 #pragma mark --- 用户信息
 @interface UserInfo : JSONModel
 @property(nonatomic,strong) NSString <Optional>*  id;
-@property(nonatomic,strong) NSString <Optional>*  uuid;
+@property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样
 @property(nonatomic,strong) NSString <Optional>*  icon;
 @property(nonatomic,strong) NSString <Optional>*  mobile;
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
