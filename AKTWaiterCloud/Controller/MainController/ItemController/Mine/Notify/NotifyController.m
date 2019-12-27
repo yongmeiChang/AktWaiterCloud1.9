@@ -30,15 +30,14 @@
 }
 
 -(void)getPushRecordService{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"请求中..."];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
     NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AFNetWorkingRequest sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
 
         if([dic[@"code"] intValue]==1){
             if(![dic objectForKey:@"object"]){
-                [SVProgressHUD dismiss];
+                [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
             NSArray * arr = dic[@"object"];
@@ -58,16 +57,15 @@
                                                  [self.navigationController popViewControllerAnimated:YES];
                                              }];
             }
-            [SVProgressHUD dismiss];
         }else{
-            [SVProgressHUD dismiss];
             [self showMessageAlertWithController:self title:@""
                                          Message:@"查询失败请重新查询" canelBlock:^{
                                              [self.navigationController popViewControllerAnimated:YES];
                                          }];
         }
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         [self showMessageAlertWithController:self title:@""
                                      Message:@"查询失败请重新查询" canelBlock:^{
                                          [self.navigationController popViewControllerAnimated:YES];
@@ -137,8 +135,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if(workid){
         NSDictionary * dic = @{@"workOrderId":workid,@"tenantsId":appDelegate.userinfo.tenantsId};
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD setStatus:Loading];
+        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
         [[AFNetWorkingRequest sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
@@ -156,9 +153,9 @@
                 MinuteTaskController * mtController = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
                 [self.navigationController pushViewController:mtController animated:YES];
             }
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         }];
     }else{
         return;
@@ -168,4 +165,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 92.0f;
 }
+
+
 @end

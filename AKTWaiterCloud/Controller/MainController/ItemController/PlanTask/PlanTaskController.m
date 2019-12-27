@@ -54,7 +54,24 @@
     [self checkNetWork];
 }
 
-#pragma mark -- 初始化日历控件
+-(void)viewWillAppear:(BOOL)animated{
+    DDLogInfo(@"点击了待办任务item");
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = NO;
+    ishidden = YES;
+    if(appDelegate.isclean){
+        [self viewDidLoad];
+        appDelegate.isclean = false;
+    }
+    if(appDelegate.planTaskOrderRf){
+        appDelegate.planTaskOrderRf = YES;
+        pageSize = 0;
+        [self requestUnFinishedTask];
+    }
+}
+
+
+#pragma mark - 初始化日历控件
 -(void)initCalender{
     _calendar.dataSource = self;
     _calendar.delegate = self;
@@ -359,144 +376,7 @@
     }];
 }
 
-#pragma mark 获取一段时间的工单  不传type字段返回所有工单的数量
-//-(void)requestUnFinishedTask{
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"yyyy-MM-dd"];
-//    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
-//    NSArray * timearr = [dateTime componentsSeparatedByString:@"-"];
-//    NSString * yearstr = [timearr objectAtIndex:0];
-//    int year = [yearstr intValue];
-//    year = year -1;
-//    yearstr = [NSString stringWithFormat:@"%d",year];
-//    NSString * month = @"11";
-//    NSString * day = @"01";
-//    NSString * begintime = [NSString stringWithFormat:@"%@-%@-%@",yearstr,month,day];
-//
-//    NSDictionary * parameters = @{@"beginDate":begintime,@"endDate":dateTime,@"tenantsId":appDelegate.userinfo.tenantsId,@"type":@"undo",@"waiterId":appDelegate.userinfo.uuid};
-//    NSString * url = @"getWorkByMonth";
-//
-//    [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:parameters type:HttpRequestTypePost success:^(id responseObject) {
-//        NSDictionary * dic = responseObject;
-//        NSNumber * code = [dic objectForKey:@"code"];
-//        if([code intValue] == 1){
-//            _countArr = [dic objectForKey:@"object"];
-//            for(NSDictionary * overdic in _countArr){
-//                NSString * serviceitem = [overdic objectForKey:@"serviceItem"];
-//                NSDictionary * parameter = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":serviceitem,@"type":@"undo"};
-//                [self requestAllOverOrderTask:parameter];
-//                if(self.index == self.countArr.count){
-//                    self.netWorkErrorView.userInteractionEnabled = YES;
-//                    [SVProgressHUD dismiss];
-//                }
-//            }
-//        }else {
-//            if(self.index == self.countArr.count){
-//                self.netWorkErrorView.userInteractionEnabled = YES;
-//                self.index = 0;
-//            }
-//        }
-//
-//    } failure:^(NSError *error) {
-//        self.index = 0;
-//        self.netWorkErrorView.userInteractionEnabled = YES;
-//        [SVProgressHUD dismiss];
-//    }];
-//}
-
-#pragma mark 获取当天工单
-//-(void)requestAllOverOrderTask:(NSDictionary *)parameter{
-//    NSString * url = @"getWorkByDay";
-//    [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:parameter type:HttpRequestTypePost success:^(id responseObject) {
-//        NSDictionary * dic = responseObject;
-//        NSString * message = [dic objectForKey:@"message"];
-//        NSNumber * code = [dic objectForKey:@"code"];
-//        self.index++;
-//        if([code intValue]==1){
-//            NSArray * arr = [NSArray array];
-//            arr = [dic objectForKey:@"object"];
-//            if([message isEqualToString:@"当前没有工单任务!"]){
-//                [self showOffLineAlertWithTime:1.0  message:@"当前没有工单任务!" DoSomethingBlock:^{
-//                    self.netWorkErrorView.hidden = NO;
-//                    if(self.index == self.countArr.count){
-//                        self.netWorkErrorView.userInteractionEnabled = YES;
-//                        self.index = 0;
-//                    }
-//                }];
-//            }else{
-//                if(arr&&arr.count>0){
-//                    self.netWorkErrorView.hidden = YES;
-//                    for (NSMutableDictionary * dicc in arr) {
-//                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
-//                        NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-//                        NSString * createBy = [createBydic objectForKey:@"id"];
-//                        NSString * updateBy = [updateBydic objectForKey:@"id"];
-//                        [dicc removeObjectForKey:@"createBy"];
-//                        [dicc removeObjectForKey:@"updateBy"];
-//                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
-//                        [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
-//                        NSDictionary * objdic = (NSDictionary*)dicc;
-//                        self.orderfmdb = [[OrderTaskFmdb alloc]init];
-//                        OrderInfo * orderinfo;
-//                        orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
-//                        if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
-//                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-//                            orderinfo.tid = orderinfo.id;
-//                            //[self.dataArray addObject:orderinfo];
-//                            [appDelegate.unFinishedArray addObject:orderinfo];
-//                            [self.orderfmdb saveOrderTask:orderinfo];
-//                        }else{
-//                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-//                            orderinfo.tid = orderinfo.id;
-//                            //[self.dataArray addObject:orderinfo];
-//                            [appDelegate.unFinishedArray addObject:orderinfo];
-//                            [self.orderfmdb updateObject:orderinfo];
-//                        }
-//                    }
-//                    [self.taskTableview reloadData];
-//
-//                    if(self.index == self.countArr.count){
-//                        [self.taskTableview reloadData];
-//                        [SVProgressHUD dismiss];
-//                        self.index = 0;
-//                        self.netWorkErrorView.userInteractionEnabled = YES;                 }
-//                }else{
-//                    if(self.index == self.countArr.count){
-//                        self.netWorkErrorView.hidden = NO;
-//                        [SVProgressHUD dismiss];
-//                        self.index = 0;
-//                        self.netWorkErrorView.userInteractionEnabled = YES;
-//                    }
-//                }
-//            }
-//            [SVProgressHUD dismiss];
-//        }else{
-//            if(self.index == self.countArr.count){
-////                [self showOffLineAlertWithTime:0.7  message:message DoSomethingBlock:^{
-////                    [self.view bringSubviewToFront:netWorkErrorView];
-////                }];
-////                self.index = 0;
-//                self.netWorkErrorView.userInteractionEnabled = YES;
-//            }
-//        }
-//        if(appDelegate.netWorkType == Off_line){
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-//                }];
-//                appDelegate.netWorkType = On_line;
-//            });
-//        }
-//    }
-//    failure:^(NSError *error) {
-//        [SVProgressHUD dismiss];
-//        if(self.index == self.countArr.count){
-//            self.index = 0;
-//            self.netWorkErrorView.userInteractionEnabled = YES;
-//        }
-//     }];
-//}
-
-
+#pragma mark - 比较日期
 - (void)compareNsdate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -511,23 +391,6 @@
         return [date2 compare:date1];
     }];
 }
-
--(void)viewWillAppear:(BOOL)animated{
-    DDLogInfo(@"点击了待办任务item");
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    self.tabBarController.tabBar.hidden = NO;
-    ishidden = YES;
-    if(appDelegate.isclean){
-        [self viewDidLoad];
-        appDelegate.isclean = false;
-    }
-    if(appDelegate.planTaskOrderRf){
-        appDelegate.planTaskOrderRf = YES;
-        pageSize = 0;
-        [self requestUnFinishedTask];
-    }
-}
-
 
 -(void)labelClick{
     
@@ -573,12 +436,6 @@
     return 1;
 }
 
-//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-//{
-//    // 设置section背景颜色
-//    view.tintColor = [UIColor colorWithRed:226/255.0f green:231/255.0f blue:237/255.0f alpha:1];
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(SCREEN_WIDTH<375){
         return 190.0f;
@@ -614,32 +471,6 @@
     if(arr.count>0){
         OrderInfo * orderinfo = arr[indexPath.section];
         [cell setOrderList:orderinfo];
-//        cell.namelabel.text = orderinfo.customerName;
-//        [cell.nameBtn addTarget:self action:@selector(ClickName:) forControlEvents:UIControlEventTouchUpInside];
-//        [cell.namelabel setTag:indexPath.section+1];
-//        cell.phonelabel.text = orderinfo.customerPhone;
-//        NSString * serviceBeg = [orderinfo.serviceBegin substringToIndex:orderinfo.serviceBegin.length-3];
-//        cell.datelabel.text = serviceBeg;
-//
-//        NSString * serviceEn = [orderinfo.serviceEnd substringToIndex:orderinfo.serviceEnd.length-3];
-//        cell.datetimelabel.text = [NSString stringWithFormat:@"%@",serviceEn];
-//        cell.workNolabel.text = [NSString stringWithFormat:@"订单号:%@",orderinfo.workNo];
-//        NSString * itemName = orderinfo.serviceItemName;
-//        itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  ▶  "];
-//
-//        if([orderinfo.workStatus isEqualToString:@"3"]||[orderinfo.workStatus isEqualToString:@"7"]){
-//            cell.bgimageview.image = [UIImage imageNamed:@"undo"];
-//        }else if([orderinfo.workStatus isEqualToString:@"4"]){
-//            cell.bgimageview.image = [UIImage imageNamed:@"doing"];
-//        }else if([orderinfo.workStatus isEqualToString:@"6"]){
-//            cell.bgimageview.image = [UIImage imageNamed:@"finish"];
-//        }else if([orderinfo.workStatus isEqualToString:@"11"]){
-//            cell.bgimageview.image = [UIImage imageNamed:@"editorder"];
-//        }
-//
-//        cell.titlelabel.text = itemName;
-//        cell.addresslabel.text = orderinfo.serviceAddress;
-
     }
     return cell;
 }
@@ -653,19 +484,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self.navigationController pushViewController:minuteTaskContoller animated:YES];
 }
-
-//让section的头部跟着一起滑动
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView == self.taskTableview)
-//    {
-//        CGFloat sectionHeaderHeight = 20;
-//        if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-//        } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//        }
-//    }
-//}
 
 -(void)ClickName:(id)sender{
     UIButton * btn = (UIButton*)sender;
@@ -731,14 +549,6 @@
     }
     return nil;
 }
-
-//- (NSArray<UIColor *> *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance eventDefaultColorsForDate:(NSDate *)date{
-//    //        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    //        [formatter setDateFormat:@"yyyy-MM-dd"];
-//    //        NSString * str = [formatter stringFromDate:date];
-//
-//    return @[[UIColor redColor]];
-//}
 
 //显示下面的事件点的数量
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date{

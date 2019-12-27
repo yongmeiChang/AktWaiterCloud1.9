@@ -55,7 +55,7 @@
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.loginBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, -(self.loginBtn.frame.size.width), 0, 0);
+
     // 获取缓存
     if(appDelegate.userinfo){
         self.unameText.text = appDelegate.userinfo.waiterUkey;
@@ -116,7 +116,7 @@
     [self.navigationController pushViewController:findPswController animated:YES];
 }
 - (IBAction)sigInClickBtn:(UIButton *)sender {
-    SignInVC *signvc = [[SignInVC alloc] init];
+    SignInVC *signvc = [[SignInVC alloc] initWithSigninWController:self];
     [self.navigationController pushViewController:signvc animated:YES];
 }
 

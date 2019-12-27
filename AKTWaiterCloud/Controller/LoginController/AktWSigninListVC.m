@@ -35,6 +35,7 @@
     modellist = [[SigninListInfo alloc] init];
     [self reloadListZuhu];
 }
+
 #pragma mark - request
 -(void)reloadListZuhu{
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"getTenantsTree" parameters:@{} type:HttpRequestTypePost success:^(id responseObject) {

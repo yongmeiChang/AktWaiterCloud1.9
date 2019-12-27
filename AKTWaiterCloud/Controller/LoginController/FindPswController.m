@@ -36,7 +36,6 @@
     self.topNavConsraint.constant = AktNavAndStatusHight;
     self.mobleField.keyboardType = UIKeyboardTypeNumberPad;
     self.waiterField.keyboardType = UIKeyboardTypeNumberPad;
-    self.rightBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, -(self.rightBtn.frame.size.width+6), 0, 0);
 
     [self setNavTitle:@"忘记密码"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
