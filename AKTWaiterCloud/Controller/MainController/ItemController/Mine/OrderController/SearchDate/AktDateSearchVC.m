@@ -167,7 +167,7 @@
     }
     
     NSDictionary * parameters =@{@"type":@"done",@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"beginDate":startTime,@"endDate":endTime};
-    
+    /*
     [[AFNetWorkingRequest sharedTool] requestgetWorkListByDay:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];
@@ -214,6 +214,7 @@
                                                           [SVProgressHUD dismiss];
                                                           [self showMessageAlertWithController:self Message:@"查询错误，请重新操作!"];
                                                       }];
+    */
 }
 - (IBAction)cancelPicke:(UIButton *)sender {
     [self.viewBgBlack setHidden:YES];

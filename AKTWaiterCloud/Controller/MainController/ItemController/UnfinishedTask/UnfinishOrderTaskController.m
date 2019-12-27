@@ -11,10 +11,15 @@
 #import "MinuteTaskController.h"
 #import "QRCodeViewController.h"
 #import "AKTSearchInfoVC.h"
+#import "SearchDateController.h" // 筛选日期
 
 @interface UnfinishOrderTaskController ()<UITableViewDataSource,UITableViewDelegate,AMapLocationManagerDelegate,AktSearchDelegate>{
     int pageSize;//当前分页
-    NSString *searchKey;
+    NSString *searchKey; // 用户名搜索
+    NSString *searchAddress; // 服务地址
+    NSString *searchBTime; // 服务开始时间
+    NSString *searchETime; // 服务结束时间
+    NSString *searchWorkNo;// 服务单号
 }
 
 @property(nonatomic,strong) NSDate * locationServiceEndDate;
@@ -29,6 +34,11 @@
     [super viewDidLoad];
     self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
+    searchAddress = [NSString stringWithFormat:@""];
+    searchBTime = [NSString stringWithFormat:@""];
+    searchETime = [NSString stringWithFormat:@""];
+    searchWorkNo = [NSString stringWithFormat:@""];
+
     [self initTaskTableView];
     pageSize = 1;
     self.dataArray = [[NSMutableArray alloc] init];
@@ -66,19 +76,29 @@
 -(void)LeftBarClick{
     AKTSearchInfoVC *searvc = [AKTSearchInfoVC new];
     searvc.delegate = self;
-    searvc.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self.navigationController presentViewController:searvc animated:YES completion:nil];
+    searvc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searvc animated:YES];
 }
 #pragma mark - search delegate
--(void)searchKey:(NSString *)search Sender:(NSInteger)sender{
+-(void)searchKey:(NSString *)search SearchAddress:(nonnull NSString *)address Searchtime:(nonnull NSString *)searchtime SearchOrder:(nonnull NSString *)orderid Sender:(NSInteger)sender{
     if (sender == 1) {
-        searchKey = search;
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        searchKey = search; // 用户名
+        searchAddress = address; // 地址
+        if (searchtime.length>10) {
+            searchBTime = [searchtime substringToIndex:10]; // 时间
+            searchETime = [searchtime substringWithRange:NSMakeRange(11, 10)]; // 结束时间
+        }else{
+            searchBTime = @"";
+            searchETime = @"";
+        }
+        searchWorkNo = orderid; // 单号
+        [self.navigationController popViewControllerAnimated:YES];
         [self.taskTableview.mj_header beginRefreshing];
     }else{
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     // 马上进入刷新状态
@@ -124,8 +144,8 @@
 -(void)requestUnFinishedTask{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [SVProgressHUD setStatus:Loading];
-    
-    NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey)};
+    NSLog(@"---%@",appDelegate.userinfo);
+    NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
 
     [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;

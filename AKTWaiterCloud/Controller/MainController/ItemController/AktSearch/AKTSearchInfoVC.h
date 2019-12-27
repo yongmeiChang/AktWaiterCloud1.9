@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol AktSearchDelegate <NSObject>
--(void)searchKey:(NSString *)search Sender:(NSInteger)sender;
+-(void)searchKey:(NSString *)search SearchAddress:(NSString *)address Searchtime:(NSString *)searchtime SearchOrder:(NSString *)orderid Sender:(NSInteger)sender;
 @end
 
 @interface AKTSearchInfoVC : WorkBaseViewController

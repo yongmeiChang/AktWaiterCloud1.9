@@ -330,7 +330,7 @@ static AFNetWorkingRequest * aq_instance = nil;
 }
 
 #pragma mark 按月时间段工单
--(void)requestgetWorkListByDay:(NSDictionary *)param  type:(HttpRequestType)type
+/*-(void)requestgetWorkListByDay:(NSDictionary *)param  type:(HttpRequestType)type
                      success:(void (^)(id responseObject))success
                      failure:(void (^)(NSError *error))failure{
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"getWorkListByDay" parameters:param type:type success:^(id responseObject) {
@@ -339,7 +339,7 @@ static AFNetWorkingRequest * aq_instance = nil;
         failure(error);
     }];
 }
-
+*/
 #pragma mark 修改密码
 -(void)requesteditPassword:(NSDictionary *)param  type:(HttpRequestType)type
                    success:(void (^)(id responseObject))success

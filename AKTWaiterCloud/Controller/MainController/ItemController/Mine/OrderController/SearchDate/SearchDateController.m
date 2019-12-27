@@ -31,6 +31,7 @@
 @property(nonatomic,strong) NSString * bTime;//给后台
 @property(nonatomic,strong) NSString * eTime;//给后台
 @property(nonatomic,assign) int dateType;//1开始时间 2结束时间
+@property (weak, nonatomic) IBOutlet UIButton *btnsearch;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnToday;
 @property (weak, nonatomic) IBOutlet UIButton *btnToWeek;
@@ -53,6 +54,11 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     self.netWorkErrorView.hidden = YES;
     
+    if (self.typeVC == 0) {
+        [self.btnsearch setTitle:@"搜索" forState:UIControlStateNormal];
+    }else{
+        [self.btnsearch setTitle:@"确认" forState:UIControlStateNormal];
+    }
     // 日期时间选择
     self.rangPickerView = [[AktRangePickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.rangPickerView.delegate = self;
@@ -233,9 +239,15 @@
         [self showMessageAlertWithController:self Message:@"开始日期必须小于结束日期"];
         return;
     }
-    [self requestOrderByDate];
+    NSArray *barray = [self.bTime componentsSeparatedByString:@" "]; //从字符A中分隔成2个元素的数组
+    NSString * bdatetime = barray[0];
+    NSArray *earray = [self.eTime componentsSeparatedByString:@" "]; //从字符A中分隔成2个元素的数组
+    NSString *edatetime = earray[0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"searchDateVC" object:@{@"beginDate":bdatetime,@"endDate":edatetime} userInfo:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    [self requestOrderByDate];
 }
-
+/*
 -(void)requestOrderByDate{
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
@@ -306,7 +318,7 @@
         [self showMessageAlertWithController:self Message:@"查询错误，请重新操作!"];
     }];
 }
-
+*/
 #pragma mark - rangePickerView delegate
 -(void)AktRangePickerViewFirstDate:(NSString *)firstdate LastDate:(NSString *)lastdate{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:106] removeFromSuperview];
