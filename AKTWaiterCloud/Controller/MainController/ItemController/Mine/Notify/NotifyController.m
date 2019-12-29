@@ -25,7 +25,7 @@
     self.tabeleview.dataSource = self;
     self.dataArray = [NSMutableArray array];
     [self setNavTitle:@"通知"];
-    [self initNavItem];
+    [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     [self getPushRecordService];
 }
 
@@ -59,7 +59,7 @@
             }
         }else{
             [self showMessageAlertWithController:self title:@""
-                                         Message:@"查询失败请重新查询" canelBlock:^{
+                                         Message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]] canelBlock:^{
                                              [self.navigationController popViewControllerAnimated:YES];
                                          }];
         }
@@ -67,66 +67,33 @@
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
         [self showMessageAlertWithController:self title:@""
-                                     Message:@"查询失败请重新查询" canelBlock:^{
+                                     Message:error.domain canelBlock:^{
                                          [self.navigationController popViewControllerAnimated:YES];
                                      }];
     }];
 }
 
--(void)initNavItem{
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(backClick:) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton setFrame:CGRectMake(0, 0, 60, 40)];
-    [leftButton setTitle:@"返回" forState:UIControlStateNormal];
-    leftButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
-    [leftButton.titleLabel setTextColor:[UIColor whiteColor]];
-    leftButton.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0];
-    UIEdgeInsets titlecg = leftButton.titleEdgeInsets;
-    titlecg.left = 10;
-    leftButton.titleEdgeInsets = titlecg;
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(backClick:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    //设置导航栏字体颜色
-    //    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
-}
-
-#pragma mark ======= tableview设置
-/**段数*/
+#pragma mark - tableview设置
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-/**行数*/;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 
-/**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentify = @"NotifyCell";
     NotifyCell *cell = (NotifyCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NotifyCell" owner:self options:nil] objectAtIndex:0];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary * dic = self.dataArray[indexPath.section];
-    cell.dateLabel.text = dic[@"createDate"];
-    cell.contentLabel.text = dic[@"content"];
-    
-    cell.layer.masksToBounds = NO;
-    
-    cell.layer.contentsScale = [UIScreen mainScreen].scale;
-    
-    cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-    
-    cell.layer.shadowOpacity = 0.4f;
-    
-    cell.layer.shadowRadius = 3.f;
-    
-    cell.layer.shadowOffset = CGSizeMake(4,4);
+    [cell setNoticeListInfo:self.dataArray Indexpath:indexPath];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 152.0f;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -162,9 +129,9 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 92.0f;
+#pragma mark -
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 @end
