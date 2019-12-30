@@ -113,8 +113,7 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }else{
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD setStatus:Loading];
+        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
         [self requestGrabWorkOrder];
     }
 }
@@ -192,7 +191,7 @@
                         [self showMessageAlertWithController:self Message:@"暂无数据"];
                         self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
                         self.netWorkErrorView.hidden = NO;
-                        [SVProgressHUD dismiss];
+                        [[AppDelegate sharedDelegate] hidHUD];
                         self.netWorkErrorView.userInteractionEnabled = YES;
                     //}
                 }
@@ -215,7 +214,7 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         //if(self.requestype == 0){
             [self.tableview.mj_header endRefreshing];
         //}else{
@@ -224,7 +223,7 @@
         
     }
     failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         self.netWorkErrorView.hidden = NO;
         self.netWorkErrorView.userInteractionEnabled = YES;
         self.netWorkErrorLabel.text = @"暂无数据,请轻触重新加载";
@@ -346,8 +345,7 @@
             [self showMessageAlertWithController:self Message:@"网络状态不佳,请稍后再试!"];
         }
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     self.netWorkErrorLabel.text = Loading;
     [self requestGrabWorkOrder];
     self.netWorkErrorView.userInteractionEnabled = false;

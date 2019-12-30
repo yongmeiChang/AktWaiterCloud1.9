@@ -142,14 +142,12 @@
 
 #pragma mark - 请求工单列表
 -(void)requestUnFinishedTask{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Logining];
     NSLog(@"---%@",appDelegate.userinfo);
     NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
 
     [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
-        NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
         
         if([code intValue]==1){
@@ -206,9 +204,9 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         self.netWorkErrorView.hidden = NO;
         self.netWorkErrorView.userInteractionEnabled = YES;
         self.netWorkErrorLabel.text = @"暂无数据,请轻触重新加载";

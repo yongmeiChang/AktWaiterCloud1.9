@@ -205,7 +205,7 @@
     [timer invalidate];
     timer = nil;
     [timer setFireDate:[NSDate distantFuture]];
-    [SVProgressHUD dismiss];
+    [[AppDelegate sharedDelegate] hidHUD];
 }
 #pragma mark - service time
 -(void)ComputeServiceTime{
@@ -1044,7 +1044,7 @@
         contentStr = @"暂无备注";
     }
     NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic Url:@"uploadWorkNode" type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         if([dic[@"code"] intValue]==1){
@@ -1052,9 +1052,9 @@
             self.lctitleTextField.text = @"";
             self.lccontentTextView.text = @"";
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         [self showMessageAlertWithController:self Message:@"提交失败，请重新提交"];
 
     }];
@@ -1092,7 +1092,7 @@
                            }
 
                        } failure:^(NSError *error) {
-                           [SVProgressHUD dismiss];
+                           [[AppDelegate sharedDelegate] hidHUD];
                            [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
                                [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
                            }];
@@ -1100,7 +1100,7 @@
     } Error:nil];
 }
 -(void)postDataAllInfo:(NSString *)reason{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     if(self.type==1){
         NSDate * date = [NSDate date];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -1114,9 +1114,9 @@
         | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
         // 对比时间差
         NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-        [SVProgressHUD setStatus:@"任务签出提交中"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
     }else{
-        [SVProgressHUD setStatus:@"任务签入提交中"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
     }
     NSMutableArray * basearr = [NSMutableArray array];
     NSString * baseStr = @"";
@@ -1171,7 +1171,7 @@
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSNumber * code = dic[@"code"];
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 //获取各类工单数量
                 NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
@@ -1196,7 +1196,7 @@
                 }];
             }
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
             }];
@@ -1218,7 +1218,7 @@
         [[AFNetWorkingRequest sharedTool] requestsignIn:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSNumber * code = dic[@"code"];
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 [self.unfinishManager stopUpdatingLocation];
                 [AppInfoDefult sharedClict].orderinfoId = @"";
@@ -1260,7 +1260,7 @@
                                              
                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
                                          }];
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         }];
     }
 }

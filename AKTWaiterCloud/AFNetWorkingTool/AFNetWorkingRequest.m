@@ -26,7 +26,7 @@ static AFNetWorkingRequest * aq_instance = nil;
 //    [[AFNetWorkingTool sharedTool] requestWithURLString:@"signIn" parameters:param type:type success:^(id responseObject) {
 //        
 //    } failure:^(NSError *error) {
-//        [SVProgressHUD dismiss];
+//        [[AppDelegate sharedDelegate] hidHUD];
 //        failure(error);
 //    }];
 //}
@@ -39,7 +39,7 @@ static AFNetWorkingRequest * aq_instance = nil;
             success(responseObject);
         }
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -53,7 +53,7 @@ static AFNetWorkingRequest * aq_instance = nil;
             success(responseObject);
         }
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -69,7 +69,7 @@ static AFNetWorkingRequest * aq_instance = nil;
 //            success(code);
 //        }
 //    } failure:^(NSError *error) {
-//        [SVProgressHUD dismiss];
+//        [[AppDelegate sharedDelegate] hidHUD];
 //        failure(error);
 //    }];
 //}
@@ -81,7 +81,7 @@ static AFNetWorkingRequest * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"getCustomerBalance" parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -92,9 +92,9 @@ static AFNetWorkingRequest * aq_instance = nil;
                                    failure:(void (^)(NSError *error))failure{
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"getPassword" parameters:param type:type success:^(id responseObject) {
         success(responseObject);
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -106,7 +106,7 @@ static AFNetWorkingRequest * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"scanWorkOrder" parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -118,7 +118,7 @@ static AFNetWorkingRequest * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"startOrderForm" parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }
@@ -130,7 +130,7 @@ static AFNetWorkingRequest * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:@"getServiceType" parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         failure(error);
     }];
 }

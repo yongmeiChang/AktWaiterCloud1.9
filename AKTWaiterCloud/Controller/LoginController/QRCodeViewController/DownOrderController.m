@@ -190,51 +190,49 @@
     
     int ok = [self compareDate];
     if(ok!=-1){
-        [SVProgressHUD showInfoWithStatus:@"日期格式不符合要求"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"日期格式不符合要求"];
         return;
     }
     
     if(kString(_servicepojInfo.name).length==0){
-        [SVProgressHUD showInfoWithStatus:@"请选择服务项目"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务项目"];
         return;
     }
     if(kString(_Date).length==0){
-        [SVProgressHUD showInfoWithStatus:@"请选择服务日期"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务日期"];
         return;
     }
     if(kString(_bTime).length==0){
-        [SVProgressHUD showInfoWithStatus:@"请选择服务开始时间"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务开始时间"];
         return;
     }
     if(kString(_eTime).length==0){
-        [SVProgressHUD showInfoWithStatus:@"请选择服务结束时间"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务结束时间"];
         return;
     }
 //    if(_phoneTfield.text==nil){
-//        [SVProgressHUD showInfoWithStatus:@"用户电话不能为空"];
+//        [[AppDelegate sharedDelegate] showTextOnly:@"用户电话不能为空"];
 //        return;
 //    }
     if(strArea.length==0){
-        [SVProgressHUD showInfoWithStatus:@"服务区域不能为空"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"服务区域不能为空"];
         return;
     }
     if(strAddress.length==0){
-        [SVProgressHUD showInfoWithStatus:@"服务地址不能为空"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"服务地址不能为空"];
         return;
     }
     NSArray * bg =  [_bTime componentsSeparatedByString:@" "];;
     NSString * btstr = bg[0];
     if(![_Date isEqualToString:btstr]){
-        [SVProgressHUD showInfoWithStatus:@"服务日期与服务开始时间不相符"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"服务日期与服务开始时间不相符"];
         return;
     }
-    
     
     NSLog(@"点击下单按钮");
     [_submitBtn setEnabled:false];
     [self requestSubmit];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"提交中"];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
 }
 
 -(void)requestSubmit{
@@ -255,24 +253,24 @@
         NSLog(@"%@",dic[@"message"]);
         NSNumber * code = dic[@"code"];
         if([code longValue] == 1){
-            [SVProgressHUD showSuccessWithStatus:@"提交成功!"];
+            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 for(UIView * view in self.view.subviews){
                     [view removeFromSuperview];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                [SVProgressHUD dismiss];
+                 [[AppDelegate sharedDelegate] hidHUD];;
                 
             });
         }else{
-            [SVProgressHUD dismiss];
-            [SVProgressHUD showInfoWithStatus:dic[@"message"]];
+             [[AppDelegate sharedDelegate] hidHUD];;
+            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
             [_submitBtn setEnabled:YES];
             }
     } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
-            [SVProgressHUD showInfoWithStatus:@"提交失败，请重新提交!"];
+             [[AppDelegate sharedDelegate] hidHUD];;
+            [[AppDelegate sharedDelegate] showTextOnly:error.domain];
             [_submitBtn setEnabled:YES];
     }];
 }

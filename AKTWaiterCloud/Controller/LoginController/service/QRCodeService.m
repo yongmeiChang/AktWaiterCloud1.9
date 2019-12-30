@@ -14,8 +14,7 @@
 @implementation QRCodeService
 
 -(void)QRorderRequest:(BaseControllerViewController *)controller Code:(NSString *)str{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:controller.view msg:Loading];
     
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
@@ -102,9 +101,9 @@
                     [qvcontroller.session startRunning];
                 }];
             }
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             //[controller.navigationController popToRootViewControllerAnimated:YES];
             [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
                 QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
@@ -118,7 +117,7 @@
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
             if([code intValue] == 2){
-                [SVProgressHUD dismiss];
+                [[AppDelegate sharedDelegate] hidHUD];
                 [controller showMessageAlertWithController:controller title:@"提示" Message:dic[@"message"] canelBlock:^{
                     QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
                     [qvcontroller.session startRunning];
@@ -130,9 +129,9 @@
             DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
             [controller.navigationController pushViewController:doController animated:YES];
             doController.hidesBottomBarWhenPushed = YES;
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             [controller showMessageAlertWithController:controller title:@"提示" Message:@"操作失败，请稍后再试" canelBlock:^{
                 QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
                 [qvcontroller.session startRunning];
@@ -145,8 +144,8 @@
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
             if([code intValue] == 2){
-                [SVProgressHUD dismiss];
-                [SVProgressHUD showErrorWithStatus:dic[@"message"]];
+                [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
+                 [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
             NSDictionary * object = dic[@"object"];
@@ -155,9 +154,9 @@
             [controller.navigationController pushViewController:doController animated:YES];
             doController.hidesBottomBarWhenPushed = YES;
          
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             [controller showMessageAlertWithController:controller Message:@"操作失败，请稍后再试"];
         }];
     }

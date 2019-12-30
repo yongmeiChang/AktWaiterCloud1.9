@@ -192,8 +192,6 @@
         if(!weakSelf.remarks){
             [self showMessageAlertWithController:weakSelf Message:@"请输入变更原因"];
         }else{
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-            [SVProgressHUD setStatus:@"提交中..."];
             if(![self.showdatebegin.text isEqualToString:self.oldBeginTime]||![self.showdateend.text isEqualToString:self.oldEndTime]){
                 self.changetype=@"1";
             }
@@ -211,7 +209,7 @@
 }
 
 -(void)requestaskForWorkChange{
-
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中..."];
     NSString * newserviceid = @"";
     if(self.servicepojInfo){
         newserviceid = self.servicepojInfo.id;
@@ -229,9 +227,9 @@
         }else{
             [self showMessageAlertWithController:self Message:@"提交失败,请稍后再试"];
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 

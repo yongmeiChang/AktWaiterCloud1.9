@@ -145,7 +145,7 @@
 {
     
     if ([[[UIApplication sharedApplication]textInputMode].primaryLanguage isEqualToString:@"emoji"]) {
-        [SVProgressHUD showErrorWithStatus:@"不支持表情符号"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"不支持表情符号"];
         return NO;
     }
     return YES;

@@ -207,12 +207,12 @@
 }
 #pragma mark - alter
 -(void)showOffLineAlertWithTime:(float)timing message:(NSString *)Message DoSomethingBlock:(void(^)(void))DoBlock{
-    [SVProgressHUD showInfoWithStatus:Message];
+    [[AppDelegate sharedDelegate] showTextOnly:Message];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timing * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(DoBlock){
             DoBlock();
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     });
 }
 

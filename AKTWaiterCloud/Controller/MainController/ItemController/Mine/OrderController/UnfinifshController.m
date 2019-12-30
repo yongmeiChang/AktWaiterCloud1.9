@@ -198,8 +198,7 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }else{
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD setStatus:Loading];
+        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Logining];
     }
     tableviewtype = 0;
     //status：状态(1：未完成 2：服务中 3：已完成)
@@ -254,12 +253,12 @@
                     }
                     
                     [self.taskTableview reloadData];
-                    [SVProgressHUD dismiss];
+                    [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
                 }else{
                     self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
                     self.netWorkErrorView.hidden = NO;
-                    [SVProgressHUD dismiss];
+                    [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
                 }
             }
@@ -278,11 +277,11 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
         [self.calendar reloadData];
     }
         failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld",(long)error.code]];
             [self.calendar reloadData];
             self.netWorkErrorView.hidden = NO;
@@ -310,8 +309,7 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Logining];
     self.netWorkErrorLabel.text = Loading;
     [self requestTask];
     self.netWorkErrorView.userInteractionEnabled = NO;
@@ -456,9 +454,9 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = NO;
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 
@@ -471,8 +469,7 @@
     NSLog(@"选择查看了====%@",[dateFormatter stringFromDate:date]);
     [self RightBarClick];
     NSString * dateStr = [dateFormatter stringFromDate:date];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Logining];
     [self RequestgetWorkByDay:dateStr];
 
 }
