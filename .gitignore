@@ -71,3 +71,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 AKTWaiterCloud/model/.svn/
+
+AKTWaiterCloud/Entity/.svn/
+
+*.svn-base
