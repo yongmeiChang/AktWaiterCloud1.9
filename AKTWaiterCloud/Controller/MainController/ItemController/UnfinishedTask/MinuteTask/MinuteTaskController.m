@@ -201,7 +201,7 @@
             
             UITapGestureRecognizer *openSinImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImageIn)];
             openSinImageTapGestureRecognizer.delegate = self;
-            [sCell.photoview addGestureRecognizer:openSinImageTapGestureRecognizer];
+            [sCell.btnCheckImage addGestureRecognizer:openSinImageTapGestureRecognizer];
             return sCell;
         }
     }else if(indexPath.section==2){
@@ -224,7 +224,7 @@
             
             UITapGestureRecognizer *openSinImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImageOut)];
             openSinImageTapGestureRecognizer.delegate = self;
-            [soutCell.photoview addGestureRecognizer:openSinImageTapGestureRecognizer];
+            [soutCell.btnCheckImage addGestureRecognizer:openSinImageTapGestureRecognizer];
             
             return soutCell;
         }

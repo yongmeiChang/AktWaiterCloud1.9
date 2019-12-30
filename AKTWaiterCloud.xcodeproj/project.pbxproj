@@ -1103,13 +1103,13 @@
 			path = AFNetWorkingTool;
 			sourceTree = "<group>";
 		};
-		AD552F491F8F68E6001FFE1C /* Entity */ = {
+		AD552F491F8F68E6001FFE1C /* model */ = {
 			isa = PBXGroup;
 			children = (
 				AD552F4A1F8F68F3001FFE1C /* DataModel.h */,
 				AD552F4B1F8F68F3001FFE1C /* DataModel.m */,
 			);
-			path = Entity;
+			path = model;
 			sourceTree = "<group>";
 		};
 		AD65759B1FAAEA0900495D1E /* MinuteTask */ = {
@@ -1223,7 +1223,7 @@
 			children = (
 				AD31D5731FECDF1E00DB7C46 /* Mytableview */,
 				AD56A0D51F973933004C956C /* AKTWaiterCloud.entitlements */,
-				AD552F491F8F68E6001FFE1C /* Entity */,
+				AD552F491F8F68E6001FFE1C /* model */,
 				AD4DAAE61F8F0CA200610281 /* AFNetWorkingTool */,
 				AD4A44781F8C7DB300D6E5C0 /* ImageResource */,
 				AD4A446B1F8C6FB700D6E5C0 /* Util */,

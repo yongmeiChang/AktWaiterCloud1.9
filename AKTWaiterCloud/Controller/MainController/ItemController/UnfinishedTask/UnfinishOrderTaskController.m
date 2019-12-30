@@ -142,7 +142,7 @@
 
 #pragma mark - 请求工单列表
 -(void)requestUnFinishedTask{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Logining];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     NSLog(@"---%@",appDelegate.userinfo);
     NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
 
@@ -190,7 +190,7 @@
             
             [self.taskTableview reloadData];
             
-        }else if(pageSize == 1){
+        }else if(pageSize == 1 && [code intValue]==2){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
             [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
@@ -209,7 +209,7 @@
         [[AppDelegate sharedDelegate] hidHUD];
         self.netWorkErrorView.hidden = NO;
         self.netWorkErrorView.userInteractionEnabled = YES;
-        self.netWorkErrorLabel.text = @"暂无数据,请轻触重新加载";
+        self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
     }];
 }
 #pragma mark -

@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlanTaskController">
             <connections>
-                <outlet property="calendar" destination="upf-Fo-cgb" id="xEd-fB-OMZ"/>
                 <outlet property="taskTableview" destination="jlf-7M-rRT" id="6V8-Pi-U11"/>
-                <outlet property="topConstant" destination="AAY-Ms-rqa" id="K0q-lJ-2hb"/>
+                <outlet property="topConstant" destination="2L6-Eg-BtR" id="3w9-EK-wIA"/>
                 <outlet property="view" destination="iN0-l3-epB" id="9kD-th-rh3"/>
             </connections>
         </placeholder>
@@ -23,27 +19,19 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-7M-rRT">
-                    <rect key="frame" x="20" y="0.0" width="335" height="667"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-7M-rRT">
+                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upf-Fo-cgb" customClass="FSCalendar">
-                    <rect key="frame" x="0.0" y="64" width="375" height="267"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="jlf-7M-rRT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2L6-Eg-BtR"/>
-                <constraint firstItem="upf-Fo-cgb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="AAY-Ms-rqa"/>
+                <constraint firstItem="jlf-7M-rRT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="2L6-Eg-BtR"/>
                 <constraint firstAttribute="bottom" secondItem="jlf-7M-rRT" secondAttribute="bottom" id="AiE-JO-z0I"/>
-                <constraint firstItem="upf-Fo-cgb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.4" id="Fhj-I0-eHh"/>
-                <constraint firstAttribute="trailing" secondItem="upf-Fo-cgb" secondAttribute="trailing" id="PdN-cW-glK"/>
-                <constraint firstItem="upf-Fo-cgb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jsb-2C-wRm"/>
-                <constraint firstItem="jlf-7M-rRT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="svD-ul-0EB"/>
-                <constraint firstAttribute="trailing" secondItem="jlf-7M-rRT" secondAttribute="trailing" constant="20" id="zBd-vY-2mY"/>
+                <constraint firstItem="jlf-7M-rRT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="svD-ul-0EB"/>
+                <constraint firstAttribute="trailing" secondItem="jlf-7M-rRT" secondAttribute="trailing" id="zBd-vY-2mY"/>
             </constraints>
-            <point key="canvasLocation" x="24.5" y="75.5"/>
+            <point key="canvasLocation" x="23.199999999999999" y="75.112443778110944"/>
         </view>
     </objects>
 </document>

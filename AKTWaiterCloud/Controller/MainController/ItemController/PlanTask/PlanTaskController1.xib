@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlanTaskController">
             <connections>
-                <outlet property="calendar" destination="vD5-Yy-ZF4" id="iB0-RS-Rsp"/>
-                <outlet property="constraintTop" destination="X01-zb-MWg" id="F9Y-uC-JMy"/>
                 <outlet property="tableview" destination="cNd-Wb-wP0" id="n8b-5P-3IU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,23 +26,9 @@
                         <outlet property="delegate" destination="-1" id="Kvk-Bs-ZYs"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vD5-Yy-ZF4" customClass="FSCalendar">
-                    <rect key="frame" x="0.0" y="120" width="375" height="260"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="260" id="XPy-jp-qw8"/>
-                    </constraints>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="vlb-AR-lUz"/>
-                        <outlet property="delegate" destination="-1" id="0HD-p2-TjL"/>
-                    </connections>
-                </view>
             </subviews>
             <constraints>
-                <constraint firstItem="vD5-Yy-ZF4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="M1J-RI-CSd"/>
-                <constraint firstAttribute="trailing" secondItem="vD5-Yy-ZF4" secondAttribute="trailing" id="R5Q-OM-ACU"/>
                 <constraint firstItem="cNd-Wb-wP0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="WGL-ov-IUD"/>
-                <constraint firstItem="vD5-Yy-ZF4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="120" id="X01-zb-MWg"/>
                 <constraint firstAttribute="trailing" secondItem="cNd-Wb-wP0" secondAttribute="trailing" id="XVt-qM-2xi"/>
                 <constraint firstAttribute="bottom" secondItem="cNd-Wb-wP0" secondAttribute="bottom" id="frz-wh-xRX"/>
                 <constraint firstItem="cNd-Wb-wP0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pFU-2a-fuo"/>
