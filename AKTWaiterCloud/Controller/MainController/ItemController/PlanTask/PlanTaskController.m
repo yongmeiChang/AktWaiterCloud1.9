@@ -123,6 +123,8 @@
     SearchDateController * sdController = [[SearchDateController alloc] init];
     sdController.hidesBottomBarWhenPushed = YES;
 //    sdController.type = _bid;
+    sdController.mindate = [AktUtil getNowDate];
+    sdController.maxdate = @"50";
     [self.navigationController pushViewController:sdController animated:YES];
 }
 

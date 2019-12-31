@@ -28,7 +28,6 @@
 @property(nonatomic,strong) NSString * eTime;//给后台
 
 @property (nonatomic,strong) DownOrderView * doView;
-@property(nonatomic,strong) UIButton * submitBtn; // 提交按钮
 @property(nonatomic,strong) NSDictionary * addressDic;
 @property(nonatomic) int type;
 // 服务日期选项
@@ -49,7 +48,6 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     
     [self initTableview];
-    [self initButton];
     [self initDatePick];
 }
 
@@ -153,7 +151,7 @@
 
 #pragma mark - init
 -(void)initTableview{
-    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-123) style:UITableViewStyleGrouped];
+    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, AktNavAndStatusHight, SCREEN_WIDTH, SCREEN_HEIGHT-123) style:UITableViewStyleGrouped];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
@@ -161,23 +159,6 @@
     [self.view addSubview:self.tableview];
     self.tableview.showsVerticalScrollIndicator = NO;
     self.tableview.bounces = NO;
-}
-
--(void)initButton{
-    _submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10.5, SCREEN_HEIGHT-self.tableview.frame.size.height-74, SCREEN_WIDTH-20, 74)];
-    [_submitBtn addTarget:self action:@selector(SubmitBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-    [_submitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [_submitBtn setBackgroundColor:[UIColor whiteColor]];
-    
-    [self.view addSubview:_submitBtn];
-    [_submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableview.mas_bottom).offset(0);
-        make.left.mas_equalTo(10.5);
-        make.right.mas_equalTo(-9.5);
-        make.height.mas_equalTo(64);
-    }];
-    [_submitBtn setHidden: NO];
 }
 
 #pragma mark - nav back
@@ -228,9 +209,7 @@
         [[AppDelegate sharedDelegate] showTextOnly:@"服务日期与服务开始时间不相符"];
         return;
     }
-    
     NSLog(@"点击下单按钮");
-    [_submitBtn setEnabled:false];
     [self requestSubmit];
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
 }
@@ -248,6 +227,8 @@
     [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];
     [paremeter addUnEmptyString:appDelegate.userinfo.id forKey:@"waiterId"];
     [paremeter addUnEmptyString:appDelegate.userinfo.waiterName forKey:@"waiterName"];
+    [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
+    
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSLog(@"%@",dic[@"message"]);
@@ -266,12 +247,10 @@
         }else{
              [[AppDelegate sharedDelegate] hidHUD];;
             [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
-            [_submitBtn setEnabled:YES];
             }
     } failure:^(NSError *error) {
              [[AppDelegate sharedDelegate] hidHUD];;
             [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-            [_submitBtn setEnabled:YES];
     }];
 }
 
@@ -288,7 +267,11 @@
     return section==1?4:1;
 }
 
-/**Cell生成*/
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return indexPath.section==1?53:(indexPath.section == 2?150.0f:183.f);
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0){
         static NSString *cellidentify = @"userCell";
@@ -337,13 +320,14 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
     return 0.01f;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return indexPath.section==1?53:150.0f;
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    return nil;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    return nil;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -375,7 +359,9 @@
 -(void)remarkChangeDelegateText:(NSString *)remak{
     strRemark = remak;
 }
-
+-(void)didPostInfo{
+    [self SubmitBtnClick];
+}
 #pragma mark - click
 -(void)ClickReload{
     NSLog(@"点击了重新计算");

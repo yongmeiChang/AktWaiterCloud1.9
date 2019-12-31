@@ -13,5 +13,7 @@
 
 @property (nonatomic,assign) NSInteger typeVC; // 0筛选 1搜索 
 
+@property (nonatomic,strong) NSString *mindate; // 最小
+@property (nonatomic,strong) NSString *maxdate; // 最大
 
 @end

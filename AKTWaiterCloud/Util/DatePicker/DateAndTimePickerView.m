@@ -422,7 +422,7 @@
     }
 
     NSLog(@"%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr);
-    labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr];
+    labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -724,7 +724,7 @@
             }
             rowLabel.text = self.minuceRemainingArray[row];
             minuceStr = rowLabel.text;
-            labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr];
+            labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
             return rowLabel;
     }
 }

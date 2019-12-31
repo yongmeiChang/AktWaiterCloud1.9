@@ -110,7 +110,10 @@
     NSLog(@"搜索按钮");
     SearchDateController * sdController = [[SearchDateController alloc] init];
     sdController.hidesBottomBarWhenPushed = YES;
+    sdController.mindate = @"1996-01-01";
+    sdController.maxdate = [AktUtil getNowDate];
     sdController.type = _bid;
+    
     [self.navigationController pushViewController:sdController animated:YES];
 }
 #pragma mark - search delegate

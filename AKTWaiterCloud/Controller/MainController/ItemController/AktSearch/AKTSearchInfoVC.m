@@ -68,6 +68,8 @@
 - (IBAction)btnSelectTimeClick:(UIButton *)sender {
     SearchDateController *searchTimevc = [[SearchDateController alloc] init];
     searchTimevc.typeVC = 1;
+    searchTimevc.mindate = @"1996-01-01";
+    searchTimevc.maxdate = [AktUtil getNowDate];
     [self.navigationController pushViewController:searchTimevc animated:YES];
 }
 #pragma mark - text delegate

@@ -16,7 +16,7 @@
     self.tvRemark.delegate = self;
     
     // 绘制圆角 需设置的圆角 使用"|"来组合
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.viewBg.bounds byRoundingCorners:UIRectCornerTopLeft |
+    /*UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SCREEN_WIDTH-20, 53) byRoundingCorners:UIRectCornerTopLeft |
     UIRectCornerTopRight cornerRadii:CGSizeMake(7.5, 7.5)];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
 
@@ -27,12 +27,20 @@
     maskLayer.path = maskPath.CGPath;
     self.viewBg.layer.mask = maskLayer;
     [self.contentView addSubview:self.viewBg];
+    */
+    self.viewBg.layer.masksToBounds = YES;
+    self.viewBg.layer.cornerRadius = 7.5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+- (IBAction)btnPostInfo:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(didPostInfo)]) {
+        [_delegate didPostInfo];
+    }
 }
 
 #pragma mark - delegate

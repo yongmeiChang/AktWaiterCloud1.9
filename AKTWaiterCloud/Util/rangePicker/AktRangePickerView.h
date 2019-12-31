@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) id<AktRangePickerViewDelegate> delegate;
 
+@property (nonatomic, strong) NSString *minimumDate; // 最小时间点  1986-01-01
+
+@property (nonatomic, strong) NSString *maximumDate; // 最大时间点  50
+
 @end
 
 NS_ASSUME_NONNULL_END

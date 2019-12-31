@@ -643,9 +643,9 @@
 			isa = PBXGroup;
 			children = (
 				4C4AD8F823B34350005DEDE4 /* AktRangePickerView.h */,
-				4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */,
 				4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */,
 				4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */,
+				4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */,
 			);
 			path = rangePicker;
 			sourceTree = "<group>";

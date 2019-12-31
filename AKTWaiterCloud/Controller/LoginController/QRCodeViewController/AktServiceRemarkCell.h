@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @protocol AktServiceRemarkCellDelegate <NSObject>
 -(void)remarkChangeDelegateText:(NSString *)remak;
+-(void)didPostInfo; // 提交
 @end
 
 @interface AktServiceRemarkCell : UITableViewCell<UITextViewDelegate>

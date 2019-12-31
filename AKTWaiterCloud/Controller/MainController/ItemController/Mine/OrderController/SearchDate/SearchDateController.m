@@ -49,6 +49,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"B1");
     self.topviewLayout.constant = AktNavAndStatusHight;
+ 
     //初始化日期选择器的内容
     [self setTitle:@"筛选日期"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
@@ -62,6 +63,8 @@
     // 日期时间选择
     self.rangPickerView = [[AktRangePickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.rangPickerView.delegate = self;
+    self.rangPickerView.minimumDate = _mindate;
+    self.rangPickerView.maximumDate = _maxdate;
     self.rangPickerView.tag = 106;
 }
 
