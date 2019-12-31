@@ -138,4 +138,11 @@
     }
 }
 
++(NSDate *)StringtoDate:(NSString *)dateStr{
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
+    dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
+    NSDate * date = [dateFormatter dateFromString:dateStr];
+    return date;
+}
+
 @end

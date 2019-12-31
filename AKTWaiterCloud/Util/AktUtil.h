@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 对比版本号
 +(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode;
 
++(NSDate *)StringtoDate:(NSString *)dateStr;
 
 @end
 

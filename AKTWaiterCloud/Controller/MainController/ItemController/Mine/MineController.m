@@ -10,7 +10,6 @@
 #import "MineCell.h"
 #import "ButtonUtil.h"
 #import "SettingsController.h"
-#import "WalletController.h"
 #import "UnfinishOrderTaskController.h"
 #import "UnfinifshController.h"
 #import "EditUserInfoController.h"
@@ -115,77 +114,24 @@
 #pragma mark -  点击事件 目前除了设置按钮都不开放
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
-
     NSLog(@"点击了,%ld",(long)index);
-    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(index!=1){
-                [self switchMode:self DoWorkBlock:^{
-                    [LoginRequest RequestLoginName:appDelegate.userinfo.waiterNo PassWord:appDelegate.userinfo.password registrationId:@"" successBlock:^{
-                        if(appDelegate.netWorkType==Off_line){
-                            [self showMessageAlertWithController:self Message:@"切换在线模式成功!"];
-                            appDelegate.netWorkType = On_line;
-                        }
-                        switch (index) {
-                            case 0:{
-                                WalletController * walletController = [[WalletController alloc]init];
-                                walletController.hidesBottomBarWhenPushed = YES;
-                                [self.navigationController pushViewController:walletController animated:YES];
-                                break;
-                            }
-                            case 4:{
-                                SettingsController * settingsController = [[SettingsController alloc]init];
-                                settingsController.hidesBottomBarWhenPushed = YES;
-                                [self.navigationController pushViewController:settingsController animated:YES];
-                                break;
-                            }
-                            default:
-                                break;
-                        }
-                        
-                    } errorBlock:^{
-                        if(appDelegate.netWorkType == Off_line){
-                            [self showMessageAlertWithController:self Message:ContinueError];
-                        }else{
-                            [self showMessageAlertWithController:self Message:NetWorkMessage];
-                        }
-                        appDelegate.netWorkType = Off_line;
-                    } ohterErrorBlock:^{
-                        if(appDelegate.netWorkType == Off_line){
-                            [self showMessageAlertWithController:self Message:ContinueError];
-                        }else{
-                            [self showMessageAlertWithController:self Message:NetWorkMessage];
-                        }
-                        appDelegate.netWorkType = Off_line;
-                    }];
-                } canelBlock:^{ 
-                }];
-            }
-        }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
-        }
-    }else{
-        switch (index) {
-            case 0:{
-                NotifyController * notifyController = [[NotifyController alloc]init];
-                notifyController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:notifyController animated:YES];
-                break;
-            }
-            case 1:{
-                SettingsController * settingsController = [[SettingsController alloc]init];
-                settingsController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:settingsController animated:YES];
-            }
-                break;
-            case 4:{
-               
-                break;
-            }
-            default:
-                break;
-        }
-    }
+   switch (index) {
+       case 0:{
+           NotifyController * notifyController = [[NotifyController alloc]init];
+           notifyController.hidesBottomBarWhenPushed = YES;
+           [self.navigationController pushViewController:notifyController animated:YES];
+           break;
+       }
+       case 1:{
+           SettingsController * settingsController = [[SettingsController alloc]init];
+           settingsController.hidesBottomBarWhenPushed = YES;
+           [self.navigationController pushViewController:settingsController animated:YES];
+       }
+           break;
+           
+       default:
+           break;
+   }
 }
 #pragma mark - layout
 - (UICollectionViewFlowLayout *)flowLayout{
@@ -237,6 +183,7 @@
     }];
 
 }
+
 #pragma mark - click
 -(IBAction)unfinshBtn:(id)sender
 {
@@ -248,6 +195,7 @@
     ovcontroller.bid = btn.tag;
     [self.navigationController pushViewController:ovcontroller animated:YES];
 }
+
 -(void)backClick:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

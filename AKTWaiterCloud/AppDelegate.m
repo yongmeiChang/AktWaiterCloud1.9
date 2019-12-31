@@ -10,7 +10,6 @@
 #import "MainController.h"
 #import "LoginViewController.h"
 #import "BaseNavController.h"
-#import "GrabSingleController.h"
 
 //注意，关于 iOS10 系统版本的判断，可以用下面这个宏来判断。不能再用截取字符的方法。
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -255,7 +254,7 @@
     }
 }
 
-#pragma mark======极光代理方法 点击通知栏
+#pragma mark - 极光代理方法 点击通知栏
 //点击通知栏时的事件
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     NSLog(@"推送成功");
