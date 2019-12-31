@@ -12,6 +12,10 @@
 #import "MinuteTaskController.h"
 @interface NotifyController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak,nonatomic) IBOutlet UITableView * tabeleview;
+@property (weak, nonatomic) IBOutlet UIButton *noDateImage;
+@property (weak, nonatomic) IBOutlet UIButton *noDatelab;
+
+
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @end
 
@@ -41,21 +45,14 @@
                 return;
             }
             NSArray * arr = dic[@"object"];
-            if([arr isKindOfClass:[NSNull class]]){
-                [self showMessageAlertWithController:self title:@""
-                                             Message:@"没有查询到信息" canelBlock:^{
-                                                 [self.navigationController popViewControllerAnimated:YES];
-                                             }];
-            }else if(arr && arr.count>0){
+          if(arr && arr.count>0){
+              [self.tabeleview setHidden:NO];
                 for(NSDictionary * dic in arr){
                     [self.dataArray addObject:dic];
                 }
                 [self.tabeleview reloadData];
             }else{
-                [self showMessageAlertWithController:self title:@""
-                                             Message:@"没有查询到信息" canelBlock:^{
-                                                 [self.navigationController popViewControllerAnimated:YES];
-                                             }];
+                [self.tabeleview setHidden:YES];
             }
         }else{
             [self showMessageAlertWithController:self title:@""
@@ -133,5 +130,10 @@
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (IBAction)btnNullCKEL123:(UIButton *)sender {
+    [self getPushRecordService];
+}
+
 
 @end

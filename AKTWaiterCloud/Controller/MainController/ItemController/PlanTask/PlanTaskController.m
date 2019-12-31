@@ -127,8 +127,8 @@
 }
 
 -(void)requestUnFinishedTask{
-    //记录上拉加载的分页
-    NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize]};
+
+    NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime};
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
@@ -140,47 +140,40 @@
             if (pageSize == 1) {
                 [self.dataArray removeAllObjects];
             }
-            if(arr&&arr.count>0){
-                self.taskTableview.hidden = NO;
-                self.netWorkErrorView.hidden = YES;
+            self.taskTableview.hidden = NO;
+            self.netWorkErrorView.hidden = YES;
 
-                for (NSMutableDictionary * dicc in arr) {
-                    NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
-                    NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                    NSString * createBy = [createBydic objectForKey:@"id"];
-                    NSString * updateBy = [updateBydic objectForKey:@"id"];
-                    [dicc removeObjectForKey:@"createBy"];
-                    [dicc removeObjectForKey:@"updateBy"];
-                    [dicc setObject:createBy forKeyedSubscript:@"createBy"];
-                    [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
-                    NSDictionary * objdic = (NSDictionary*)dicc;
-                    self.orderfmdb = [[OrderTaskFmdb alloc]init];
-                    OrderInfo * orderinfo;
-                    orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
-                    if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
-                        orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-                        [_dataArray addObject:orderinfo];
-                        orderinfo.tid = orderinfo.id;
-                        [self.orderfmdb saveOrderTask:orderinfo];
-                    }else{
-                        orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-                       [_dataArray addObject:orderinfo];
-                        orderinfo.tid = orderinfo.id;
-                        [self.orderfmdb updateObject:orderinfo];
-                    }
-                }
-              
-                [self.taskTableview reloadData];
-            }else{
-                [self showMessageAlertWithController:self Message:@"暂无数据"];
-                self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-                self.netWorkErrorView.hidden = NO;
-                self.netWorkErrorView.userInteractionEnabled = YES;
-            }
+              for (NSMutableDictionary * dicc in arr) {
+                  NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
+                  NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
+                  NSString * createBy = [createBydic objectForKey:@"id"];
+                  NSString * updateBy = [updateBydic objectForKey:@"id"];
+                  [dicc removeObjectForKey:@"createBy"];
+                  [dicc removeObjectForKey:@"updateBy"];
+                  [dicc setObject:createBy forKeyedSubscript:@"createBy"];
+                  [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
+                  NSDictionary * objdic = (NSDictionary*)dicc;
+                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
+                  OrderInfo * orderinfo;
+                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+                  if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
+                      orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                      [_dataArray addObject:orderinfo];
+                      orderinfo.tid = orderinfo.id;
+                      [self.orderfmdb saveOrderTask:orderinfo];
+                  }else{
+                      orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                     [_dataArray addObject:orderinfo];
+                      orderinfo.tid = orderinfo.id;
+                      [self.orderfmdb updateObject:orderinfo];
+                  }
+              }
+            
+              [self.taskTableview reloadData];
             
         }else  if(pageSize == 1 && [code integerValue] == 2){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-            [self showMessageAlertWithController:self Message:@"暂无数据"];
+//            [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
@@ -192,13 +185,12 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [[AppDelegate sharedDelegate] hidHUD];
         self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-        
-    }failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
+    }failure:^(NSError *error) {
         self.netWorkErrorView.userInteractionEnabled = YES;
         self.netWorkErrorView.hidden = NO;
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 
