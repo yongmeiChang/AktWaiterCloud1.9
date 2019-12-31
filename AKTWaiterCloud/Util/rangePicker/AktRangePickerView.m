@@ -179,7 +179,11 @@
 
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar
 {
-    return [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:[_maximumDate integerValue] toDate:[NSDate date] options:0];
+    if (_maximumDate.length>4) {
+        return [self.dateFormatter dateFromString:_maximumDate];
+    }else{
+      return [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:[_maximumDate integerValue] toDate:[NSDate date] options:0];
+    }
 }
 
 - (NSString *)calendar:(FSCalendar *)calendar titleForDate:(NSDate *)date
