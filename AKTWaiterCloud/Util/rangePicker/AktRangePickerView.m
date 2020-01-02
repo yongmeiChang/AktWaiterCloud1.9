@@ -90,7 +90,6 @@
     self.calendar = calendar;
     self.calendar.appearance.separators = FSCalendarSeparatorInterRows; // 横线
     calendar.appearance.headerMinimumDissolvedAlpha = 0;
-//    calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
     calendar.appearance.titleDefaultColor = [UIColor blackColor]; // 日历 文字颜色
     calendar.appearance.headerTitleColor = [UIColor blackColor]; // 标题颜色
     calendar.appearance.headerDateFormat = @"yyyy年MM月";
@@ -101,6 +100,7 @@
     calendar.swipeToChooseGesture.enabled = YES;
     calendar.today = nil; // Hide the today circle
     [calendar registerClass:[RangePickerCell class] forCellReuseIdentifier:@"cell"];
+    [calendar appearance].subtitleOffset = CGPointMake(0, 10);  // 日期的副标题
     [calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.top.mas_equalTo(viewTitleClose.mas_bottom);
@@ -194,6 +194,21 @@
     return nil;
 }
 
+- (NSString *)calendar:(FSCalendar *)calendar subtitleForDate:(NSDate *)date{
+    //先判断 如果去程和返程时同一天
+    if ([strFisrt isEqualToString:strLast] && [strFisrt isEqualToString:[self.dateFormatter stringFromDate:date]]) {
+        return @"开始/结束";
+    }
+   else if (self.date1 && [strFisrt isEqualToString:[self.dateFormatter stringFromDate:date]]) {
+        return @"开始";
+    }
+   else if (self.date2 && [strLast isEqualToString:[self.dateFormatter stringFromDate:date]]){
+        return @"结束";
+   }else{
+       return nil;
+   }
+}
+
 - (FSCalendarCell *)calendar:(FSCalendar *)calendar cellForDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
 {
     RangePickerCell *cell = [calendar dequeueReusableCellWithIdentifier:@"cell" forDate:date atMonthPosition:monthPosition];
@@ -250,9 +265,10 @@
         strLast = [NSString stringWithFormat:@"%@",[self.dateFormatter stringFromDate:self.date2]];
     }else{
         strFisrt = [NSString stringWithFormat:@"%@",[self.dateFormatter stringFromDate:self.date1]];
+        strLast = @"";
     }
+    [calendar reloadData];
     NSLog(@"did select date %@    %@",strFisrt,strLast);
-
 }
 
 - (void)calendar:(FSCalendar *)calendar didDeselectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition

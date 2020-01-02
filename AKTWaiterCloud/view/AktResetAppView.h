@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @interface AktResetAppView : UIView
 @property(weak,nonatomic)id <AktResetAppDelegate> delegate;
-
+@property(nonatomic,strong) NSString *strContent; // 更新内容
 @end
 
 NS_ASSUME_NONNULL_END
