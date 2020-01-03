@@ -37,8 +37,6 @@ typedef NS_ENUM (NSInteger,LoginType)
 @property (nonatomic,strong) dispatch_semaphore_t sema;
 @property(strong,nonatomic) RangeUtil* Rutil;
 @property(strong, nonatomic) NSMutableArray * minuteArray;//工单详情数据（需要仔细想想是否有必要存在）
-@property(nonatomic,assign) BOOL unfinishOrderRf;//yes刷新 no不刷新
-@property(nonatomic,assign) BOOL planTaskOrderRf;//yes刷新 no不刷新
 @property(strong, nonatomic) UITabBarController * mainController;
 
 + (AppDelegate *)sharedDelegate; // 单例

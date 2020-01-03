@@ -30,9 +30,13 @@
     self.dataArray = [[NSMutableArray alloc] init];
     [self setNavTitle:@"通知"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-    [self getPushRecordService];
+  
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+      [self getPushRecordService];
+}
+#pragma mark - request
 -(void)getPushRecordService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
     NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
@@ -55,10 +59,7 @@
                 [self.tabeleview setHidden:YES];
             }
         }else{
-            [self showMessageAlertWithController:self title:@""
-                                         Message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]] canelBlock:^{
-                                             [self.navigationController popViewControllerAnimated:YES];
-                                         }];
+            [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
         }
         [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {

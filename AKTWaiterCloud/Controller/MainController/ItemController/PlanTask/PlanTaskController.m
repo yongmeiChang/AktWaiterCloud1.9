@@ -52,24 +52,9 @@
     DDLogInfo(@"点击了待办任务item");
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.tabBarController.tabBar.hidden = NO;
-    
-    if(appDelegate.isclean){
-        [self viewDidLoad];
-        appDelegate.isclean = false;
-    }
-    if(appDelegate.planTaskOrderRf){
-        appDelegate.planTaskOrderRf = YES;
-        [self.taskTableview.mj_header beginRefreshing];
-    }
 }
 
 #pragma mark -
-- (void)showAllBtnClicked:(id)sender
-{
-    [self RightBarClick];
-    [self.taskTableview reloadData];
-}
-
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
@@ -114,7 +99,6 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }else{
-        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
         [self requestUnFinishedTask];
     }
 }
@@ -129,22 +113,21 @@
 }
 
 -(void)requestUnFinishedTask{
-
+     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime};
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
-        NSString * message = [dic objectForKey:@"message"];
+//        NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
+        if (pageSize == 1) {
+            [self.dataArray removeAllObjects];
+            }
         if([code intValue]==1){
             NSArray * arr = [NSArray array];
             NSDictionary * obj = [dic objectForKey:@"object"];
             arr = obj[@"result"];
-            if (pageSize == 1) {
-                [self.dataArray removeAllObjects];
-            }
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
-
               for (NSMutableDictionary * dicc in arr) {
                   NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                   NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
@@ -170,24 +153,13 @@
                       [self.orderfmdb updateObject:orderinfo];
                   }
               }
-            
               [self.taskTableview reloadData];
-            
         }else  if(pageSize == 1 && [code integerValue] == 2){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-//            [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }
-        if(appDelegate.netWorkType == Off_line){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-                }];
-                appDelegate.netWorkType = On_line;
-            });
-        }
-        self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
         [[AppDelegate sharedDelegate] hidHUD];
     }failure:^(NSError *error) {
         self.netWorkErrorView.userInteractionEnabled = YES;
@@ -199,23 +171,6 @@
 #pragma mark - 点击了刷新按钮
 -(void)labelClick{
     DDLogInfo(@"点击了刷新按钮");
-    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self title:@"提示" Message:ContinueError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }else{
-                [self showMessageAlertWithController:self title:@"提示" Message:LoadingError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }
-            appDelegate.netWorkType = Off_line;
-            return;
-        }else{
-            [self showMessageAlertWithController:self Message:@"网络状态不佳,请稍后再试!"];
-        }
-    }
     self.netWorkErrorView.userInteractionEnabled = false;
     [self.taskTableview.mj_header beginRefreshing];
 }
@@ -230,11 +185,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(SCREEN_WIDTH<375){
-        return 190.0f;
-        }else{
-            return 220.0f;
-        }
+    return 200.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -242,13 +193,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if(section==0){
-        return 0;
-    }
-    return 20.0f;
+    return 0.01f;
 }
 
-/**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentify = @"PlanTaskCell";
     PlanTaskCell *cell = (PlanTaskCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];

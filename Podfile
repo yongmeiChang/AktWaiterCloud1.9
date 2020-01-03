@@ -6,7 +6,7 @@ target 'AKTWaiterCloud' do
     pod 'AMap3DMap' #3D地图sdk
     pod 'AMapLocation' #定位SDK
     pod 'AMapSearch' #地图sdk搜索功能
-    
+    pod 'Bugly'
     pod 'SDCycleScrollView', '~> 1.73'
     pod 'SVProgressHUD', '~> 1.1.3'
     pod 'Masonry', '~> 1.1.0' #手动约束
