@@ -27,7 +27,7 @@
     self.tabeleview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tabeleview.delegate = self;
     self.tabeleview.dataSource = self;
-    self.dataArray = [NSMutableArray array];
+    self.dataArray = [[NSMutableArray alloc] init];
     [self setNavTitle:@"通知"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     [self getPushRecordService];
