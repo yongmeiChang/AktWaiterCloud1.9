@@ -10,11 +10,9 @@
 #import "NotifyCell.h"
 #import "Vaildate.h"
 #import "MinuteTaskController.h"
+
 @interface NotifyController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak,nonatomic) IBOutlet UITableView * tabeleview;
-@property (weak, nonatomic) IBOutlet UIButton *noDateImage;
-@property (weak, nonatomic) IBOutlet UIButton *noDatelab;
-
 
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @end
@@ -30,15 +28,20 @@
     self.dataArray = [[NSMutableArray alloc] init];
     [self setNavTitle:@"通知"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    [self.view bringSubviewToFront:self.netWorkErrorView];
+    self.tabeleview.hidden = YES;
+    self.netWorkErrorView.hidden = YES;
   
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
       [self getPushRecordService];
 }
+
 #pragma mark - request
 -(void)getPushRecordService{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AFNetWorkingRequest sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -50,12 +53,16 @@
             }
             NSArray * arr = dic[@"object"];
           if(arr && arr.count>0){
-              [self.tabeleview setHidden:NO];
-                for(NSDictionary * dic in arr){
+              self.tabeleview.hidden = NO;
+              self.netWorkErrorView.hidden = YES;
+              for(NSDictionary * dic in arr){
                     [self.dataArray addObject:dic];
                 }
                 [self.tabeleview reloadData];
             }else{
+                self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
+                self.netWorkErrorView.hidden = NO;
+                self.netWorkErrorView.userInteractionEnabled = YES;
                 [self.tabeleview setHidden:YES];
             }
         }else{
@@ -64,10 +71,9 @@
         [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
-        [self showMessageAlertWithController:self title:@""
-                                     Message:error.domain canelBlock:^{
-                                         [self.navigationController popViewControllerAnimated:YES];
-                                     }];
+        [self showMessageAlertWithController:self Message:error.domain];
+        self.netWorkErrorView.userInteractionEnabled = YES;
+        self.netWorkErrorView.hidden = NO;
     }];
 }
 
@@ -122,8 +128,6 @@
         } failure:^(NSError *error) {
             [[AppDelegate sharedDelegate] hidHUD];
         }];
-    }else{
-        return;
     }
 }
 
@@ -132,9 +136,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)btnNullCKEL123:(UIButton *)sender {
+-(void)labelClick{
+    DDLogInfo(@"点击了刷新按钮");
+    self.netWorkErrorView.userInteractionEnabled = false;
     [self getPushRecordService];
 }
-
 
 @end

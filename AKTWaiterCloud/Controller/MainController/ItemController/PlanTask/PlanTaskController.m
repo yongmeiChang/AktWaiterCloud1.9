@@ -80,24 +80,7 @@
 #pragma mark - checkNetWork
 -(void)checkNetWork{
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self Message:ContinueError];
-            }else{
-                [self showMessageAlertWithController:self Message:LoadingError];
-            }
-            appDelegate.netWorkType = Off_line;
-            self.orderfmdb = [[OrderTaskFmdb alloc] init];
-            _dataArray = [self.orderfmdb findAllOrderInfo];
-            if(_dataArray.count==0){
-                self.netWorkErrorView.hidden = NO;
-            }else{
-                self.netWorkErrorView.hidden = YES;
-                [self.taskTableview reloadData];
-            }
-        }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
-        }
+        [self showMessageAlertWithController:self Message:NetWorkMessage];
     }else{
         [self requestUnFinishedTask];
     }
@@ -106,18 +89,16 @@
 -(void)RightBarClick{
     SearchDateController * sdController = [[SearchDateController alloc] init];
     sdController.hidesBottomBarWhenPushed = YES;
-//    sdController.type = _bid;
     sdController.mindate = [AktUtil getNowDate];
     sdController.maxdate = @"50";
     [self.navigationController pushViewController:sdController animated:YES];
 }
 
 -(void)requestUnFinishedTask{
-     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
+     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * parameters =@{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime};
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
-//        NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
         if (pageSize == 1) {
             [self.dataArray removeAllObjects];

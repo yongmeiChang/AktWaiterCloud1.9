@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WorkBaseViewController.h"
 
-@interface NotifyController : BaseControllerViewController
+@interface NotifyController : WorkBaseViewController
 
 @end
