@@ -11,7 +11,6 @@
 #import "PlanTaskCell.h"
 #import "SignInCell.h"
 #import "SignoutController.h"
-#import "DateUtil.h"
 #import "EditOrderController.h"
 #import "VisitCell.h"
 #import "NoDateCell.h"
@@ -75,8 +74,8 @@
 
 #pragma mark - showUserMoney
 -(void)showUserMoney{ //显示用户余额
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"请求中..."];
+ 
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
     NSDictionary * param = @{@"customerId":_orderinfo.customerId,@"customerName":_orderinfo.customerName,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AFNetWorkingRequest sharedTool] requestWithGetCustomerBalanceParameters:param type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -92,9 +91,9 @@
             message = [dic objectForKey:@"message"];
             [self showMessageAlertWithController:self Message:message];
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 
@@ -201,7 +200,7 @@
             
             UITapGestureRecognizer *openSinImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImageIn)];
             openSinImageTapGestureRecognizer.delegate = self;
-            [sCell.photoview addGestureRecognizer:openSinImageTapGestureRecognizer];
+            [sCell.btnCheckImage addGestureRecognizer:openSinImageTapGestureRecognizer];
             return sCell;
         }
     }else if(indexPath.section==2){
@@ -224,7 +223,7 @@
             
             UITapGestureRecognizer *openSinImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImageOut)];
             openSinImageTapGestureRecognizer.delegate = self;
-            [soutCell.photoview addGestureRecognizer:openSinImageTapGestureRecognizer];
+            [soutCell.btnCheckImage addGestureRecognizer:openSinImageTapGestureRecognizer];
             
             return soutCell;
         }
@@ -265,8 +264,7 @@
 
 #pragma mark - showImageIn
 -(void)showImageIn{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"加载中..."];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
     NSDictionary * param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"signType":@"101"};
     [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -321,9 +319,9 @@
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 
@@ -336,8 +334,7 @@
 }
 
 -(void)showImageOut{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"加载中..."];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
     NSDictionary * param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"signType":@"102"};
     [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -391,9 +388,9 @@
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
         
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 #pragma mark - call phone

@@ -8,6 +8,12 @@
 
 #import "AktResetAppView.h"
 
+@interface AktResetAppView ()
+{
+    UILabel *labSubName;
+}
+@end
+
 @implementation AktResetAppView
 
 /*
@@ -19,14 +25,14 @@
 */
 -(id)initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
-        [self setInitView];
+        
         return self;
     }else{
         return nil;
     }
 }
 
--(void)setInitView{
+-(void)setInitView:(NSString *)updateInfo{
     
     UIView *alView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     alView.backgroundColor = kColor(@"C4");
@@ -53,8 +59,8 @@
         make.height.mas_equalTo(17);
     }];
     
-    UILabel *labSubName = [[UILabel alloc] init];
-    labSubName.text = @"1.界面全新升级，更好的视觉优化\n2.内容更加完善，新增ui设计\n3.修复若干bug";
+    labSubName = [[UILabel alloc] init];
+    labSubName.text = updateInfo;
     labSubName.font = [UIFont systemFontOfSize:12];
     labSubName.textColor = kColor(@"C7");
     labSubName.textAlignment = NSTextAlignmentLeft;
@@ -125,6 +131,11 @@
         make.centerX.mas_equalTo(self);
     }];
     
+}
+#pragma mark -
+-(void)setStrContent:(NSString *)strContent{
+    NSLog(@"-%@",strContent);
+    [self setInitView:strContent];
 }
 
 #pragma mark - btn click

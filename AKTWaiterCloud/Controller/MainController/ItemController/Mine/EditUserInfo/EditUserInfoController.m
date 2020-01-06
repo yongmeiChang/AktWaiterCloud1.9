@@ -107,11 +107,23 @@
 -(void)saveClick{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
-    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"images":_headBaseStr};
-    [[AFNetWorkingRequest sharedTool] requestupdateWaiterInfo:params type:HttpRequestTypePost success:^(id responseObject) {
+ 
+    NSDictionary * params = @{@"id":kString(appDelegate.userinfo.uuid),@"sex":appDelegate.userinfo.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString(appDelegate.userinfo.tenantsId)};
+     
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"waiterEdit" parameters:params type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
         self.minecontroller.headimage = self.himage;
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];
-        [self.tableUser reloadData];
+        if ([code integerValue] == 1) {
+            appDelegate.userinfo.icon = kString([dic objectForKey:@"icon"]);
+            appDelegate.userinfo.sex = [dic objectForKey:@"sex"];
+            UserFmdb * userdb = [[UserFmdb alloc] init];
+            [userdb updateObject:appDelegate.userinfo];
+            [self.tableUser reloadData];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
     } failure:^(NSError *error) {
      [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];

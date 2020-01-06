@@ -20,5 +20,13 @@
 
     // Configure the view for the selected state
 }
+-(void)setNoticeListInfo:(NSArray *)noticeAry Indexpath:(NSIndexPath *)index{
+    
+    NSDictionary * dic = noticeAry[index.section];
+    if (noticeAry.count>0) {
+        self.dateLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"createDate"]];
+        self.contentLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]];
+    }
+}
 
 @end

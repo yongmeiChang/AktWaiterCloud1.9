@@ -8,6 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		4C39E58623A090E900D34F16 /* AktSexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C39E58523A090E900D34F16 /* AktSexView.m */; };
+		4C4AD7AC23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
+		4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
+		4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
+		4C4AD7AF23B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
+		4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
+		4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */; };
+		4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */; };
+		4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */; };
+		4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
+		4C4AD90923B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
+		4C4AD90A23B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
 		4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */; };
 		4C59615823A8A35300969CB5 /* AktServiceRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */; };
 		4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615A23A8D60700969CB5 /* AktDateView.m */; };
@@ -32,6 +50,7 @@
 		4C89D67523A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C89D66F23A78CDE0024456F /* AktAddOrderUserInfoCell.xib */; };
 		4CA9C2D4239F4A0D0029FEF5 /* AktTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA9C2D2239F4A0D0029FEF5 /* AktTitleCell.m */; };
 		4CA9C2D5239F4A0D0029FEF5 /* AktTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA9C2D3239F4A0D0029FEF5 /* AktTitleCell.xib */; };
+		4CAED3F923B9FBEC00BAF2E3 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */; };
 		4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */; };
 		4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
 		4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
@@ -95,11 +114,8 @@
 		4CF261E3233376D3001AB19F /* AktSearchFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF261E2233376D3001AB19F /* AktSearchFmdb.m */; };
 		4CF261EF2334AD23001AB19F /* AktDateSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF261ED2334AD23001AB19F /* AktDateSearchVC.m */; };
 		4CF261F02334AD23001AB19F /* AktDateSearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF261EE2334AD23001AB19F /* AktDateSearchVC.xib */; };
-		AD029C2C1F959B1700C1C1A1 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = AD029C2B1F959B1700C1C1A1 /* bg.png */; };
 		AD0379C61F906D6B001973A2 /* NotifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0379C41F906D6B001973A2 /* NotifyController.m */; };
 		AD0379C71F906D6B001973A2 /* NotifyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD0379C51F906D6B001973A2 /* NotifyController.xib */; };
-		AD0379D01F906D8A001973A2 /* WalletController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0379CE1F906D8A001973A2 /* WalletController.m */; };
-		AD0379D11F906D8A001973A2 /* WalletController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD0379CF1F906D8A001973A2 /* WalletController.xib */; };
 		AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0861D41FD014C80003F692 /* MyGaodeMap.m */; };
 		AD0A8C2B1FA1AD410082F337 /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0A8C2A1FA1AD410082F337 /* LoginRequest.m */; };
 		AD0BC44B1FA6F2D30083661C /* OrderTaskFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */; };
@@ -145,33 +161,24 @@
 		AD4DAACC1F8F093800610281 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAA9F1F8F093800610281 /* SettingsTableViewCell.xib */; };
 		AD4DAACD1F8F093800610281 /* AboutUsController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAA11F8F093800610281 /* AboutUsController.m */; };
 		AD4DAACE1F8F093800610281 /* AboutUsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAA31F8F093800610281 /* AboutUsController.xib */; };
-		AD4DAACF1F8F093800610281 /* CleanChaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAA51F8F093800610281 /* CleanChaceController.xib */; };
-		AD4DAAD01F8F093800610281 /* CleanChaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAA71F8F093800610281 /* CleanChaceController.m */; };
 		AD4DAAD11F8F093800610281 /* EditPassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAA91F8F093800610281 /* EditPassWordController.m */; };
 		AD4DAAD21F8F093800610281 /* EditPassWordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAAA1F8F093800610281 /* EditPassWordController.xib */; };
 		AD4DAAD31F8F093800610281 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAAC1F8F093800610281 /* SettingsController.m */; };
-		AD4DAAD41F8F093800610281 /* VideoTutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAAE1F8F093800610281 /* VideoTutorialViewController.xib */; };
-		AD4DAAD51F8F093800610281 /* VideoTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAB01F8F093800610281 /* VideoTutorialViewController.m */; };
 		AD4DAAD61F8F093800610281 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAB21F8F093800610281 /* SettingsController.xib */; };
 		AD4DAAD91F8F093800610281 /* MineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAB71F8F093800610281 /* MineCell.m */; };
 		AD4DAADA1F8F093800610281 /* MineController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAB81F8F093800610281 /* MineController.m */; };
 		AD4DAADB1F8F093800610281 /* MineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAAB91F8F093800610281 /* MineCell.xib */; };
-		AD4DAADC1F8F093800610281 /* GrabSingleController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAABD1F8F093800610281 /* GrabSingleController.m */; };
-		AD4DAADD1F8F093800610281 /* GrabSingleController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4DAABE1F8F093800610281 /* GrabSingleController.xib */; };
 		AD4DAAE91F8F0CA200610281 /* AFNetWorkingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAE81F8F0CA200610281 /* AFNetWorkingTool.m */; };
 		AD4DAAEC1F8F546700610281 /* ReachbilityTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4DAAEB1F8F546700610281 /* ReachbilityTool.m */; };
 		AD552F441F8F6456001FFE1C /* NSDictionary+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AD552F411F8F6449001FFE1C /* NSDictionary+Extension.m */; };
 		AD552F451F8F6456001FFE1C /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AD552F401F8F6449001FFE1C /* NSArray+Extension.m */; };
 		AD552F481F8F651E001FFE1C /* DicToString.m in Sources */ = {isa = PBXBuildFile; fileRef = AD552F471F8F651E001FFE1C /* DicToString.m */; };
-		AD552F4C1F8F68F3001FFE1C /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD552F4B1F8F68F3001FFE1C /* DataModel.m */; };
 		AD5760752062482A00991FFA /* CalendarSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5760732062482A00991FFA /* CalendarSearchController.m */; };
 		AD5760762062482A00991FFA /* CalendarSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD5760742062482A00991FFA /* CalendarSearchController.xib */; };
 		AD576079206B3E0200991FFA /* RangeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AD576078206B3E0200991FFA /* RangeUtil.m */; };
 		AD5F48881FA0371300A0C201 /* UserFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5F48871FA0371300A0C201 /* UserFmdb.m */; };
 		AD5F488B1FA06BEB00A0C201 /* SaveDocumentArray.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5F48891FA06BEA00A0C201 /* SaveDocumentArray.m */; };
 		AD5F488E1FA0868200A0C201 /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5F488D1FA0868200A0C201 /* QRCodeViewController.m */; };
-		AD5F48921FA09CE700A0C201 /* WallectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5F48901FA09CE700A0C201 /* WallectCell.m */; };
-		AD5F48931FA09CE700A0C201 /* WallectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD5F48911FA09CE700A0C201 /* WallectCell.xib */; };
 		AD63865E1FD0EB4F00265AAB /* NSMutableDictionary+Utuks.m in Sources */ = {isa = PBXBuildFile; fileRef = AD63865C1FD0EB4F00265AAB /* NSMutableDictionary+Utuks.m */; };
 		AD6410742086DF3D003916D9 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD6410732086DF3D003916D9 /* AddressView.m */; };
 		AD6575A11FAAEA5600495D1E /* SignoutController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD65759F1FAAEA5600495D1E /* SignoutController.xib */; };
@@ -184,8 +191,6 @@
 		ADA5FFEC1FD67C1600F291C5 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ADA5FFEB1FD67C1600F291C5 /* PhotoCell.m */; };
 		ADADBB3F1FDFE96600B54117 /* FileManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ADADBB3E1FDFE96600B54117 /* FileManagerUtil.m */; };
 		ADB0D8211F904981002F6B87 /* PlanTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB0D81F1F904981002F6B87 /* PlanTaskController.m */; };
-		ADB0D8221F904981002F6B87 /* PlanTaskController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB0D8201F904981002F6B87 /* PlanTaskController1.xib */; };
-		ADB5FE6B1F9605DC0017040D /* 1-750px.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB5FE6A1F9605DC0017040D /* 1-750px.png */; };
 		ADBB6A161F9841BC00DDC01C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A151F9841BC00DDC01C /* CFNetwork.framework */; };
 		ADBB6A181F9841C300DDC01C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A171F9841C300DDC01C /* CoreFoundation.framework */; };
 		ADBB6A1A1F9841CD00DDC01C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A191F9841CD00DDC01C /* CoreTelephony.framework */; };
@@ -199,7 +204,6 @@
 		ADBE01631FE7C53B00B30488 /* EditUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBE01611FE7C53B00B30488 /* EditUserInfoController.m */; };
 		ADBE01641FE7C53B00B30488 /* EditUserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADBE01621FE7C53B00B30488 /* EditUserInfoController.xib */; };
 		ADC892C21FE111E50049B3B5 /* DownOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ADC892C11FE111E50049B3B5 /* DownOrderView.m */; };
-		ADC892C51FE147380049B3B5 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ADC892C41FE147380049B3B5 /* DateUtil.m */; };
 		ADD09B541F998A1E00CFEC52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD09B531F998A1D00CFEC52 /* Images.xcassets */; };
 		ADD2E16F1F99E77D004DFE76 /* ButtonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD2E16D1F99E77D004DFE76 /* ButtonUtil.m */; };
 		ADD562BD1FDFB5D400898AC3 /* HandCodeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADD562BA1FDFB5D400898AC3 /* HandCodeController.xib */; };
@@ -251,6 +255,17 @@
 		295155AC8DB18CEFF65CCC5D /* Pods-AKTWaiterCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.debug.xcconfig"; sourceTree = "<group>"; };
 		4C39E58423A090E900D34F16 /* AktSexView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktSexView.h; sourceTree = "<group>"; };
 		4C39E58523A090E900D34F16 /* AktSexView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktSexView.m; sourceTree = "<group>"; };
+		4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimePickerView.m; sourceTree = "<group>"; };
+		4C4AD7A923B08962005DEDE4 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
+		4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
+		4C4AD7AB23B08962005DEDE4 /* DateAndTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateAndTimePickerView.h; sourceTree = "<group>"; };
+		4C4AD8F823B34350005DEDE4 /* AktRangePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AktRangePickerView.h; sourceTree = "<group>"; };
+		4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangePickerCell.m; sourceTree = "<group>"; };
+		4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktRangePickerView.m; sourceTree = "<group>"; };
+		4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangePickerCell.h; sourceTree = "<group>"; };
+		4C4AD90223B366D8005DEDE4 /* AktWSigninListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktWSigninListVC.h; sourceTree = "<group>"; };
+		4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktWSigninListVC.m; sourceTree = "<group>"; };
+		4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktWSigninListVC.xib; sourceTree = "<group>"; };
 		4C59615423A8A35300969CB5 /* AktServiceRemarkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServiceRemarkCell.h; sourceTree = "<group>"; };
 		4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServiceRemarkCell.m; sourceTree = "<group>"; };
 		4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServiceRemarkCell.xib; sourceTree = "<group>"; };
@@ -269,6 +284,8 @@
 		4CA9C2D1239F4A0D0029FEF5 /* AktTitleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktTitleCell.h; sourceTree = "<group>"; };
 		4CA9C2D2239F4A0D0029FEF5 /* AktTitleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktTitleCell.m; sourceTree = "<group>"; };
 		4CA9C2D3239F4A0D0029FEF5 /* AktTitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktTitleCell.xib; sourceTree = "<group>"; };
+		4CAED3F723B9FBEC00BAF2E3 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AKTColorString.strings; sourceTree = "<group>"; };
 		4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAddImagesView.m; sourceTree = "<group>"; };
 		4CD674C422E94CDF00AB76AF /* UIView+KIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KIAdditions.h"; sourceTree = "<group>"; };
@@ -318,13 +335,9 @@
 		4CF261EE2334AD23001AB19F /* AktDateSearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktDateSearchVC.xib; sourceTree = "<group>"; };
 		85608984DD85E9CE41839972 /* Pods-AKTWaiterCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.release.xcconfig"; sourceTree = "<group>"; };
 		920492DD240A35FAC7AD3743 /* libPods-AKTWaiterCloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AKTWaiterCloud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD029C2B1F959B1700C1C1A1 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		AD0379C31F906D6B001973A2 /* NotifyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotifyController.h; sourceTree = "<group>"; };
 		AD0379C41F906D6B001973A2 /* NotifyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotifyController.m; sourceTree = "<group>"; };
 		AD0379C51F906D6B001973A2 /* NotifyController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotifyController.xib; sourceTree = "<group>"; };
-		AD0379CD1F906D8A001973A2 /* WalletController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletController.h; sourceTree = "<group>"; };
-		AD0379CE1F906D8A001973A2 /* WalletController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalletController.m; sourceTree = "<group>"; };
-		AD0379CF1F906D8A001973A2 /* WalletController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletController.xib; sourceTree = "<group>"; };
 		AD0861D31FD014C80003F692 /* MyGaodeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyGaodeMap.h; sourceTree = "<group>"; };
 		AD0861D41FD014C80003F692 /* MyGaodeMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyGaodeMap.m; sourceTree = "<group>"; };
 		AD0A8C291FA1AD410082F337 /* LoginRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
@@ -383,7 +396,6 @@
 		AD475FF31F8B6578003DC2F0 /* FindPswController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindPswController.h; sourceTree = "<group>"; };
 		AD475FF41F8B6578003DC2F0 /* FindPswController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindPswController.m; sourceTree = "<group>"; };
 		AD475FF51F8B6578003DC2F0 /* FindPswController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindPswController.xib; sourceTree = "<group>"; };
-		AD4A44811F8C956D00D6E5C0 /* icon_checked_fail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_checked_fail.png; sourceTree = "<group>"; };
 		AD4A448B1F8CA64D00D6E5C0 /* BaseNavController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNavController.h; sourceTree = "<group>"; };
 		AD4A448C1F8CA64D00D6E5C0 /* BaseNavController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNavController.m; sourceTree = "<group>"; };
 		AD4DAA8C1F8F093800610281 /* MainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainController.xib; sourceTree = "<group>"; };
@@ -398,16 +410,10 @@
 		AD4DAAA11F8F093800610281 /* AboutUsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsController.m; sourceTree = "<group>"; };
 		AD4DAAA21F8F093800610281 /* AboutUsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsController.h; sourceTree = "<group>"; };
 		AD4DAAA31F8F093800610281 /* AboutUsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsController.xib; sourceTree = "<group>"; };
-		AD4DAAA51F8F093800610281 /* CleanChaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CleanChaceController.xib; sourceTree = "<group>"; };
-		AD4DAAA61F8F093800610281 /* CleanChaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CleanChaceController.h; sourceTree = "<group>"; };
-		AD4DAAA71F8F093800610281 /* CleanChaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CleanChaceController.m; sourceTree = "<group>"; };
 		AD4DAAA91F8F093800610281 /* EditPassWordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPassWordController.m; sourceTree = "<group>"; };
 		AD4DAAAA1F8F093800610281 /* EditPassWordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPassWordController.xib; sourceTree = "<group>"; };
 		AD4DAAAB1F8F093800610281 /* EditPassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPassWordController.h; sourceTree = "<group>"; };
 		AD4DAAAC1F8F093800610281 /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
-		AD4DAAAE1F8F093800610281 /* VideoTutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoTutorialViewController.xib; sourceTree = "<group>"; };
-		AD4DAAAF1F8F093800610281 /* VideoTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTutorialViewController.h; sourceTree = "<group>"; };
-		AD4DAAB01F8F093800610281 /* VideoTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTutorialViewController.m; sourceTree = "<group>"; };
 		AD4DAAB11F8F093800610281 /* SettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewCell.h; sourceTree = "<group>"; };
 		AD4DAAB21F8F093800610281 /* SettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		AD4DAAB71F8F093800610281 /* MineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCell.m; sourceTree = "<group>"; };
@@ -415,9 +421,6 @@
 		AD4DAAB91F8F093800610281 /* MineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineCell.xib; sourceTree = "<group>"; };
 		AD4DAABA1F8F093800610281 /* MineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCell.h; sourceTree = "<group>"; };
 		AD4DAABB1F8F093800610281 /* MineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineController.h; sourceTree = "<group>"; };
-		AD4DAABD1F8F093800610281 /* GrabSingleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabSingleController.m; sourceTree = "<group>"; };
-		AD4DAABE1F8F093800610281 /* GrabSingleController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrabSingleController.xib; sourceTree = "<group>"; };
-		AD4DAABF1F8F093800610281 /* GrabSingleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrabSingleController.h; sourceTree = "<group>"; };
 		AD4DAAC11F8F093800610281 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		AD4DAAE71F8F0CA200610281 /* AFNetWorkingTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetWorkingTool.h; sourceTree = "<group>"; };
 		AD4DAAE81F8F0CA200610281 /* AFNetWorkingTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetWorkingTool.m; sourceTree = "<group>"; };
@@ -429,8 +432,6 @@
 		AD552F431F8F6449001FFE1C /* NSArray+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		AD552F461F8F651E001FFE1C /* DicToString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DicToString.h; sourceTree = "<group>"; };
 		AD552F471F8F651E001FFE1C /* DicToString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DicToString.m; sourceTree = "<group>"; };
-		AD552F4A1F8F68F3001FFE1C /* DataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
-		AD552F4B1F8F68F3001FFE1C /* DataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		AD56A0D51F973933004C956C /* AKTWaiterCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AKTWaiterCloud.entitlements; sourceTree = "<group>"; };
 		AD5760722062482A00991FFA /* CalendarSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSearchController.h; sourceTree = "<group>"; };
 		AD5760732062482A00991FFA /* CalendarSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarSearchController.m; sourceTree = "<group>"; };
@@ -443,9 +444,6 @@
 		AD5F488A1FA06BEB00A0C201 /* SaveDocumentArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveDocumentArray.h; sourceTree = "<group>"; };
 		AD5F488C1FA0868200A0C201 /* QRCodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
 		AD5F488D1FA0868200A0C201 /* QRCodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
-		AD5F488F1FA09CE700A0C201 /* WallectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WallectCell.h; sourceTree = "<group>"; };
-		AD5F48901FA09CE700A0C201 /* WallectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WallectCell.m; sourceTree = "<group>"; };
-		AD5F48911FA09CE700A0C201 /* WallectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WallectCell.xib; sourceTree = "<group>"; };
 		AD63865C1FD0EB4F00265AAB /* NSMutableDictionary+Utuks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Utuks.m"; sourceTree = "<group>"; };
 		AD63865D1FD0EB4F00265AAB /* NSMutableDictionary+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Utils.h"; sourceTree = "<group>"; };
 		AD6410722086DF3D003916D9 /* AddressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
@@ -469,8 +467,6 @@
 		ADADBB3E1FDFE96600B54117 /* FileManagerUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileManagerUtil.m; sourceTree = "<group>"; };
 		ADB0D81E1F904981002F6B87 /* PlanTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanTaskController.h; sourceTree = "<group>"; };
 		ADB0D81F1F904981002F6B87 /* PlanTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlanTaskController.m; sourceTree = "<group>"; };
-		ADB0D8201F904981002F6B87 /* PlanTaskController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanTaskController1.xib; sourceTree = "<group>"; };
-		ADB5FE6A1F9605DC0017040D /* 1-750px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1-750px.png"; sourceTree = "<group>"; };
 		ADBB6A151F9841BC00DDC01C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ADBB6A171F9841C300DDC01C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		ADBB6A191F9841CD00DDC01C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -488,8 +484,6 @@
 		ADBE01621FE7C53B00B30488 /* EditUserInfoController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditUserInfoController.xib; sourceTree = "<group>"; };
 		ADC892C01FE111E50049B3B5 /* DownOrderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownOrderView.h; sourceTree = "<group>"; };
 		ADC892C11FE111E50049B3B5 /* DownOrderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownOrderView.m; sourceTree = "<group>"; };
-		ADC892C31FE147380049B3B5 /* DateUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
-		ADC892C41FE147380049B3B5 /* DateUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		ADD09B531F998A1D00CFEC52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AKTWaiterCloud/Images.xcassets; sourceTree = "<group>"; };
 		ADD2E16D1F99E77D004DFE76 /* ButtonUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonUtil.m; sourceTree = "<group>"; };
 		ADD2E16E1F99E77D004DFE76 /* ButtonUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonUtil.h; sourceTree = "<group>"; };
@@ -599,6 +593,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C4AD7A723B08962005DEDE4 /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				4C4AD7A923B08962005DEDE4 /* DatePickerView.h */,
+				4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */,
+				4C4AD7AB23B08962005DEDE4 /* DateAndTimePickerView.h */,
+				4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */,
+			);
+			path = DatePicker;
+			sourceTree = "<group>";
+		};
+		4C4AD8F723B34350005DEDE4 /* rangePicker */ = {
+			isa = PBXGroup;
+			children = (
+				4C4AD8F823B34350005DEDE4 /* AktRangePickerView.h */,
+				4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */,
+				4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */,
+				4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */,
+			);
+			path = rangePicker;
+			sourceTree = "<group>";
+		};
 		4C89D65123A74E560024456F /* AktSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,6 +640,15 @@
 				4CE6A04C23AB268300C41114 /* AktResetAppView.m */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		4CAED3F623B9FBEC00BAF2E3 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				4CAED3F723B9FBEC00BAF2E3 /* DataModel.h */,
+				4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		4CD674C222E94CDF00AB76AF /* UpImage */ = {
@@ -681,19 +706,6 @@
 				4CD6753322EAF97400AB76AF /* lame.h */,
 			);
 			path = mp3;
-			sourceTree = "<group>";
-		};
-		AD0379BB1F906D36001973A2 /* Wallet */ = {
-			isa = PBXGroup;
-			children = (
-				AD0379CD1F906D8A001973A2 /* WalletController.h */,
-				AD0379CE1F906D8A001973A2 /* WalletController.m */,
-				AD0379CF1F906D8A001973A2 /* WalletController.xib */,
-				AD5F488F1FA09CE700A0C201 /* WallectCell.h */,
-				AD5F48901FA09CE700A0C201 /* WallectCell.m */,
-				AD5F48911FA09CE700A0C201 /* WallectCell.xib */,
-			);
-			path = Wallet;
 			sourceTree = "<group>";
 		};
 		AD0379BD1F906D36001973A2 /* Notify */ = {
@@ -842,6 +854,9 @@
 				4C89D66423A769A70024456F /* SignInVC.h */,
 				4C89D66523A769A70024456F /* SignInVC.m */,
 				4C89D66623A769A70024456F /* SignInVC.xib */,
+				4C4AD90223B366D8005DEDE4 /* AktWSigninListVC.h */,
+				4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */,
+				4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */,
 			);
 			path = LoginController;
 			sourceTree = "<group>";
@@ -849,6 +864,8 @@
 		AD4A446B1F8C6FB700D6E5C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4C4AD8F723B34350005DEDE4 /* rangePicker */,
+				4C4AD7A723B08962005DEDE4 /* DatePicker */,
 				4CD6753122EAF97400AB76AF /* mp3 */,
 				4CD674C222E94CDF00AB76AF /* UpImage */,
 				ADD836072058F6550003A1C5 /* UIColor+Hex.h */,
@@ -884,8 +901,6 @@
 				AD1E03441FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m */,
 				ADADBB3D1FDFE96600B54117 /* FileManagerUtil.h */,
 				ADADBB3E1FDFE96600B54117 /* FileManagerUtil.m */,
-				ADC892C31FE147380049B3B5 /* DateUtil.h */,
-				ADC892C41FE147380049B3B5 /* DateUtil.m */,
 				ADF1A43F1FE92A4500A572CE /* UIButton+Badge.h */,
 				ADF1A4401FE92A4500A572CE /* UIButton+Badge.m */,
 				AD576077206B3E0200991FFA /* RangeUtil.h */,
@@ -896,23 +911,12 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		AD4A44781F8C7DB300D6E5C0 /* ImageResource */ = {
-			isa = PBXGroup;
-			children = (
-				ADB5FE6A1F9605DC0017040D /* 1-750px.png */,
-				AD029C2B1F959B1700C1C1A1 /* bg.png */,
-				AD4A44811F8C956D00D6E5C0 /* icon_checked_fail.png */,
-			);
-			path = ImageResource;
-			sourceTree = "<group>";
-		};
 		AD4DAA8E1F8F093800610281 /* ItemController */ = {
 			isa = PBXGroup;
 			children = (
 				4C89D65123A74E560024456F /* AktSearch */,
 				AD4DAA8F1F8F093800610281 /* DownOrders */,
 				AD4DAAC01F8F093800610281 /* UnfinishedTask */,
-				AD4DAABC1F8F093800610281 /* GrabSingle */,
 				AD4DAA9A1F8F093800610281 /* Mine */,
 				AD4DAA931F8F093800610281 /* PlanTask */,
 			);
@@ -935,7 +939,6 @@
 				ADB0D81E1F904981002F6B87 /* PlanTaskController.h */,
 				ADB0D81F1F904981002F6B87 /* PlanTaskController.m */,
 				ADF1A43D1FE90FFE00A572CE /* PlanTaskController.xib */,
-				ADB0D8201F904981002F6B87 /* PlanTaskController1.xib */,
 			);
 			path = PlanTask;
 			sourceTree = "<group>";
@@ -953,7 +956,6 @@
 				AD472F2D1FC54F490065C934 /* OrderController */,
 				AD4DAA9C1F8F093800610281 /* Settings */,
 				AD0379BD1F906D36001973A2 /* Notify */,
-				AD0379BB1F906D36001973A2 /* Wallet */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -968,9 +970,7 @@
 				AD4DAA9D1F8F093800610281 /* SettingsTableViewCell.m */,
 				AD4DAA9F1F8F093800610281 /* SettingsTableViewCell.xib */,
 				AD4DAAA01F8F093800610281 /* AboutUs */,
-				AD4DAAA41F8F093800610281 /* CleanCache */,
 				AD4DAAA81F8F093800610281 /* EditPassWord */,
-				AD4DAAAD1F8F093800610281 /* VideoTutorial */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -985,16 +985,6 @@
 			path = AboutUs;
 			sourceTree = "<group>";
 		};
-		AD4DAAA41F8F093800610281 /* CleanCache */ = {
-			isa = PBXGroup;
-			children = (
-				AD4DAAA51F8F093800610281 /* CleanChaceController.xib */,
-				AD4DAAA61F8F093800610281 /* CleanChaceController.h */,
-				AD4DAAA71F8F093800610281 /* CleanChaceController.m */,
-			);
-			path = CleanCache;
-			sourceTree = "<group>";
-		};
 		AD4DAAA81F8F093800610281 /* EditPassWord */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,26 +993,6 @@
 				AD4DAAAA1F8F093800610281 /* EditPassWordController.xib */,
 			);
 			path = EditPassWord;
-			sourceTree = "<group>";
-		};
-		AD4DAAAD1F8F093800610281 /* VideoTutorial */ = {
-			isa = PBXGroup;
-			children = (
-				AD4DAAAF1F8F093800610281 /* VideoTutorialViewController.h */,
-				AD4DAAB01F8F093800610281 /* VideoTutorialViewController.m */,
-				AD4DAAAE1F8F093800610281 /* VideoTutorialViewController.xib */,
-			);
-			path = VideoTutorial;
-			sourceTree = "<group>";
-		};
-		AD4DAABC1F8F093800610281 /* GrabSingle */ = {
-			isa = PBXGroup;
-			children = (
-				AD4DAABF1F8F093800610281 /* GrabSingleController.h */,
-				AD4DAABD1F8F093800610281 /* GrabSingleController.m */,
-				AD4DAABE1F8F093800610281 /* GrabSingleController.xib */,
-			);
-			path = GrabSingle;
 			sourceTree = "<group>";
 		};
 		AD4DAAC01F8F093800610281 /* UnfinishedTask */ = {
@@ -1045,15 +1015,6 @@
 				AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */,
 			);
 			path = AFNetWorkingTool;
-			sourceTree = "<group>";
-		};
-		AD552F491F8F68E6001FFE1C /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				AD552F4A1F8F68F3001FFE1C /* DataModel.h */,
-				AD552F4B1F8F68F3001FFE1C /* DataModel.m */,
-			);
-			path = Entity;
 			sourceTree = "<group>";
 		};
 		AD65759B1FAAEA0900495D1E /* MinuteTask */ = {
@@ -1167,9 +1128,8 @@
 			children = (
 				AD31D5731FECDF1E00DB7C46 /* Mytableview */,
 				AD56A0D51F973933004C956C /* AKTWaiterCloud.entitlements */,
-				AD552F491F8F68E6001FFE1C /* Entity */,
+				4CAED3F623B9FBEC00BAF2E3 /* model */,
 				AD4DAAE61F8F0CA200610281 /* AFNetWorkingTool */,
-				AD4A44781F8C7DB300D6E5C0 /* ImageResource */,
 				AD4A446B1F8C6FB700D6E5C0 /* Util */,
 				AD475FCC1F8B651C003DC2F0 /* Controller */,
 				AD475FAF1F8B2648003DC2F0 /* FMDB_ operation */,
@@ -1380,12 +1340,12 @@
 				ADBE01641FE7C53B00B30488 /* EditUserInfoController.xib in Resources */,
 				AD472F321FC550050065C934 /* UnfinifshController.xib in Resources */,
 				AD4DAACE1F8F093800610281 /* AboutUsController.xib in Resources */,
+				4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
 				AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */,
 				ADD836062057C0140003A1C5 /* NotifyCell.xib in Resources */,
 				ADD789231F7DF730008DEC55 /* LaunchScreen.storyboard in Resources */,
 				AD4DAAC21F8F093800610281 /* MainController.xib in Resources */,
-				AD4DAAD41F8F093800610281 /* VideoTutorialViewController.xib in Resources */,
 				AD6575A11FAAEA5600495D1E /* SignoutController.xib in Resources */,
 				AD0EA6D91FD52FCB00A6B496 /* SignInCell.xib in Resources */,
 				4CA9C2D5239F4A0D0029FEF5 /* AktTitleCell.xib in Resources */,
@@ -1399,12 +1359,8 @@
 				AD37AB3D1FF4E78A001D304C /* ZYInputAlertView.xib in Resources */,
 				4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */,
 				ADF511C02060A4EC008FCAFE /* NoDateCell.xib in Resources */,
-				AD4DAADD1F8F093800610281 /* GrabSingleController.xib in Resources */,
 				AD332A1F1FEBB8EA003D801B /* SearchDateController.xib in Resources */,
-				AD5F48931FA09CE700A0C201 /* WallectCell.xib in Resources */,
 				AD37AB441FF51AA7001D304C /* VisitCell.xib in Resources */,
-				AD0379D11F906D8A001973A2 /* WalletController.xib in Resources */,
-				AD4DAACF1F8F093800610281 /* CleanChaceController.xib in Resources */,
 				AD1711B01FDE7B3300A9DD07 /* ServicePojController.xib in Resources */,
 				ADF1A43E1FE90FFE00A572CE /* PlanTaskController.xib in Resources */,
 				4C89D66A23A769A70024456F /* SignInVC.xib in Resources */,
@@ -1414,13 +1370,10 @@
 				AD1711AE1FDE7B3300A9DD07 /* ServicePojCell.xib in Resources */,
 				4CD674EF22E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				AD31D5721FECD63C00DB7C46 /* FilterController.xib in Resources */,
-				ADB5FE6B1F9605DC0017040D /* 1-750px.png in Resources */,
 				ADD562BD1FDFB5D400898AC3 /* HandCodeController.xib in Resources */,
 				4C89D65823A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
 				AD4DAAD61F8F093800610281 /* SettingsController.xib in Resources */,
 				AD7B007F1FA2E3C400DCCB5F /* PlanTaskCell.xib in Resources */,
-				ADB0D8221F904981002F6B87 /* PlanTaskController1.xib in Resources */,
-				AD029C2C1F959B1700C1C1A1 /* bg.png in Resources */,
 				AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */,
 				ADF896401FD9A693008CCE1E /* DownOrderCell.xib in Resources */,
 				AD5760762062482A00991FFA /* CalendarSearchController.xib in Resources */,
@@ -1440,6 +1393,7 @@
 				4C89D66B23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F022E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
+				4C4AD90923B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1451,6 +1405,7 @@
 				4C89D66C23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F122E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
+				4C4AD90A23B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1525,12 +1480,12 @@
 				ADBB6A2A1F9895BC00DDC01C /* BaseControllerViewController.m in Sources */,
 				AD4DAACB1F8F093800610281 /* SettingsTableViewCell.m in Sources */,
 				AD31D5711FECD63C00DB7C46 /* FilterController.m in Sources */,
-				AD4DAAD51F8F093800610281 /* VideoTutorialViewController.m in Sources */,
 				ADD836092058F6560003A1C5 /* UIColor+Hex.m in Sources */,
 				4CD6750422E94CDF00AB76AF /* UIView+KIAdditions.m in Sources */,
 				AD4DAAD31F8F093800610281 /* SettingsController.m in Sources */,
 				4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */,
 				ADF511BF2060A4EC008FCAFE /* NoDateCell.m in Sources */,
+				4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 				AD63865E1FD0EB4F00265AAB /* NSMutableDictionary+Utuks.m in Sources */,
 				ADE657C81F9D9D2F008E20A6 /* PhoneSize.m in Sources */,
 				AD9264051F94B69C00C43972 /* GroupShadowTableView.m in Sources */,
@@ -1538,13 +1493,13 @@
 				AD332A231FEBB9E7003D801B /* SearchDateCell.m in Sources */,
 				4C89D67023A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				AD4DAADA1F8F093800610281 /* MineController.m in Sources */,
+				4CAED3F923B9FBEC00BAF2E3 /* DataModel.m in Sources */,
 				4CD6753E22EB031400AB76AF /* AktWCMp3.m in Sources */,
 				ADD789261F7DF731008DEC55 /* main.m in Sources */,
 				4CD674F822E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD562BE1FDFB5D400898AC3 /* HandCodeController.m in Sources */,
 				AD4DAAE91F8F0CA200610281 /* AFNetWorkingTool.m in Sources */,
-				AD4DAAD01F8F093800610281 /* CleanChaceController.m in Sources */,
-				ADC892C51FE147380049B3B5 /* DateUtil.m in Sources */,
+				4C4AD7AC23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
 				AD4DAAD91F8F093800610281 /* MineCell.m in Sources */,
 				4CD674FE22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4CF261E3233376D3001AB19F /* AktSearchFmdb.m in Sources */,
@@ -1557,7 +1512,6 @@
 				4C89D66723A769A70024456F /* SignInVC.m in Sources */,
 				4CE6A04D23AB268300C41114 /* AktResetAppView.m in Sources */,
 				AD0A8C2B1FA1AD410082F337 /* LoginRequest.m in Sources */,
-				AD5F48921FA09CE700A0C201 /* WallectCell.m in Sources */,
 				AD332A1E1FEBB8EA003D801B /* SearchDateController.m in Sources */,
 				AD1711AF1FDE7B3300A9DD07 /* ServicePojController.m in Sources */,
 				AD4DAAC31F8F093800610281 /* MainController.m in Sources */,
@@ -1573,6 +1527,7 @@
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
 				AD552F481F8F651E001FFE1C /* DicToString.m in Sources */,
+				4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				ADDCEDE91FAB202800BB14A6 /* UnfinishOrderTaskController.m in Sources */,
 				AD6410742086DF3D003916D9 /* AddressView.m in Sources */,
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
@@ -1582,7 +1537,6 @@
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
-				AD552F4C1F8F68F3001FFE1C /* DataModel.m in Sources */,
 				AD0EA6D81FD52FCB00A6B496 /* SignInCell.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,
 				ADD835F3205779AF0003A1C5 /* AppInfoDefult.m in Sources */,
@@ -1596,15 +1550,15 @@
 				AD4DAAD11F8F093800610281 /* EditPassWordController.m in Sources */,
 				ADF8963F1FD9A693008CCE1E /* DownOrderCell.m in Sources */,
 				ADBB6A271F988D7900DDC01C /* Vaildate.m in Sources */,
+				4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				ADF1A4411FE92A4500A572CE /* UIButton+Badge.m in Sources */,
 				4CD674E922E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				AD4DAAC51F8F093800610281 /* DownOrdersController.m in Sources */,
-				AD0379D01F906D8A001973A2 /* WalletController.m in Sources */,
 				AD5F488E1FA0868200A0C201 /* QRCodeViewController.m in Sources */,
-				AD4DAADC1F8F093800610281 /* GrabSingleController.m in Sources */,
 				ADD836052057C0140003A1C5 /* NotifyCell.m in Sources */,
 				AD37AB431FF51AA7001D304C /* VisitCell.m in Sources */,
 				AD4A448D1F8CA64D00D6E5C0 /* BaseNavController.m in Sources */,
+				4C4AD7AF23B08962005DEDE4 /* DatePickerView.m in Sources */,
 				ADD789181F7DF730008DEC55 /* AppDelegate.m in Sources */,
 				AD7E83701F96E77B0066F069 /* CheckObject.m in Sources */,
 				AD7B00821FA2E9A400DCCB5F /* WorkBaseViewController.m in Sources */,
@@ -1629,6 +1583,8 @@
 				4CD674ED22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CD6752F22EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CD674FF22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
+				4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
+				4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E422E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4CD674F922E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD789301F7DF731008DEC55 /* AKTWaiterCloudTests.m in Sources */,
@@ -1640,7 +1596,10 @@
 				4C89D67123A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
+				4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */,
+				4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1657,6 +1616,8 @@
 				4CD674EE22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CD6753022EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CD6750022E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
+				4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
+				4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E522E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4CD674FA22E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD7893B1F7DF731008DEC55 /* AKTWaiterCloudUITests.m in Sources */,
@@ -1668,7 +1629,10 @@
 				4C89D67223A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
+				4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */,
+				4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1828,9 +1792,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;
@@ -1926,9 +1892,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;

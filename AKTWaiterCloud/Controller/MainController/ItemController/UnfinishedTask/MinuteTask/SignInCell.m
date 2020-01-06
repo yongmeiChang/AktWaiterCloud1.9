@@ -37,17 +37,12 @@
 
     [stAddress addAttributes:@{NSForegroundColorAttributeName: kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInAddressLabel.attributedText = stAddress;
-    
-    self.photoview.hidden = NO;
-    self.photoview.userInteractionEnabled = YES;
 }
 
 -(void)setSignOutInfo:(OrderInfo *)orderinfo{
     self.singOutServiceLengthLab.hidden = NO;
     self.remarklab.hidden = NO;
     self.titleLabel.text = @"签出情况";
-    self.photoview.userInteractionEnabled = YES;
-    self.photoview.hidden = NO;
     
     // 时间
     NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actrueEnd).length == 0 ? @"无":orderinfo.actrueEnd] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];

@@ -48,8 +48,9 @@ static AFNetWorkingTool * a_instance = nil;
     NSString * url = @"";
     if([[dic allKeys] containsObject:@"appstore"]){
         url = [NSString stringWithFormat:@"%@%@",appstoreURl,URLString];
-    }else{
-        url = [NSString stringWithFormat:@"%@/appNewService/%@",SERVICEURL,URLString];
+    }
+    else{
+        url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
     }
     NSLog(@"requst:%@\n参数:%@",url,parameters);
     switch (type) {

@@ -10,9 +10,9 @@
 #import "BaseControllerViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class LoginViewController;
 @interface SignInVC : BaseControllerViewController
-
+-(id)initWithSigninWController:(LoginViewController *)logincontoller;
 @end
 
 NS_ASSUME_NONNULL_END

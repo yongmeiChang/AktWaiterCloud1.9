@@ -70,7 +70,7 @@
     NSLog(@"本周");
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit
+    NSDateComponents *comp = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitWeekday|NSCalendarUnitDay
                                          fromDate:now];
     // 得到星期几
     NSInteger weekDay = [comp weekday];
@@ -92,11 +92,11 @@
     NSLog(@"firstDiff:%ld   lastDiff:%ld",firstDiff,lastDiff);
     
     // 在当前日期(去掉了时分秒)基础上加上差的天数
-    NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
+    NSDateComponents *firstDayComp = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:now];
     [firstDayComp setDay:day + firstDiff];
     NSDate *firstDayOfWeek= [calendar dateFromComponents:firstDayComp];
     
-    NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
+    NSDateComponents *lastDayComp = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:now];
     [lastDayComp setDay:day + lastDiff];
     NSDate *lastDayOfWeek= [calendar dateFromComponents:lastDayComp];
     
@@ -167,7 +167,7 @@
     }
     
     NSDictionary * parameters =@{@"type":@"done",@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"beginDate":startTime,@"endDate":endTime};
-    
+    /*
     [[AFNetWorkingRequest sharedTool] requestgetWorkListByDay:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];
@@ -208,12 +208,11 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [SVProgressHUD dismiss];
     }
                                                       failure:^(NSError *error) {
-                                                          [SVProgressHUD dismiss];
                                                           [self showMessageAlertWithController:self Message:@"查询错误，请重新操作!"];
                                                       }];
+    */
 }
 - (IBAction)cancelPicke:(UIButton *)sender {
     [self.viewBgBlack setHidden:YES];

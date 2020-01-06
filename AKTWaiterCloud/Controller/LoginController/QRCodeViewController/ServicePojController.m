@@ -35,7 +35,7 @@
 }
 
 -(void)requestServicePoj{
-    [SVProgressHUD show];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
     [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
 //    [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
@@ -69,23 +69,15 @@
         
         _dataArray = [NSMutableArray arrayWithArray:arr];
         [_tableview reloadData];
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
-
-//-(void)setviewstyle
-//{
-//
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
-//
-//}
 
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 #pragma mark - tableview设置
 /**段数*/

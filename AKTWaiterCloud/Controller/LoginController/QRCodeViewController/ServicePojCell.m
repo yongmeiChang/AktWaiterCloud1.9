@@ -28,4 +28,19 @@
         self.btnSelect.selected = YES;
     }
 }
+
+-(void)setSigninDetailsCellInfo:(SigninDetailsInfo *)cellInfo selectCellInfo:(SigninDetailsInfo *)select;{ // 选择租户
+    self.leftlabel.text = cellInfo.name;
+    self.leftlabel.font = [UIFont systemFontOfSize:13];
+    self.leftlabel.textColor = kColor(@"C1");
+    [self.btnSelect setImage:[UIImage imageNamed:@"duihao_normal"] forState:UIControlStateNormal];
+    [self.btnSelect setImage:[UIImage imageNamed:@"duihao_select"] forState:UIControlStateSelected];
+    self.btnTopConstraint.constant =9;
+    
+  if ([cellInfo.id isEqualToString:select.id]) {
+        self.btnSelect.selected = YES;
+    }
+}
+
+
 @end

@@ -11,14 +11,17 @@
 #import "PlanTaskCell.h"
 #import "MinuteTaskController.h"
 #import "SearchDateController.h"
-#import <FSCalendar.h>
 #import "AKTSearchInfoVC.h"
 
-@interface UnfinifshController ()<UITableViewDataSource,UITableViewDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance,AktSearchDelegate>{
+@interface UnfinifshController ()<UITableViewDataSource,UITableViewDelegate,AktSearchDelegate>{
     int pageSize;
     BOOL ishidden;
     int tableviewtype;//是显示全部数据还是某天数据  0全部 1某天
      NSString *searchKey;
+    NSString *searchAddress; // 服务地址
+    NSString *searchBTime; // 服务开始时间
+    NSString *searchETime; // 服务结束时间
+    NSString *searchWorkNo;// 服务单号
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableTop;
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
@@ -28,9 +31,8 @@
 @property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @property(nonatomic) int b;
 
-
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
-@property (weak, nonatomic) IBOutlet FSCalendar *calendar;
+
 @end
 
 @implementation UnfinifshController
@@ -39,32 +41,27 @@
     [super viewDidLoad];
     self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
+    searchAddress = [NSString stringWithFormat:@""];
+     searchWorkNo = [NSString stringWithFormat:@""];
+    
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
-    self.calendar.hidden = YES;
+
     pageSize = 1;
     self.dataArray = [NSMutableArray array];
     self.dateArray = [NSMutableArray array];
     //显示的title
-    NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务",@"待提交任务"];
-        self.title = titleArr[_bid];
+    NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务"];
+    self.title = titleArr[_bid];
     [self setLeftNavTilte:@"back.png" RightNavTilte:@"search.png" RightTitleTwo:@"calendar.png"];
 
-    if(self.bid==0){
-        [self initCalender];
-        self.calendar.delegate = self;
-        self.calendar.dataSource = self;
-        self.calendar.layer.shadowOpacity = 0.56f;
-        self.calendar.layer.shadowRadius = 4.f;
-        self.calendar.layer.shadowOffset = CGSizeMake(0,0);
-        self.calendar.layer.shadowColor = RGB(198,198,198).CGColor;
-    }
+    // 注册日历筛选通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchNoticeDate:) name:@"searchDateVC" object:nil];
 
     self.topConstant.constant = [[UIApplication sharedApplication] statusBarFrame].size.height +   self.navigationController.navigationBar.frame.size.height;
     
     if([ReachbilityTool.internetStatus isEqualToString:@"notReachable"]){
         [self.view bringSubviewToFront:self.netWorkErrorView];
-        [self.view bringSubviewToFront:self.calendar];
     }else{
         [self.view sendSubviewToBack:self.netWorkErrorView];
     }
@@ -84,38 +81,6 @@
     ishidden = YES;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
-#pragma mark - 初始化日历控件
--(void)initCalender{
-    _calendar.dataSource = self;
-    _calendar.delegate = self;
-    _calendar.firstWeekday = 2;     //设置周一为第一天
-    _calendar.appearance.weekdayTextColor = [UIColor blackColor];
-    _calendar.appearance.weekdayFont = [UIFont systemFontOfSize:18];
-    _calendar.appearance.headerTitleColor = [UIColor darkGrayColor];
-    _calendar.appearance.titleDefaultColor = [UIColor darkGrayColor];
-    _calendar.appearance.titleFont = [UIFont systemFontOfSize:18];
-    
-    _calendar.appearance.eventDefaultColor = [UIColor colorWithHexString:@"#900000"];//事件点的颜色
-    _calendar.appearance.titleSelectionColor = [UIColor darkGrayColor];//点击日期的字体颜色
-    _calendar.appearance.headerDateFormat = @"yyyy年MM月";
-    _calendar.appearance.todayColor = nil;//今日的颜色
-    _calendar.appearance.titleTodayColor = [UIColor lightGrayColor];
-    _calendar.appearance.borderRadius = 1.0;  // 设置当前选择是圆形,0.0是正方形
-    _calendar.appearance.headerMinimumDissolvedAlpha = 0.0;
-    _calendar.backgroundColor = [UIColor whiteColor];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
-    _calendar.locale = locale;  // 设置周次是中文显示
-    _calendar.placeholderType = FSCalendarPlaceholderTypeNone; //月份模式时，只显示当前月份
-    
-    UIButton *showAllBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    showAllBtn.frame = CGRectMake(SCREEN_WIDTH-105, 5, 95, 34);
-    showAllBtn.backgroundColor = [UIColor colorWithHexString:@"##1878C0"];
-    [showAllBtn setTitle:@"显示全部" forState:UIControlStateNormal];
-    [showAllBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    showAllBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [showAllBtn addTarget:self action:@selector(showAllBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.calendar addSubview:showAllBtn];
-}
 
 - (void)showAllBtnClicked:(id)sender
 {
@@ -123,44 +88,54 @@
     [self RightBarClick];
     [self requestTask];
 }
+
+#pragma mark - notice
+-(void)searchNoticeDate:(NSNotification *)searchDate{
+    if (searchDate) {
+     NSDictionary *dicDate = [searchDate object];
+        searchBTime = kString([dicDate objectForKey:@"beginDate"]);
+        searchETime = kString([dicDate objectForKey:@"endDate"]);
+        [self.taskTableview.mj_header beginRefreshing];
+    }
+}
+
 #pragma mark - nav click
 -(void)RightBarClick{
-//    if(self.bid==1){
-//        return;
-//    }else if(self.bid==0){
-//        if(ishidden){
-//            self.calendar.hidden = NO;
-//            [self downLayoutAnimate];
-//            ishidden = NO;
-//        }else{
-//            [self upLayoutAnimate];
-//            ishidden = YES;
-//        }
-//
-//    }
-    
     AKTSearchInfoVC *searvc = [AKTSearchInfoVC new];
     searvc.delegate = self;
-    searvc.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self.navigationController presentViewController:searvc animated:YES completion:nil];
+    searvc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searvc animated:YES];
 }
 -(void)SearchBarClick{
     NSLog(@"搜索按钮");
     SearchDateController * sdController = [[SearchDateController alloc] init];
-           sdController.hidesBottomBarWhenPushed = YES;
-           sdController.type = _bid;
-           [self.navigationController pushViewController:sdController animated:YES];
+    sdController.hidesBottomBarWhenPushed = YES;
+    sdController.mindate = @"1996-01-01";
+    sdController.maxdate = [AktUtil getNowDate];
+    sdController.type = _bid;
+    
+    [self.navigationController pushViewController:sdController animated:YES];
 }
 #pragma mark - search delegate
--(void)searchKey:(NSString *)search Sender:(NSInteger)sender{
+-(void)searchKey:(NSString *)search SearchAddress:(nonnull NSString *)address Searchtime:(nonnull NSString *)searchtime SearchOrder:(nonnull NSString *)orderid Sender:(NSInteger)sender{
     if (sender == 1) {
        searchKey = search;
-       [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+       searchAddress = address; // 地址
+        if (searchtime.length>10) {
+            searchBTime = [searchtime substringToIndex:10]; // 时间
+            searchETime = [searchtime substringWithRange:NSMakeRange(11, 10)]; // 结束时间
+        }else{
+            searchBTime = @"";
+            searchETime = @"";
+        }
+       searchWorkNo = orderid; // 单号
+       [self.navigationController popViewControllerAnimated:YES];
        [self.taskTableview.mj_header beginRefreshing];
     }else{
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
 #pragma mark - mj
 -(void)initTableview{
     //去除没有数据时的分割线
@@ -207,8 +182,7 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }else{
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD setStatus:Loading];
+        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     }
     tableviewtype = 0;
     //status：状态(1：未完成 2：服务中 3：已完成)
@@ -217,7 +191,7 @@
         [self.dataArray removeAllObjects];
     }
     NSLog(@"%@",appDelegate.userinfo);
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey)};
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
@@ -263,16 +237,16 @@
                     }
                     
                     [self.taskTableview reloadData];
-                    [SVProgressHUD dismiss];
+                    [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
                 }else{
                     self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
                     self.netWorkErrorView.hidden = NO;
-                    [SVProgressHUD dismiss];
+                    [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
                 }
             }
-        }else if(pageSize == 1){
+        }else if(pageSize == 1 && [code integerValue] == 2){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
             [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
@@ -287,13 +261,11 @@
                 appDelegate.netWorkType = On_line;
             });
         }
-        [SVProgressHUD dismiss];
-        [self.calendar reloadData];
+        [[AppDelegate sharedDelegate] hidHUD];
     }
         failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld",(long)error.code]];
-            [self.calendar reloadData];
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }];
@@ -319,8 +291,7 @@
             [self showMessageAlertWithController:self Message:NetWorkMessage];
         }
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     self.netWorkErrorLabel.text = Loading;
     [self requestTask];
     self.netWorkErrorView.userInteractionEnabled = NO;
@@ -391,45 +362,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//上拉动画
--(void)upLayoutAnimate{
-    [UIView animateWithDuration:1.0 // 动画时长
-                          delay:0.0 // 动画延迟
-         usingSpringWithDamping:1.0 // 类似弹簧振动效果 0~1
-          initialSpringVelocity:4.0 // 初始速度
-                        options:UIViewAnimationOptionCurveEaseInOut // 动画过渡效果
-                     animations:^{
-                         CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
-                         CGPoint point = self.calendar.center;
-                         point.y = -rectStatus.size.height-self.navigationController.navigationBar.frame.size.height-self.calendar.frame.size.height*0.4;
-                         [self.calendar setCenter:point];
-                         
-                     } completion:^(BOOL finished) {
-                         // 动画完成后执行
-                         [self.calendar setAlpha:1];
-                         [self.taskTableview reloadData];
-                     }];
-}
-
-//下拉动画
--(void)downLayoutAnimate{
-    [UIView animateWithDuration:1.0 // 动画时长
-                          delay:0.0 // 动画延迟
-         usingSpringWithDamping:1.0 // 类似弹簧振动效果 0~1
-          initialSpringVelocity:3.0 // 初始速度
-                        options:UIViewAnimationOptionCurveEaseInOut // 动画过渡效果
-                     animations:^{
-                         CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
-                         CGPoint point = self.calendar.center;
-                         point.y = rectStatus.size.height+self.navigationController.navigationBar.frame.size.height+SCREEN_HEIGHT*0.4*0.5;
-                         [self.calendar setCenter:point];
-                         
-                     } completion:^(BOOL finished) {
-                         // 动画完成后执行
-                         [self.calendar setAlpha:1];
-                     }];
-}
-
+#pragma mark -
 -(void)RequestgetWorkByDay:(NSString *)dateStr{
     //NSString * date = [NSString stringWithFormat:@"%@ 00:00:00",dateStr];
     //type=doing  进行中工单   type=undo 未开始工单  type=done 已完成工单
@@ -465,74 +398,11 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = NO;
         }
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 
-
-#pragma mark FSCalendarDelegateAppearance
-//日历点击事件
-- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date {
-    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
-    dateFormatter.dateFormat=@"yyyy-MM-dd";//指定转date得日期格式化形式
-    NSLog(@"选择查看了====%@",[dateFormatter stringFromDate:date]);
-    [self RightBarClick];
-    NSString * dateStr = [dateFormatter stringFromDate:date];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Loading];
-    [self RequestgetWorkByDay:dateStr];
-
-}
-
-//在未选中的状态中填写特定日期的填充颜色
-- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillDefaultColorForDate:(NSDate *)date{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSString * orderStr = @"";
-    for(OrderInfo * order in self.dataArray){
-        orderStr = order.serviceDate;
-        NSDate *orderDate = [formatter dateFromString:orderStr];
-        if([date isEqualToDate:orderDate]){
-            //日期上的按钮背景色
-            UIColor * color = [UIColor colorWithHexString:@"#1878C0"];
-            return color;
-        }else{
-            continue;
-        }
-    }
-    return nil;
-}
-
-- (NSArray<UIColor *> *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance eventDefaultColorsForDate:(NSDate *)date{
-
-    return nil;
-}
-
-//显示下面的事件点的数量
-- (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSString * dateStr = [formatter stringFromDate:date];
-    int count = 0;
-    for(OrderInfo * info in self.dataArray){
-        if([dateStr isEqualToString:info.serviceDate]){
-            count++;
-        }
-    }
-    if(count>3){
-        return 3;
-    }
-    return count;
-}
-
-//每次切换月份日期时的事件
-- (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
-{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSLog(@"did change to page %@",[formatter stringFromDate:calendar.currentPage]);
-}
 
 @end

@@ -126,16 +126,23 @@
     NSArray *aryOld = [oldCode componentsSeparatedByString:@"."];
     NSArray *aryNew = [newCode componentsSeparatedByString:@"."];
     if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
-        return YES;
-    }else if([[aryNew objectAtIndex:0] integerValue]<[[aryOld objectAtIndex:0] integerValue]){
         return NO;
+    }else if([[aryNew objectAtIndex:0] integerValue]<[[aryOld objectAtIndex:0] integerValue]){
+        return YES;
     }else{
         if ([[aryNew objectAtIndex:1] integerValue]>[[aryOld objectAtIndex:1] integerValue]) {
-            return YES;
-        }else{
             return NO;
+        }else{
+            return YES;
         }
     }
+}
+
++(NSDate *)StringtoDate:(NSString *)dateStr{
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
+    dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
+    NSDate * date = [dateFormatter dateFromString:dateStr];
+    return date;
 }
 
 @end

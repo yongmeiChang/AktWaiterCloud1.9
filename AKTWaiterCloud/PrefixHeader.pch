@@ -39,7 +39,7 @@
 #import <MAMapKit/MAGeometry.h>
 #import "MBProgressHUD.h"
 #import <JPUSHService.h>
-
+#import <Bugly/Bugly.h>
 
 
 // 系统文件
@@ -96,7 +96,7 @@ static const int ddLogLevel = DDLogLevelError;
 #define appid @"1294211974"
 #define GAODEAPPKEY @"d7fac2d3810fa204fa0246c7fead9806"
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
-
+#define Bugly_AppId @"d5a027a07b"
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -106,9 +106,11 @@ static const int ddLogLevel = DDLogLevelError;
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service"
+//#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service/appNewService"
 // 测试环境
-//#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service"
+//#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service/appNewService"
+#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
+//#define SERVICEURL @"http://172.16.30.32:8081/ankangtong-outwork/appService"
 // App Store
 #define appstoreURl @"https://itunes.apple.com/cn/"
 

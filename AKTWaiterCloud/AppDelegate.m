@@ -10,7 +10,6 @@
 #import "MainController.h"
 #import "LoginViewController.h"
 #import "BaseNavController.h"
-#import "GrabSingleController.h"
 
 //注意，关于 iOS10 系统版本的判断，可以用下面这个宏来判断。不能再用截取字符的方法。
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -28,8 +27,6 @@
 
 //app启动方法 程序被杀死，点击通知后调用此程序
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.unfinishOrderRf = NO;
-    self.planTaskOrderRf = NO;
     //UIApplicationLaunchOptionsLocalNotificationKey表示用户点击本地通知导致app被启动运行；如果不含有对应键值则表示 App 不是因点击本地通知而被启动，可能为直接点击icon被启动或其他。
     // 本地通知内容获取：NSDictionary *localNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey]
 
@@ -60,6 +57,10 @@
     
     //定位通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judegeRange:) name:@"localaction" object:nil];
+    
+    // 注册bugly
+    [Bugly startWithAppId:Bugly_AppId];
+
     
     self.isclean = false;
     self.Registration_ID=@"";
@@ -255,7 +256,7 @@
     }
 }
 
-#pragma mark======极光代理方法 点击通知栏
+#pragma mark - 极光代理方法 点击通知栏
 //点击通知栏时的事件
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     NSLog(@"推送成功");

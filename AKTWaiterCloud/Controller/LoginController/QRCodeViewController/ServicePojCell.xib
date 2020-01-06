@@ -55,6 +55,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="btnSelect" destination="i7S-xF-RLJ" id="EnG-re-f7j"/>
+                <outlet property="btnTopConstraint" destination="jzh-Ep-aM0" id="Hf7-gA-1wd"/>
                 <outlet property="leftlabel" destination="gLu-bg-MEh" id="NqF-Qs-Sj0"/>
                 <outlet property="viewBg" destination="sqo-GT-kvC" id="PDa-jo-FqI"/>
             </connections>

@@ -12,6 +12,7 @@
                 <outlet property="btnToMounth" destination="u9B-62-XNb" id="Wy9-we-yiO"/>
                 <outlet property="btnToWeek" destination="OMP-an-JQC" id="QXe-5j-QWL"/>
                 <outlet property="btnToday" destination="8pt-NW-QOK" id="ti5-lD-Fzh"/>
+                <outlet property="btnsearch" destination="Rk9-0W-WaN" id="qxI-o2-uBr"/>
                 <outlet property="labEndData" destination="cHD-bI-wLu" id="RCg-Y5-hy5"/>
                 <outlet property="labStartData" destination="Mpc-9C-Bbb" id="f57-ql-MZw"/>
                 <outlet property="topviewLayout" destination="3ph-4F-g1H" id="zOa-vS-mva"/>

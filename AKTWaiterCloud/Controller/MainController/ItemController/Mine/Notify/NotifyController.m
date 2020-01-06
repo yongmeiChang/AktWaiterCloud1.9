@@ -10,8 +10,10 @@
 #import "NotifyCell.h"
 #import "Vaildate.h"
 #import "MinuteTaskController.h"
+
 @interface NotifyController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak,nonatomic) IBOutlet UITableView * tabeleview;
+
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @end
 
@@ -23,112 +25,79 @@
     self.tabeleview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tabeleview.delegate = self;
     self.tabeleview.dataSource = self;
-    self.dataArray = [NSMutableArray array];
+    self.dataArray = [[NSMutableArray alloc] init];
     [self setNavTitle:@"通知"];
-    [self initNavItem];
-    [self getPushRecordService];
+    [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    [self.view bringSubviewToFront:self.netWorkErrorView];
+    self.tabeleview.hidden = YES;
+    self.netWorkErrorView.hidden = YES;
+  
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+      [self getPushRecordService];
+}
+
+#pragma mark - request
 -(void)getPushRecordService{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:@"请求中..."];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AFNetWorkingRequest sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
 
         if([dic[@"code"] intValue]==1){
             if(![dic objectForKey:@"object"]){
-                [SVProgressHUD dismiss];
+                [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
             NSArray * arr = dic[@"object"];
-            if([arr isKindOfClass:[NSNull class]]){
-                [self showMessageAlertWithController:self title:@""
-                                             Message:@"没有查询到信息" canelBlock:^{
-                                                 [self.navigationController popViewControllerAnimated:YES];
-                                             }];
-            }else if(arr && arr.count>0){
-                for(NSDictionary * dic in arr){
+          if(arr && arr.count>0){
+              self.tabeleview.hidden = NO;
+              self.netWorkErrorView.hidden = YES;
+              for(NSDictionary * dic in arr){
                     [self.dataArray addObject:dic];
                 }
                 [self.tabeleview reloadData];
             }else{
-                [self showMessageAlertWithController:self title:@""
-                                             Message:@"没有查询到信息" canelBlock:^{
-                                                 [self.navigationController popViewControllerAnimated:YES];
-                                             }];
+                self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
+                self.netWorkErrorView.hidden = NO;
+                self.netWorkErrorView.userInteractionEnabled = YES;
+                [self.tabeleview setHidden:YES];
             }
-            [SVProgressHUD dismiss];
         }else{
-            [SVProgressHUD dismiss];
-            [self showMessageAlertWithController:self title:@""
-                                         Message:@"查询失败请重新查询" canelBlock:^{
-                                             [self.navigationController popViewControllerAnimated:YES];
-                                         }];
+            [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
         }
+        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [self showMessageAlertWithController:self title:@""
-                                     Message:@"查询失败请重新查询" canelBlock:^{
-                                         [self.navigationController popViewControllerAnimated:YES];
-                                     }];
+        [[AppDelegate sharedDelegate] hidHUD];
+        [self showMessageAlertWithController:self Message:error.domain];
+        self.netWorkErrorView.userInteractionEnabled = YES;
+        self.netWorkErrorView.hidden = NO;
     }];
 }
 
--(void)initNavItem{
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(backClick:) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton setFrame:CGRectMake(0, 0, 60, 40)];
-    [leftButton setTitle:@"返回" forState:UIControlStateNormal];
-    leftButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
-    [leftButton.titleLabel setTextColor:[UIColor whiteColor]];
-    leftButton.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0];
-    UIEdgeInsets titlecg = leftButton.titleEdgeInsets;
-    titlecg.left = 10;
-    leftButton.titleEdgeInsets = titlecg;
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(backClick:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    //设置导航栏字体颜色
-    //    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
-}
-
-#pragma mark ======= tableview设置
-/**段数*/
+#pragma mark - tableview设置
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-/**行数*/;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 
-/**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentify = @"NotifyCell";
     NotifyCell *cell = (NotifyCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NotifyCell" owner:self options:nil] objectAtIndex:0];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary * dic = self.dataArray[indexPath.section];
-    cell.dateLabel.text = dic[@"createDate"];
-    cell.contentLabel.text = dic[@"content"];
-    
-    cell.layer.masksToBounds = NO;
-    
-    cell.layer.contentsScale = [UIScreen mainScreen].scale;
-    
-    cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-    
-    cell.layer.shadowOpacity = 0.4f;
-    
-    cell.layer.shadowRadius = 3.f;
-    
-    cell.layer.shadowOffset = CGSizeMake(4,4);
+    [cell setNoticeListInfo:self.dataArray Indexpath:indexPath];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 152.0f;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -137,8 +106,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if(workid){
         NSDictionary * dic = @{@"workOrderId":workid,@"tenantsId":appDelegate.userinfo.tenantsId};
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD setStatus:Loading];
+        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
         [[AFNetWorkingRequest sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
@@ -156,16 +124,22 @@
                 MinuteTaskController * mtController = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
                 [self.navigationController pushViewController:mtController animated:YES];
             }
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [[AppDelegate sharedDelegate] hidHUD];
         }];
-    }else{
-        return;
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 92.0f;
+#pragma mark -
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+-(void)labelClick{
+    DDLogInfo(@"点击了刷新按钮");
+    self.netWorkErrorView.userInteractionEnabled = false;
+    [self getPushRecordService];
+}
+
 @end

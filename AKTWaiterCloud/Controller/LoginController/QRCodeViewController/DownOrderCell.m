@@ -24,7 +24,7 @@
 -(void)setOrderInfo:(NSIndexPath *)path{
     if (path.row == 0) {
         // 绘制圆角 需设置的圆角 使用"|"来组合
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, self.viewBg.frame.size.width, 53) byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(7.5, 7.5)];
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SCREEN_WIDTH-20, 53) byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(7.5, 7.5)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
         // 设置大小
         maskLayer.frame = self.viewBg.bounds;
@@ -35,7 +35,7 @@
         self.leftLabel.text = @"服务项目";
     }else if (path.row == 3){
         // 绘制圆角 需设置的圆角 使用"|"来组合
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.viewBg.bounds byRoundingCorners:UIRectCornerBottomLeft |
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SCREEN_WIDTH-20, 53) byRoundingCorners:UIRectCornerBottomLeft |
         UIRectCornerBottomRight cornerRadii:CGSizeMake(7.5, 7.5)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
         // 设置大小

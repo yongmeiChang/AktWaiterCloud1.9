@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UnfinifshController">
             <connections>
-                <outlet property="calendar" destination="Vor-Co-nnl" id="tlX-KT-jEp"/>
                 <outlet property="tableTop" destination="zvz-vU-gS2" id="eK1-xl-BGp"/>
                 <outlet property="taskTableview" destination="Ufn-lH-62A" id="bYW-KQ-lOO"/>
-                <outlet property="topConstant" destination="Qco-yh-7O8" id="mHL-rE-pEz"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Lpk-LE-MNP"/>
             </connections>
         </placeholder>
@@ -23,29 +21,21 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkM-8U-L9o">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <state key="normal" title="Button" backgroundImage="orderbg"/>
+                    <state key="normal" backgroundImage="orderbg"/>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ufn-lH-62A">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ufn-lH-62A">
                     <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vor-Co-nnl" customClass="FSCalendar">
-                    <rect key="frame" x="0.0" y="64" width="375" height="267"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="pkM-8U-L9o" secondAttribute="trailing" id="4NH-Kn-mAk"/>
                 <constraint firstItem="pkM-8U-L9o" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Pf4-mP-sFG"/>
-                <constraint firstItem="Vor-Co-nnl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Qco-yh-7O8"/>
                 <constraint firstItem="pkM-8U-L9o" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Sxa-nU-nbS"/>
                 <constraint firstAttribute="bottom" secondItem="pkM-8U-L9o" secondAttribute="bottom" id="Xty-vC-i5M"/>
-                <constraint firstAttribute="trailing" secondItem="Vor-Co-nnl" secondAttribute="trailing" id="YEA-vo-7Ag"/>
                 <constraint firstAttribute="bottom" secondItem="Ufn-lH-62A" secondAttribute="bottom" id="dFN-zC-Cg0"/>
                 <constraint firstItem="Ufn-lH-62A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kf2-cU-8ng"/>
-                <constraint firstItem="Vor-Co-nnl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="leI-cQ-T6m"/>
                 <constraint firstAttribute="trailing" secondItem="Ufn-lH-62A" secondAttribute="trailing" id="vY5-xh-0Yf"/>
-                <constraint firstItem="Vor-Co-nnl" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.4" id="xYJ-s3-KpP"/>
                 <constraint firstItem="Ufn-lH-62A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="zvz-vU-gS2"/>
             </constraints>
             <point key="canvasLocation" x="31.199999999999999" y="72.413793103448285"/>

@@ -8,13 +8,16 @@
 
 #import "AKTSearchInfoVC.h"
 #import "AktSearchFmdb.h"
+#import "SearchDateController.h"
 
 @interface AKTSearchInfoVC ()<UITextFieldDelegate>
-
+{
+    NSString *strTime;
+}
 @property (weak, nonatomic) IBOutlet UITextField *tfSearch;
-@property (weak, nonatomic) IBOutlet UITextField *tfTime;
 @property (weak, nonatomic) IBOutlet UITextField *tfAddress;
 @property (weak, nonatomic) IBOutlet UITextField *tfOrderNumber;
+@property (weak, nonatomic) IBOutlet UILabel *labTime;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNav;
 
@@ -31,10 +34,51 @@
     
     [self setTitle:@"搜索"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-   
+    strTime = [[NSString alloc] init];
+    // 注册搜索通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchNoticeDate:) name:@"searchDateVC" object:nil];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+}
+
+#pragma mark - notice
+-(void)searchNoticeDate:(NSNotification *)searchDate{
+    if (searchDate) {
+     NSDictionary *dicDate = [searchDate object];
+        strTime = [NSString stringWithFormat:@"%@ %@",kString([dicDate objectForKey:@"beginDate"]),kString([dicDate objectForKey:@"endDate"])];
+        self.labTime.text = strTime;
+    }
+}
+#pragma mark - click
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)searchClick:(UIButton *)sender {
+    [self.tfSearch resignFirstResponder];
+    [self.tfAddress resignFirstResponder];
+    [self.tfOrderNumber resignFirstResponder];
+    
+    if (_delegate&&[_delegate respondsToSelector:@selector(searchKey:SearchAddress:Searchtime:SearchOrder:Sender:)])
+        [_delegate searchKey:kString(_tfSearch.text) SearchAddress:kString(_tfAddress.text) Searchtime:kString(strTime) SearchOrder:kString(_tfOrderNumber.text) Sender:sender.tag];
+}
+
+- (IBAction)btnSelectTimeClick:(UIButton *)sender {
+    SearchDateController *searchTimevc = [[SearchDateController alloc] init];
+    searchTimevc.typeVC = 1;
+    searchTimevc.mindate = @"1996-01-01";
+    searchTimevc.maxdate = [AktUtil getNowDate];
+    [self.navigationController pushViewController:searchTimevc animated:YES];
+}
+#pragma mark - text delegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self.tfSearch resignFirstResponder];
+    [self.tfAddress resignFirstResponder];
+    [self.tfOrderNumber resignFirstResponder];
+    
+    return textField;
 }
 
 /*
@@ -46,33 +90,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-#pragma mark - click
--(void)LeftBarClick{
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-- (IBAction)btnBackCkick:(id)sender {
-      [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-- (IBAction)searchClick:(UIButton *)sender {
-    [self.tfSearch resignFirstResponder];
-    [self.tfTime resignFirstResponder];
-    [self.tfAddress resignFirstResponder];
-    [self.tfOrderNumber resignFirstResponder];
-    
-    if ([_delegate respondsToSelector:@selector(searchKey:Sender:)])
-        [_delegate searchKey:kString(_tfSearch.text) Sender:sender.tag];
-}
-
-#pragma mark - text delegate
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self.tfSearch resignFirstResponder];
-    [self.tfTime resignFirstResponder];
-    [self.tfAddress resignFirstResponder];
-    [self.tfOrderNumber resignFirstResponder];
-    
-    return textField;
-}
-
-
 @end

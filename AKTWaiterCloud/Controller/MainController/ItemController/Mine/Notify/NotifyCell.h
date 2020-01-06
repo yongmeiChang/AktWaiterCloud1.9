@@ -11,4 +11,7 @@
 @interface NotifyCell : UITableViewCell
 @property (weak,nonatomic) IBOutlet UILabel * dateLabel;
 @property (weak,nonatomic) IBOutlet UILabel * contentLabel;
+
+-(void)setNoticeListInfo:(NSArray *)noticeAry Indexpath:(NSIndexPath *)index; // 通知列表
+
 @end

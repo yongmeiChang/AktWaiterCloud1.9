@@ -17,8 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *singOutServiceLengthLab; // 服务时长
 @property (weak, nonatomic) IBOutlet UILabel *remarklab; // 备注
-
-@property (weak,nonatomic) IBOutlet UIImageView * photoview;//签入签出右侧的图片按钮
+@property (weak, nonatomic) IBOutlet UIButton *btnCheckImage; // 查看图片
 
 -(void)setSignInInfo:(OrderInfo *)orderinfo; // 签入情况
 

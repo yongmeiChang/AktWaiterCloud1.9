@@ -37,10 +37,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
-    resetView.tag = 102;
-    resetView.delegate = self;
-    
     self.unameText.delegate = self;
     self.upswText.delegate = self;
     // 样式
@@ -55,7 +51,7 @@
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.loginBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, -(self.loginBtn.frame.size.width), 0, 0);
+
     // 获取缓存
     if(appDelegate.userinfo){
         self.unameText.text = appDelegate.userinfo.waiterUkey;
@@ -106,8 +102,6 @@
         [self showMessageAlertWithController:self Message:NetWorkMessage];
         appDelegate.netWorkType = On_line;
     }
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setStatus:Logining];
     [self Userlogin];
 }
 
@@ -118,7 +112,7 @@
     [self.navigationController pushViewController:findPswController animated:YES];
 }
 - (IBAction)sigInClickBtn:(UIButton *)sender {
-    SignInVC *signvc = [[SignInVC alloc] init];
+    SignInVC *signvc = [[SignInVC alloc] initWithSigninWController:self];
     [self.navigationController pushViewController:signvc animated:YES];
 }
 
@@ -127,24 +121,25 @@
     [self.view endEditing:YES];
     
     if(self.unameText.text == nil || self.unameText.text.length == 0){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"请输账号!"];
+
+        [[AppDelegate sharedDelegate] showTextOnly:@"请输账号!"];
         return;
     }
     if(self.unameText.text == nil || self.unameText.text.length < 3){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"账号长度不符合规定!"];
+       
+         [[AppDelegate sharedDelegate] showTextOnly:@"账号长度不符合规定!"];
         return;
     }
     if(self.upswText.text == nil || self.upswText.text.length == 0){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showInfoWithStatus:@"请输入密码!"];
+
+         [[AppDelegate sharedDelegate] showTextOnly:@"请输入密码!"];
         return;
     }
     [self RequestLogin];
 }
 
 -(void)RequestLogin{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     //返回极光的id
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
@@ -176,7 +171,7 @@
                     }
                     appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    [SVProgressHUD dismiss];
+            
                     //获取各类工单数量
                     NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
@@ -191,11 +186,11 @@
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];
-                    [SVProgressHUD dismiss];
                 }
-                
+               
+                 [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                 [[AppDelegate sharedDelegate] hidHUD];
                 NSLog(@"请求错误，code==%lu",error.code);
                 [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
             }];
@@ -228,7 +223,6 @@
                     }
                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    [SVProgressHUD dismiss];
                     //获取各类工单数量
                     NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
@@ -242,13 +236,11 @@
                     }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [SVProgressHUD dismiss];
                     [self showMessageAlertWithController:self Message:messageDic];
-                    [SVProgressHUD dismiss];
                 }
-                
+                 [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                 [[AppDelegate sharedDelegate] hidHUD];
                 NSLog(@"请求错误，code==%lu",error.code);
                 [self showMessageAlertWithController:self Message:@"登陆失败，请稍后再试"];
             }];
@@ -262,7 +254,7 @@
 {
     
     if ([[[UIApplication sharedApplication]textInputMode].primaryLanguage isEqualToString:@"emoji"]) {
-        [SVProgressHUD showErrorWithStatus:@"不支持表情符号"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"不支持表情符号"];
         return NO;
     }
     return YES;
@@ -292,38 +284,32 @@
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    
-    NSDictionary * dic = @{@"id":@"1294211974",@"appstore":@"appstore"};
-    [[AFNetWorkingRequest sharedTool] requestgetversion:dic Url:@"lookup" type:HttpRequestTypePost success:^(id responseObject) {
-        //返回信息
-        //        minimumOsVersion = "8.0";         //App所支持的最低iOS系统
-        //        fileSizeBytes = ;                 //应用的大小
-        //        releaseDate = "";                 //发布时间
-        //        trackCensoredName = "";           //审查名称
-        //        trackContentRating = "";          //评级
-        //        trackId = ;                       //应用程序ID
-        //        trackName = "";                   //应用程序名称
-        //        trackViewUrl = "";                //应用程序介绍网址 需要更新跳转的网址
-        //        version = "4.0.3";                //版本号
-        NSDictionary * dic = [responseObject[@"results"] firstObject];
-        // 最新版本号
-        NSString *iTunesVersion = dic[@"version"];
-        // 应用程序介绍网址(用户升级跳转URL)
-        trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"trackViewUrl"]];
-        
-        if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
-            NSLog(@"不是最新版本,需要更新");
-            [[UIApplication sharedApplication].keyWindow addSubview:resetView];
-        } else {
-            NSLog(@"已是最新版本,不需要更新!");
-            if(appDelegate.userinfo){
-                self.unameText.text = appDelegate.userinfo.waiterUkey;
-                self.upswText.text = appDelegate.userinfo.password;
-                if(appDelegate.IsAutoLogin){
-                    [self loginBtnClick:nil];
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dic = responseObject[@"object"];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+            // 最新版本号
+            NSString *iTunesVersion = dic[@"versions"];
+            // 应用程序介绍网址(用户升级跳转URL)
+            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
+            
+            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
+                NSLog(@"不是最新版本,需要更新");
+                resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
+                 resetView.tag = 102;
+                 resetView.delegate = self;
+                resetView.strContent = dic[@"updateContent"];
+                [[UIApplication sharedApplication].keyWindow addSubview:resetView];
+            } else {
+                NSLog(@"已是最新版本,不需要更新!");
+                if(appDelegate.userinfo){
+                    self.unameText.text = appDelegate.userinfo.waiterUkey;
+                    self.upswText.text = appDelegate.userinfo.password;
+                    if(appDelegate.IsAutoLogin){
+                        [self loginBtnClick:nil];
+                    }
+                    //账号默认关闭离线模式
+                    appDelegate.userinfo.isclickOff_line = @"1";
                 }
-                //账号默认关闭离线模式
-                appDelegate.userinfo.isclickOff_line = @"1";
             }
         }
     } failure:^(NSError *error) {
@@ -349,15 +335,8 @@
             appDelegate.userinfo.isclickOff_line = @"1";
         }
     }else{
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl] options:@{} completionHandler:^(BOOL success) {
-            if(appDelegate.userinfo){
-                if(appDelegate.IsAutoLogin){
-                    [self loginBtnClick:nil];
-                }
-                //账号默认关闭离线模式
-                appDelegate.userinfo.isclickOff_line = @"1";
-            }
-        }];
+        // 内容包含中文，需要转码之后才能跳转  否则无法跳转
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
     }
 }
 
