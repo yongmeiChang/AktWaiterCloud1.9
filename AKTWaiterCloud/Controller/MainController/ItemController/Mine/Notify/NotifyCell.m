@@ -23,9 +23,10 @@
 -(void)setNoticeListInfo:(NSArray *)noticeAry Indexpath:(NSIndexPath *)index{
     
     NSDictionary * dic = noticeAry[index.section];
-    self.dateLabel.text = dic[@"createDate"];
-    self.contentLabel.text = dic[@"content"];
-       
+    if (noticeAry.count>0) {
+        self.dateLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"createDate"]];
+        self.contentLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]];
+    }
 }
 
 @end
