@@ -48,8 +48,8 @@
     self.taskTableview.dataSource = self;
 
     pageSize = 1;
-    self.dataArray = [NSMutableArray array];
-    self.dateArray = [NSMutableArray array];
+    self.dataArray = [[NSMutableArray alloc] init];
+    self.dateArray = [[NSMutableArray alloc] init                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ];
     //显示的title
     NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务"];
     self.title = titleArr[_bid];

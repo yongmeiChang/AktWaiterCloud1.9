@@ -80,6 +80,7 @@
 
 
 #define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
+#define imageH(w) ((w*SCREEN_HEIGHT)/SCREEN_WIDTH)
 
 
 // Include any system framework and library headers here that should be included in all compilation units.
@@ -110,7 +111,7 @@ static const int ddLogLevel = DDLogLevelError;
 // 测试环境
 //#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service/appNewService"
 #define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
-//#define SERVICEURL @"http://172.16.30.32:8081/ankangtong-outwork/appService"
+
 // App Store
 #define appstoreURl @"https://itunes.apple.com/cn/"
 

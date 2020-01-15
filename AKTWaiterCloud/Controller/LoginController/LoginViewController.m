@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = kColor(@"C13");
     self.unameText.delegate = self;
     self.upswText.delegate = self;
     // 样式

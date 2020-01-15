@@ -995,8 +995,6 @@
                {
                    self.orderinfo.isAbnormal = @"0";
                    self.addressLabel.text = [NSString stringWithFormat:@"%@",regeocode.formattedAddress];
-//                   self.local = [NSString stringWithFormat:@"%@",regeocode.formattedAddress];
-//                   self.rangStr=[self distanceBetweenOrderBy:[self.locaitonx doubleValue] :[self.orderinfo.serviceLocationX doubleValue] :[self.locaitony doubleValue]:[self.orderinfo.serviceLocationY doubleValue]];
                }
                Rloction(location);
                [[AppDelegate sharedDelegate] hidHUD];
@@ -1032,7 +1030,7 @@
      [self distanceBetween:distance];
     } Error:nil];
 }
-
+#pragma mark - 服务流程
 -(IBAction)submitWorkNode:(id)sender{
     
     if([self.lctitleTextField.text isEqualToString:@""]){
@@ -1330,6 +1328,17 @@
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [UIView commitAnimations];
 }
+#pragma mark - textfield delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+   
+    if ([self.lctitleTextField isFirstResponder]) {
+        // 隐藏键盘.
+        [textField resignFirstResponder];
+        return YES;
+    }
+    return YES;
+}
 
 
 -(void)dealloc{
@@ -1341,82 +1350,5 @@
     //移除名称为tongzhi的那个通知
 //    NSLog(@"移除了名称为tongzhi的通知");
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"tongzhi" object:nil];
-}
-
-
-#pragma mark - mp3转字符串
-//-(NSString *)mp3ToBASE64{
-//    if ([_filePathname isEqualToString:@"nil"] || [_filePathname isKindOfClass:[NSNull class]] || _filePathname.length ==0) {
-//
-//    }else{
-//        _filePathname = [AktUtil convertToMp3SouceFilePathName:_filePathname];
-//    }
-//    NSData *mp3Data = [NSData dataWithContentsOfFile:_filePathname];
-//    NSString *_encodedImageStr = [mp3Data base64Encoding];
-//    NSLog(@"===Encoded image:\n%@", _encodedImageStr);
-//    return _encodedImageStr;
-//}
-
-
--(NSString *)distanceBetweenOrderBy:(double) lat1 :(double) lat2 :(double) lon1 :(double) lon2{
-    double er = 6378137; // 6378700.0f;
-    //ave. radius = 6371.315 (someone said more accurate is 6366.707)
-    //equatorial radius = 6378.388
-    //nautical mile = 1.15078
-    double radlat1 = PI*lat1/180.0f;
-    double radlat2 = PI*lat2/180.0f;
-    //now long.
-    double radlong1 = PI*lon1/180.0f;
-    double radlong2 = PI*lon2/180.0f;
-    if( radlat1 < 0 ) radlat1 = PI/2 + fabs(radlat1);// south
-    if( radlat1 > 0 ) radlat1 = PI/2 - fabs(radlat1);// north
-    if( radlong1 < 0 ) radlong1 = PI*2 - fabs(radlong1);//west
-    if( radlat2 < 0 ) radlat2 = PI/2 + fabs(radlat2);// south
-    if( radlat2 > 0 ) radlat2 = PI/2 - fabs(radlat2);// north
-    if( radlong2 < 0 ) radlong2 = PI*2 - fabs(radlong2);// west
-    //spherical coordinates x=r*cos(ag)sin(at), y=r*sin(ag)*sin(at), z=r*cos(at)
-    //zero ag is up so reverse lat
-    double x1 = er * cos(radlong1) * sin(radlat1);
-    double y1 = er * sin(radlong1) * sin(radlat1);
-    double z1 = er * cos(radlat1);
-    double x2 = er * cos(radlong2) * sin(radlat2);
-    double y2 = er * sin(radlong2) * sin(radlat2);
-    double z2 = er * cos(radlat2);
-    double d = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2));
-    //side, side, side, law of cosines and arccos
-    double theta = acos((er*er+er*er-d*d)/(2*er*er));
-    double dist  = theta*er;
-    NSString * str = @"";
-    if(dist>1000){
-        dist = theta*er/1000;
-        str = [NSString stringWithFormat:@"超出%0.1f公里",dist];
-        if(self.type==0){
-            self.distanceLabel.textColor = [UIColor redColor];
-        }else{
-            self.distanceLabel.textColor = [UIColor redColor];
-        }
-    }else{
-        if(dist>500){
-            if(self.type==0){
-                self.distanceLabel.textColor = [UIColor redColor];
-            }else{
-                self.distanceLabel.textColor = [UIColor redColor];
-            }
-
-        }
-        str = [NSString stringWithFormat:@"超出%0.1f米",dist];
-    }
-    return str;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-   
-    if ([self.lctitleTextField isFirstResponder]) {
-        // 隐藏键盘.
-        [textField resignFirstResponder];
-        return YES;
-    }
-    return YES;
 }
 @end
