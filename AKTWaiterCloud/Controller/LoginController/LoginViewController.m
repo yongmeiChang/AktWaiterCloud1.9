@@ -28,6 +28,11 @@
 @property(weak,nonatomic) IBOutlet UITextField * unameText;
 @property(weak,nonatomic) IBOutlet UITextField * upswText;
 @property(weak,nonatomic) IBOutlet UIButton * qrBtn;
+// 页面控件需要做适配
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *LabTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameViewTop;
+@property (weak, nonatomic) IBOutlet UILabel *labTitle;
+@property (weak, nonatomic) IBOutlet UILabel *labSubname;
 
 @property(nonatomic,strong) NSString * registerid;
 
@@ -38,6 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"C13");
+    [self setConstraint];
     self.unameText.delegate = self;
     self.upswText.delegate = self;
     // 样式
@@ -67,6 +73,21 @@
     //开启定时器
     if(![self.cqCodeUserName isEqualToString:@""]){
         self.unameText.text = self.cqCodeUserName;
+    }
+}
+
+#pragma mark - 适配
+-(void)setConstraint{
+    if (SCREEN_WIDTH>375) {
+        self.LabTop.constant = 70;
+        self.labTitle.font = [UIFont systemFontOfSize:25];
+        self.labSubname.font = [UIFont systemFontOfSize:18];
+        self.userNameViewTop.constant = 35;
+    }else{
+        self.LabTop.constant = 60;
+        self.labTitle.font = [UIFont systemFontOfSize:22];
+              self.labSubname.font = [UIFont systemFontOfSize:16];
+        self.userNameViewTop.constant = 25;
     }
 }
 

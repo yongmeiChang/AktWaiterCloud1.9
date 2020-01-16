@@ -69,4 +69,11 @@
         [_delegate didSelectPhonecomster:phone];
     }
 }
+
+- (IBAction)btnAddressClickMap:(UIButton *)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectAddressMap)]) {
+        [_delegate didSelectAddressMap];
+    }
+}
+
 @end

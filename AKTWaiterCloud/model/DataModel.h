@@ -83,8 +83,8 @@
 @property(nonatomic,strong) NSString  <Optional>* customerName;//用户姓名
 @property(nonatomic,strong) NSString  <Optional>* customerPhone;//用户电话
 @property(nonatomic,strong) NSString  <Optional>* serviceAddress;//服务地址
-@property(nonatomic,strong) NSString  <Optional>* serviceLocationX;//20170915添加
-@property(nonatomic,strong) NSString  <Optional>* serviceLocationY;//20170915添加
+@property(nonatomic,strong) NSString  <Optional>* serviceLocationX;//20170915添加  经线 longitude
+@property(nonatomic,strong) NSString  <Optional>* serviceLocationY;//20170915添加  纬线 latitude
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaId;//
 @property(nonatomic,strong) NSString  <Optional>* serviceResult;//完成情况
 @property(nonatomic,strong) NSString  <Optional>* serviceContent;//服务内容
