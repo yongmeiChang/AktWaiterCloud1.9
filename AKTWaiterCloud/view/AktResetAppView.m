@@ -38,13 +38,19 @@
     alView.backgroundColor = kColor(@"C4");
     alView.alpha = 0.6;
     [self addSubview:alView];
-    
+   CGSize Fsize= [AktUtil getNewTextSize:updateInfo font:12 limitWidth:200];
     // 白色 背景
-    UIView *Wbg = [[UIView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-260)/2, 209, 260, 226)];
+    UIView *Wbg = [[UIView alloc] init];
     Wbg.backgroundColor = kColor(@"C3");
     [self addSubview:Wbg];
     Wbg.layer.masksToBounds = YES;
     Wbg.layer.cornerRadius = 5;
+    [Wbg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(Fsize.height+130);
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.centerY.mas_equalTo(self);
+    }];
     
     UILabel *labTilte = [[UILabel alloc] init];
     labTilte.text = @"发现新版本";
@@ -125,7 +131,7 @@
     imagTop.image = [UIImage imageNamed:@"reset"];
     [self addSubview:imagTop];
     [imagTop mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(148);
+        make.top.mas_equalTo(Wbg.mas_top).offset(-60);
         make.width.mas_equalTo(217);
         make.height.mas_equalTo(147);
         make.centerX.mas_equalTo(self);
