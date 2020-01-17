@@ -66,10 +66,9 @@
     self.finishBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
     //编辑页面成功更新头像后，返回时刷新当前页面头像
     if ([appDelegate.userinfo.icon containsString:@"http"]) {
-           [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", appDelegate.userinfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
+        self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",appDelegate.userinfo.icon]]]];
     }
-
-    NSLog(@"%@",appDelegate.userinfo.icon);
+    NSLog(@"头像：%@",appDelegate.userinfo.icon);
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图

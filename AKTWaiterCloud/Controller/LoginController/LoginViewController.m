@@ -201,10 +201,10 @@
                     } failure:^(NSError *error) {
                         
                     }];
-                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-                    }
+//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
+//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
+//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
+//                    }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];
@@ -252,10 +252,10 @@
                     } failure:^(NSError *error) {
                         
                     }];
-                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-                    }
+//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
+//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
+//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
+//                    }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];

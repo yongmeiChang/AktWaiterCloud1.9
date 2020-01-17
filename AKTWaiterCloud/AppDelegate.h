@@ -31,7 +31,7 @@ typedef NS_ENUM (NSInteger,LoginType)
 @property(nonatomic,strong) NSString * doing;//进行中数量
 @property(nonatomic,strong) NSString * finish;//已完成数量
 @property(nonatomic,strong) NSString * unsubmit;//未提交数量
-@property(nonatomic,strong) UIImage * userheadimage;//用户头像
+//@property(nonatomic,strong) UIImage * userheadimage;//用户头像
 @property(nonatomic,assign) int isrx; //是否刷新rootview 0不刷新 1刷新
 @property(strong, nonatomic) UIWindow *window;
 @property (nonatomic,strong) dispatch_semaphore_t sema;

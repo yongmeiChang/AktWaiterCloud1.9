@@ -58,7 +58,7 @@
     [super viewWillAppear:animated];
     UserFmdb * userdb = [[UserFmdb alloc] init];
     appDelegate.userinfo = [userdb findByrow:0];
-    NSLog(@"----%@",appDelegate.userinfo.icon);
+    NSLog(@"头像----%@",appDelegate.userinfo.icon);
 }
 
 #pragma mark - tableview datesouce
