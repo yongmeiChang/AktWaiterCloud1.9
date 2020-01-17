@@ -46,10 +46,15 @@
     
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
+    //去除没有数据时的分割线
+    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.taskTableview.mj_header = self.mj_header;
+    self.taskTableview.mj_footer = self.mj_footer;
+    [self.taskTableview.mj_header beginRefreshing];
 
     pageSize = 1;
     self.dataArray = [[NSMutableArray alloc] init];
-    self.dateArray = [[NSMutableArray alloc] init                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ];
+    self.dateArray = [[NSMutableArray alloc] init];
     //显示的title
     NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务"];
     self.title = titleArr[_bid];
@@ -72,8 +77,6 @@
     if(self.bid==3){
         return;
     }
-    [self initTableview];
-    [self requestTask];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -137,15 +140,6 @@
 }
 
 #pragma mark - mj
--(void)initTableview{
-    //去除没有数据时的分割线
-    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-    //去除右侧滚动条
-    self.taskTableview.showsVerticalScrollIndicator = NO;
-    
-    self.taskTableview.mj_header = self.mj_header;
-    self.taskTableview.mj_footer = self.mj_footer;
-}
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     [self.taskTableview.mj_header beginRefreshing];
     pageSize = 1;
@@ -322,7 +316,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
-    return 0.0f;
+    return 0.01f;
 }
 
 /**Cell生成*/
@@ -348,9 +342,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
-    MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
+    MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:orderinfo];
     minuteTaskContoller.type = @"1";
     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];

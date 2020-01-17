@@ -76,7 +76,7 @@
     if ([appDelegate.userinfo.icon containsString:@"http"]) {
            [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", appDelegate.userinfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
     }else{
-        self.headImageView.image = self.headimage; 
+        self.headImageView.image = self.headimage;
     }
 }
 #pragma mark - 跳转编辑视图
