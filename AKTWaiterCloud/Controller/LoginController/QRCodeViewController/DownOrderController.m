@@ -77,14 +77,14 @@
         NSLog(@"%@--%@",_servicepojInfo.serviceBegin,_servicepojInfo.serviceEnd);
         if (_servicepojInfo.serviceBegin.length>16) {
             _Date = [[NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin] substringToIndex:10];
-            _bTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin];
-            _eTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceEnd];
+            _bTime = [NSString stringWithFormat:@"%@",[_servicepojInfo.serviceBegin substringToIndex:16]];
+            _eTime = [NSString stringWithFormat:@"%@",[_servicepojInfo.serviceEnd substringToIndex:16]];
         }
         [_tableview reloadData];
     }else{
         _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
-        _bTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceBegin)];
-        _eTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceEnd)];
+        _bTime = [NSString stringWithFormat:@"%@",kString([self.dofInfo.serviceBegin substringToIndex:16])];
+        _eTime = [NSString stringWithFormat:@"%@",kString([self.dofInfo.serviceEnd substringToIndex:16])];
     }
 }
 #pragma mark - init datepickeview
@@ -374,9 +374,10 @@
         if (_type == 2) {
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             
-            _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
+            _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
+            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld",year,month,day,hour,[minute integerValue]+5];
         }else if(_type == 3){
-            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
+            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
         }
          [self.tableview reloadData];
     }else{//1002：取消

@@ -206,6 +206,7 @@
     labEnddata.font = [UIFont systemFontOfSize:16];
     labEnddata.textColor = [UIColor blackColor];
     labEnddata.textAlignment = NSTextAlignmentCenter;
+    labEnddata.text = [NSString stringWithFormat:@"%ld年%ld月%ld日",(long)currentYear,(long)currentMonth,(long)currentDay];
     [viewDateBg addSubview:labEnddata];
     
     UILabel *labI = [[UILabel alloc] init];
@@ -724,7 +725,7 @@
             }
             rowLabel.text = self.minuceRemainingArray[row];
             minuceStr = rowLabel.text;
-            labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
+//            labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
             return rowLabel;
     }
 }
