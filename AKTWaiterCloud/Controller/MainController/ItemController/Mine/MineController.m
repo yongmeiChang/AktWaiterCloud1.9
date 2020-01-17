@@ -51,14 +51,6 @@
     self.dataSourceArray = @[@"通知",@"设置"];
     [self collectionViewinit];
     [self initLayout];
-    
-    //接收登陆后后台返回的头像
-//    if(appDelegate.userheadimage){
-//        self.headImageView.image = appDelegate.userheadimage;
-//    }
-    if ([appDelegate.userinfo.icon containsString:@"http"]) {
-        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", appDelegate.userinfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
-    }
     //给整个编辑资料视图添加手势以便用户点击
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEditUserInfo)];
     [_editView addGestureRecognizer:tapGesture];
@@ -75,9 +67,9 @@
     //编辑页面成功更新头像后，返回时刷新当前页面头像
     if ([appDelegate.userinfo.icon containsString:@"http"]) {
            [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", appDelegate.userinfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
-    }else{
-        self.headImageView.image = self.headimage;
     }
+
+    NSLog(@"%@",appDelegate.userinfo.icon);
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图

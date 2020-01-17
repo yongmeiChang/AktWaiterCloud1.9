@@ -32,13 +32,17 @@
             self.labName.text = @"头像";
             self.labvalue.hidden = YES;
             self.imageValue.hidden = NO;
-            if ([kString(userInfo.icon) containsString:@"http"] && kString(userInfo.icon).length>5) {
-                [self.imageValue sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", userInfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
-            }else{
+//            if ([kString(userInfo.icon) containsString:@"http"] && kString(userInfo.icon).length>5) {
+//                [self.imageValue sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", userInfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
+//            }else{
                if (iconIamge) {
                   [self.imageValue setImage:iconIamge];
+               }else{
+                   if ([kString(userInfo.icon) containsString:@"http"] && kString(userInfo.icon).length>5) {
+                        [self.imageValue sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", userInfo.icon]] placeholderImage:[UIImage imageNamed:@"defaultuserhead"]];
+                   }
                }
-            }
+//            }
           
          }
             break;

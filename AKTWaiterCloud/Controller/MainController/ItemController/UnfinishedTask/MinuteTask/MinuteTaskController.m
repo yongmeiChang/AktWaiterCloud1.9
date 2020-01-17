@@ -280,37 +280,43 @@
         if([code intValue]==1){
             NSArray * obj = dic[@"object"];
             if(obj.count>0){
-                NSDictionary * object = obj[0];
-                NSString * affixName = object[@"affixUrl"];
-                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                UIView * popview = [[UIView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                
+                UIView * popview = [[UIView alloc] init];
                 popview.backgroundColor = [UIColor grayColor];
-                //popview.alpha=0.7;
-                UIButton * closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
                 [popview setTag:10];
+                [self.view addSubview:popview];
+
+                UIScrollView *scollBg = [[UIScrollView alloc] init];
+                scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
+                scollBg.pagingEnabled = YES;
+                [popview addSubview:scollBg];
                 
-                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                [popview addSubview:photoImageView];
-                photoImageView.image = [UIImage imageWithData:imageData];
+                for (int i = 0; i<obj.count; i++) {
+                    NSDictionary * object = obj[i];
+                    NSString * affixName = object[@"affixUrl"];
+                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                    UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                    photoImageView.image = [UIImage imageWithData:imageData];
+                    [scollBg addSubview:photoImageView];
+                    
+                }
                 
+                UIButton * closeBtn = [[UIButton alloc] init];
                 [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
                 [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
                 [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                 [popview addSubview: closeBtn];
-                
-                [self.view addSubview:popview];
-                
+
                 [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                    if(KIsiPhoneX){
-                        make.top.mas_equalTo(128);
-                    }else{
-                        make.top.mas_equalTo(104);
-                    }
-                    make.left.mas_equalTo(40);
-                    make.right.mas_equalTo(-40);
-                    make.bottom.mas_equalTo(-80);
+                    make.top.mas_equalTo(AktNavAndStatusHight);
+                    make.left.mas_equalTo(0);
+                    make.right.mas_equalTo(0);
+                    make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+                }];
+                [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.bottom.left.right.mas_equalTo(0);
                 }];
                 
                 [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -320,9 +326,6 @@
                     make.height.mas_equalTo(30);
                 }];
                 
-                [photoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.top.right.bottom.mas_equalTo(0);
-                }];
             }
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
@@ -349,40 +352,43 @@
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
             NSArray * obj = dic[@"object"];
-            UIImageView * photoImageView;
             
-            UIView * popview = [[UIView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            UIView * popview = [[UIView alloc] init];
             popview.backgroundColor = [UIColor grayColor];
-                       //popview.alpha=0.7;
             [self.view addSubview:popview];
+            
+            UIScrollView *scollBg = [[UIScrollView alloc] init];
+            scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
+            scollBg.pagingEnabled = YES;
+            [popview addSubview:scollBg];
             
             for (int i = 0; i<obj.count; i++) {
                 NSDictionary * object = obj[i];
                 NSString * affixName = object[@"affixUrl"];
                 NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
                 NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH*i, SCREEN_HEIGHT)];
-                [popview addSubview:photoImageView];
+                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
                 photoImageView.image = [UIImage imageWithData:imageData];
+                [scollBg addSubview:photoImageView];
+                
             }
             
-            UIButton * closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+            UIButton * closeBtn = [[UIButton alloc] init];
                 [popview setTag:10];
                 [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
                 [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
                 [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                 [popview addSubview: closeBtn];
-            
+         
             [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                if(KIsiPhoneX){
-                    make.top.mas_equalTo(128);
-                }else{
-                    make.top.mas_equalTo(104);
-                }
-                make.left.mas_equalTo(40);
-                make.right.mas_equalTo(-40);
-                make.bottom.mas_equalTo(-80);
+                make.top.mas_equalTo(AktNavAndStatusHight);
+                make.left.mas_equalTo(0);
+                make.right.mas_equalTo(0);
+                make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+            }];
+            [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.bottom.left.right.mas_equalTo(0);
             }];
             
             [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -392,9 +398,6 @@
                 make.height.mas_equalTo(30);
             }];
             
-            [photoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.right.bottom.mas_equalTo(0);
-            }];
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
