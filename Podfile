@@ -22,6 +22,5 @@ target 'AKTWaiterCloud' do
     pod 'MJRefresh' #下拉刷新
 #    pod 'lame'
     pod 'SDWebImage','~> 4.0.0'
-    pod 'IQKeyboardManager' #键盘
-
+    pod 'IQKeyboardManager'  #键盘
 end
