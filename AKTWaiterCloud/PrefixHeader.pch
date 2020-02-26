@@ -107,7 +107,8 @@ static const int ddLogLevel = DDLogLevelError;
 
 //正式环境
 //#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service/appNewService"
-#define SERVICEURL @"http://172.16.100.59:8089/ankangtong-outwork/appService"
+//#define SERVICEURL @"http://172.16.100.59:8089/ankangtong-outwork/appService"
+#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
 // 测试环境
 //#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
 
