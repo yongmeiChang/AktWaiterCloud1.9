@@ -25,7 +25,7 @@
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;
     // 距离
-    NSMutableAttributedString *strDis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离：%@米",kString(orderinfo.signInDistance).length == 0 ? @"无":orderinfo.signInDistance] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName: kColor(@"C1")}];
+    NSMutableAttributedString *strDis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离：%@",kString(orderinfo.signInDistance).length == 0 ? @"无":orderinfo.signInDistance] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName: kColor(@"C1")}];
     [strDis addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDistanceLabel.attributedText = strDis;
     // 状态
@@ -49,7 +49,7 @@
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;
     // 距离
-    NSMutableAttributedString *strDis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离：%@米",kString(orderinfo.signOutDistance).length == 0 ? @"无":orderinfo.signOutDistance] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName: kColor(@"C1")}];
+    NSMutableAttributedString *strDis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离：%@",kString(orderinfo.signOutDistance).length == 0 ? @"无":orderinfo.signOutDistance] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName: kColor(@"C1")}];
     [strDis addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDistanceLabel.attributedText = strDis;
     // 状态

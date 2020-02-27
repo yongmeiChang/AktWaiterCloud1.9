@@ -85,8 +85,8 @@
 @property (nonatomic,strong) AMapSearchAPI * searchAPI;  // 逆地理编码
 @property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标
 @property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标
-//@property (nonatomic,strong) NSString * local;//定位的当前位置
-//@property (nonatomic,strong) NSString * rangStr;//计算出的距离
+@property (nonatomic,strong) NSString * statusPost;   // 状态  2020、2、27 更改提交数据
+//@property (nonatomic,strong) NSString * distancePost; // 距离
 
 
 @end
@@ -948,23 +948,30 @@
                  if (self.type ==0) {
                      self.distanceLabel.textColor = [UIColor redColor];
                      self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
+                     self.statusPost = @"签入定位异常";
                  }else{
                      self.distanceLabel.textColor = [UIColor redColor];
                      self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
+                     self.statusPost = @"签出定位异常";
                  }
+        
     }else if (distance>500){
             if (self.type ==0) {
                 self.distanceLabel.textColor = [UIColor redColor];
                 self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
+                self.statusPost = @"签入定位异常";
             }else{
                 self.distanceLabel.textColor = [UIColor redColor];
                 self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
+                self.statusPost = @"签出定位异常";
             }
     }else{
             if (self.type ==0) {
                 self.distanceLabel.text = @"正常";
+                self.statusPost = @"签入定位正常";
             }else{
                 self.distanceLabel.text = @"正常";
+                self.statusPost = @"签出定位正常";
             }
     }
 }
@@ -1156,7 +1163,7 @@
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signOutLocationY"];
         [param addUnEmptyString:self.distanceLabel.text forKey:@"signOutDistance"];// 签出距离
-        [param addUnEmptyString:self.distanceLabel.text forKey:@"signOutStatus"]; // 签出状态
+        [param addUnEmptyString:self.statusPost forKey:@"signOutStatus"]; // 签出状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signOutLocation"]; // 签出 当前地址
         [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
         [param addUnEmptyString:self.nowdate forKey:@"actrueEnd"];
@@ -1206,7 +1213,7 @@
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distanceLabel.text forKey:@"signInDistance"];
-        [param addUnEmptyString:self.distanceLabel.text forKey:@"signInStatus"];
+        [param addUnEmptyString:self.statusPost forKey:@"signInStatus"];
         [param addUnEmptyString:self.addressLabel.text forKey:@"signInLocation"];
         [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
         [param addUnEmptyString:self.nowdate forKey:@"actrueBegin"];
