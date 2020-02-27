@@ -84,7 +84,7 @@
     calendar.pagingEnabled = YES; // 翻页
     calendar.allowsMultipleSelection = YES;
     calendar.rowHeight = 60;
-//    calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 六行
+    calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 六行
     calendar.scrollDirection = FSCalendarScrollDirectionHorizontal;  // 横行滑动
     [viewWhite addSubview:calendar];
     self.calendar = calendar;
