@@ -27,6 +27,7 @@
 #import "AppInfoDefult.h"
 #import "SinoutReasonView.h" // 提交失败的原因
 #import "AktWCMp3.h" // 录音
+#import "AddWaterMark.h" // 水印
 
 #define PI 3.1415926
 @interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
@@ -1287,6 +1288,15 @@
 }
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
+    // 水印内容
+    NSString *strMark = [NSString stringWithFormat:@"安康通\n%@\n%@",[AktUtil getNowDateAndTime],self.addressLabel.text];
+    // 水印
+    AddWaterMark *mark = [[AddWaterMark alloc] init];
+    mark.textFont = [UIFont fontWithName:@"PingFang SC" size:14];
+    mark.textFontSubtitle = [UIFont fontWithName:@"PingFang SC" size:10];
+    mark.textColor = [UIColor grayColor];
+    image = [mark addWaterMark:image watemarkText:strMark];
+
     NSData *data = UIImageJPEGRepresentation(image, 0.5f);
 //    NSString * mimeType = @"image/jpeg";
 //    NSString *encodedImageStr = [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,[data base64EncodedStringWithOptions: 0]];
