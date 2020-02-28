@@ -10,7 +10,7 @@
 
 @protocol PlanTaskPhoneDelegate <NSObject>
 -(void)didSelectPhonecomster:(NSString *)phone;
-
+-(void)didSelectAddressMap;
 @end
 
 typedef void(^ContinuityLocation)(UIButton*);

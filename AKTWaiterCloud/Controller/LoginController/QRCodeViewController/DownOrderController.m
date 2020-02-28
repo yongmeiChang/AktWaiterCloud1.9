@@ -298,9 +298,11 @@
         }else if (indexPath.row == 1){
             cell.labValue.text = _Date;
         }else if (indexPath.row == 2){
-             cell.labValue.text = _bTime;
+            NSArray *array = [_bTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]];
         }else{
-            cell.labValue.text = _eTime;
+            NSArray *eTimeArray = [_bTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];
         }
         return cell;
         
@@ -375,8 +377,9 @@
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             
             _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
+            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
         }else if(_type == 3){
-            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
+            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:59",year,month,day,hour,minute];
         }
          [self.tableview reloadData];
     }else{//1002：取消

@@ -23,7 +23,7 @@
     NSString *strLast; // 结束日期
 }
 
-@property (weak, nonatomic) FSCalendar *calendar;
+@property (strong, nonatomic) FSCalendar *calendar;
 
 @property (weak, nonatomic) UILabel *eventLabel;
 @property (strong, nonatomic) NSCalendar *gregorian;
@@ -78,30 +78,31 @@
         make.height.mas_equalTo(44);
     }];
     
-    FSCalendar *calendar = [[FSCalendar alloc] init];
-    calendar.dataSource = self;
-    calendar.delegate = self;
-    calendar.pagingEnabled = YES; // 翻页
-    calendar.allowsMultipleSelection = YES;
-    calendar.rowHeight = 60;
-//    calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 六行
-    calendar.scrollDirection = FSCalendarScrollDirectionHorizontal;  // 横行滑动
-    [viewWhite addSubview:calendar];
-    self.calendar = calendar;
+    self.calendar = [[FSCalendar alloc] init];
+    self.calendar.dataSource = self;
+    self.calendar.delegate = self;
+    self.calendar.pagingEnabled = YES; // 翻页
+    self.calendar.allowsMultipleSelection = YES;
+    self.calendar.rowHeight = 60;
+    self.calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail; // 日历显示类型 无 适应 六行
+    self.calendar.scrollDirection = FSCalendarScrollDirectionHorizontal;  // 横行滑动
+    [viewWhite addSubview:self.calendar];
+//    self.calendar = calendar;
     self.calendar.appearance.separators = FSCalendarSeparatorInterRows; // 横线
-    calendar.appearance.headerMinimumDissolvedAlpha = 0;
-    calendar.appearance.titleDefaultColor = [UIColor blackColor]; // 日历 文字颜色
-    calendar.appearance.headerTitleColor = [UIColor blackColor]; // 标题颜色
-    calendar.appearance.headerDateFormat = @"yyyy年MM月";
-    calendar.appearance.titleFont = [UIFont systemFontOfSize:16];
-    calendar.weekdayHeight = 50; // 星期 的高度
-    calendar.appearance.weekdayTextColor = [UIColor blackColor]; // 星期 字体颜色
+    self.calendar.appearance.headerMinimumDissolvedAlpha = 0;
+    self.calendar.appearance.titleDefaultColor = [UIColor blackColor]; // 日历 文字颜色
+    self.calendar.appearance.headerTitleColor = [UIColor blackColor]; // 标题颜色
+    self.calendar.appearance.headerDateFormat = @"yyyy年MM月";
+    self.calendar.appearance.titleFont = [UIFont systemFontOfSize:16];
+    self.calendar.weekdayHeight = 50; // 星期 的高度
+    self.calendar.appearance.weekdayTextColor = [UIColor blackColor]; // 星期 字体颜色
+    self.calendar.appearance.caseOptions = FSCalendarCaseOptionsWeekdayUsesSingleUpperCase; // 设置周次为 一 二
     
-    calendar.swipeToChooseGesture.enabled = YES;
-    calendar.today = nil; // Hide the today circle
-    [calendar registerClass:[RangePickerCell class] forCellReuseIdentifier:@"cell"];
-    [calendar appearance].subtitleOffset = CGPointMake(0, 10);  // 日期的副标题
-    [calendar mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.calendar.swipeToChooseGesture.enabled = YES;
+    self.calendar.today = nil; // Hide the today circle
+    [self.calendar registerClass:[RangePickerCell class] forCellReuseIdentifier:@"cell"];
+    [self.calendar appearance].subtitleOffset = CGPointMake(0, 10);  // 日期的副标题
+    [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.top.mas_equalTo(viewTitleClose.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
@@ -117,7 +118,7 @@
     [viewWhite addSubview:previousButton];
     [previousButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self);
-        make.top.mas_equalTo(calendar.mas_top);
+        make.top.mas_equalTo(self.calendar.mas_top);
         make.width.mas_equalTo(64);
         make.height.mas_equalTo(44);
     }];
@@ -130,7 +131,7 @@
     [viewWhite addSubview:nextButton];
     [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self);
-        make.top.mas_equalTo(calendar.mas_top);
+        make.top.mas_equalTo(self.calendar.mas_top);
         make.width.mas_equalTo(64);
         make.height.mas_equalTo(44);
     }];
@@ -144,7 +145,7 @@
     [viewWhite addSubview:self.btnReset];
     [self.btnReset mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
-        make.top.mas_equalTo(calendar.mas_bottom);
+        make.top.mas_equalTo(self.calendar.mas_bottom);
         make.height.mas_equalTo(49);
         make.width.mas_equalTo(138);
     }];
@@ -157,8 +158,8 @@
     [self.btnSure addTarget:self action:@selector(btnSureClick:) forControlEvents:UIControlEventTouchUpInside];
     [viewWhite addSubview:self.btnSure];
     [self.btnSure mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(calendar.mas_right);
-        make.top.mas_equalTo(calendar.mas_bottom);
+        make.right.mas_equalTo(self.calendar.mas_right);
+        make.top.mas_equalTo(self.calendar.mas_bottom);
         make.height.mas_equalTo(49);
         make.left.mas_equalTo(self.btnReset.mas_right);
     }];

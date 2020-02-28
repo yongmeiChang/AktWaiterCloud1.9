@@ -12,6 +12,7 @@
 
 #import "CheckObject.h"
 #import "AppDelegate.h"
+#import <MapKit/MapKit.h>
 #import "PhoneSize.h"
 #import "BaseControllerViewController.h"
 #import "LoginRequest.h"
@@ -81,7 +82,6 @@
 
 #define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
 
-
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
@@ -107,10 +107,11 @@ static const int ddLogLevel = DDLogLevelError;
 
 //正式环境
 //#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service/appNewService"
+//#define SERVICEURL @"http://172.16.100.59:8089/ankangtong-outwork/appService"
+#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
 // 测试环境
-//#define SERVICEURL @"http://223.99.6.252:18081/ankangtong-service/appNewService"
-#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
-//#define SERVICEURL @"http://172.16.30.32:8081/ankangtong-outwork/appService"
+//#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
+
 // App Store
 #define appstoreURl @"https://itunes.apple.com/cn/"
 

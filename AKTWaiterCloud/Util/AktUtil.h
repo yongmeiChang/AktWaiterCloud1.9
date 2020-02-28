@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(NSDate *)StringtoDate:(NSString *)dateStr;
 
+// 计算字符串的size
++ (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,7 +14,13 @@
 #import "EditOrderController.h"
 #import "VisitCell.h"
 #import "NoDateCell.h"
+#import <CoreLocation/CoreLocation.h>
 @interface MinuteTaskController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,PlanTaskPhoneDelegate>
+{
+    CLGeocoder *_geocoder;
+    NSString *_latitude;//纬度
+    NSString *_longitude;//经度
+}
 @property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @property(nonatomic,strong) OrderInfo * orderinfo;
 @property(weak,nonatomic) IBOutlet UITableView * minuteTaskTableView;
@@ -59,6 +65,8 @@
     }else{ // 任务
         self.viewHeightConstraint.constant = 84;
     }
+    _geocoder=[[CLGeocoder alloc]init];
+    [self getCoordinateByAddress:self.orderinfo.serviceAddress];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -272,37 +280,43 @@
         if([code intValue]==1){
             NSArray * obj = dic[@"object"];
             if(obj.count>0){
-                NSDictionary * object = obj[0];
-                NSString * affixName = object[@"affixUrl"];
-                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                UIView * popview = [[UIView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                
+                UIView * popview = [[UIView alloc] init];
                 popview.backgroundColor = [UIColor grayColor];
-                //popview.alpha=0.7;
-                UIButton * closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
                 [popview setTag:10];
+                [self.view addSubview:popview];
+
+                UIScrollView *scollBg = [[UIScrollView alloc] init];
+                scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
+                scollBg.pagingEnabled = YES;
+                [popview addSubview:scollBg];
                 
-                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                [popview addSubview:photoImageView];
-                photoImageView.image = [UIImage imageWithData:imageData];
+                for (int i = 0; i<obj.count; i++) {
+                    NSDictionary * object = obj[i];
+                    NSString * affixName = object[@"affixUrl"];
+                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                    UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                    photoImageView.image = [UIImage imageWithData:imageData];
+                    [scollBg addSubview:photoImageView];
+                    
+                }
                 
+                UIButton * closeBtn = [[UIButton alloc] init];
                 [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
                 [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
                 [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                 [popview addSubview: closeBtn];
-                
-                [self.view addSubview:popview];
-                
+
                 [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                    if(KIsiPhoneX){
-                        make.top.mas_equalTo(128);
-                    }else{
-                        make.top.mas_equalTo(104);
-                    }
-                    make.left.mas_equalTo(40);
-                    make.right.mas_equalTo(-40);
-                    make.bottom.mas_equalTo(-80);
+                    make.top.mas_equalTo(AktNavAndStatusHight);
+                    make.left.mas_equalTo(0);
+                    make.right.mas_equalTo(0);
+                    make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+                }];
+                [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.bottom.left.right.mas_equalTo(0);
                 }];
                 
                 [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -312,9 +326,6 @@
                     make.height.mas_equalTo(30);
                 }];
                 
-                [photoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.top.right.bottom.mas_equalTo(0);
-                }];
             }
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
@@ -341,37 +352,43 @@
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
             NSArray * obj = dic[@"object"];
-            NSDictionary * object = obj[0];
-            NSString * affixName = object[@"affixUrl"];
-            NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-            NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            UIView * popview = [[UIView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            
+            UIView * popview = [[UIView alloc] init];
             popview.backgroundColor = [UIColor grayColor];
-            //popview.alpha=0.7;
-            UIButton * closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-            [popview setTag:10];
-            
-            UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-            [popview addSubview:photoImageView];
-            photoImageView.image = [UIImage imageWithData:imageData];
-            
-            [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-            [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
-            [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-            [popview addSubview: closeBtn];
-            
             [self.view addSubview:popview];
             
+            UIScrollView *scollBg = [[UIScrollView alloc] init];
+            scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
+            scollBg.pagingEnabled = YES;
+            [popview addSubview:scollBg];
+            
+            for (int i = 0; i<obj.count; i++) {
+                NSDictionary * object = obj[i];
+                NSString * affixName = object[@"affixUrl"];
+                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                photoImageView.image = [UIImage imageWithData:imageData];
+                [scollBg addSubview:photoImageView];
+                
+            }
+            
+            UIButton * closeBtn = [[UIButton alloc] init];
+                [popview setTag:10];
+                [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
+                [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
+                [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+                [popview addSubview: closeBtn];
+         
             [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                if(KIsiPhoneX){
-                    make.top.mas_equalTo(128);
-                }else{
-                    make.top.mas_equalTo(104);
-                }
-                make.left.mas_equalTo(40);
-                make.right.mas_equalTo(-40);
-                make.bottom.mas_equalTo(-80);
+                make.top.mas_equalTo(AktNavAndStatusHight);
+                make.left.mas_equalTo(0);
+                make.right.mas_equalTo(0);
+                make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+            }];
+            [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.bottom.left.right.mas_equalTo(0);
             }];
             
             [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -381,9 +398,6 @@
                 make.height.mas_equalTo(30);
             }];
             
-            [photoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.right.bottom.mas_equalTo(0);
-            }];
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
@@ -393,10 +407,97 @@
         [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
-#pragma mark - call phone
+#pragma mark - cell phone
 -(void)didSelectPhonecomster:(NSString *)phone{
     NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",phone];
       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:@{} completionHandler:nil];
+}
+-(void)didSelectAddressMap{
+    
+    NSMutableArray *maps = [NSMutableArray array];
+     //苹果原生地图-苹果原生地图方法和其他不一样
+     NSMutableDictionary *iosMapDic = [NSMutableDictionary dictionary];
+     iosMapDic[@"title"] = @"苹果地图";
+     [maps addObject:iosMapDic];
+     //百度地图
+     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
+      NSMutableDictionary *baiduMapDic = [NSMutableDictionary dictionary];
+      baiduMapDic[@"title"] = @"百度地图";
+      NSString *urlString = [[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=%@&mode=driving&coord_type=gcj02",self.orderinfo.serviceAddress] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      baiduMapDic[@"url"] = urlString;
+      [maps addObject:baiduMapDic];
+     }
+     //高德地图
+     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]) {
+      NSMutableDictionary *gaodeMapDic = [NSMutableDictionary dictionary];
+      gaodeMapDic[@"title"] = @"高德地图";
+      NSString *urlString = [[NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=%@&lat=%@&lon=%@&dev=0&style=2",@"路线功能",@"nav123456",_latitude,_longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      gaodeMapDic[@"url"] = urlString;
+      [maps addObject:gaodeMapDic];
+     }
+     //谷歌地图
+    /* if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]) {
+      NSMutableDictionary *googleMapDic = [NSMutableDictionary dictionary];
+      googleMapDic[@"title"] = @"谷歌地图";
+         NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%@&directionsmode=driving",@"导航功能",@"nav123456",self.orderinfo.serviceAddress] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      googleMapDic[@"url"] = urlString;
+      [maps addObject:googleMapDic];
+     }*/
+     //腾讯地图
+     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"qqmap://"]]) {
+      NSMutableDictionary *qqMapDic = [NSMutableDictionary dictionary];
+      qqMapDic[@"title"] = @"腾讯地图";
+      NSString *urlString = [[NSString stringWithFormat:@"qqmap://map/routeplan?from=我的位置&type=drive&tocoord=%@,%@&to=终点&coord_type=1&policy=0",_latitude, _longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      qqMapDic[@"url"] = urlString;
+      [maps addObject:qqMapDic];
+     }
+     //选择
+     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"选择地图" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+     NSInteger index = maps.count;
+     for (int i = 0; i < index; i++) {
+      NSString * title = maps[i][@"title"];
+      //苹果原生地图方法
+      if (i == 0) {
+       UIAlertAction * action = [UIAlertAction actionWithTitle:title style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        [self navAppleMapnavAppleMapWithArray];
+       }];
+       [alert addAction:action];
+       continue;
+      }
+      UIAlertAction * action = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       NSString *urlString = maps[i][@"url"];
+          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:nil];
+      }];
+      [alert addAction:action];
+     }
+     UIAlertAction * action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+     }];
+     [alert addAction:action];
+//     [[CPBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
+     [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+#pragma mark - 苹果地图
+//苹果地图
+- (void)navAppleMapnavAppleMapWithArray
+{
+ float lat = [NSString stringWithFormat:@"%@",_latitude].floatValue;
+ float lon = [NSString stringWithFormat:@"%@",_longitude].floatValue;
+ //终点坐标
+ CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
+ //用户位置
+ MKMapItem *currentLoc = [MKMapItem mapItemForCurrentLocation];
+ //终点位置
+ MKMapItem *toLocation = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:loc addressDictionary:nil] ];
+ NSArray *items = @[currentLoc,toLocation];
+ //第一个
+ NSDictionary *dic = @{       MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving,       MKLaunchOptionsMapTypeKey : @(MKMapTypeStandard),       MKLaunchOptionsShowsTrafficKey : @(YES)
+       };
+ //第二个，都可以用
+ // NSDictionary * dic = @{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+ //       MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]};
+ [MKMapItem openMapsWithItems:items launchOptions:dic];
 }
 
 //日期比较
@@ -419,4 +520,24 @@
     }//否则手势存在
     return YES;
 }
+#pragma mark - 地址转化坐标
+-(void)getCoordinateByAddress:(NSString *)address{
+    //地理编码
+     [_geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+         //取得第一个地标，地标中存储了详细的地址信息，注意：一个地名可能搜索出多个地址
+           CLPlacemark *placemark=[placemarks firstObject];
+           CLLocation *location=placemark.location;//位置
+
+           CLLocationDegrees latitude=location.coordinate.latitude;
+           CLLocationDegrees longitude=location.coordinate.longitude;
+           NSLog(@"纬度-->%lf,经度-->%lf",latitude,longitude);
+           
+           //传给接口的纬度和经度
+           _latitude=[NSString stringWithFormat:@"%lf",latitude];
+
+           _longitude=[NSString stringWithFormat:@"%lf",longitude];
+     }];
+
+}
+
 @end

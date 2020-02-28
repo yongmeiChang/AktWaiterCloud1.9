@@ -145,4 +145,14 @@
     return date;
 }
 
++ (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width{
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+    paragraph.alignment = NSLineBreakByWordWrapping;
+    UIFont *font = [UIFont systemFontOfSize:_font];
+    if (_font == 22)
+        font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:22];
+    NSDictionary *attribute = @{NSFontAttributeName:font, NSParagraphStyleAttributeName: paragraph};
+    return [_text boundingRectWithSize:CGSizeMake(_width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil].size;
+}
+
 @end

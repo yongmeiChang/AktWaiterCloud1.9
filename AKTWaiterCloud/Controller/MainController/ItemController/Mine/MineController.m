@@ -41,7 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DDLogInfo(@"点击了我的item");
+    DDLogInfo(@"个人");
     self.view.backgroundColor = kColor(@"B2");
     self.renZhengView.layer.masksToBounds = YES;
     self.renZhengView.layer.cornerRadius = self.renZhengView.frame.size.height/2;
@@ -51,12 +51,6 @@
     self.dataSourceArray = @[@"通知",@"设置"];
     [self collectionViewinit];
     [self initLayout];
-    
-    //接收登陆后后台返回的头像
-    if(appDelegate.userheadimage){
-        self.headImageView.image = appDelegate.userheadimage;
-    }
-    
     //给整个编辑资料视图添加手势以便用户点击
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEditUserInfo)];
     [_editView addGestureRecognizer:tapGesture];
@@ -67,14 +61,14 @@
     self.unfinishBtn.shouldHideBadgeAtZero = YES;
     self.ongoingBtn.shouldHideBadgeAtZero = YES;
     self.finishBtn.shouldHideBadgeAtZero = YES;
-     NSLog(@"--:%@:---:%@:---:%@:",appDelegate.unfinish,appDelegate.doing,appDelegate.finish);
     self.unfinishBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
     self.ongoingBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
     self.finishBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
     //编辑页面成功更新头像后，返回时刷新当前页面头像
-    if(self.headimage){
-        self.headImageView.image = self.headimage;
+    if ([appDelegate.userinfo.icon containsString:@"http"]) {
+        self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",appDelegate.userinfo.icon]]]];
     }
+    NSLog(@"头像：%@",appDelegate.userinfo.icon);
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图
@@ -114,7 +108,6 @@
 #pragma mark -  点击事件 目前除了设置按钮都不开放
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
-    NSLog(@"点击了,%ld",(long)index);
    switch (index) {
        case 0:{
            NotifyController * notifyController = [[NotifyController alloc]init];
@@ -187,7 +180,6 @@
 #pragma mark - click
 -(IBAction)unfinshBtn:(id)sender
 {
-    DDLogInfo(@"点击了待完成按钮");
     UnfinifshController * ovcontroller = [[UnfinifshController alloc]init];
     //隐藏导航栏
     ovcontroller.hidesBottomBarWhenPushed = YES;
