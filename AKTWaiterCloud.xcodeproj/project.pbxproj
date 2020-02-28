@@ -55,6 +55,9 @@
 		4C869A8B24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
+		4C869A91240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
+		4C869A92240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
+		4C869A93240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
 		4C89D65523A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
 		4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
 		4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
@@ -334,6 +337,8 @@
 		4C869A782407BD660018B943 /* FSCalendarAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarAppearance.m; sourceTree = "<group>"; };
 		4C869A8924092B390018B943 /* ZHAttributeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHAttributeTextView.m; sourceTree = "<group>"; };
 		4C869A8A24092B390018B943 /* ZHAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHAttributeTextView.h; sourceTree = "<group>"; };
+		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
+		4C869A90240940700018B943 /* AddWaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWaterMark.m; sourceTree = "<group>"; };
 		4C89D65223A74E560024456F /* AKTSearchInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTSearchInfoVC.m; sourceTree = "<group>"; };
 		4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKTSearchInfoVC.xib; sourceTree = "<group>"; };
 		4C89D65423A74E560024456F /* AKTSearchInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTSearchInfoVC.h; sourceTree = "<group>"; };
@@ -717,6 +722,15 @@
 			path = FSCalendar;
 			sourceTree = "<group>";
 		};
+		4C869A8E240940700018B943 /* CzJWaterMark */ = {
+			isa = PBXGroup;
+			children = (
+				4C869A8F240940700018B943 /* AddWaterMark.h */,
+				4C869A90240940700018B943 /* AddWaterMark.m */,
+			);
+			path = CzJWaterMark;
+			sourceTree = "<group>";
+		};
 		4C89D65123A74E560024456F /* AktSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -969,6 +983,7 @@
 		AD4A446B1F8C6FB700D6E5C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4C869A8E240940700018B943 /* CzJWaterMark */,
 				4C869A8A24092B390018B943 /* ZHAttributeTextView.h */,
 				4C869A8924092B390018B943 /* ZHAttributeTextView.m */,
 				4C4AD8F723B34350005DEDE4 /* rangePicker */,
@@ -1650,6 +1665,7 @@
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
 				AD552F481F8F651E001FFE1C /* DicToString.m in Sources */,
 				4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
+				4C869A91240940700018B943 /* AddWaterMark.m in Sources */,
 				ADDCEDE91FAB202800BB14A6 /* UnfinishOrderTaskController.m in Sources */,
 				AD6410742086DF3D003916D9 /* AddressView.m in Sources */,
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
@@ -1726,6 +1742,7 @@
 				4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
+				4C869A92240940700018B943 /* AddWaterMark.m in Sources */,
 				4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
@@ -1761,6 +1778,7 @@
 				4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
+				4C869A93240940700018B943 /* AddWaterMark.m in Sources */,
 				4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
