@@ -58,6 +58,9 @@
 		4C869A91240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
 		4C869A92240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
 		4C869A93240940700018B943 /* AddWaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A90240940700018B943 /* AddWaterMark.m */; };
+		4C869A96240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
+		4C869A97240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
+		4C869A98240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
 		4C89D65523A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
 		4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
 		4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
@@ -339,6 +342,7 @@
 		4C869A8A24092B390018B943 /* ZHAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHAttributeTextView.h; sourceTree = "<group>"; };
 		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
 		4C869A90240940700018B943 /* AddWaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWaterMark.m; sourceTree = "<group>"; };
+		4C869A95240943FE0018B943 /* AktAgreement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = AktAgreement.html; sourceTree = "<group>"; };
 		4C89D65223A74E560024456F /* AKTSearchInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTSearchInfoVC.m; sourceTree = "<group>"; };
 		4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKTSearchInfoVC.xib; sourceTree = "<group>"; };
 		4C89D65423A74E560024456F /* AKTSearchInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTSearchInfoVC.h; sourceTree = "<group>"; };
@@ -729,6 +733,14 @@
 				4C869A90240940700018B943 /* AddWaterMark.m */,
 			);
 			path = CzJWaterMark;
+			sourceTree = "<group>";
+		};
+		4C869A94240943FE0018B943 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				4C869A95240943FE0018B943 /* AktAgreement.html */,
+			);
+			path = html;
 			sourceTree = "<group>";
 		};
 		4C89D65123A74E560024456F /* AktSearch */ = {
@@ -1248,6 +1260,7 @@
 		ADD789151F7DF730008DEC55 /* AKTWaiterCloud */ = {
 			isa = PBXGroup;
 			children = (
+				4C869A94240943FE0018B943 /* html */,
 				AD31D5731FECDF1E00DB7C46 /* Mytableview */,
 				AD56A0D51F973933004C956C /* AKTWaiterCloud.entitlements */,
 				4CAED3F623B9FBEC00BAF2E3 /* model */,
@@ -1463,6 +1476,7 @@
 				AD472F321FC550050065C934 /* UnfinifshController.xib in Resources */,
 				AD4DAACE1F8F093800610281 /* AboutUsController.xib in Resources */,
 				4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
+				4C869A96240943FE0018B943 /* AktAgreement.html in Resources */,
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
 				AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */,
 				ADD836062057C0140003A1C5 /* NotifyCell.xib in Resources */,
@@ -1514,6 +1528,7 @@
 			files = (
 				4C158A152403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67423A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
+				4C869A97240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C89D66B23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F022E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
@@ -1527,6 +1542,7 @@
 			files = (
 				4C158A162403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67523A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
+				4C869A98240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C89D66C23A769A70024456F /* SignInVC.xib in Resources */,
 				4CD674F122E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */,

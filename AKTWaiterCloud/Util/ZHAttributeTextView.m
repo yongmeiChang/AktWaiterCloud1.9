@@ -14,20 +14,32 @@
     if (self) {
         // 左侧是否选中按钮
         self.leftAgreeBtn = [UIButton buttonWithType:0];
-//        self.leftAgreeBtn.backgroundColor = [UIColor cyanColor];
-        self.leftAgreeBtn.frame = CGRectMake(35, 0, 35, self.bounds.size.height);
         [self.leftAgreeBtn addTarget:self action:@selector(leftAgreeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_normal.png"] forState:UIControlStateNormal];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_select.png"] forState:UIControlStateSelected];
         [self addSubview:self.leftAgreeBtn];
 
         // 右侧的富文本
-        _myTextView = [[UITextView alloc]initWithFrame:CGRectMake(self.leftAgreeBtn.frame.origin.x+self.leftAgreeBtn.frame.size.width, 0, self.bounds.size.width - 35, self.bounds.size.height)];
-//        _myTextView.backgroundColor = [UIColor brownColor];
+        _myTextView = [[UITextView alloc]init];
         _myTextView.delegate = self;
         _myTextView.editable = NO;        // 禁止输入，否则会弹出输入键盘
         _myTextView.scrollEnabled = NO;   // 可选的，视具体情况而定
         [self addSubview:_myTextView];
+        [_myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(self.bounds.size.width - 35);
+            make.height.mas_equalTo(self.bounds.size.height);
+            make.centerX.mas_equalTo(self.mas_centerX).offset(35);
+            make.centerY.mas_equalTo(self.mas_centerY);
+        }];
+        
+        [self.leftAgreeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(_myTextView.mas_left);
+            make.width.mas_equalTo(35);
+            make.height.mas_equalTo(self.bounds.size.height);
+            make.centerY.mas_equalTo(self.mas_centerY);
+            
+        }];
+        
     }
     return self;
     
