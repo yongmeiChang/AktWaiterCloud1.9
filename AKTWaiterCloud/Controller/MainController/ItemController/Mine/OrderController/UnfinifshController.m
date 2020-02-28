@@ -185,7 +185,7 @@
         [self.dataArray removeAllObjects];
     }
     NSLog(@"%@",appDelegate.userinfo);
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];

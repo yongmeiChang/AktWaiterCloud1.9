@@ -298,9 +298,11 @@
         }else if (indexPath.row == 1){
             cell.labValue.text = _Date;
         }else if (indexPath.row == 2){
-             cell.labValue.text = _bTime;
+            NSArray *array = [_bTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]];
         }else{
-            cell.labValue.text = _eTime;
+            NSArray *eTimeArray = [_bTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];
         }
         return cell;
         

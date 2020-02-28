@@ -12,7 +12,7 @@ target 'AKTWaiterCloud' do
     pod 'Masonry', '~> 1.1.0' #手动约束
     pod 'MBProgressHUD', '~> 1.1.0'
     pod 'JSONModel'
-    pod 'FSCalendar'  #日历
+    #    pod 'FSCalendar'  #日历
     pod 'JPush'
     pod 'FMDB'
     pod 'Reachability'
