@@ -10,8 +10,10 @@
 #import "BaseControllerViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class LoginViewController;
 @interface AktAgreementVC : BaseControllerViewController
+
+-(id)initWithSigninWController:(LoginViewController *)logincontoller;
 
 @end
 

@@ -21,6 +21,7 @@
     NSString * testPassWord ;
     NSString *trackViewUrl; // appst网址
     AktResetAppView *resetView;
+    BOOL isAgreement;
 }
 @property (weak, nonatomic) IBOutlet UIView *userviewBg;
 @property (weak, nonatomic) IBOutlet UIView *pwdViewbg;
@@ -62,7 +63,7 @@
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
     
     // 隐私
-    ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(10, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
+    ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
     myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
     myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
     myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
@@ -74,16 +75,25 @@
         btn.selected = !btn.selected;
         if(btn.selected == YES){
             NSLog(@"左侧按钮选中状态为YES");
+            isAgreement = YES;
+            [self.loginBtn setUserInteractionEnabled:YES];
         }else{
             NSLog(@"左侧按钮选中状态为NO");
+            isAgreement = NO;
+            [self.loginBtn setUserInteractionEnabled:NO];
         }
     };
     myTextView.eventblock = ^(NSAttributedString *contentStr) {
-        NSLog(@"点击了富文本--%@", contentStr.string);
-        AktAgreementVC *signvc = [[AktAgreementVC alloc] init];
-        [self.navigationController pushViewController:signvc animated:YES];
+        AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
+        [self.navigationController pushViewController:Agreementvc animated:YES];
     };
     [self.viewBgAgreement addSubview:myTextView];
+    [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(self.viewBgAgreement.mas_width);
+        make.height.mas_equalTo(35);
+        make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
+        make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
+    }];
     
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -153,7 +163,12 @@
         [self showMessageAlertWithController:self Message:NetWorkMessage];
         appDelegate.netWorkType = On_line;
     }
-    [self Userlogin];
+    if (isAgreement) {
+        [self Userlogin];
+    }else{
+        [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
+    }
+    
 }
 
 /**忘记密码按钮*/
