@@ -185,7 +185,7 @@
         [self.dataArray removeAllObjects];
     }
     NSLog(@"%@",appDelegate.userinfo);
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
@@ -359,7 +359,7 @@
 -(void)RequestgetWorkByDay:(NSString *)dateStr{
     //NSString * date = [NSString stringWithFormat:@"%@ 00:00:00",dateStr];
     //type=doing  进行中工单   type=undo 未开始工单  type=done 已完成工单
-    NSDictionary * dic =  @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":dateStr,@"type":@"undo"};
+    NSDictionary * dic =  @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":dateStr,@"type":@"undo"};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByDay:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dicc = responseObject;
         NSLog(@"%@",dicc);

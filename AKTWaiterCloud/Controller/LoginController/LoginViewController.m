@@ -224,7 +224,7 @@
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
             
                     //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                         
                     } failure:^(NSError *error) {
@@ -275,7 +275,7 @@
                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
                     //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                         
                     } failure:^(NSError *error) {

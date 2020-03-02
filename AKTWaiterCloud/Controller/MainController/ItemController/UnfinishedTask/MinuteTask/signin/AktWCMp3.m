@@ -65,7 +65,7 @@
     Date = [Date stringByReplacingOccurrencesOfString:@":" withString:@""];
     //年月日_时分秒
     Date = [Date stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    NSString * filename = [NSString stringWithFormat:@"%@%@.wav",appDelegate.userinfo.id,Date];
+    NSString * filename = [NSString stringWithFormat:@"%@%@.wav",appDelegate.userinfo.uuid,Date];
     
     _filePathname = [filePath stringByAppendingString:filename];
     [[FileManagerUtil sharedTool] createDirectoryAtPath:filePath];

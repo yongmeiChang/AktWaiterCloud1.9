@@ -59,7 +59,7 @@
             self.accessoryType = UITableViewCellAccessoryNone;
             self.labValueConstraint.constant = 43.5;
             self.labName.text = @"唯一码";
-            self.labvalue.text = kString(userInfo.waiterUkey);
+            self.labvalue.text = kString(userInfo.waiterUkey); 
         }
             break;
         case 4:{
