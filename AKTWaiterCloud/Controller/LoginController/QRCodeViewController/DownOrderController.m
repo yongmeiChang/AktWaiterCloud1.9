@@ -225,7 +225,7 @@
     [paremeter addUnEmptyString:_eTime forKey:@"serviceEnd"];
     [paremeter addUnEmptyString:strRemark forKey:@"serviceContent"]; // 服务内容
     [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];
-    [paremeter addUnEmptyString:appDelegate.userinfo.id forKey:@"waiterId"];
+    [paremeter addUnEmptyString:appDelegate.userinfo.uuid forKey:@"waiterId"];
     [paremeter addUnEmptyString:appDelegate.userinfo.waiterName forKey:@"waiterName"];
     [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
     
@@ -299,10 +299,10 @@
             cell.labValue.text = _Date;
         }else if (indexPath.row == 2){
             NSArray *array = [_bTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]]; // 开始时间
         }else{
-            NSArray *eTimeArray = [_bTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];
+            NSArray *eTimeArray = [_eTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];// 结束时间
         }
         return cell;
         
@@ -377,7 +377,11 @@
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             
             _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
-            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
+            if ([minute integerValue]+5>59) { // 当分数大于60的时候 小时加一
+                _eTime = [NSString stringWithFormat:@"%@-%@-%@ %ld:%ld:59",year,month,day,[hour integerValue]+1,[minute integerValue]+5-60];
+            }else{
+               _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
+            }
         }else if(_type == 3){
             _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:59",year,month,day,hour,minute];
         }

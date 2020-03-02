@@ -166,7 +166,7 @@
         return;
     }
     
-    NSDictionary * parameters =@{@"type":@"done",@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"beginDate":startTime,@"endDate":endTime};
+    NSDictionary * parameters =@{@"type":@"done",@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"beginDate":startTime,@"endDate":endTime};
     /*
     [[AFNetWorkingRequest sharedTool] requestgetWorkListByDay:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;

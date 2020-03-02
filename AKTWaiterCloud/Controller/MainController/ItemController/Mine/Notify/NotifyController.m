@@ -42,7 +42,7 @@
 #pragma mark - request
 -(void)getPushRecordService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+    NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AFNetWorkingRequest sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
 
