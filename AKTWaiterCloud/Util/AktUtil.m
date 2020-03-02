@@ -27,7 +27,7 @@
     Date = [Date stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     
     
-    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", appDelegate.userinfo.id,Date];
+    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", appDelegate.userinfo.uuid,Date];
     NSString *filePath = [filePathOld stringByAppendingString:fileName];
     NSLog(@"%@",filePath);
     

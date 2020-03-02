@@ -18,7 +18,7 @@
     
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
-        NSDictionary * param = @{@"customerUkey":str,@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
         [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSString * message = [dic objectForKey:@"message"];
