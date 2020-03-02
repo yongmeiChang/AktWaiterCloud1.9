@@ -377,7 +377,11 @@
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             
             _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
-            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
+            if ([minute integerValue]+5>59) { // 当分数大于60的时候 小时加一
+                _eTime = [NSString stringWithFormat:@"%@-%@-%@ %ld:%ld:59",year,month,day,[hour integerValue]+1,[minute integerValue]+5-60];
+            }else{
+               _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
+            }
         }else if(_type == 3){
             _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:59",year,month,day,hour,minute];
         }
