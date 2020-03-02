@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,10 +31,10 @@
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RPB-zj-XDa">
                     <rect key="frame" x="26.5" y="161.5" width="361" height="636.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <mutableString key="text">        安康通成立于1998年，是国内综合养老运营标杆企业。公司以自主运营的智慧养老指挥中心、自主研发的信息管理系统平台、专业化的线上线下服务团队为基础，整合优质社会资源，为广大老年人提供居家、社区、机构三位一体的全方位养老服务。
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <string key="text">        安康通成立于1998年，是国内综合养老运营标杆企业。公司以自主运营的智慧养老指挥中心、自主研发的信息管理系统平台、专业化的线上线下服务团队为基础，整合优质社会资源，为广大老年人提供居家、社区、机构三位一体的全方位养老服务。
 创立20年来，安康通已在上海、北京、重庆、天津、江苏、山东、浙江、安徽等20个省市开展业务，截至2019年初已拥有超过1723万的国内老年用户，累积为各地政府建立智慧养老指挥中心66个，平均每天拯救老人15位，是老年人离不开的生活服务平台。
-                            </mutableString>
+                            </string>
                     <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -49,16 +51,29 @@
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxa-C8-LCQ">
+                    <rect key="frame" x="15" y="749" width="384" height="27"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="《隐私政策》">
+                        <color key="titleColor" red="0.36862745098039218" green="0.52156862745098043" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="agreementClick:" destination="-1" eventType="touchUpInside" id="Imm-vs-MYY"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="URB-T3-bpq" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="0hW-BI-8pA"/>
+                <constraint firstItem="URB-T3-bpq" firstAttribute="top" secondItem="qxa-C8-LCQ" secondAttribute="bottom" constant="10" id="2gd-Ms-7J2"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="URB-T3-bpq" secondAttribute="trailing" constant="15" id="8EC-b0-Rtb"/>
                 <constraint firstItem="efJ-kg-ITu" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="27.5" id="AgQ-RG-zHA"/>
                 <constraint firstItem="rZB-Dn-JNx" firstAttribute="top" secondItem="RPB-zj-XDa" secondAttribute="bottom" constant="10" id="DHO-Dm-X9G"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="qxa-C8-LCQ" secondAttribute="trailing" constant="15" id="Gso-uS-b0z"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="rZB-Dn-JNx" secondAttribute="trailing" constant="15" id="IuV-B0-uF3"/>
                 <constraint firstItem="rZB-Dn-JNx" firstAttribute="top" secondItem="URB-T3-bpq" secondAttribute="bottom" constant="8" id="JzG-ta-BJn"/>
                 <constraint firstItem="RPB-zj-XDa" firstAttribute="top" secondItem="efJ-kg-ITu" secondAttribute="bottom" constant="26.5" id="MJK-aJ-3lp"/>
+                <constraint firstItem="qxa-C8-LCQ" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="XXo-6f-qQp"/>
                 <constraint firstItem="RPB-zj-XDa" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="26.5" id="kHu-he-MDI"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="RPB-zj-XDa" secondAttribute="trailing" constant="26.5" id="r7b-Sr-2h5"/>
                 <constraint firstItem="efJ-kg-ITu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xug-20-7To"/>

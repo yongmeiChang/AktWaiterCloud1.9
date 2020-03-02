@@ -13,12 +13,15 @@
 #import "SignInVC.h" // 注册
 #import "UserFmdb.h"
 #import "AktResetAppView.h" // 更新提示view
+#import "AktAgreementVC.h"
+#import "ZHAttributeTextView.h" //
 
 @interface LoginViewController ()<UITextFieldDelegate,AktResetAppDelegate>{
     NSString * testUserName ;
     NSString * testPassWord ;
     NSString *trackViewUrl; // appst网址
     AktResetAppView *resetView;
+    BOOL isAgreement;
 }
 @property (weak, nonatomic) IBOutlet UIView *userviewBg;
 @property (weak, nonatomic) IBOutlet UIView *pwdViewbg;
@@ -33,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameViewTop;
 @property (weak, nonatomic) IBOutlet UILabel *labTitle;
 @property (weak, nonatomic) IBOutlet UILabel *labSubname;
+
+@property (weak, nonatomic) IBOutlet UIView *viewBgAgreement;
 
 @property(nonatomic,strong) NSString * registerid;
 
@@ -56,6 +61,40 @@
     self.pwdViewbg.layer.borderColor = RGB(210, 210, 210).CGColor;
     self.pwdViewbg.layer.borderWidth = 1;
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
+    
+    // 隐私
+    ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
+    myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
+    myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
+    myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
+    myTextView.fontSize = 13;                            // 可点击的字体大小
+    myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
+    // 设置了上面后要在最后设置内容
+    myTextView.content = @"阅读并同意《隐私政策》";
+    myTextView.agreeBtnClick = ^(UIButton *btn) {
+        btn.selected = !btn.selected;
+        if(btn.selected == YES){
+            NSLog(@"左侧按钮选中状态为YES");
+            isAgreement = YES;
+            [self.loginBtn setUserInteractionEnabled:YES];
+        }else{
+            NSLog(@"左侧按钮选中状态为NO");
+            isAgreement = NO;
+            [self.loginBtn setUserInteractionEnabled:NO];
+        }
+    };
+    myTextView.eventblock = ^(NSAttributedString *contentStr) {
+        AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
+        [self.navigationController pushViewController:Agreementvc animated:YES];
+    };
+    [self.viewBgAgreement addSubview:myTextView];
+    [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(self.viewBgAgreement.mas_width);
+        make.height.mas_equalTo(35);
+        make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
+        make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
+    }];
+    
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
@@ -124,7 +163,12 @@
         [self showMessageAlertWithController:self Message:NetWorkMessage];
         appDelegate.netWorkType = On_line;
     }
-    [self Userlogin];
+    if (isAgreement) {
+        [self Userlogin];
+    }else{
+        [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
+    }
+    
 }
 
 /**忘记密码按钮*/
@@ -195,7 +239,7 @@
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
             
                     //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                         
                     } failure:^(NSError *error) {
@@ -246,7 +290,7 @@
                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
                     //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                     [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                         
                     } failure:^(NSError *error) {

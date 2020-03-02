@@ -27,6 +27,7 @@
 #import "AppInfoDefult.h"
 #import "SinoutReasonView.h" // 提交失败的原因
 #import "AktWCMp3.h" // 录音
+#import "AddWaterMark.h" // 水印
 
 #define PI 3.1415926
 @interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
@@ -1180,7 +1181,7 @@
             [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                 [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                     
                 } failure:^(NSError *error) {
@@ -1210,7 +1211,7 @@
         }];
         
     }else{
-        [param addUnEmptyString:appDelegate.userinfo.id forKey:@"waiterId"];
+        [param addUnEmptyString:appDelegate.userinfo.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
@@ -1230,7 +1231,7 @@
                 [AppInfoDefult sharedClict].orderinfoId = @"";
                 [AppInfoDefult sharedClict].islongLocation=0;
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                 [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                     
                 } failure:^(NSError *error) {
@@ -1287,6 +1288,15 @@
 }
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
+    // 水印内容
+    NSString *strMark = [NSString stringWithFormat:@"安康通\n%@\n%@",[AktUtil getNowDateAndTime],self.addressLabel.text];
+    // 水印
+    AddWaterMark *mark = [[AddWaterMark alloc] init];
+    mark.textFont = [UIFont fontWithName:@"PingFang SC" size:14];
+    mark.textFontSubtitle = [UIFont fontWithName:@"PingFang SC" size:10];
+    mark.textColor = [UIColor grayColor];
+    image = [mark addWaterMark:image watemarkText:strMark];
+
     NSData *data = UIImageJPEGRepresentation(image, 0.5f);
 //    NSString * mimeType = @"image/jpeg";
 //    NSString *encodedImageStr = [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,[data base64EncodedStringWithOptions: 0]];
