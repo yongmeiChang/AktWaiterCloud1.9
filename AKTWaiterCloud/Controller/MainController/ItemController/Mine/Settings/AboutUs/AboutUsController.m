@@ -7,6 +7,7 @@
 //
 
 #import "AboutUsController.h"
+#import "AktAgreementVC.h"
 
 @interface AboutUsController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
@@ -28,6 +29,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)agreementClick:(UIButton *)sender {
+    AktAgreementVC *signvc = [[AktAgreementVC alloc] init];
+    [self.navigationController pushViewController:signvc animated:YES];
+}
 #pragma mark - MemoryWarning
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
