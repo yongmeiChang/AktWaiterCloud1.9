@@ -1181,7 +1181,7 @@
             [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                 [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                     
                 } failure:^(NSError *error) {
@@ -1211,7 +1211,7 @@
         }];
         
     }else{
-        [param addUnEmptyString:appDelegate.userinfo.id forKey:@"waiterId"];
+        [param addUnEmptyString:appDelegate.userinfo.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
@@ -1231,7 +1231,7 @@
                 [AppInfoDefult sharedClict].orderinfoId = @"";
                 [AppInfoDefult sharedClict].islongLocation=0;
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId};
+                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
                 [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                     
                 } failure:^(NSError *error) {
