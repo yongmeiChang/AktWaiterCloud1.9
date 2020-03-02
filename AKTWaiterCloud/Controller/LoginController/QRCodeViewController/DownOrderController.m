@@ -299,10 +299,10 @@
             cell.labValue.text = _Date;
         }else if (indexPath.row == 2){
             NSArray *array = [_bTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]]; // 开始时间
         }else{
-            NSArray *eTimeArray = [_bTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];
+            NSArray *eTimeArray = [_eTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];// 结束时间
         }
         return cell;
         
