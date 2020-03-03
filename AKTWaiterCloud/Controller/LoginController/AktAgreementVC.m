@@ -40,7 +40,7 @@
 }
 #pragma mark - click
 -(void)LeftBarClick{
-    DDLogInfo(@"点击了导航栏左侧按钮");
+    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 /*

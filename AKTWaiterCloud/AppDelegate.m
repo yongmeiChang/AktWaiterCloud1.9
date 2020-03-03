@@ -53,6 +53,7 @@
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
+    // 根视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootViewController:) name:@"changerootview" object:nil];
     
     //定位通知
@@ -65,10 +66,10 @@
     self.isclean = false;
     self.Registration_ID=@"";
     
+    // 初始化页面
     LoginViewController * loginController = [[LoginViewController alloc]init];
     BaseNavController * baseNavController = [[BaseNavController alloc]initWithRootViewController:loginController];
     self.window.rootViewController = baseNavController;
-    
     
     UserFmdb * userdb = [[UserFmdb alloc] init];
     _OrderTypeCountArr = [NSMutableArray array];

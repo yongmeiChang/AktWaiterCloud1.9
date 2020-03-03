@@ -56,7 +56,7 @@
             [[watemarkText substringFromIndex:24] drawInRect:CGRectMake(j * (SCREEN_WIDTH/2.5), i*100+30, SCREEN_WIDTH/2.5, 16) withAttributes:dicSubtitle]; // 第三行文字
             
             
-            CGContextSetAlpha(UIGraphicsGetCurrentContext(),0.15); // 水印透明度
+            CGContextSetAlpha(UIGraphicsGetCurrentContext(),0.2); // 水印透明度
         }
     }
     UIImage * newImage = UIGraphicsGetImageFromCurrentImageContext();
