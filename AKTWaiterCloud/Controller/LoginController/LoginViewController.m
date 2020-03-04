@@ -76,17 +76,16 @@
         if(btn.selected == YES){
             NSLog(@"左侧按钮选中状态为YES");
             isAgreement = YES;
-            [self.loginBtn setUserInteractionEnabled:YES];
         }else{
             NSLog(@"左侧按钮选中状态为NO");
             isAgreement = NO;
-            [self.loginBtn setUserInteractionEnabled:NO];
         }
     };
     myTextView.eventblock = ^(NSAttributedString *contentStr) {
         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
         [self.navigationController pushViewController:Agreementvc animated:YES];
     };
+    [self.viewBgAgreement setBackgroundColor:[UIColor clearColor]];
     [self.viewBgAgreement addSubview:myTextView];
     [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(self.viewBgAgreement.mas_width);
@@ -133,9 +132,7 @@
 #pragma mark - click
 - (IBAction)pwdBtn:(UIButton *)sender {
      sender.selected = !sender.selected;
-       
        if (sender.selected) { // 按下去了就是明文
-           
            NSString *tempPwdStr = self.upswText.text;
            self.upswText.text = @""; // 这句代码可以防止切换的时候光标偏移
            self.upswText.secureTextEntry = NO;
@@ -149,15 +146,13 @@
            self.upswText.text = tempPwdStr;
        }
 }
+//扫码登录
 -(IBAction)qrCodeBtnClick:(id)sender{
-    DDLogInfo(@"点击了扫描按钮");
     QRCodeViewController * qrcodeController = [[QRCodeViewController alloc]initWithQRCode:self Type:@"logincontoller"];
     [self.navigationController pushViewController:qrcodeController animated:nil];
 }
-
 /**登陆按钮*/
 -(IBAction)loginBtnClick:(id)sender{
-    DDLogInfo(@"点击了登陆按钮");
     NSString * netWorkType = [ReachbilityTool internetStatus];
     if([netWorkType isEqualToString:@"notReachable"]){
         [self showMessageAlertWithController:self Message:NetWorkMessage];
@@ -168,20 +163,17 @@
     }else{
         [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
     }
-    
 }
-
 /**忘记密码按钮*/
 -(IBAction)findPswBtn:(id)sender{
-    DDLogInfo(@"点击忘记密码按钮");
     FindPswController * findPswController = [[FindPswController alloc]initWithFindPswController:self];
     [self.navigationController pushViewController:findPswController animated:YES];
 }
+// 注册
 - (IBAction)sigInClickBtn:(UIButton *)sender {
     SignInVC *signvc = [[SignInVC alloc] initWithSigninWController:self];
     [self.navigationController pushViewController:signvc animated:YES];
 }
-
 #pragma mark - login
 -(void)Userlogin{
     [self.view endEditing:YES];
@@ -245,10 +237,6 @@
                     } failure:^(NSError *error) {
                         
                     }];
-//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-//                    }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];
@@ -296,10 +284,6 @@
                     } failure:^(NSError *error) {
                         
                     }];
-//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-//                    }
                 }else{
                     NSString * messageDic = [responseObject objectForKey:@"message"];
                     [self showMessageAlertWithController:self Message:messageDic];
@@ -312,9 +296,7 @@
             }];
         }
     }];
-   
 }
-
 #pragma mark TextFieldDelgate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
