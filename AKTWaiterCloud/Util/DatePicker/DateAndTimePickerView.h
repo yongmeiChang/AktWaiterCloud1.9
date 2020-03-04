@@ -33,6 +33,9 @@ typedef NS_ENUM(NSInteger,TimeShowMode){
 @interface DateAndTimePickerView : UIView
 - (instancetype)initWithFrame:(CGRect)frame withTimeShowMode:(TimeShowMode)timeMode withIsShowTodayDate:(BOOL)isShowToday;
 @property (nonatomic, assign) id<DateAndTimePickerViewDelegate> delegate;
+
+@property (nonatomic, copy) NSString *currentSelectTime; // 选择的当前时间
+
 @end
 
 NS_ASSUME_NONNULL_END

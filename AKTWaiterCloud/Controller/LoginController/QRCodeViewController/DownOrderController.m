@@ -372,6 +372,18 @@
 
 #pragma mark - time pickerview
 -(void)DateAndTimePickerView:(NSString *)year withMonth:(NSString *)month withDay:(NSString *)day withHour:(NSString *)hour withMinute:(NSString *)minute withDate:(NSString *)date withTag:(NSInteger)tag{
+    if (month.length == 1) {
+        month = [NSString stringWithFormat:@"0%@",month];
+    }
+    if (day.length == 1) {
+        day = [NSString stringWithFormat:@"0%@",day];
+    }
+    if (hour.length == 1) {
+        hour = [NSString stringWithFormat:@"0%@",hour];
+    }
+    if (minute.length == 1) {
+        minute = [NSString stringWithFormat:@"0%@",minute];
+    }
     if (tag == 1001) {
         if (_type == 2) {
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];

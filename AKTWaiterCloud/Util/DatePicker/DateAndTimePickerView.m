@@ -422,7 +422,7 @@
         minuceStr = [NSString stringWithFormat:@"%@",self.minuceRemainingArray[row]];
     }
 
-    NSLog(@"%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr);
+    NSLog(@"dpickerviewdidselectrow:%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr);
     labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
 }
 
