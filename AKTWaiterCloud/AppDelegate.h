@@ -10,7 +10,7 @@
 #import "DataModel.h"
 #import <UserNotifications/UserNotifications.h>
 #import "RangeUtil.h"
-#import "MainController.h"
+//#import "MainController.h"
 typedef NS_ENUM (NSInteger,LoginType)
 {
     Off_line = 0,//离线
@@ -26,7 +26,7 @@ typedef NS_ENUM (NSInteger,LoginType)
 @property(nonatomic,assign) BOOL IsAutoLogin;//是否自动登陆
 @property(nonatomic) int netWorkType;//当前网络状态
 @property(nonatomic,strong) NSMutableArray * OrderTypeCountArr;
-@property(nonatomic,strong) MainController * maincontroller;
+//@property(nonatomic,strong) MainController * maincontroller;
 @property(nonatomic,strong) NSString * unfinish;//未开始数量
 @property(nonatomic,strong) NSString * doing;//进行中数量
 @property(nonatomic,strong) NSString * finish;//已完成数量
@@ -37,7 +37,8 @@ typedef NS_ENUM (NSInteger,LoginType)
 @property (nonatomic,strong) dispatch_semaphore_t sema;
 @property(strong,nonatomic) RangeUtil* Rutil;
 @property(strong, nonatomic) NSMutableArray * minuteArray;//工单详情数据（需要仔细想想是否有必要存在）
-@property(strong, nonatomic) UITabBarController * mainController;
+//@property(strong, nonatomic) UITabBarController * mainController;
+@property (strong, nonatomic) UITabBarController *rootViewController;
 
 + (AppDelegate *)sharedDelegate; // 单例
 + (UIViewController *)getCurrentVC;

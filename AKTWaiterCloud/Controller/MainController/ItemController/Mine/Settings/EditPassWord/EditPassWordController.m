@@ -128,16 +128,14 @@
 -(void)didSelectClose{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:101] removeFromSuperview];
     
-  //不能自动登陆
-    appDelegate.IsAutoLogin=false;
-    LoginViewController * loginContoller = [[LoginViewController alloc] init];
-    [loginContoller.navigationController setNavigationBarHidden:YES animated:nil];
-    [self.navigationController pushViewController:loginContoller animated:YES];
-    //下次能否自动登陆
-    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isAutologin"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+    [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - TextFieldDelgate

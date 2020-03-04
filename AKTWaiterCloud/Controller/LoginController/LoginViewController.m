@@ -7,7 +7,7 @@
 //
 #import <JPUSHService.h>
 #import "LoginViewController.h"
-#import "MainController.h"
+//#import "MainController.h"
 #import "FindPswController.h"
 #import "QRCodeViewController.h"
 #import "SignInVC.h" // 注册
@@ -211,106 +211,50 @@
         if(resCode == 0){
             NSLog(@"registrationID获取成功：%@",registrationID);
             appDelegate.Registration_ID = registrationID;
-
-            NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-            NSString * url = @"waiterLogin";
-            
-            [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-                NSDictionary * result = responseObject;
-               // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-                NSNumber * code = [result objectForKey:@"code"];
-                if([code intValue] == 1){
-                    NSDictionary * userdic = [result objectForKey:@"object"];
-                    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                    [dic setObject:@"1" forKey:@"isclickOff_line"];
-                    UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-                    user.uuid = user.id;
-                    appDelegate.userinfo = user;
-                    appDelegate.mainController = [[MainController alloc]init];
-                    UserFmdb * userdb = [[UserFmdb alloc] init];
-                    UserInfo * useroldinfo = [[UserInfo alloc] init];
-                    useroldinfo = [userdb findByrow:0];
-                    if(useroldinfo.uuid){
-                        [userdb updateObject:appDelegate.userinfo];
-                    }else{
-                        [userdb saveUserInfo:appDelegate.userinfo];
-                    }
-                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
-                    [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-            
-                    //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                    [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                        
-                    } failure:^(NSError *error) {
-                        
-                    }];
-//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-//                    }
-                }else{
-                    NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [self showMessageAlertWithController:self Message:messageDic];
-                }
-               
-                 [[AppDelegate sharedDelegate] hidHUD];
-            } failure:^(NSError *error) {
-                 [[AppDelegate sharedDelegate] hidHUD];
-                NSLog(@"请求错误，code==%lu",error.code);
-                [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
-            }];
-        }
-        else{
+        }else{
             NSLog(@"registrationID获取失败，code：%d",resCode);
-            // 测试登陆接口
-            NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-            NSString * url = @"waiterLogin";
-            
-            [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-                NSDictionary * result = responseObject;
-                // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-                NSNumber * code = [result objectForKey:@"code"];
-                if([code intValue] == 1){
-                    NSDictionary * userdic = [result objectForKey:@"object"];
-                    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                    [dic setObject:@"1" forKey:@"isclickOff_line"];
-                    UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-                    user.uuid = user.id;
-                    appDelegate.userinfo = user;
-                    appDelegate.mainController = [[MainController alloc]init];
-                    UserFmdb * userdb = [[UserFmdb alloc] init];
-                    UserInfo * useroldinfo = [[UserInfo alloc] init];
-                    useroldinfo = [userdb findByrow:0];
-                    if(useroldinfo.uuid){
-                        [userdb updateObject:appDelegate.userinfo];
-                    }else{
-                        [userdb saveUserInfo:appDelegate.userinfo];
-                    }
-                   appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
-                    [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                    [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                        
-                    } failure:^(NSError *error) {
-                        
-                    }];
-//                    if(appDelegate.userinfo.icon&&![appDelegate.userinfo.icon isEqualToString:@""]&&appDelegate.userinfo.icon != nil){
-//                        NSURL *imageUrl = [NSURL URLWithString:appDelegate.userinfo.icon];
-//                        appDelegate.userheadimage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
-//                    }
-                }else{
-                    NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [self showMessageAlertWithController:self Message:messageDic];
-                }
-                 [[AppDelegate sharedDelegate] hidHUD];
-            } failure:^(NSError *error) {
-                 [[AppDelegate sharedDelegate] hidHUD];
-                NSLog(@"请求错误，code==%lu",error.code);
-                [self showMessageAlertWithController:self Message:@"登陆失败，请稍后再试"];
-            }];
         }
+        NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
+                    NSString * url = @"waiterLogin";
+                    
+                    [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+                        NSDictionary * result = responseObject;
+                       // 目前后台没有存储开启离线模式字段 手动添加默认关闭
+                        NSNumber * code = [result objectForKey:@"code"];
+                        if([code intValue] == 1){
+                            NSDictionary * userdic = [result objectForKey:@"object"];
+                            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
+                            [dic setObject:@"1" forKey:@"isclickOff_line"];
+                            UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
+                            user.uuid = user.id;
+                            appDelegate.userinfo = user;
+                            UserFmdb * userdb = [[UserFmdb alloc] init];
+                            UserInfo * useroldinfo = [[UserInfo alloc] init];
+                            useroldinfo = [userdb findByrow:0];
+                            if(useroldinfo.uuid){
+                                [userdb updateObject:appDelegate.userinfo];
+                            }else{
+                                [userdb saveUserInfo:appDelegate.userinfo];
+                            }
+                            // 登录成功
+                            [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [self dismissViewControllerAnimated:YES completion:^{
+                                UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
+                                [tabViewController setSelectedIndex:1];
+                            }];
+                          
+                        }else{
+                            NSString * messageDic = [responseObject objectForKey:@"message"];
+                            [self showMessageAlertWithController:self Message:messageDic];
+                        }
+                       
+                         [[AppDelegate sharedDelegate] hidHUD];
+                    } failure:^(NSError *error) {
+                         [[AppDelegate sharedDelegate] hidHUD];
+                        NSLog(@"请求错误，code==%lu",error.code);
+                        [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
+                    }];
     }];
    
 }

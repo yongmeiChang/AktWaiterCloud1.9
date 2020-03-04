@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
+#import "PFViewHeader.h"
 
 //快速注册多种cellnib
 UIKIT_STATIC_INLINE void LRRegisterNibsQuick(UITableView * tableView, NSArray * names){
@@ -18,9 +19,12 @@ UIKIT_STATIC_INLINE void LRRegisterNibsQuick(UITableView * tableView, NSArray * 
 }
 
 @interface BaseControllerViewController : UIViewController
+@property (strong) id createArgs;
 @property (nonatomic,strong) UIAlertController * alertView;
 @property(nonatomic,strong) MJRefreshAutoGifFooter *mj_footer;
 @property(nonatomic,strong) MJRefreshGifHeader * mj_header;
+
++ (instancetype)createViewControllerWithName:(NSString *)vcName createArgs:(nullable id)args;
 
 -(void)setNavTitle:(NSString *)title;
 -(void)initWithNavLeftImageName:(NSString *)leftimagename RightImageName:(NSString *)rightimagename;// 左右是图片

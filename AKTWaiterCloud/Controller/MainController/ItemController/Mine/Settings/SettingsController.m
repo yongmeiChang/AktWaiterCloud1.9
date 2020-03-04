@@ -212,16 +212,16 @@
     UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"用户退出登录");
-        //不能自动登陆
-        appDelegate.IsAutoLogin=false;
-        LoginViewController * loginContoller = [[LoginViewController alloc] init];
-        [loginContoller.navigationController setNavigationBarHidden:YES animated:nil];
-        [self.navigationController pushViewController:loginContoller animated:YES];
-        //下次能否自动登陆
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isAutologin"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+        
     }];
     [alertController addAction:canelAction];
     [alertController addAction:okAction];

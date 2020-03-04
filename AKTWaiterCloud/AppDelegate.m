@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "MainController.h"
+//#import "MainController.h"
 #import "LoginViewController.h"
-#import "BaseNavController.h"
+//#import "BaseNavController.h"
 
 //注意，关于 iOS10 系统版本的判断，可以用下面这个宏来判断。不能再用截取字符的方法。
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -65,11 +65,12 @@
     
     self.isclean = false;
     self.Registration_ID=@"";
-    
+    /*
     // 初始化页面
     LoginViewController * loginController = [[LoginViewController alloc]init];
     BaseNavController * baseNavController = [[BaseNavController alloc]initWithRootViewController:loginController];
     self.window.rootViewController = baseNavController;
+    */
     
     UserFmdb * userdb = [[UserFmdb alloc] init];
     _OrderTypeCountArr = [NSMutableArray array];
@@ -91,6 +92,11 @@
     self.IsAutoLogin = [self AutoLogin];
     
     [self.window makeKeyAndVisible];
+    /*新版APP基础架构*/
+    self.rootViewController = [self getRootTabVBarAction];
+    self.window.rootViewController = self.rootViewController;
+    [self showLoginPage];
+    [self setTabBarAndNavigationBarStyle];
 
     /*
      * 测试本地通知
@@ -98,6 +104,13 @@
     //[self testAddNotification];
    
     return YES;
+}
+- (void)showLoginPage{
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
+        BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
+    }
 }
 
 -(void)initGlobalArray{
@@ -163,9 +176,9 @@
 
         }
     }else{
-        MainController * mainView = [[MainController alloc]init];
+        /*MainController * mainView = [[MainController alloc]init];
         self.window.rootViewController = mainView;
-        self.isrx = 1;
+        self.isrx = 1;*/
     }
 }
 
@@ -275,12 +288,12 @@
         NSLog(@"iOS10 收到远程通知:%@",userInfo);
         //[self didReceiveJPushNotification:userInfo];
         if(self.userinfo){
-            self.mainController = [[MainController alloc] init];
-            UIViewController * vc =self.mainController.navigationController.topViewController;
-            [vc dismissViewControllerAnimated:YES completion:nil];
-            
-            self.mainController.selectedIndex = 1;
-            self.window.rootViewController = self.mainController;
+//            self.mainController = [[MainController alloc] init];
+//            UIViewController * vc =self.mainController.navigationController.topViewController;
+//            [vc dismissViewControllerAnimated:YES completion:nil];
+//
+//            self.mainController.selectedIndex = 1;
+//            self.window.rootViewController = self.mainController;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"grabSingle" object:nil userInfo:nil];
         }else{
             return;
@@ -374,6 +387,42 @@
     dispatch_semaphore_signal(appDelegate.sema);
     appDelegate.sema = nil;
     //dispatch_semaphore_wait(self.sema, DISPATCH_TIME_FOREVER);
+}
+#pragma mark -
+- (void)setTabBarAndNavigationBarStyle{
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T2"), NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal]; //tab 正常字体颜色
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T1"), NSForegroundColorAttributeName, nil] forState:UIControlStateSelected]; //tab 选中字体颜色
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"N1"),NSForegroundColorAttributeName,[UIFont fontWithName:@"PingFang SC" size:17], NSFontAttributeName, nil]];// nav 标题的 颜色 字号
+   /* UIImage *bGImage = [UIImage imageNamed:@"lightbg"];
+    bGImage = [bGImage resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch]; // 比例显示图片
+    [[UINavigationBar appearance] setBackgroundImage:bGImage forBarMetrics:UIBarMetricsDefault];*/
+    [[UINavigationBar appearance] setTranslucent:NO]; // 是否透明
+}
+
+- (UITabBarController *)getRootTabVBarAction{
+    NSArray *ary = @[@{@"name":@"DownOrdersController",@"itmeName":@"下单",@"nicom":@"downorders_item",@"sicom":@"select-downorders_item"},
+                     @{@"name":@"UnfinishOrderTaskController",@"itmeName":@"任务",@"nicom":@"unfinish_item",@"sicom":@"select_unfinish_item"},
+                     @{@"name":@"PlanTaskController",@"itmeName":@"计划",@"nicom":@"task_item",@"sicom":@"select-task_item"},
+                     @{@"name":@"MineController",@"itmeName":@"我的",@"nicom":@"mine_item",@"sicom":@"select_mine_item"}];
+    NSMutableArray *navs = [NSMutableArray arrayWithCapacity:0];
+    for (int i = 0; i < [ary count]; i++)
+        [navs addObject:[self getViewControllerWithNav:ary[i]]];
+    UITabBarController *tabbar = [[UITabBarController alloc] init];
+    tabbar.viewControllers = navs;
+    //默认显示的item
+    [tabbar setSelectedIndex:1];
+    UIView *tabBackgroundView = [[UIView alloc] init];
+    [tabBackgroundView setBackgroundColor:kColor(@"C3")];
+    [tabbar.tabBar insertSubview:tabBackgroundView atIndex:0];
+    return tabbar;
+}
+
+- (UINavigationController *)getViewControllerWithNav:(NSDictionary *)dict{
+    BaseControllerViewController *vc = [BaseControllerViewController createViewControllerWithName:dict[@"name"] createArgs:nil];
+    UINavigationController *vcNav = [[UINavigationController alloc] initWithRootViewController:vc];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:dict[@"itmeName"] image:[UIImage imageNamedWithoutSelected:dict[@"nicom"]] selectedImage:[UIImage imageNamedWithoutSelected:dict[@"sicom"]]];
+    vc.tabBarItem = item;
+    return vcNav;
 }
 
 #pragma mark - get current viewcontroller

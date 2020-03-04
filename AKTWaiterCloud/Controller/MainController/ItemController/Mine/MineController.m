@@ -156,7 +156,6 @@
 }
 
 -(void)initLayout{
-    self.firsViewtop.constant = AktNavHight+AktStatusHight;
     CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     //背景图
     float firstviewHeight = (SCREEN_HEIGHT-60-rectStatus.size.height-44)/10;

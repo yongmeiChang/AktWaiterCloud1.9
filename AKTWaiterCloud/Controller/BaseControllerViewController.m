@@ -12,6 +12,11 @@
 @end
 
 @implementation BaseControllerViewController
++ (instancetype)createViewControllerWithName:(NSString *)vcName createArgs:(id)args{
+    BaseControllerViewController *vc = [[NSClassFromString(vcName) alloc] init];
+    vc.createArgs = args;
+    return vc;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
