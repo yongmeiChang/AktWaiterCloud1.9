@@ -75,3 +75,15 @@ AKTWaiterCloud/model/.svn/
 AKTWaiterCloud/Entity/.svn/
 
 *.svn-base
+
+AKTWaiterCloud/Util/viewPlus/UILabel\+Plus.m
+
+AKTWaiterCloud/Util/viewPlus/UILabel\+Plus.h
+
+AKTWaiterCloud/Util/viewPlus/UIImage\+Color.m
+
+AKTWaiterCloud/Util/viewPlus/UIImage\+Color.h
+
+AKTWaiterCloud/Util/viewPlus/PFViewHeader.h
+
+AKTWaiterCloud/Util/viewPlus/.DS_Store
