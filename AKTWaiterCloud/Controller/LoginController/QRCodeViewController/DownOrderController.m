@@ -151,7 +151,7 @@
 
 #pragma mark - init
 -(void)initTableview{
-    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, AktNavAndStatusHight, SCREEN_WIDTH, SCREEN_HEIGHT-123) style:UITableViewStyleGrouped];
+    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStyleGrouped];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];

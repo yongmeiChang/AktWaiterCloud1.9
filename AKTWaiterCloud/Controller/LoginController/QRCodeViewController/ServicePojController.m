@@ -31,7 +31,6 @@
     _tableview.dataSource = self;
     _dataArray = [NSArray array];
     [self requestServicePoj];
-    self.toptableview.constant = AktNavHight+AktStatusHight;
 }
 
 -(void)requestServicePoj{

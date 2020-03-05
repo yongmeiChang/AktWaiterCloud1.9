@@ -39,7 +39,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
     searchAddress = [NSString stringWithFormat:@""];
      searchWorkNo = [NSString stringWithFormat:@""];
