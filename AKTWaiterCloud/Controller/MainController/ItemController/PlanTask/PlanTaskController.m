@@ -35,7 +35,6 @@
     [self initTaskTableView];
     searchBTime = [NSString stringWithFormat:@""];
     searchETime = [NSString stringWithFormat:@""];
-    self.topConstant.constant = AktNavAndStatusHight;
     pageSize = 1;
     [self.view bringSubviewToFront:self.netWorkErrorView];
     self.taskTableview.hidden = YES;

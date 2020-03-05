@@ -53,7 +53,7 @@
     [super viewDidLoad];
     [self setTitle:@"任务详情"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-    self.tableTop.constant = AktNavAndStatusHight;
+//    self.tableTop.constant = AktNavAndStatusHight;
     self.bgviewTop.constant = AktNavAndStatusHight+200;
     
     self.netWorkErrorView.hidden = YES;

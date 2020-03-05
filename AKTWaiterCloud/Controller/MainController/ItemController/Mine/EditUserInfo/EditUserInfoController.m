@@ -42,7 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.netWorkErrorView.hidden = YES;
-    self.tableTop.constant = AktNavAndStatusHight;
     [self setNavTitle:@"个人信息"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@"保存"];
     

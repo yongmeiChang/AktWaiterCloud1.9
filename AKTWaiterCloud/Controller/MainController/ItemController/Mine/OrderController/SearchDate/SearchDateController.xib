@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hR-20-a18" userLabel="topview">
-                    <rect key="frame" x="0.0" y="64" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                     <subviews>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pt-NW-QOK">
                             <rect key="frame" x="10" y="10" width="80" height="40"/>
@@ -91,7 +91,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8O9-0g-u5Z">
-                    <rect key="frame" x="193" y="140.5" width="177" height="68.5"/>
+                    <rect key="frame" x="193" y="76.5" width="177" height="68.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结束时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5j-hJ-cM7">
                             <rect key="frame" x="8" y="14.5" width="61.5" height="15"/>
@@ -143,7 +143,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MlF-Yv-YuX">
-                    <rect key="frame" x="8" y="140.5" width="177" height="68.5"/>
+                    <rect key="frame" x="8" y="76.5" width="177" height="68.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开始时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0o0-3z-frP">
                             <rect key="frame" x="8" y="14.5" width="61.5" height="15"/>
@@ -195,7 +195,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxs-bB-7f9">
-                    <rect key="frame" x="175.5" y="162.5" width="24" height="24"/>
+                    <rect key="frame" x="175.5" y="98.5" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="mcs-MO-RUM"/>
                         <constraint firstAttribute="width" constant="24" id="xuh-gh-64T"/>
@@ -203,7 +203,7 @@
                     <state key="normal" image="searchTime"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rk9-0W-WaN">
-                    <rect key="frame" x="42.5" y="277.5" width="291.5" height="64"/>
+                    <rect key="frame" x="42.5" y="213.5" width="291.5" height="64"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="fFl-tw-Rif"/>
                     </constraints>
@@ -219,7 +219,7 @@
             </subviews>
             <constraints>
                 <constraint firstItem="8O9-0g-u5Z" firstAttribute="width" secondItem="MlF-Yv-YuX" secondAttribute="width" id="0te-bo-n0u"/>
-                <constraint firstItem="1hR-20-a18" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="3ph-4F-g1H"/>
+                <constraint firstItem="1hR-20-a18" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3ph-4F-g1H"/>
                 <constraint firstAttribute="trailing" secondItem="1hR-20-a18" secondAttribute="trailing" id="B4x-nu-Et9"/>
                 <constraint firstAttribute="trailing" secondItem="Rk9-0W-WaN" secondAttribute="trailing" constant="41" id="CKn-7t-9GC"/>
                 <constraint firstItem="8O9-0g-u5Z" firstAttribute="top" secondItem="1hR-20-a18" secondAttribute="bottom" constant="16.5" id="CSs-OA-T8q"/>

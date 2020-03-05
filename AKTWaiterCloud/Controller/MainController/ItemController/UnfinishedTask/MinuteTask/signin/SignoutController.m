@@ -422,7 +422,7 @@
 
 #pragma mark - init ui
 -(void)initOtherView{
-    self.pictrueTop.constant = AktNavAndStatusHight+10;
+    self.pictrueTop.constant = 0;
     _layout.itemSize = CGSizeMake((SCREEN_WIDTH-60)/4, (SCREEN_WIDTH-60)/4);
     _layout.minimumInteritemSpacing = 0;
     _layout.minimumLineSpacing = 10;

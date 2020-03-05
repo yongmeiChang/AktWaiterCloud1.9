@@ -19,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfOrderNumber;
 @property (weak, nonatomic) IBOutlet UILabel *labTime;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNav;
-
 @end
 
 @implementation AKTSearchInfoVC
@@ -29,9 +27,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.netWorkErrorView setHidden:YES];
-    NSLog(@"%f  %f  %f"  ,AktNavHight,AktStatusHight,AktNavAndStatusHight);
-    self.topNav.constant = 44+ AktStatusHight;
-    
     [self setTitle:@"搜索"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     strTime = [[NSString alloc] init];

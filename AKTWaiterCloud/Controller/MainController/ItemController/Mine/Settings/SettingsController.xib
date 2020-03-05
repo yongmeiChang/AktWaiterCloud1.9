@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppS-TQ-EZ4">
-                    <rect key="frame" x="30" y="297" width="315" height="62.5"/>
+                    <rect key="frame" x="30" y="233" width="315" height="62.5"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="62.5" id="mh6-YZ-3q5"/>
                     </constraints>
@@ -39,7 +39,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Re8-Tg-lSt">
-                    <rect key="frame" x="0.0" y="64" width="375" height="213"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="213"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="213" id="NTm-M1-RCP"/>
@@ -52,7 +52,7 @@
                 <constraint firstItem="ppS-TQ-EZ4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mpo-yg-QG0"/>
                 <constraint firstAttribute="trailing" secondItem="Re8-Tg-lSt" secondAttribute="trailing" id="pDI-fk-8RA"/>
                 <constraint firstAttribute="trailing" secondItem="ppS-TQ-EZ4" secondAttribute="trailing" constant="30" id="viC-j7-pgF"/>
-                <constraint firstItem="Re8-Tg-lSt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="yAd-KH-Ehg"/>
+                <constraint firstItem="Re8-Tg-lSt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yAd-KH-Ehg"/>
                 <constraint firstItem="ppS-TQ-EZ4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="zIa-XU-QvS"/>
             </constraints>
             <point key="canvasLocation" x="32.5" y="103.5"/>
