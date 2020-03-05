@@ -84,6 +84,9 @@
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
     }else{
+        //获取各类工单数量
+        NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+        [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
         UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
         [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
     }

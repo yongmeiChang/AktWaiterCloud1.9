@@ -211,6 +211,7 @@
     UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"用户退出登录");
+        [self.navigationController popViewControllerAnimated:YES];
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
         

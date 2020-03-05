@@ -231,6 +231,10 @@
                             }else{
                                 [userdb saveUserInfo:appDelegate.userinfo];
                             }
+                            //获取各类工单数量
+                            NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+                            [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
+                                                                              } failure:^(NSError *error) {}];
                             // 登录成功
                             [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];
                             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -309,18 +313,10 @@
                 if(appDelegate.userinfo){
                     self.unameText.text = appDelegate.userinfo.waiterUkey;
                     self.upswText.text = appDelegate.userinfo.password;
-                    [self loginBtnClick:nil];
-                    //账号默认关闭离线模式
-                    appDelegate.userinfo.isclickOff_line = @"1";
                 }
             }
         }
     } failure:^(NSError *error) {
-        if(appDelegate.userinfo){
-            [self loginBtnClick:nil];
-            //账号默认关闭离线模式
-            appDelegate.userinfo.isclickOff_line = @"1";
-        }
     }];
 }
 
