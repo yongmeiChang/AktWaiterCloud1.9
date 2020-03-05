@@ -27,7 +27,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"B1");
-    self.tabletTOP.constant = AktNavAndStatusHight;
     self.settingTableView.delegate = self;
     self.settingTableView.dataSource = self;
     
@@ -117,7 +116,7 @@
                         [[SDImageCache sharedImageCache] clearMemory];
                         [[SDImageCache
                           sharedImageCache]clearDiskOnCompletion:^{
-                            appDelegate.isclean = true;
+//                            appDelegate.isclean = true;
                             
                         }];
                     }];

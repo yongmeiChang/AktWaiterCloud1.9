@@ -56,6 +56,12 @@
        self.mj_footer.triggerAutomaticallyRefreshPercent = 50.0;
     
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSString *className = NSStringFromClass([self class]);
+    BOOL isHidden = ([className isEqualToString:@"LoginViewController"]);
+    self.navigationController.navigationBarHidden = isHidden;
+}
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
 }
@@ -70,7 +76,6 @@
     NSString * messages =@"您当前处于离线模式,无法进行此操作!是否需要尝试切换成在线模式?";
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         messages = @"当前网络不可用,无法进行此操作!已切换成离线模式,是否需要尝试切换成在线模式?";
-        appDelegate.netWorkType = Off_line;
     }
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"状态提示" message:messages preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -253,11 +258,12 @@
     [self showMessageAlertWithController:self title:@"" Message:@"当前账号已在其他设备登陆" canelBlock:^{
         NSLog(@"用户退出登录");
         //不能自动登陆
-        appDelegate.IsAutoLogin=false;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:@"login"];
-        //下次能否自动登陆
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isAutologin"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+               
+        BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
     }];
 }
 #pragma mark -

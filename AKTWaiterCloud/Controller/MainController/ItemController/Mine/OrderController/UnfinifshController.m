@@ -158,12 +158,6 @@
     //网络状态判断
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self Message:ContinueError];
-            }else{
-                [self showMessageAlertWithController:self Message:LoadingError];
-            }
-            appDelegate.netWorkType = Off_line;
             self.orderfmdb = [[OrderTaskFmdb alloc] init];
             _dataArray = [self.orderfmdb findAllOrderInfo];
             if(_dataArray.count==0){
@@ -247,14 +241,6 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }
-
-        if(appDelegate.netWorkType == Off_line){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-                }];
-                appDelegate.netWorkType = On_line;
-            });
-        }
         [[AppDelegate sharedDelegate] hidHUD];
     }
         failure:^(NSError *error) {
@@ -269,21 +255,7 @@
     pageSize=0;
     DDLogInfo(@"点击了刷新按钮");
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showOffLineAlertWithTime:1.0  message:ContinueError DoSomethingBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }else{
-                [self showOffLineAlertWithTime:1.0  message:LoadingError DoSomethingBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }
-            appDelegate.netWorkType = Off_line;
-            return;
-        }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
-        }
+        [self showMessageAlertWithController:self Message:NetWorkMessage];
     }
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     self.netWorkErrorLabel.text = Loading;

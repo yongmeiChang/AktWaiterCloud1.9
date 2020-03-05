@@ -12,14 +12,17 @@
 #import "QRCodeViewController.h"
 #import "AKTSearchInfoVC.h"
 #import "SearchDateController.h" // 筛选日期
+#import "AktResetAppView.h" // 更新版本view
 
-@interface UnfinishOrderTaskController ()<UITableViewDataSource,UITableViewDelegate,AMapLocationManagerDelegate,AktSearchDelegate>{
+@interface UnfinishOrderTaskController ()<UITableViewDataSource,UITableViewDelegate,AMapLocationManagerDelegate,AktSearchDelegate,AktResetAppDelegate>{
     int pageSize;//当前分页
     NSString *searchKey; // 用户名搜索
     NSString *searchAddress; // 服务地址
     NSString *searchBTime; // 服务开始时间
     NSString *searchETime; // 服务结束时间
     NSString *searchWorkNo;// 服务单号
+    NSString *trackViewUrl; // appst网址
+    AktResetAppView *resetView;
 }
 
 @property(nonatomic,strong) NSDate * locationServiceEndDate;
@@ -32,7 +35,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
     searchAddress = [NSString stringWithFormat:@""];
     searchBTime = [NSString stringWithFormat:@""];
@@ -52,7 +54,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetWork) name:@"requestUnFinish" object:nil];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getTheCurrentVersion]; // 获取最新版本
+}
+#pragma mark - init table
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
@@ -65,7 +71,6 @@
     self.taskTableview.mj_footer = self.mj_footer;
 
 }
-
 #pragma mark - nav click
 -(void)RightBarClick{
     DDLogInfo(@"点击了扫码功能");
@@ -117,23 +122,13 @@
 -(void)checkNetWork{
     //判断网络状态
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self Message:ContinueError];
-            }else{
-                [self showMessageAlertWithController:self Message:LoadingError];
-            }
-            appDelegate.netWorkType = Off_line;
-            self.orderfmdb = [[OrderTaskFmdb alloc] init];
-            _dataArray = [self.orderfmdb findAllOrderInfo];
-            if(_dataArray.count==0){
-                self.netWorkErrorView.hidden = NO;
-            }else{
-                self.netWorkErrorView.hidden = YES;
-                [self.taskTableview reloadData];
-            }
+        self.orderfmdb = [[OrderTaskFmdb alloc] init];
+        _dataArray = [self.orderfmdb findAllOrderInfo];
+        if(_dataArray.count==0){
+            self.netWorkErrorView.hidden = NO;
         }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
+            self.netWorkErrorView.hidden = YES;
+            [self.taskTableview reloadData];
         }
     }else{
         [self requestUnFinishedTask];
@@ -197,13 +192,6 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }
-        if(appDelegate.netWorkType == Off_line){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-                }];
-                appDelegate.netWorkType = On_line;
-            });
-        }
         [[AppDelegate sharedDelegate] hidHUD];
     }failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
@@ -217,21 +205,7 @@
     DDLogInfo(@"点击了刷新按钮");
     pageSize=1;
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self title:@"提示" Message:ContinueError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }else{
-                [self showMessageAlertWithController:self title:@"提示" Message:LoadingError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }
-            appDelegate.netWorkType = Off_line;
-            return;
-        }else{
-            [self showMessageAlertWithController:self Message:@"网络状态不佳,请稍后再试!"];
-        }
+        self.netWorkErrorView.hidden = NO;
     }
     
     self.netWorkErrorLabel.text = Loading;
@@ -367,7 +341,7 @@
     [self presentViewController:ac animated:YES completion:nil];
 
 }
-#pragma mark =====定位
+#pragma mark - 定位
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode{
     if (reGeocode)
     {
@@ -387,7 +361,42 @@
         } failure:^(NSError *error) {
             
         }];
-        
+    }
+}
+#pragma mark 检查更新
+-(void)getTheCurrentVersion{
+    //获取版本号
+    NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dic = responseObject[@"object"];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+            // 最新版本号
+            NSString *iTunesVersion = dic[@"versions"];
+            // 应用程序介绍网址(用户升级跳转URL)
+            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
+            
+            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
+                NSLog(@"不是最新版本,需要更新");
+                resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
+                 resetView.tag = 102;
+                 resetView.delegate = self;
+                resetView.strContent = dic[@"updateContent"];
+                [[UIApplication sharedApplication].keyWindow addSubview:resetView];
+            } else {
+                NSLog(@"已是最新版本,不需要更新!");
+            }
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+#pragma mark - delegate
+-(void)didNoResetAppClose:(NSInteger)type{
+     [[[UIApplication sharedApplication].keyWindow  viewWithTag:102] removeFromSuperview];
+    if (type ==0) {
+    }else{
+        // 内容包含中文，需要转码之后才能跳转  否则无法跳转
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
     }
 }
 @end

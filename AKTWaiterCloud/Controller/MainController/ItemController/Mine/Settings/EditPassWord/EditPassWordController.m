@@ -30,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"B1");
-    self.oldViewTop.constant = AktNavAndStatusHight+11.5;
     [self setNavTitle:@"修改密码"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     

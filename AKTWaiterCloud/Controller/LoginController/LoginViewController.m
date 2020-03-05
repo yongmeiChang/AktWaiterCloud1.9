@@ -7,7 +7,6 @@
 //
 #import <JPUSHService.h>
 #import "LoginViewController.h"
-//#import "MainController.h"
 #import "FindPswController.h"
 #import "QRCodeViewController.h"
 #import "SignInVC.h" // 注册
@@ -61,43 +60,8 @@
     self.pwdViewbg.layer.borderColor = RGB(210, 210, 210).CGColor;
     self.pwdViewbg.layer.borderWidth = 1;
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
-    
     // 隐私
-    ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
-    myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
-    myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
-    myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
-    myTextView.fontSize = 13;                            // 可点击的字体大小
-    myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
-    // 设置了上面后要在最后设置内容
-    myTextView.content = @"阅读并同意《隐私政策》";
-    myTextView.agreeBtnClick = ^(UIButton *btn) {
-        btn.selected = !btn.selected;
-        if(btn.selected == YES){
-            NSLog(@"左侧按钮选中状态为YES");
-            isAgreement = YES;
-            [self.loginBtn setUserInteractionEnabled:YES];
-        }else{
-            NSLog(@"左侧按钮选中状态为NO");
-            isAgreement = NO;
-            [self.loginBtn setUserInteractionEnabled:NO];
-        }
-    };
-    myTextView.eventblock = ^(NSAttributedString *contentStr) {
-        AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
-        [self.navigationController pushViewController:Agreementvc animated:YES];
-    };
-    [self.viewBgAgreement addSubview:myTextView];
-    [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(self.viewBgAgreement.mas_width);
-        make.height.mas_equalTo(35);
-        make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
-        make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
-    }];
-    
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-
+      [self initAgreementView];
     // 获取缓存
     if(appDelegate.userinfo){
         self.unameText.text = appDelegate.userinfo.waiterUkey;
@@ -109,12 +73,44 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //开启定时器
     if(![self.cqCodeUserName isEqualToString:@""]){
         self.unameText.text = self.cqCodeUserName;
     }
 }
-
+#pragma mark - 隐私
+-(void)initAgreementView{
+     ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
+     myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
+     myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
+     myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
+     myTextView.fontSize = 13;                            // 可点击的字体大小
+     myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
+     // 设置了上面后要在最后设置内容
+     myTextView.content = @"阅读并同意《隐私政策》";
+     myTextView.agreeBtnClick = ^(UIButton *btn) {
+         btn.selected = !btn.selected;
+         if(btn.selected == YES){
+             NSLog(@"左侧按钮选中状态为YES");
+             isAgreement = YES;
+             [self.loginBtn setUserInteractionEnabled:YES];
+         }else{
+             NSLog(@"左侧按钮选中状态为NO");
+             isAgreement = NO;
+             [self.loginBtn setUserInteractionEnabled:NO];
+         }
+     };
+     myTextView.eventblock = ^(NSAttributedString *contentStr) {
+         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
+         [self.navigationController pushViewController:Agreementvc animated:YES];
+     };
+     [self.viewBgAgreement addSubview:myTextView];
+     [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.width.mas_equalTo(self.viewBgAgreement.mas_width);
+         make.height.mas_equalTo(35);
+         make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
+         make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
+     }];
+}
 #pragma mark - 适配
 -(void)setConstraint{
     if (SCREEN_WIDTH>375) {
@@ -161,7 +157,6 @@
     NSString * netWorkType = [ReachbilityTool internetStatus];
     if([netWorkType isEqualToString:@"notReachable"]){
         [self showMessageAlertWithController:self Message:NetWorkMessage];
-        appDelegate.netWorkType = On_line;
     }
     if (isAgreement) {
         [self Userlogin];
@@ -314,9 +309,7 @@
                 if(appDelegate.userinfo){
                     self.unameText.text = appDelegate.userinfo.waiterUkey;
                     self.upswText.text = appDelegate.userinfo.password;
-                    if(appDelegate.IsAutoLogin){
-                        [self loginBtnClick:nil];
-                    }
+                    [self loginBtnClick:nil];
                     //账号默认关闭离线模式
                     appDelegate.userinfo.isclickOff_line = @"1";
                 }
@@ -324,9 +317,7 @@
         }
     } failure:^(NSError *error) {
         if(appDelegate.userinfo){
-            if(appDelegate.IsAutoLogin){
-                [self loginBtnClick:nil];
-            }
+            [self loginBtnClick:nil];
             //账号默认关闭离线模式
             appDelegate.userinfo.isclickOff_line = @"1";
         }
@@ -338,9 +329,7 @@
      [[[UIApplication sharedApplication].keyWindow  viewWithTag:102] removeFromSuperview];
     if (type ==0) {
         if(appDelegate.userinfo){
-           if(appDelegate.IsAutoLogin){
             [self loginBtnClick:nil];
-           }
             //账号默认关闭离线模式
             appDelegate.userinfo.isclickOff_line = @"1";
         }

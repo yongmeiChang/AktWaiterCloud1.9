@@ -31,7 +31,6 @@
             }else{
                 [userdb saveUserInfo:appDelegate.userinfo];
             }
-            appDelegate.netWorkType = On_line;
             if(successWorking){
                 successWorking();
             }

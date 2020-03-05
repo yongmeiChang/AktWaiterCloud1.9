@@ -47,7 +47,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"注册";
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-    self.topNavH.constant = AktNavAndStatusHight;
     self.btnCode.layer.masksToBounds = YES;
     self.btnCode.layer.cornerRadius = 5;
     UITapGestureRecognizer *tapZuhu = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkZuhuList:)];

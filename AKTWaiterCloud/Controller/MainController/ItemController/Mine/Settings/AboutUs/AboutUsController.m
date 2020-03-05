@@ -20,7 +20,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.s
     self.view.backgroundColor = [UIColor whiteColor];
-    self.topConstraint.constant = AktNavAndStatusHight+27.5;
     [self setNavTitle:@"关于我们"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
 }

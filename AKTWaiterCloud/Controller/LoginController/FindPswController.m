@@ -33,7 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.topNavConsraint.constant = AktNavAndStatusHight;
     self.mobleField.keyboardType = UIKeyboardTypeNumberPad;
     self.waiterField.keyboardType = UIKeyboardTypeNumberPad;
 

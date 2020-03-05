@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-//#import "MainController.h"
 #import "LoginViewController.h"
-//#import "BaseNavController.h"
+#import "UnfinishOrderTaskController.h"
 
 //注意，关于 iOS10 系统版本的判断，可以用下面这个宏来判断。不能再用截取字符的方法。
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -55,41 +54,19 @@
     
     // 根视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootViewController:) name:@"changerootview" object:nil];
-    
     //定位通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judegeRange:) name:@"localaction" object:nil];
-    
     // 注册bugly
     [Bugly startWithAppId:Bugly_AppId];
-
-    
-    self.isclean = false;
     self.Registration_ID=@"";
-    /*
-    // 初始化页面
-    LoginViewController * loginController = [[LoginViewController alloc]init];
-    BaseNavController * baseNavController = [[BaseNavController alloc]initWithRootViewController:loginController];
-    self.window.rootViewController = baseNavController;
-    */
-    
-    UserFmdb * userdb = [[UserFmdb alloc] init];
-    _OrderTypeCountArr = [NSMutableArray array];
-    
-    //初始化全局工单列表（需要考虑是否有必要存在）
-    [self initGlobalArray];
-    
+
     //注册高德地图
     [AMapServices sharedServices].apiKey = GAODEAPPKEY;
     
     //日志初始化
     [self initCocoaLumberjack];
-
-    //默认网络状态
-    self.netWorkType = On_line;
     //查找本地缓存用户数据
-    self.userinfo = [userdb findByrow:0];
-    //打开APP判断是否自动登录
-    self.IsAutoLogin = [self AutoLogin];
+    self.userinfo = [[[UserFmdb alloc] init] findByrow:0];
     
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
@@ -98,30 +75,20 @@
     [self showLoginPage];
     [self setTabBarAndNavigationBarStyle];
 
-    /*
-     * 测试本地通知
-     */
-    //[self testAddNotification];
-   
     return YES;
 }
+#pragma mark - show login
 - (void)showLoginPage{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
+    }else{
+        UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
+        [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
     }
 }
-
--(void)initGlobalArray{
-    self.minuteArray = [NSMutableArray array];
-}
-
--(void)ChangeRootView{
-    self.window.rootViewController = [[LoginViewController alloc]init];
-}
-
-
+#pragma mark - jpush
 -(void)initJpush{
     // 注册apns通知
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) // iOS10
@@ -131,7 +98,7 @@
         [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     }
 }
-
+#pragma mark -
 //拖下通知中心/双击Home键使App界面上移
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -176,9 +143,10 @@
 
         }
     }else{
-        /*MainController * mainView = [[MainController alloc]init];
-        self.window.rootViewController = mainView;
-        self.isrx = 1;*/
+        self.rootViewController = [self getRootTabVBarAction];
+        self.window.rootViewController = self.rootViewController;
+        [self setTabBarAndNavigationBarStyle];
+        self.isrx = 1;
     }
 }
 
@@ -194,13 +162,6 @@
     [DDLog addLogger:fileLogger];
 }
 
--(Boolean)AutoLogin{
-    NSDictionary * dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"isAutologin"];
-    if(!dic){
-        return YES;
-    }
-    return NO;
-}
 
 #pragma mark - 注册推送回调获取 DeviceToken
 #pragma mark -- 成功
@@ -263,8 +224,6 @@
             //[self didReceiveJPushNotification:userInfo];
             completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);
         }
-         // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
-        //completionHandler(UNNotificationPresentationOptionAlert);
     } else {
         // Fallback on earlier versions
     }
@@ -286,25 +245,15 @@
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 收到远程通知:%@",userInfo);
-        //[self didReceiveJPushNotification:userInfo];
         if(self.userinfo){
-//            self.mainController = [[MainController alloc] init];
-//            UIViewController * vc =self.mainController.navigationController.topViewController;
-//            [vc dismissViewControllerAnimated:YES completion:nil];
-//
-//            self.mainController.selectedIndex = 1;
-//            self.window.rootViewController = self.mainController;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"grabSingle" object:nil userInfo:nil];
         }else{
             return;
         }
-        
     }
     else {
         // 判断为本地通知
         NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
-        
-        //[self didReceiveJPushNotification:userInfo];
          completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);
     }
     completionHandler();
@@ -325,42 +274,6 @@
         [self.Rutil locAction];
     }
 }
-
-
-//本地通知
-//- (void)testAddNotification {
-//    JPushNotificationContent *content = [[JPushNotificationContent alloc] init];
-//    content.title = @"服务提醒";
-//    content.subtitle = @"吃药";
-//    content.body = @"请准时吃药";
-//    content.badge = @1;
-//    content.categoryIdentifier = @"Custom Category Name";
-
-    // 5s后提醒 iOS 10 以上支持
-//    JPushNotificationTrigger *trigger1 = [[JPushNotificationTrigger alloc] init];
-//    trigger1.timeInterval = 5;
-//    //每小时重复 1 次 iOS 10 以上支持
-//    JPushNotificationTrigger *trigger2 = [[JPushNotificationTrigger alloc] init];
-//    trigger2.timeInterval = 3600;
-//    trigger2.repeat = YES;
-
-    //每周一早上8：00提醒，iOS10以上支持
-//    NSDateComponents *components = [[NSDateComponents alloc] init];
-//    components.weekday = 6;
-//    components.hour = 18;
-//    JPushNotificationTrigger *trigger3 = [[JPushNotificationTrigger alloc] init];
-//    trigger3.dateComponents = components;
-//    trigger3.repeat = YES;
-//
-//    JPushNotificationRequest *request = [[JPushNotificationRequest alloc] init];
-//    request.requestIdentifier = @"sampleRequest";//通知标识
-//    request.content = content;
-//    request.trigger = trigger3;//trigger2;//trigger3;//trigger4;//trigger5;
-//    request.completionHandler = ^(id result) {
-//        NSLog(@"结果返回：%@", result);
-//    };
-//    [JPUSHService addNotification:request];
-//}
 
 //自定义消息事件
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
@@ -393,9 +306,6 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T2"), NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal]; //tab 正常字体颜色
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T1"), NSForegroundColorAttributeName, nil] forState:UIControlStateSelected]; //tab 选中字体颜色
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"N1"),NSForegroundColorAttributeName,[UIFont fontWithName:@"PingFang SC" size:17], NSFontAttributeName, nil]];// nav 标题的 颜色 字号
-   /* UIImage *bGImage = [UIImage imageNamed:@"lightbg"];
-    bGImage = [bGImage resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch]; // 比例显示图片
-    [[UINavigationBar appearance] setBackgroundImage:bGImage forBarMetrics:UIBarMetricsDefault];*/
     [[UINavigationBar appearance] setTranslucent:NO]; // 是否透明
 }
 
@@ -403,17 +313,17 @@
     NSArray *ary = @[@{@"name":@"DownOrdersController",@"itmeName":@"下单",@"nicom":@"downorders_item",@"sicom":@"select-downorders_item"},
                      @{@"name":@"UnfinishOrderTaskController",@"itmeName":@"任务",@"nicom":@"unfinish_item",@"sicom":@"select_unfinish_item"},
                      @{@"name":@"PlanTaskController",@"itmeName":@"计划",@"nicom":@"task_item",@"sicom":@"select-task_item"},
-                     @{@"name":@"MineController",@"itmeName":@"我的",@"nicom":@"mine_item",@"sicom":@"select_mine_item"}];
+                     @{@"name":@"MineController",@"itmeName":@"我的",@"nicom":@"mine_item",@"sicom":@"select_mine_item"}
+    ];
     NSMutableArray *navs = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < [ary count]; i++)
         [navs addObject:[self getViewControllerWithNav:ary[i]]];
     UITabBarController *tabbar = [[UITabBarController alloc] init];
     tabbar.viewControllers = navs;
-    //默认显示的item
-    [tabbar setSelectedIndex:1];
     UIView *tabBackgroundView = [[UIView alloc] init];
     [tabBackgroundView setBackgroundColor:kColor(@"C3")];
     [tabbar.tabBar insertSubview:tabBackgroundView atIndex:0];
+    //默认显示的item
     return tabbar;
 }
 
