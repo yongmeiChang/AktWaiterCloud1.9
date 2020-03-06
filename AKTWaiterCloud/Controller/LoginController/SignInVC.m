@@ -90,6 +90,10 @@
 }
 
 - (IBAction)getCodeClick:(UIButton *)sender {
+    if (kString(self.tfPhone.text).length == 0) {
+          [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
+          return;
+      }
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
     NSString * url = @"getCheckCode";
     [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
