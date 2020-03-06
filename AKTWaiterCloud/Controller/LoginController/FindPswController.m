@@ -47,7 +47,6 @@
 }
 
 -(IBAction)clickRightBtn:(id)sender{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     if(![Vaildate isMobileNumber:self.mobleField.text]){
         [self showMessageAlertWithController:self Message:@"手机格式不符合"];
         return;
@@ -56,6 +55,7 @@
         [self showMessageAlertWithController:self Message:@"唯一码不能为空"];
         return;
     }
+     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"mobile":self.mobleField.text,@"waiterUkey":self.waiterField.text};
     [[AFNetWorkingRequest sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -67,11 +67,10 @@
         }else{
             [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
         }
-        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
         [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
     }];
+     [[AppDelegate sharedDelegate] hidHUD];
 }
 
 #pragma mark TextFieldDelgate

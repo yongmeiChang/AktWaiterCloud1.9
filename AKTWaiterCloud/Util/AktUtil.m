@@ -125,7 +125,8 @@
 +(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode{
     NSArray *aryOld = [oldCode componentsSeparatedByString:@"."];
     NSArray *aryNew = [newCode componentsSeparatedByString:@"."];
-    if ([[aryNew objectAtIndex:0] integerValue]>=[[aryOld objectAtIndex:0] integerValue]) {
+    
+    if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
         return NO;
     }else if([[aryNew objectAtIndex:0] integerValue]<[[aryOld objectAtIndex:0] integerValue]){
         return YES;

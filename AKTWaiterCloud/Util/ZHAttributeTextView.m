@@ -12,11 +12,13 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         // 左侧是否选中按钮
         self.leftAgreeBtn = [UIButton buttonWithType:0];
         [self.leftAgreeBtn addTarget:self action:@selector(leftAgreeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_normal.png"] forState:UIControlStateNormal];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_select.png"] forState:UIControlStateSelected];
+        [self.leftAgreeBtn setBackgroundColor:[UIColor clearColor]];
         [self addSubview:self.leftAgreeBtn];
 
         // 右侧的富文本
@@ -24,6 +26,7 @@
         _myTextView.delegate = self;
         _myTextView.editable = NO;        // 禁止输入，否则会弹出输入键盘
         _myTextView.scrollEnabled = NO;   // 可选的，视具体情况而定
+        _myTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:_myTextView];
         [_myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(self.bounds.size.width - 35);

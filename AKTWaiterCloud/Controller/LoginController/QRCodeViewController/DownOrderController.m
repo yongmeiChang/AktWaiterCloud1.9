@@ -48,7 +48,6 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     
     [self initTableview];
-    [self initDatePick];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -88,24 +87,14 @@
     }
 }
 #pragma mark - init datepickeview
--(void)initDatePick{
+-(void)initDatePick:(NSString *)selectTime{
     
-    self.timePickerView = [[DateAndTimePickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withTimeShowMode:ShowAllTime withIsShowTodayDate:YES];
+    self.timePickerView = [[DateAndTimePickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withTimeShowMode:ShowAllTime withIsShowTodayDate:YES selectTime:selectTime];
     self.timePickerView.delegate = self;
     self.timePickerView.hidden = YES;
     self.timePickerView.layer.masksToBounds = YES;
     self.timePickerView.layer.cornerRadius = 5;
     self.timePickerView.tag = 104;
-    
-    /*
-    self.datePickerView = [[DatePickerView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-269)/2, (SCREEN_HEIGHT-246)/2, 269, 246) withDateShowMode:ShowAllDate withIsShowTodayDate:YES];
-    self.datePickerView.backgroundColor = [UIColor whiteColor];
-    self.datePickerView.delegate = self;
-    [self.view addSubview:self.datePickerView];
-    self.datePickerView.hidden = YES;
-    self.datePickerView.layer.masksToBounds = YES;
-    self.datePickerView.layer.cornerRadius = 5;
-    */
 }
 #pragma mark - init time
 -(id)initDownOrderControllerWithCustomerUkey:(DownOrderFirstInfo *)oldman customerUkey:(NSString *)customerUkey{
@@ -344,10 +333,12 @@
             //            _type = 1;
         }else if(indexPath.row==2){
             _type = 2;
+            [self initDatePick:self.bTime];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
         }else if(indexPath.row==3){
             _type = 3;
+            [self initDatePick:self.eTime];
              self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
         }else if(indexPath.row==4){
@@ -391,16 +382,5 @@
     }
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:104] removeFromSuperview];
 }
-/*
-#pragma mark - DatePickerViewDelegate
-- (void)DatePickerView:(NSString *)year withMonth:(NSString *)month withDay:(NSString *)day withDate:(NSString *)date withTag:(NSInteger)tag{
-    //确定
-    if (tag == 1001) {
-         [self.tableview reloadData];
-    }else{//1002：取消
-    }
-    [self lightGrayViewSingleTapFromAction];
-    NSLog(@"选择确认日期：%@", date);
-}
-*/
+
 @end
