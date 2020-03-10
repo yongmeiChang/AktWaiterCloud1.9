@@ -10,5 +10,4 @@
 
 @interface LoginRequest : NSObject
 
-+(void)RequestLoginName:(NSString *)waiterNo PassWord:(NSString *)password registrationId:(NSString *)rid successBlock:(void(^)(void))successWorking errorBlock:(void(^)(void))errorWorking ohterErrorBlock:(void(^)(void))ohtererrorBlock;
 @end

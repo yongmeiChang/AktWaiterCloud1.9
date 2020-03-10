@@ -11,15 +11,12 @@
 #import "QRCodeViewController.h"
 #import "SignInVC.h" // 注册
 #import "UserFmdb.h"
-#import "AktResetAppView.h" // 更新提示view
 #import "AktAgreementVC.h"
 #import "ZHAttributeTextView.h" //
 
-@interface LoginViewController ()<UITextFieldDelegate,AktResetAppDelegate>{
+@interface LoginViewController ()<UITextFieldDelegate>{
     NSString * testUserName ;
     NSString * testPassWord ;
-    NSString *trackViewUrl; // appst网址
-    AktResetAppView *resetView;
     BOOL isAgreement;
 }
 @property (weak, nonatomic) IBOutlet UIView *userviewBg;
@@ -67,8 +64,6 @@
         self.unameText.text = appDelegate.userinfo.waiterUkey;
         self.upswText.text = appDelegate.userinfo.password;
     }
-    //检查更新
-    [self getTheCurrentVersion];
     self.cqCodeUserName = @"";
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -278,52 +273,6 @@
         return YES;
     }
     return YES;
-}
-
-#pragma mark 检查更新
--(void)getTheCurrentVersion{
-    //获取版本号
-    NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject[@"object"];
-        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
-            // 最新版本号
-            NSString *iTunesVersion = dic[@"versions"];
-            // 应用程序介绍网址(用户升级跳转URL)
-            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
-            
-            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
-                NSLog(@"不是最新版本,需要更新");
-                resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
-                 resetView.tag = 102;
-                 resetView.delegate = self;
-                resetView.strContent = dic[@"updateContent"];
-                [[UIApplication sharedApplication].keyWindow addSubview:resetView];
-            } else {
-                NSLog(@"已是最新版本,不需要更新!");
-                if(appDelegate.userinfo){
-                    self.unameText.text = appDelegate.userinfo.waiterUkey;
-                    self.upswText.text = appDelegate.userinfo.password;
-                }
-            }
-        }
-    } failure:^(NSError *error) {
-    }];
-}
-
-#pragma mark - delegate
--(void)didNoResetAppClose:(NSInteger)type{
-     [[[UIApplication sharedApplication].keyWindow  viewWithTag:102] removeFromSuperview];
-    if (type ==0) {
-        if(appDelegate.userinfo){
-            [self loginBtnClick:nil];
-            //账号默认关闭离线模式
-            appDelegate.userinfo.isclickOff_line = @"1";
-        }
-    }else{
-        // 内容包含中文，需要转码之后才能跳转  否则无法跳转
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
-    }
 }
 
 @end

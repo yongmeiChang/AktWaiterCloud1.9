@@ -223,7 +223,7 @@
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
             [self showMessageAlertWithController:self Message:@"提交成功"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             [self showMessageAlertWithController:self Message:@"提交失败,请稍后再试"];
         }

@@ -229,7 +229,7 @@
                     [view removeFromSuperview];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
+                [self.navigationController popToRootViewControllerAnimated:YES];
                  [[AppDelegate sharedDelegate] hidHUD];;
                 
             });

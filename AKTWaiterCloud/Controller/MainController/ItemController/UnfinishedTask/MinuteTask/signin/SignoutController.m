@@ -1120,7 +1120,7 @@
                        } failure:^(NSError *error) {
                            [[AppDelegate sharedDelegate] hidHUD];
                            [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
-                               [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
+                               [self.navigationController popToRootViewControllerAnimated:YES];
                            }];
                        }];
     } Error:nil];
@@ -1196,37 +1196,16 @@
         
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
-            NSNumber * code = dic[@"code"];
             [[AppDelegate sharedDelegate] hidHUD];
-            if([code longValue]==1){
-                //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                    
-                } failure:^(NSError *error) {
-                    
-                }];
-                [self showMessageAlertWithController:self title:@"" Message:@"签出成功！" canelBlock:^{
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                }];
-            }else if([code longValue]==2){
-                [self showMessageAlertWithController:self title:@"" Message:@"工单签出失败，请重新尝试" canelBlock:^{
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                }];
-            }else if([code longValue]==3){
-                [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                }];
-            }
+            [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
+            
         } failure:^(NSError *error) {
             [[AppDelegate sharedDelegate] hidHUD];
             [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             }];
-            
         }];
         
     }else{
@@ -1249,43 +1228,14 @@
                 [self.unfinishManager stopUpdatingLocation];
                 [AppInfoDefult sharedClict].orderinfoId = @"";
                 [AppInfoDefult sharedClict].islongLocation=0;
-                //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                    
-                } failure:^(NSError *error) {
-                    
-                }];
-                NSString * message = @"";
-                if([AppInfoDefult sharedClict].islongLocation==0){
-                    message = @"签入成功!";
-                }else{
-                    message = @"签入成功,已关闭后台定位!";
-                }
-                [self showMessageAlertWithController:self title:@""
-                                             Message:message canelBlock:^{
-                                                 //[[AppInfoDefult sharedClict]setValue:self.orderinfo forKey:CheckIn_Order];
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                                             }];
-            }else if([code longValue]==2){
-                [self showMessageAlertWithController:self title:@""
-                                             Message:@"工单签入失败，请重新尝试" canelBlock:^{
-                                                 
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                                             }];
-            }else if([code longValue]==3){
-                [self showMessageAlertWithController:self title:@""
-                                             Message:dic[@"message"] canelBlock:^{
-                                                 
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                                             }];
             }
+            [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
+               [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
         } failure:^(NSError *error) {
-            [self showMessageAlertWithController:self title:@""
-                                         Message:@"签入失败" canelBlock:^{
-                                             
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
-                                         }];
+            [self showMessageAlertWithController:self title:@"" Message:@"签入失败" canelBlock:^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+             }];
             [[AppDelegate sharedDelegate] hidHUD];
         }];
     }
@@ -1317,9 +1267,6 @@
     image = [mark addWaterMark:image watemarkText:strMark];
 
     NSData *data = UIImageJPEGRepresentation(image, 0.5f);
-//    NSString * mimeType = @"image/jpeg";
-//    NSString *encodedImageStr = [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,[data base64EncodedStringWithOptions: 0]];
-    //NSLog(@"%@",encodedImageStr);
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
 }

@@ -9,12 +9,14 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "UnfinishOrderTaskController.h"
+#import "AktResetAppView.h" // 更新提示view
 
 //注意，关于 iOS10 系统版本的判断，可以用下面这个宏来判断。不能再用截取字符的方法。
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-@interface AppDelegate ()<JPUSHRegisterDelegate,MBProgressHUDDelegate>{
+@interface AppDelegate ()<JPUSHRegisterDelegate,MBProgressHUDDelegate,AktResetAppDelegate>{
     MBProgressHUD *HUD;
+    NSString *trackViewUrl; // appst网址
 }
 @property (nonatomic,assign) BOOL isShoPush;//抢单推送距离是否显示通知栏
 @end
@@ -47,13 +49,9 @@
     // 启动图片延时: 1秒
     [NSThread sleepForTimeInterval:1.0];
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     //注册通知 获取自定义消息内容
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
-    
-    // 根视图
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootViewController:) name:@"changerootview" object:nil];
     //定位通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judegeRange:) name:@"localaction" object:nil];
     // 注册bugly
@@ -67,7 +65,7 @@
     [self initCocoaLumberjack];
     //查找本地缓存用户数据
     self.userinfo = [[[UserFmdb alloc] init] findByrow:0];
-    
+    [self getTheCurrentVersion];//版本提示
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
     self.rootViewController = [self getRootTabVBarAction];
@@ -123,35 +121,14 @@
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
 }
-
-
 //拖上通知中心/使App界面恢复原位 点击通知中心里面的远程推送，使App从后台进入前台
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
 //按住减号图标杀死App进程
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
 
-
-- (void)changeRootViewController:(NSNotification*)notiInfo
-{
-    if (notiInfo.object!=nil) {
-        NSString * state = notiInfo.object;
-        if([state isEqualToString:@"login"]){
-            LoginViewController * lgviewcontoller = [[LoginViewController alloc] init];
-            self.window.rootViewController = lgviewcontoller;
-        }else{
-
-        }
-    }else{
-        self.rootViewController = [self getRootTabVBarAction];
-        self.window.rootViewController = self.rootViewController;
-        [self setTabBarAndNavigationBarStyle];
-        self.isrx = 1;
-    }
-}
 
 //日志初始化
 -(void)initCocoaLumberjack{
@@ -304,6 +281,43 @@
     appDelegate.sema = nil;
     //dispatch_semaphore_wait(self.sema, DISPATCH_TIME_FOREVER);
 }
+
+#pragma mark 检查更新
+-(void)getTheCurrentVersion{
+    //获取版本号
+    NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dic = responseObject[@"object"];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+            // 最新版本号
+            NSString *iTunesVersion = dic[@"versions"];
+            // 应用程序介绍网址(用户升级跳转URL)
+            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
+            
+            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
+                NSLog(@"不是最新版本,需要更新");
+                AktResetAppView *resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
+                 resetView.tag = 102;
+                 resetView.delegate = self;
+                resetView.strContent = dic[@"updateContent"];
+                [[UIApplication sharedApplication].keyWindow addSubview:resetView];
+            } else {
+                NSLog(@"已是最新版本,不需要更新!");
+            }
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+-(void)didNoResetAppClose:(NSInteger)type{
+     [[[UIApplication sharedApplication].keyWindow  viewWithTag:102] removeFromSuperview];
+    if (type ==0) {
+    }else{
+        // 内容包含中文，需要转码之后才能跳转  否则无法跳转
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
+    }
+}
+
 #pragma mark -
 - (void)setTabBarAndNavigationBarStyle{
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T2"), NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal]; //tab 正常字体颜色
