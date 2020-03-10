@@ -72,7 +72,7 @@
     NSDate *date;/**<获得日期>*/
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withTimeShowMode:(TimeShowMode)timeMode withIsShowTodayDate:(BOOL)isShowToday{
+- (instancetype)initWithFrame:(CGRect)frame withTimeShowMode:(TimeShowMode)timeMode withIsShowTodayDate:(BOOL)isShowToday selectTime:(NSString *)dateAndtime{
     if ([super initWithFrame:frame]) {
         
         _isShowTodayDate = isShowToday;
@@ -83,6 +83,11 @@
         self.houceRemainingArray = [NSMutableArray array];
         self.minuceRemainingArray = [NSMutableArray array];
         [self initData];
+        currentYear = [[NSString stringWithFormat:@"%@",[dateAndtime substringToIndex:4]] integerValue];
+        currentMonth = [[NSString stringWithFormat:@"%@",[dateAndtime substringWithRange:NSMakeRange(5, 2)]] integerValue];
+        currentDay = [[NSString stringWithFormat:@"%@",[dateAndtime substringWithRange:NSMakeRange(8, 2)]] integerValue];
+        currentH = [[NSString stringWithFormat:@"%@",[dateAndtime substringWithRange:NSMakeRange(11, 2)]] integerValue];
+        currentM = [[NSString stringWithFormat:@"%@",[dateAndtime substringWithRange:NSMakeRange(14, 2)]] integerValue];
         [self setViews];
     }
     return self;
@@ -422,7 +427,7 @@
         minuceStr = [NSString stringWithFormat:@"%@",self.minuceRemainingArray[row]];
     }
 
-    NSLog(@"%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr);
+    NSLog(@"dpickerviewdidselectrow:%@年%@月%@日%@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr);
     labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
 }
 
@@ -725,7 +730,6 @@
             }
             rowLabel.text = self.minuceRemainingArray[row];
             minuceStr = rowLabel.text;
-//            labEnddata.text = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,monthStr,dayStr];
             return rowLabel;
     }
 }
@@ -796,11 +800,36 @@
 }
 #pragma mark - 取消按钮点击方法
 - (void)cancelAction{
+    if (monthStr.length == 1) {
+        monthStr = [NSString stringWithFormat:@"0%@",monthStr];
+    }
+    if (dayStr.length == 1) {
+        dayStr = [NSString stringWithFormat:@"0%@",dayStr];
+    }
+    if (houceStr.length == 1) {
+        houceStr = [NSString stringWithFormat:@"0%@",houceStr];
+    }
+    if (minuceStr.length == 1) {
+        minuceStr = [NSString stringWithFormat:@"0%@",minuceStr];
+    }
     [self.delegate DateAndTimePickerView:yearStr withMonth:monthStr withDay:dayStr withHour:houceStr withMinute:minuceStr withDate:@"取消"withTag:1002];
 }
 
 #pragma mark - 确定按钮点击方法
 - (void)sureAction{
+    if (monthStr.length == 1) {
+        monthStr = [NSString stringWithFormat:@"0%@",monthStr];
+    }
+    if (dayStr.length == 1) {
+        dayStr = [NSString stringWithFormat:@"0%@",dayStr];
+    }
+    if (houceStr.length == 1) {
+        houceStr = [NSString stringWithFormat:@"0%@",houceStr];
+    }
+    if (minuceStr.length == 1) {
+        minuceStr = [NSString stringWithFormat:@"0%@",minuceStr];
+    }
+
     [self.delegate DateAndTimePickerView:yearStr withMonth:monthStr withDay:dayStr withHour:houceStr withMinute:minuceStr withDate:[NSString stringWithFormat:@"%@-%@-%@ %@:%@",yearStr,monthStr,dayStr,houceStr,minuceStr] withTag:1001];
 }
 

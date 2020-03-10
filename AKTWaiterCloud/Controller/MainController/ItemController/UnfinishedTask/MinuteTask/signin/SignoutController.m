@@ -341,7 +341,17 @@
                     long m = h * 60;
                     long s = m + dateCom.second;
                     leaveIntime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                    if (dateCom.day>0) {
+                        self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                    }else{
+                        if (dateCom.hour>0){
+                            self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
+                        }else{
+                            if (dateCom.minute>0) {
+                                self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld分",(long)dateCom.minute];
+                            }
+                        }
+                    }
                 }else{
                     long d = dateCom.month * 30;
                     long h = (dateCom.day + d)*24;
@@ -388,7 +398,17 @@
                     long m = h * 60;
                     long s = m + dateCom.second;
                     leaveOuttime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"早退%ld日%ld小时%ld分",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                   if (dateCom.day>0) {
+                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld日%ld小时%ld分",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                                      }else{
+                                      if (dateCom.hour>0){
+                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
+                                      }else{
+                                      if (dateCom.minute>0) {
+                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld分",(long)dateCom.minute];
+                                      }
+                        }
+                    }
                 }else{
                     long d = dateCom.month * 30;
                     long h = (dateCom.day + d)*24;
@@ -945,7 +965,7 @@
 }
 #pragma mark - 距离
 -(void)distanceBetween:(CLLocationDistance)distance{
-    if (distance>1000) {
+    /*if (distance>1000) {
                  if (self.type ==0) {
                      self.distanceLabel.textColor = [UIColor redColor];
                      self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
@@ -956,16 +976,15 @@
                      self.statusPost = @"签出定位异常";
                  }
         
-    }else if (distance>500){
+    }else*/
+        if (distance>500){
             if (self.type ==0) {
-                self.distanceLabel.textColor = [UIColor redColor];
-                self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
                 self.statusPost = @"签入定位异常";
             }else{
-                self.distanceLabel.textColor = [UIColor redColor];
-                self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
                 self.statusPost = @"签出定位异常";
             }
+        self.distanceLabel.textColor = [UIColor redColor];
+        self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
     }else{
             if (self.type ==0) {
                 self.distanceLabel.text = @"正常";
