@@ -65,7 +65,9 @@
     [self initCocoaLumberjack];
     //查找本地缓存用户数据
     self.userinfo = [[[UserFmdb alloc] init] findByrow:0];
-    [self getTheCurrentVersion];//版本提示
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
+         [self getTheCurrentVersion];//版本提示
+    }
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
     self.rootViewController = [self getRootTabVBarAction];
@@ -296,6 +298,9 @@
             
             if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
                 NSLog(@"不是最新版本,需要更新");
+                // 第一次更新
+               [[NSUserDefaults standardUserDefaults] setObject:@"isUpadateVersion" forKey:@"isUpadateVersion"];
+               [[NSUserDefaults standardUserDefaults] synchronize];
                 AktResetAppView *resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
                  resetView.tag = 102;
                  resetView.delegate = self;

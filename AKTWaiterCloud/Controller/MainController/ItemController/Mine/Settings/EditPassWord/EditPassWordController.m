@@ -126,7 +126,7 @@
 #pragma mark - delegate
 -(void)didSelectClose{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:101] removeFromSuperview];
-    
+    [self.navigationController popToRootViewControllerAnimated:YES];
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];

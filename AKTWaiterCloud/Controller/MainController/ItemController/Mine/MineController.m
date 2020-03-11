@@ -57,6 +57,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //获取各类工单数量
+    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+    [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
     //显示登陆时请求的各状态工单数
     self.unfinishBtn.shouldHideBadgeAtZero = YES;
     self.ongoingBtn.shouldHideBadgeAtZero = YES;

@@ -310,10 +310,10 @@
                 [popview addSubview: closeBtn];
 
                 [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(AktNavAndStatusHight);
+                    make.top.mas_equalTo(0);
                     make.left.mas_equalTo(0);
                     make.right.mas_equalTo(0);
-                    make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+                    make.bottom.mas_equalTo(SCREEN_HEIGHT);
                 }];
                 [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.top.bottom.left.right.mas_equalTo(0);
@@ -382,10 +382,10 @@
                 [popview addSubview: closeBtn];
          
             [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(AktNavAndStatusHight);
+                make.top.mas_equalTo(0);
                 make.left.mas_equalTo(0);
                 make.right.mas_equalTo(0);
-                make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
+                make.bottom.mas_equalTo(SCREEN_HEIGHT);
             }];
             [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.bottom.left.right.mas_equalTo(0);
