@@ -58,6 +58,7 @@
     self.pwdViewbg.layer.borderWidth = 1;
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
     // 隐私
+    isAgreement = YES;
       [self initAgreementView];
     // 获取缓存
     if(appDelegate.userinfo){
@@ -83,19 +84,17 @@
      // 设置了上面后要在最后设置内容
      myTextView.content = @"阅读并同意《隐私政策》";
      myTextView.agreeBtnClick = ^(UIButton *btn) {
-         btn.selected = !btn.selected;
+          btn.selected = !btn.selected;
          if(btn.selected == YES){
              NSLog(@"左侧按钮选中状态为YES");
              isAgreement = YES;
-             [self.loginBtn setUserInteractionEnabled:YES];
          }else{
              NSLog(@"左侧按钮选中状态为NO");
              isAgreement = NO;
-             [self.loginBtn setUserInteractionEnabled:NO];
          }
      };
      myTextView.eventblock = ^(NSAttributedString *contentStr) {
-         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
+         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] init];
          [self.navigationController pushViewController:Agreementvc animated:YES];
      };
      [self.viewBgAgreement addSubview:myTextView];
@@ -157,12 +156,12 @@
 }
 /**忘记密码按钮*/
 -(IBAction)findPswBtn:(id)sender{
-    FindPswController * findPswController = [[FindPswController alloc]initWithFindPswController:self];
+    FindPswController * findPswController = [[FindPswController alloc]init];
     [self.navigationController pushViewController:findPswController animated:YES];
 }
 // 注册
 - (IBAction)sigInClickBtn:(UIButton *)sender {
-    SignInVC *signvc = [[SignInVC alloc] initWithSigninWController:self];
+    SignInVC *signvc = [[SignInVC alloc] init];
     [self.navigationController pushViewController:signvc animated:YES];
 }
 #pragma mark - login

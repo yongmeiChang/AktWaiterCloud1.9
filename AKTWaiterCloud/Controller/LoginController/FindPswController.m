@@ -7,7 +7,6 @@
 //
 
 #import "FindPswController.h"
-#import "LoginViewController.h"
 #import "Vaildate.h"
 @interface FindPswController ()<UITextFieldDelegate>{
 
@@ -16,19 +15,11 @@
 @property (weak,nonatomic) IBOutlet UITextField * waiterField;
 
 @property (weak,nonatomic) IBOutlet UIButton * rightBtn;
-@property (nonatomic,strong) LoginViewController * loginController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNavConsraint;
 
 @end
 
 @implementation FindPswController
-
--(id)initWithFindPswController:(LoginViewController *)logincontoller{
-    if (self = [super init]) {
-        self.loginController = logincontoller;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,7 +32,6 @@
 }
 #pragma mark - click
 -(void)LeftBarClick{
-    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

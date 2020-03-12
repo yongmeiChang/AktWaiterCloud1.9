@@ -26,8 +26,7 @@
     //默认view的背景色
     self.view.backgroundColor = RGB(226, 231, 237);
     
-      // mj
-        //下拉、上拉动画图片
+      // mj 下拉、上拉动画图片
         NSMutableArray * arr = [NSMutableArray array];
         for(int i=1; i<=32;i++){
             NSString * imagename = [NSString stringWithFormat:@"loading%d.png",i];
@@ -257,6 +256,7 @@
 -(void)logoffUser{
     [self showMessageAlertWithController:self title:@"" Message:@"当前账号已在其他设备登陆" canelBlock:^{
         NSLog(@"用户退出登录");
+        [self.navigationController popToRootViewControllerAnimated:YES];
         //不能自动登陆
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -266,12 +266,8 @@
         [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
     }];
 }
+
 #pragma mark -
--(void)dealloc
-{
-
-}
-
 -(void)backClick:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

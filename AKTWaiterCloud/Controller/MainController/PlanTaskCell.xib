@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -114,11 +114,11 @@
                                                 <state key="normal" image="dianhua"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhQ-hp-w93">
-                                                <rect key="frame" x="32" y="0.0" width="275" height="20"/>
+                                                <rect key="frame" x="29" y="0.0" width="278" height="20"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-0L-6NC">
-                                                <rect key="frame" x="29.5" y="23.5" width="270.5" height="14.5"/>
+                                                <rect key="frame" x="31.5" y="23.5" width="268.5" height="14.5"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="上海市普陀区银杏路上">
                                                         <attributes>
@@ -131,7 +131,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sxu-B9-QUO">
-                                                <rect key="frame" x="29.5" y="23.5" width="270.5" height="24"/>
+                                                <rect key="frame" x="31.5" y="23.5" width="268.5" height="24"/>
                                                 <connections>
                                                     <action selector="btnAddressClickMap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="052-VZ-ryf"/>
                                                 </connections>
@@ -170,14 +170,14 @@
                                             <constraint firstItem="r6c-fh-gHx" firstAttribute="leading" secondItem="IeU-A9-bTl" secondAttribute="leading" constant="15" id="ICA-tU-y4C"/>
                                             <constraint firstItem="Sxu-B9-QUO" firstAttribute="top" secondItem="NRQ-0L-6NC" secondAttribute="top" id="O39-KV-Y9o"/>
                                             <constraint firstItem="NRQ-0L-6NC" firstAttribute="top" secondItem="CVb-JA-hRH" secondAttribute="top" constant="2" id="QR7-rh-uZd"/>
-                                            <constraint firstItem="NRQ-0L-6NC" firstAttribute="leading" secondItem="CVb-JA-hRH" secondAttribute="trailing" constant="5" id="Qj4-9m-gzH"/>
+                                            <constraint firstItem="NRQ-0L-6NC" firstAttribute="leading" secondItem="CVb-JA-hRH" secondAttribute="trailing" constant="7" id="Qj4-9m-gzH"/>
                                             <constraint firstAttribute="bottom" secondItem="Sxu-B9-QUO" secondAttribute="bottom" constant="1" id="VjF-zz-iDz"/>
                                             <constraint firstAttribute="bottom" secondItem="lIp-g6-70K" secondAttribute="bottom" constant="5" id="fSu-Ld-h5p"/>
                                             <constraint firstItem="IhQ-hp-w93" firstAttribute="top" secondItem="IeU-A9-bTl" secondAttribute="top" id="qIU-ah-rXV"/>
                                             <constraint firstItem="Sxu-B9-QUO" firstAttribute="leading" secondItem="NRQ-0L-6NC" secondAttribute="leading" id="sI5-fI-BJ4"/>
                                             <constraint firstItem="IhQ-hp-w93" firstAttribute="bottom" secondItem="r6c-fh-gHx" secondAttribute="bottom" id="uwK-Iv-VIa"/>
                                             <constraint firstAttribute="trailing" secondItem="lIp-g6-70K" secondAttribute="trailing" constant="5" id="vhV-LW-Wap"/>
-                                            <constraint firstItem="IhQ-hp-w93" firstAttribute="leading" secondItem="r6c-fh-gHx" secondAttribute="trailing" constant="5" id="xlk-ZL-Ppc"/>
+                                            <constraint firstItem="IhQ-hp-w93" firstAttribute="leading" secondItem="r6c-fh-gHx" secondAttribute="trailing" constant="2" id="xlk-ZL-Ppc"/>
                                         </constraints>
                                     </view>
                                 </subviews>

@@ -33,7 +33,7 @@
     aryPhone = [orderinfo.customerPhone componentsSeparatedByString:@","];
     
     for (int i =0; i<aryPhone.count; i++) {// 手机号
-        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake(100*i, 0, 100, 20)];
+        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake(100*i, 0, 99, 20)];
         [btnPhone addTarget:self action:@selector(btnPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
         [btnPhone setTitle:[aryPhone objectAtIndex:i] forState:UIControlStateNormal];
         [btnPhone setTitleColor:kColor(@"C7") forState:UIControlStateNormal];

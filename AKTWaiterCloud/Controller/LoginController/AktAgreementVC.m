@@ -7,22 +7,13 @@
 //
 
 #import "AktAgreementVC.h"
-#import "LoginViewController.h"
 
 @interface AktAgreementVC ()
 @property (weak, nonatomic) IBOutlet UIWebView *webBaseView;
 
-@property (nonatomic,strong) LoginViewController * loginController;
-
 @end
 
 @implementation AktAgreementVC
--(id)initWithSigninWController:(LoginViewController *)logincontoller{
-    if (self = [super init]) {
-        self.loginController = logincontoller;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +31,6 @@
 }
 #pragma mark - click
 -(void)LeftBarClick{
-    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 /*

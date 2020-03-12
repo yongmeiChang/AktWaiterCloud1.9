@@ -15,6 +15,7 @@
         self.backgroundColor = [UIColor clearColor];
         // 左侧是否选中按钮
         self.leftAgreeBtn = [UIButton buttonWithType:0];
+        self.leftAgreeBtn.selected = YES;
         [self.leftAgreeBtn addTarget:self action:@selector(leftAgreeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_normal.png"] forState:UIControlStateNormal];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_select.png"] forState:UIControlStateSelected];
