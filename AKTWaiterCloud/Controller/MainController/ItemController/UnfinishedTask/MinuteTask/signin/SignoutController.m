@@ -1290,8 +1290,8 @@
 
 #pragma mark - 键盘收缩
 -(void)keyboardWillChangeFrame:(NSNotification *)note{
-    NSDictionary* info = [note userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+//    NSDictionary* info = [note userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.25];

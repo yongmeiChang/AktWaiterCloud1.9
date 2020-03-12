@@ -55,8 +55,6 @@
     //设置允许在后台定位
     if([[AppInfoDefult sharedClict] isNaTali]){
         [self.locationManager setAllowsBackgroundLocationUpdates:YES];
-        self.locationManager.distanceFilter = 2.f;
-    }else{
     }
     self.locationManager.distanceFilter = 2.f;
     //设置定位超时时间

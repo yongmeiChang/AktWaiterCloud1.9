@@ -206,11 +206,7 @@
 		AD1739C71FD0ED6300DAC4A5 /* AFNetWorkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */; };
 		AD19D8C51FA9A62C006EE8A7 /* MinuteTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */; };
 		AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */; };
-		AD1C86761FE3604A005C5B3C /* MinuteTaskFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1C86751FE3604A005C5B3C /* MinuteTaskFmdb.m */; };
 		AD1E03451FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1E03441FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m */; };
-		AD31D5711FECD63C00DB7C46 /* FilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD31D56F1FECD63C00DB7C46 /* FilterController.m */; };
-		AD31D5721FECD63C00DB7C46 /* FilterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD31D5701FECD63C00DB7C46 /* FilterController.xib */; };
-		AD31D5761FECDF6600DB7C46 /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD31D5751FECDF6600DB7C46 /* MyTableView.m */; };
 		AD31D57B1FED1DB700DB7C46 /* EditOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD31D5791FED1DB700DB7C46 /* EditOrderController.m */; };
 		AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD31D57A1FED1DB700DB7C46 /* EditOrderController.xib */; };
 		AD332A1E1FEBB8EA003D801B /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD332A1C1FEBB8EA003D801B /* SearchDateController.m */; };
@@ -482,15 +478,8 @@
 		AD19D8C21FA9A62C006EE8A7 /* MinuteTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinuteTaskController.h; sourceTree = "<group>"; };
 		AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinuteTaskController.m; sourceTree = "<group>"; };
 		AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MinuteTaskController.xib; sourceTree = "<group>"; };
-		AD1C86741FE3604A005C5B3C /* MinuteTaskFmdb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinuteTaskFmdb.h; sourceTree = "<group>"; };
-		AD1C86751FE3604A005C5B3C /* MinuteTaskFmdb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinuteTaskFmdb.m; sourceTree = "<group>"; };
 		AD1E03431FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+UINavigationBar_CustomHeight.h"; sourceTree = "<group>"; };
 		AD1E03441FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+UINavigationBar_CustomHeight.m"; sourceTree = "<group>"; };
-		AD31D56E1FECD63C00DB7C46 /* FilterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterController.h; sourceTree = "<group>"; };
-		AD31D56F1FECD63C00DB7C46 /* FilterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterController.m; sourceTree = "<group>"; };
-		AD31D5701FECD63C00DB7C46 /* FilterController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterController.xib; sourceTree = "<group>"; };
-		AD31D5741FECDF6600DB7C46 /* MyTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTableView.h; sourceTree = "<group>"; };
-		AD31D5751FECDF6600DB7C46 /* MyTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTableView.m; sourceTree = "<group>"; };
 		AD31D5781FED1DB700DB7C46 /* EditOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditOrderController.h; sourceTree = "<group>"; };
 		AD31D5791FED1DB700DB7C46 /* EditOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditOrderController.m; sourceTree = "<group>"; };
 		AD31D57A1FED1DB700DB7C46 /* EditOrderController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditOrderController.xib; sourceTree = "<group>"; };
@@ -908,15 +897,6 @@
 			path = Notify;
 			sourceTree = "<group>";
 		};
-		AD31D5731FECDF1E00DB7C46 /* Mytableview */ = {
-			isa = PBXGroup;
-			children = (
-				AD31D5741FECDF6600DB7C46 /* MyTableView.h */,
-				AD31D5751FECDF6600DB7C46 /* MyTableView.m */,
-			);
-			path = Mytableview;
-			sourceTree = "<group>";
-		};
 		AD31D5771FED1D9100DB7C46 /* EditController */ = {
 			isa = PBXGroup;
 			children = (
@@ -942,9 +922,6 @@
 				AD332A201FEBB9E7003D801B /* SearchDateCell.h */,
 				AD332A211FEBB9E7003D801B /* SearchDateCell.m */,
 				AD332A221FEBB9E7003D801B /* SearchDateCell.xib */,
-				AD31D56E1FECD63C00DB7C46 /* FilterController.h */,
-				AD31D56F1FECD63C00DB7C46 /* FilterController.m */,
-				AD31D5701FECD63C00DB7C46 /* FilterController.xib */,
 			);
 			path = SearchDate;
 			sourceTree = "<group>";
@@ -987,8 +964,6 @@
 				AD5F48871FA0371300A0C201 /* UserFmdb.m */,
 				AD0BC4491FA6F2D30083661C /* OrderTaskFmdb.h */,
 				AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */,
-				AD1C86741FE3604A005C5B3C /* MinuteTaskFmdb.h */,
-				AD1C86751FE3604A005C5B3C /* MinuteTaskFmdb.m */,
 				4CF261E1233376D3001AB19F /* AktSearchFmdb.h */,
 				4CF261E2233376D3001AB19F /* AktSearchFmdb.m */,
 			);
@@ -1310,7 +1285,6 @@
 			isa = PBXGroup;
 			children = (
 				4C869A94240943FE0018B943 /* html */,
-				AD31D5731FECDF1E00DB7C46 /* Mytableview */,
 				AD56A0D51F973933004C956C /* AKTWaiterCloud.entitlements */,
 				4CAED3F623B9FBEC00BAF2E3 /* model */,
 				AD4DAAE61F8F0CA200610281 /* AFNetWorkingTool */,
@@ -1554,7 +1528,6 @@
 				AD4DAACC1F8F093800610281 /* SettingsTableViewCell.xib in Resources */,
 				AD1711AE1FDE7B3300A9DD07 /* ServicePojCell.xib in Resources */,
 				4CD674EF22E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
-				AD31D5721FECD63C00DB7C46 /* FilterController.xib in Resources */,
 				ADD562BD1FDFB5D400898AC3 /* HandCodeController.xib in Resources */,
 				4C89D65823A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
 				AD4DAAD61F8F093800610281 /* SettingsController.xib in Resources */,
@@ -1673,7 +1646,6 @@
 				ADBB6A2A1F9895BC00DDC01C /* BaseControllerViewController.m in Sources */,
 				AD4DAACB1F8F093800610281 /* SettingsTableViewCell.m in Sources */,
 				4C9B976F240CCF1D00576F7C /* FSCalendarCalculator.m in Sources */,
-				AD31D5711FECD63C00DB7C46 /* FilterController.m in Sources */,
 				ADD836092058F6560003A1C5 /* UIColor+Hex.m in Sources */,
 				4CD6750422E94CDF00AB76AF /* UIView+KIAdditions.m in Sources */,
 				AD4DAAD31F8F093800610281 /* SettingsController.m in Sources */,
@@ -1718,7 +1690,6 @@
 				4CD674E322E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4CF261EF2334AD23001AB19F /* AktDateSearchVC.m in Sources */,
 				4C9B9775240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
-				AD31D5761FECDF6600DB7C46 /* MyTableView.m in Sources */,
 				ADB0D8211F904981002F6B87 /* PlanTaskController.m in Sources */,
 				4CA9C2D4239F4A0D0029FEF5 /* AktTitleCell.m in Sources */,
 				AD37AB3F1FF4E78A001D304C /* UITextView+Placeholder.m in Sources */,
@@ -1735,7 +1706,6 @@
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
 				AD1E03451FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m in Sources */,
 				4CDAD74E240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
-				AD1C86761FE3604A005C5B3C /* MinuteTaskFmdb.m in Sources */,
 				AD472F301FC54F9F0065C934 /* UnfinifshController.m in Sources */,
 				4C9B9754240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,

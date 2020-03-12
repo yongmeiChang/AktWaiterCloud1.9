@@ -7,7 +7,6 @@
 //
 
 #import "SearchDateController.h"
-#import "FilterController.h"
 #import "AktRangePickerView.h"
 
 @interface SearchDateController ()<AktRangePickerViewDelegate>{
