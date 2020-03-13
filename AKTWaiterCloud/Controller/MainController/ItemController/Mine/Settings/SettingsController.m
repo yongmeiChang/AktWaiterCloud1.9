@@ -44,11 +44,6 @@
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-#pragma mark - MemoryWarning
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
 #pragma mark - tableview datesouce
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -148,44 +143,31 @@
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    
-    NSDictionary * dic = @{@"id":@"1294211974",@"appstore":@"appstore"};
-    [[AFNetWorkingRequest sharedTool] requestgetversion:dic Url:@"lookup" type:HttpRequestTypePost success:^(id responseObject) {
-        //返回信息
-        //        minimumOsVersion = "8.0";         //App所支持的最低iOS系统
-        //        fileSizeBytes = ;                 //应用的大小
-        //        releaseDate = "";                 //发布时间
-        //        trackCensoredName = "";           //审查名称
-        //        trackContentRating = "";          //评级
-        //        trackId = ;                       //应用程序ID
-        //        trackName = "";                   //应用程序名称
-        //        trackViewUrl = "";                //应用程序介绍网址 需要更新跳转的网址
-        //        version = "4.0.3";                //版本号
-        NSDictionary * dic = [responseObject[@"results"] firstObject];
-        // 最新版本号
-        NSString *iTunesVersion = dic[@"version"];
-        // 应用程序介绍网址(用户升级跳转URL)
-        NSString *trackViewUrl = dic[@"trackViewUrl"];
-        
-        if ([versionValueStringForSystemNow doubleValue]<[iTunesVersion doubleValue]) {
-            NSLog(@"不是最新版本,需要更新");
-            UIAlertController * alertview = [UIAlertController alertControllerWithTitle:@"提示" message:@"检测到有最新版本，点击跳转更新" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction * ok = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl] options:@{} completionHandler:^(BOOL success) {
-                    
-                }];
-            }];
-            UIAlertAction * canel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            [alertview addAction:ok];
-            [alertview addAction:canel];
-            alertview.modalPresentationStyle = UIModalPresentationFullScreen;
-            [self presentViewController:alertview animated:YES completion:nil];
-
-        } else {
-            NSLog(@"已是最新版本,不需要更新!");
-            [self showMessageAlertWithController:self Message:@"当前为最新版本"];
+    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+        NSDictionary * dic = responseObject[@"object"];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+            // 最新版本号
+            NSString *iTunesVersion = dic[@"versions"];
+            // 应用程序介绍网址(用户升级跳转URL)
+            NSString *trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
+            
+            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
+               UIAlertController * alertview = [UIAlertController alertControllerWithTitle:@"提示" message:@"检测到有最新版本，点击跳转更新" preferredStyle:UIAlertControllerStyleAlert];
+                           UIAlertAction * ok = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl] options:@{} completionHandler:^(BOOL success) {
+                                   
+                               }];
+                           }];
+                           UIAlertAction * canel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                               
+                           }];
+                           [alertview addAction:ok];
+                           [alertview addAction:canel];
+                           alertview.modalPresentationStyle = UIModalPresentationFullScreen;
+                           [self presentViewController:alertview animated:YES completion:nil];
+            } else {
+              [self showMessageAlertWithController:self Message:@"当前为最新版本"];
+            }
         }
     } failure:^(NSError *error) {
         [self showMessageAlertWithController:self Message:@"检测失败，稍后再试"];
@@ -204,7 +186,6 @@
         self.timer = nil;
     }
 }
-
 //注销
 -(IBAction)logoffUser:(id)sender{
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"是否退出登录" message:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -228,5 +209,8 @@
     alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
-
+#pragma mark - MemoryWarning
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
 @end

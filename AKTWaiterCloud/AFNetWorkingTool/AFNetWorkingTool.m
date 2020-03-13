@@ -43,15 +43,8 @@ static AFNetWorkingTool * a_instance = nil;
     }else{
         manager.requestSerializer.timeoutInterval = 20.0f;
     }
-    NSDictionary * dic = parameters;
-    
-    NSString * url = @"";
-    if([[dic allKeys] containsObject:@"appstore"]){
-        url = [NSString stringWithFormat:@"%@%@",appstoreURl,URLString];
-    }
-    else{
-        url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
-    }
+    NSString *url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
+
     NSLog(@"requst:%@\n参数:%@",url,parameters);
     switch (type) {
             

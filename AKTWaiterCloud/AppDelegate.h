@@ -26,6 +26,8 @@
 @property(strong,nonatomic) RangeUtil* Rutil;
 @property (strong, nonatomic) UITabBarController *rootViewController;
 
+-(void)getTheCurrentVersion; // 更新提示
+
 + (AppDelegate *)sharedDelegate; // 单例
 + (UIViewController *)getCurrentVC;
 // 风火轮封装
