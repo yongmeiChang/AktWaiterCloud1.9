@@ -15,7 +15,6 @@
 #import <MapKit/MapKit.h>
 #import "PhoneSize.h"
 #import "BaseControllerViewController.h"
-#import "LoginRequest.h"
 #import "Vaildate.h"
 #import "NSMutableDictionary+Utils.h"
 #import "DataManager.h"

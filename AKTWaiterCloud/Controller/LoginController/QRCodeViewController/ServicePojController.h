@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class DownOrderController,EditOrderController;
+@class DownOrderController;
 @interface ServicePojController : BaseControllerViewController
 @property(nonatomic,strong) DownOrderController * DoContoller;
-@property(nonatomic,strong) EditOrderController * EoController;
-
 @property(nonatomic,strong) ServicePojInfo*selectInfo;
 @end

@@ -11,10 +11,10 @@
 #import "PlanTaskCell.h"
 #import "SignInCell.h"
 #import "SignoutController.h"
-#import "EditOrderController.h"
 #import "VisitCell.h"
 #import "NoDateCell.h"
 #import <CoreLocation/CoreLocation.h>
+
 @interface MinuteTaskController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,PlanTaskPhoneDelegate>
 {
     CLGeocoder *_geocoder;
@@ -70,6 +70,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    self.tabBarController.tabBar.hidden = YES;
     _sgController = [[SignoutController alloc] init];
     if([self.orderinfo.workStatus isEqualToString:@"4"]){
         _sgController.type = 1;
@@ -79,7 +80,10 @@
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
     }
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.tabBarController.tabBar.hidden = NO;
+}
 #pragma mark - showUserMoney
 -(void)showUserMoney{ //显示用户余额
  
@@ -103,21 +107,6 @@
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
     }];
-}
-
--(void)clickEdit{
-    EditOrderController * eoController = [[EditOrderController alloc] init];
-    eoController.serviceid = self.orderinfo.serviceItemId;
-    eoController.untype = self.orderinfo.unitType;
-    eoController.oldmoney = self.orderinfo.serviceMoney;
-    eoController.oldBeginTime = self.orderinfo.serviceBegin;
-    eoController.workstuats = self.orderinfo.workStatus;
-    eoController.oldEndTime = self.orderinfo.serviceEnd;
-    eoController.workid = self.orderinfo.id;
-    eoController.workNo = self.orderinfo.workNo;
-    eoController.stationId = self.orderinfo.stationId;
-    eoController.oldService = self.orderinfo.serviceItemName;
-    [self.navigationController pushViewController:eoController animated:YES];
 }
 
 #pragma mark - nav back

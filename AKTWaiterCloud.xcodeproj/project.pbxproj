@@ -195,7 +195,6 @@
 		AD0379C61F906D6B001973A2 /* NotifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0379C41F906D6B001973A2 /* NotifyController.m */; };
 		AD0379C71F906D6B001973A2 /* NotifyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD0379C51F906D6B001973A2 /* NotifyController.xib */; };
 		AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0861D41FD014C80003F692 /* MyGaodeMap.m */; };
-		AD0A8C2B1FA1AD410082F337 /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0A8C2A1FA1AD410082F337 /* LoginRequest.m */; };
 		AD0BC44B1FA6F2D30083661C /* OrderTaskFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */; };
 		AD0EA6D81FD52FCB00A6B496 /* SignInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0EA6D61FD52FCB00A6B496 /* SignInCell.m */; };
 		AD0EA6D91FD52FCB00A6B496 /* SignInCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD0EA6D71FD52FCB00A6B496 /* SignInCell.xib */; };
@@ -207,8 +206,6 @@
 		AD19D8C51FA9A62C006EE8A7 /* MinuteTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */; };
 		AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */; };
 		AD1E03451FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1E03441FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m */; };
-		AD31D57B1FED1DB700DB7C46 /* EditOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD31D5791FED1DB700DB7C46 /* EditOrderController.m */; };
-		AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD31D57A1FED1DB700DB7C46 /* EditOrderController.xib */; };
 		AD332A1E1FEBB8EA003D801B /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD332A1C1FEBB8EA003D801B /* SearchDateController.m */; };
 		AD332A1F1FEBB8EA003D801B /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD332A1D1FEBB8EA003D801B /* SearchDateController.xib */; };
 		AD332A231FEBB9E7003D801B /* SearchDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AD332A211FEBB9E7003D801B /* SearchDateCell.m */; };
@@ -459,8 +456,6 @@
 		AD0379C51F906D6B001973A2 /* NotifyController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotifyController.xib; sourceTree = "<group>"; };
 		AD0861D31FD014C80003F692 /* MyGaodeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyGaodeMap.h; sourceTree = "<group>"; };
 		AD0861D41FD014C80003F692 /* MyGaodeMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyGaodeMap.m; sourceTree = "<group>"; };
-		AD0A8C291FA1AD410082F337 /* LoginRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
-		AD0A8C2A1FA1AD410082F337 /* LoginRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		AD0BC4491FA6F2D30083661C /* OrderTaskFmdb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderTaskFmdb.h; sourceTree = "<group>"; };
 		AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderTaskFmdb.m; sourceTree = "<group>"; };
 		AD0EA6D51FD52FCB00A6B496 /* SignInCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInCell.h; sourceTree = "<group>"; };
@@ -480,9 +475,6 @@
 		AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MinuteTaskController.xib; sourceTree = "<group>"; };
 		AD1E03431FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+UINavigationBar_CustomHeight.h"; sourceTree = "<group>"; };
 		AD1E03441FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+UINavigationBar_CustomHeight.m"; sourceTree = "<group>"; };
-		AD31D5781FED1DB700DB7C46 /* EditOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditOrderController.h; sourceTree = "<group>"; };
-		AD31D5791FED1DB700DB7C46 /* EditOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditOrderController.m; sourceTree = "<group>"; };
-		AD31D57A1FED1DB700DB7C46 /* EditOrderController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditOrderController.xib; sourceTree = "<group>"; };
 		AD332A1B1FEBB8EA003D801B /* SearchDateController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchDateController.h; sourceTree = "<group>"; };
 		AD332A1C1FEBB8EA003D801B /* SearchDateController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchDateController.m; sourceTree = "<group>"; };
 		AD332A1D1FEBB8EA003D801B /* SearchDateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchDateController.xib; sourceTree = "<group>"; };
@@ -897,16 +889,6 @@
 			path = Notify;
 			sourceTree = "<group>";
 		};
-		AD31D5771FED1D9100DB7C46 /* EditController */ = {
-			isa = PBXGroup;
-			children = (
-				AD31D5781FED1DB700DB7C46 /* EditOrderController.h */,
-				AD31D5791FED1DB700DB7C46 /* EditOrderController.m */,
-				AD31D57A1FED1DB700DB7C46 /* EditOrderController.xib */,
-			);
-			path = EditController;
-			sourceTree = "<group>";
-		};
 		AD332A1A1FEBB861003D801B /* SearchDate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1190,7 +1172,6 @@
 				ADF511BC2060A4EC008FCAFE /* NoDateCell.h */,
 				ADF511BD2060A4EC008FCAFE /* NoDateCell.m */,
 				ADF511BE2060A4EC008FCAFE /* NoDateCell.xib */,
-				AD31D5771FED1D9100DB7C46 /* EditController */,
 				AD65759C1FAAEA2C00495D1E /* signin */,
 			);
 			path = MinuteTask;
@@ -1249,8 +1230,6 @@
 		ADD562BF1FDFB63800898AC3 /* service */ = {
 			isa = PBXGroup;
 			children = (
-				AD0A8C291FA1AD410082F337 /* LoginRequest.h */,
-				AD0A8C2A1FA1AD410082F337 /* LoginRequest.m */,
 				ADD562C01FDFB67C00898AC3 /* QRCodeService.h */,
 				ADD562C11FDFB67C00898AC3 /* QRCodeService.m */,
 			);
@@ -1501,7 +1480,6 @@
 				4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */,
 				4C869A96240943FE0018B943 /* AktAgreement.html in Resources */,
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
-				AD31D57C1FED1DB700DB7C46 /* EditOrderController.xib in Resources */,
 				ADD836062057C0140003A1C5 /* NotifyCell.xib in Resources */,
 				ADD789231F7DF730008DEC55 /* LaunchScreen.storyboard in Resources */,
 				AD6575A11FAAEA5600495D1E /* SignoutController.xib in Resources */,
@@ -1677,12 +1655,10 @@
 				4CDAD745240F7E0E00CF9129 /* NSDictionary+Extension.m in Sources */,
 				4CD674F222E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				AD1711AD1FDE7B3300A9DD07 /* ServicePojCell.m in Sources */,
-				AD31D57B1FED1DB700DB7C46 /* EditOrderController.m in Sources */,
 				AD0379C61F906D6B001973A2 /* NotifyController.m in Sources */,
 				4C89D66723A769A70024456F /* SignInVC.m in Sources */,
 				4CE6A04D23AB268300C41114 /* AktResetAppView.m in Sources */,
 				4C9B9763240CCF1D00576F7C /* FSCalendarWeekdayView.m in Sources */,
-				AD0A8C2B1FA1AD410082F337 /* LoginRequest.m in Sources */,
 				AD332A1E1FEBB8EA003D801B /* SearchDateController.m in Sources */,
 				AD1711AF1FDE7B3300A9DD07 /* ServicePojController.m in Sources */,
 				ADD835F020576F9F0003A1C5 /* CheckInJudge.m in Sources */,
@@ -2018,7 +1994,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_INPUT_FILETYPE = automatic;
@@ -2035,7 +2011,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
@@ -2117,7 +2093,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2133,7 +2109,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
