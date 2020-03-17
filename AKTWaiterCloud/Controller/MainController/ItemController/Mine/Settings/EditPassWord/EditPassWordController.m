@@ -95,7 +95,7 @@
     NSDictionary * param = @{@"waiterId":appDelegate.userinfo.uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":appDelegate.userinfo.tenantsId};
     
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"操作中"];
-    [[AFNetWorkingRequest sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
     
         NSDictionary * result = responseObject;
         NSNumber * code = [result objectForKey:@"code"];

@@ -43,7 +43,7 @@
 -(void)getPushRecordService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [[AFNetWorkingRequest sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
 
         if([dic[@"code"] intValue]==1){
@@ -107,7 +107,7 @@
     if(workid){
         NSDictionary * dic = @{@"workOrderId":workid,@"tenantsId":appDelegate.userinfo.tenantsId};
         [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-        [[AFNetWorkingRequest sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
+        [[AktVipCmd sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
                 NSMutableDictionary * dicc = dic[@"object"];

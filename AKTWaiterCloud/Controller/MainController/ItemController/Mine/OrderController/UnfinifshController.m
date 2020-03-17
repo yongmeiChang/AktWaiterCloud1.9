@@ -326,47 +326,4 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark -
--(void)RequestgetWorkByDay:(NSString *)dateStr{
-    //NSString * date = [NSString stringWithFormat:@"%@ 00:00:00",dateStr];
-    //type=doing  进行中工单   type=undo 未开始工单  type=done 已完成工单
-    NSDictionary * dic =  @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":dateStr,@"type":@"undo"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkByDay:dic type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dicc = responseObject;
-        NSLog(@"%@",dicc);
-        int code = [dicc[@"code"] intValue];
-        if(code==1){
-            tableviewtype = 1;
-            [self.dateArray removeAllObjects];
-            NSArray * arr = dicc[@"object"];
-            if(arr.count>0){
-                for(NSMutableDictionary * ordrerDic in arr){
-                    NSDictionary * createBydic = [ordrerDic objectForKey:@"createBy"];
-                    NSDictionary * updateBydic = [ordrerDic objectForKey:@"updateBy"];
-                    NSString * createBy = [createBydic objectForKey:@"id"];
-                    NSString * updateBy = [updateBydic objectForKey:@"id"];
-                    [ordrerDic removeObjectForKey:@"createBy"];
-                    [ordrerDic removeObjectForKey:@"updateBy"];
-                    [ordrerDic setObject:createBy forKeyedSubscript:@"createBy"];
-                    [ordrerDic setObject:updateBy forKeyedSubscript:@"updateBy"];
-                    OrderInfo * order = [[OrderInfo alloc] initWithDictionary:ordrerDic error:nil];
-                    [self.dateArray addObject:order];
-                }
-                [self.taskTableview reloadData];
-            }
-        }else{
-//            [self showMessageAlertWithController:self Message:[dicc objectForKey:@"message"]];
-            self.netWorkErrorLabel.text = [dicc objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:@"暂无数据"];
-            self.taskTableview.hidden = YES;
-            self.netWorkErrorView.hidden = NO;
-            self.netWorkErrorView.userInteractionEnabled = NO;
-        }
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
-}
-
-
 @end

@@ -350,7 +350,7 @@
                                @"status":@"99",
                                @"referenceId":self.LocationwaiterId
                                };
-        [[AFNetWorkingRequest sharedTool] uploadLocateInformation:dic Url:@"uploadLocateInformation" type:HttpRequestTypeGet success:^(id responseObject) {
+        [[AFNetWorkingRequest sharedTool] uploadLocateInformation:dic type:HttpRequestTypeGet success:^(id responseObject) {
             
         } failure:^(NSError *error) {
             

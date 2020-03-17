@@ -84,30 +84,6 @@
     [super viewWillDisappear:YES];
     self.tabBarController.tabBar.hidden = NO;
 }
-#pragma mark - showUserMoney
--(void)showUserMoney{ //显示用户余额
- 
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
-    NSDictionary * param = @{@"customerId":_orderinfo.customerId,@"customerName":_orderinfo.customerName,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [[AFNetWorkingRequest sharedTool] requestWithGetCustomerBalanceParameters:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = [dic objectForKey:@"code"];
-        NSString * message = @"";
-        if([code intValue] == 1){
-            NSString * object = dic[@"object"];
-            message = [[object componentsSeparatedByString:@"："] objectAtIndex:1];
-            [self showMessageAlertWithController:self title:@"" Message:message canelBlock:^{
-                
-            }];
-        }else{
-            message = [dic objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:message];
-        }
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
-}
 
 #pragma mark - nav back
 -(void)LeftBarClick{

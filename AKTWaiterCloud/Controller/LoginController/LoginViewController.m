@@ -197,9 +197,7 @@
             NSLog(@"registrationID获取失败，code：%d",resCode);
         }
         NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-                    NSString * url = @"waiterLogin";
-                    
-                    [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+                    [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
                         NSDictionary * result = responseObject;
                        // 目前后台没有存储开启离线模式字段 手动添加默认关闭
                         NSNumber * code = [result objectForKey:@"code"];
@@ -220,7 +218,7 @@
                             }
                             //获取各类工单数量
                             NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                            [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
+                            [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
                                                                               } failure:^(NSError *error) {}];
                             // 登录成功
                             [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];

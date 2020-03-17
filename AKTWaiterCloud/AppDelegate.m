@@ -86,7 +86,7 @@
     }else{
         //获取各类工单数量
         NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-        [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
         UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
         [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
     }
@@ -288,7 +288,7 @@
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestAppVersionParameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject[@"object"];
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             // 最新版本号

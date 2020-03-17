@@ -198,27 +198,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self.navigationController pushViewController:minuteTaskContoller animated:YES];
 }
-
--(void)ClickName:(id)sender{
-    UIButton * btn = (UIButton*)sender;
-    NSInteger tag = btn.tag;
-    OrderInfo * orderinfo = _dataArray[tag-1];
-    NSDictionary * param = @{@"customerId":orderinfo.customerId,@"customerName":orderinfo.customerName,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [[AFNetWorkingRequest sharedTool] requestWithGetCustomerBalanceParameters:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = [dic objectForKey:@"code"];
-        NSString * message = @"";
-        if([code intValue] == 2){
-            message = [dic objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:message];
-        }else{
-            
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
 #pragma mark - notice
 -(void)searchNoticeDate:(NSNotification *)searchDate{
     if (searchDate) {

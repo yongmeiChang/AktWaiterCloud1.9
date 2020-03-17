@@ -1071,7 +1071,7 @@
     }
     NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":appDelegate.userinfo.tenantsId};
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic Url:@"uploadWorkNode" type:HttpRequestTypeGet success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         if([dic[@"code"] intValue]==1){
             [self showMessageAlertWithController:self Message:@"提交成功"];

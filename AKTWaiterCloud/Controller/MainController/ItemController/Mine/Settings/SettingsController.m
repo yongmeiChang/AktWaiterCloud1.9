@@ -143,7 +143,7 @@
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestAppVersionParameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject[@"object"];
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             // 最新版本号

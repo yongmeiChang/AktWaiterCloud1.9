@@ -46,7 +46,7 @@
     }
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"mobile":self.mobleField.text,@"waiterUkey":self.waiterField.text};
-    [[AFNetWorkingRequest sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue] == 1){
