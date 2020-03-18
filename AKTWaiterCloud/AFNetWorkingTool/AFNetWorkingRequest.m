@@ -141,7 +141,7 @@ static AFNetWorkingRequest * aq_instance = nil;
 -(void)requesttoBeHandle:(NSDictionary *)param  type:(HttpRequestType)type
                       success:(void (^)(id responseObject))success
                       failure:(void (^)(NSError *error))failure{
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"" parameters:param type:type success:^(id responseObject) {
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTPlanOrderListMethod parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         failure(error);
@@ -151,7 +151,7 @@ static AFNetWorkingRequest * aq_instance = nil;
 -(void)requestgetWorkOrderImages:(NSDictionary *)param  type:(HttpRequestType)type
                          success:(void (^)(id responseObject))success
                          failure:(void (^)(NSError *error))failure{
-    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTPlanOrderListMethod parameters:param type:type success:^(id responseObject) {
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOrderImageMethod parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         failure(error);

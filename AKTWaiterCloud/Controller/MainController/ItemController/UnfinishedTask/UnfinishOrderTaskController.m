@@ -287,7 +287,7 @@
     OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
     minuteTaskContoller.type = @"0";
-//    minuteTaskContoller.hidesBottomBarWhenPushed = YES;
+    minuteTaskContoller.hidesBottomBarWhenPushed = YES;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if([AppInfoDefult sharedClict].islongLocation == 1){
         minuteTaskContoller.lm = self.locationManager;

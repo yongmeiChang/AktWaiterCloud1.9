@@ -80,10 +80,6 @@
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
     }
 }
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-    self.tabBarController.tabBar.hidden = NO;
-}
 
 #pragma mark - nav back
 -(void)LeftBarClick{
@@ -295,9 +291,8 @@
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
-        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
 }
 
@@ -366,10 +361,8 @@
         }else{
             [self showMessageAlertWithController:self Message:@"没有图片"];
         }
-        
-        [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
 }
 #pragma mark - cell phone

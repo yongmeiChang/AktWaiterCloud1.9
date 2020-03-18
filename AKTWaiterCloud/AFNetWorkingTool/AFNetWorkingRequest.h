@@ -21,6 +21,7 @@
 #define AKTHistoryNoHandledMethod @"historyNoHandled" // 任务
 #define AKTMyOrderWorkListMethod @"getWorkByStatus" // 我的工单
 #define AKTPlanOrderListMethod @"toBeHandle" // 计划工单
+#define AKTOrderImageMethod @"getWorkOrderImages" // 获取签入 签出图片
 #define AKTUploadLocationInfoMethod @"uploadLocateInformation" // 上传连续定位信息
 #define AKTUploadWorkNodeMethod @"uploadWorkNode" // 上传工单节点
 
