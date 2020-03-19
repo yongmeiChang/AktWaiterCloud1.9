@@ -37,6 +37,12 @@
 		4C379752242205EE00DC9EFB /* NoDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C379742242205EE00DC9EFB /* NoDateCell.m */; };
 		4C379753242205EE00DC9EFB /* NoDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C379742242205EE00DC9EFB /* NoDateCell.m */; };
 		4C379754242205EE00DC9EFB /* NoDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C379742242205EE00DC9EFB /* NoDateCell.m */; };
+		4C3797582422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */; };
+		4C3797592422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */; };
+		4C37975A2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */; };
+		4C37975B2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
+		4C37975C2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
+		4C37975D2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
 		4C39E58623A090E900D34F16 /* AktSexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C39E58523A090E900D34F16 /* AktSexView.m */; };
 		4C4AD7AC23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
 		4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
@@ -352,6 +358,9 @@
 		4C379740242205EE00DC9EFB /* SignInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInCell.h; sourceTree = "<group>"; };
 		4C379741242205EE00DC9EFB /* VisitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitCell.h; sourceTree = "<group>"; };
 		4C379742242205EE00DC9EFB /* NoDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoDateCell.m; sourceTree = "<group>"; };
+		4C3797552422088D00DC9EFB /* AktOrderDetailsCheckImageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOrderDetailsCheckImageVC.h; sourceTree = "<group>"; };
+		4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderDetailsCheckImageVC.m; sourceTree = "<group>"; };
+		4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOrderDetailsCheckImageVC.xib; sourceTree = "<group>"; };
 		4C39E58423A090E900D34F16 /* AktSexView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktSexView.h; sourceTree = "<group>"; };
 		4C39E58523A090E900D34F16 /* AktSexView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktSexView.m; sourceTree = "<group>"; };
 		4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimePickerView.m; sourceTree = "<group>"; };
@@ -1207,6 +1216,9 @@
 				AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */,
 				AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */,
 				AD65759C1FAAEA2C00495D1E /* signin */,
+				4C3797552422088D00DC9EFB /* AktOrderDetailsCheckImageVC.h */,
+				4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */,
+				4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */,
 			);
 			path = MinuteTask;
 			sourceTree = "<group>";
@@ -1545,6 +1557,7 @@
 				AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */,
 				4C37974F242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				ADF896401FD9A693008CCE1E /* DownOrderCell.xib in Resources */,
+				4C37975B2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
 				4C37974C242205EE00DC9EFB /* NoDateCell.xib in Resources */,
 				AD5760762062482A00991FFA /* CalendarSearchController.xib in Resources */,
 				4C59615823A8A35300969CB5 /* AktServiceRemarkCell.xib in Resources */,
@@ -1561,6 +1574,7 @@
 			files = (
 				4C158A152403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67423A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
+				4C37975C2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
 				4C869A97240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379750242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4C89D66B23A769A70024456F /* SignInVC.xib in Resources */,
@@ -1578,6 +1592,7 @@
 			files = (
 				4C158A162403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67523A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
+				4C37975D2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
 				4C869A98240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379751242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4C89D66C23A769A70024456F /* SignInVC.xib in Resources */,
@@ -1690,6 +1705,7 @@
 				AD4DAAD91F8F093800610281 /* MineCell.m in Sources */,
 				4CD674FE22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4CF261E3233376D3001AB19F /* AktSearchFmdb.m in Sources */,
+				4C3797582422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */,
 				4CD674E622E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				ADADBB3F1FDFE96600B54117 /* FileManagerUtil.m in Sources */,
 				4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */,
@@ -1822,6 +1838,7 @@
 				4C37974A242205EE00DC9EFB /* SignInCell.m in Sources */,
 				4C4AD90623B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C3797592422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */,
 				4C9B9773240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C379753242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */,
@@ -1884,6 +1901,7 @@
 				4C37974B242205EE00DC9EFB /* SignInCell.m in Sources */,
 				4C4AD90723B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
+				4C37975A2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */,
 				4C9B9774240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C379754242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */,
