@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,6 +19,7 @@
                 <outlet property="tfzuhu" destination="hfE-gz-las" id="dDQ-dj-kOZ"/>
                 <outlet property="topNavH" destination="i8a-tg-yzZ" id="d0B-td-7Wp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewBgAgreement" destination="vQD-BR-CtB" id="LYb-dO-Era"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -366,7 +367,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4H-tb-NM7">
-                    <rect key="frame" x="42.5" y="417" width="291" height="72"/>
+                    <rect key="frame" x="42.5" y="537" width="291" height="72"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="72" id="S8e-Fv-fCX"/>
                     </constraints>
@@ -377,21 +378,31 @@
                         <action selector="setSignIn:" destination="-1" eventType="touchUpInside" id="IWY-UJ-2cd"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQD-BR-CtB">
+                    <rect key="frame" x="60" y="617" width="255" height="20"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="8g0-hw-aCS"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="vQD-BR-CtB" firstAttribute="top" secondItem="n4H-tb-NM7" secondAttribute="bottom" constant="8" id="1Rx-nv-Lcx"/>
+                <constraint firstAttribute="trailing" secondItem="vQD-BR-CtB" secondAttribute="trailing" constant="60" id="1j3-1T-fkJ"/>
                 <constraint firstItem="fLl-X4-DZ8" firstAttribute="top" secondItem="8ft-JL-gO9" secondAttribute="bottom" id="3eR-iH-j5a"/>
                 <constraint firstItem="t0f-Ob-q7c" firstAttribute="top" secondItem="Uj7-WQ-Sx4" secondAttribute="bottom" id="4Ok-gp-4Ma"/>
                 <constraint firstItem="n4H-tb-NM7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="42.5" id="90d-oh-c9O"/>
                 <constraint firstAttribute="trailing" secondItem="fLl-X4-DZ8" secondAttribute="trailing" id="94z-VT-mYz"/>
                 <constraint firstItem="8ft-JL-gO9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AXI-ej-DcH"/>
                 <constraint firstItem="fLl-X4-DZ8" firstAttribute="height" secondItem="fen-p9-BmR" secondAttribute="height" id="Cl6-W8-7Dd"/>
+                <constraint firstAttribute="bottom" secondItem="vQD-BR-CtB" secondAttribute="bottom" constant="30" id="Ds8-HJ-6yG"/>
                 <constraint firstAttribute="trailing" secondItem="n4H-tb-NM7" secondAttribute="trailing" constant="41.5" id="Fk4-dJ-LsK"/>
                 <constraint firstItem="t0f-Ob-q7c" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GcA-Qu-Rcc"/>
                 <constraint firstAttribute="trailing" secondItem="pK4-aw-GuQ" secondAttribute="trailing" id="J7u-Zz-3A4"/>
                 <constraint firstItem="pK4-aw-GuQ" firstAttribute="top" secondItem="t0f-Ob-q7c" secondAttribute="bottom" id="MEL-RZ-diO"/>
-                <constraint firstItem="n4H-tb-NM7" firstAttribute="top" secondItem="9HL-Ny-wk9" secondAttribute="bottom" constant="67" id="Qoi-I5-bTo"/>
                 <constraint firstItem="pK4-aw-GuQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TYu-qm-qBg"/>
+                <constraint firstItem="vQD-BR-CtB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="UcL-Fa-LGs"/>
                 <constraint firstItem="t0f-Ob-q7c" firstAttribute="height" secondItem="fen-p9-BmR" secondAttribute="height" id="Zbm-Qd-NhU"/>
                 <constraint firstItem="fLl-X4-DZ8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bXe-aO-LZy"/>
                 <constraint firstAttribute="trailing" secondItem="9HL-Ny-wk9" secondAttribute="trailing" id="czh-Oj-tWf"/>
@@ -411,7 +422,7 @@
                 <constraint firstItem="Uj7-WQ-Sx4" firstAttribute="top" secondItem="fen-p9-BmR" secondAttribute="bottom" id="yqb-GW-DeT"/>
                 <constraint firstItem="fen-p9-BmR" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="zk8-01-sXe"/>
             </constraints>
-            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
+            <point key="canvasLocation" x="130.40000000000001" y="152.47376311844079"/>
         </view>
     </objects>
     <resources>
