@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppS-TQ-EZ4">
-                    <rect key="frame" x="30" y="233" width="315" height="62.5"/>
+                    <rect key="frame" x="30" y="560.5" width="315" height="62.5"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="62.5" id="mh6-YZ-3q5"/>
                     </constraints>
@@ -38,17 +38,15 @@
                         <action selector="logoffUser:" destination="-1" eventType="touchUpInside" id="tDy-pw-0e4"/>
                     </connections>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Re8-Tg-lSt">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="213"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="213" id="NTm-M1-RCP"/>
-                    </constraints>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Re8-Tg-lSt">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="540.5"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
             </subviews>
             <constraints>
                 <constraint firstItem="Re8-Tg-lSt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LdP-dL-axb"/>
                 <constraint firstItem="ppS-TQ-EZ4" firstAttribute="top" secondItem="Re8-Tg-lSt" secondAttribute="bottom" constant="20" id="bCp-X4-ta1"/>
+                <constraint firstAttribute="bottom" secondItem="ppS-TQ-EZ4" secondAttribute="bottom" constant="44" id="ggb-It-bJR"/>
                 <constraint firstItem="ppS-TQ-EZ4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mpo-yg-QG0"/>
                 <constraint firstAttribute="trailing" secondItem="Re8-Tg-lSt" secondAttribute="trailing" id="pDI-fk-8RA"/>
                 <constraint firstAttribute="trailing" secondItem="ppS-TQ-EZ4" secondAttribute="trailing" constant="30" id="viC-j7-pgF"/>

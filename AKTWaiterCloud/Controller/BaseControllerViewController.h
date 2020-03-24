@@ -33,7 +33,6 @@ UIKIT_STATIC_INLINE void LRRegisterNibsQuick(UITableView * _Nullable tableView, 
 -(void)LeftBarClick;
 -(void)SearchBarClick; // 搜索按钮
 
--(void)switchMode:(UIViewController *_Nullable)viewController DoWorkBlock:(void(^_Nullable)(void))okblock canelBlock:(void(^_Nullable)(void))canelblock;
 -(void)showOffLineAlertWithTime:(float)timing message:(NSString *_Nullable)Message DoSomethingBlock:(void(^_Nullable)(void))DoBlock;
 
 -(void)showMessageAlertWithController:(UIViewController *_Nullable)controller Message:(NSString *_Nullable)message;

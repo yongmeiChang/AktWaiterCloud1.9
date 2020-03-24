@@ -71,28 +71,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)switchMode:(UIViewController *)viewController DoWorkBlock:(void(^)(void))okblock canelBlock:(void(^)(void))canelblock{
-    NSString * messages =@"您当前处于离线模式,无法进行此操作!是否需要尝试切换成在线模式?";
-    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        messages = @"当前网络不可用,无法进行此操作!已切换成离线模式,是否需要尝试切换成在线模式?";
-    }
-    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"状态提示" message:messages preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if(okblock){
-            okblock();
-        }
-    }];
-    
-    UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        if(canelblock){
-            canelblock();
-        }
-    }];
-    [alertController addAction:okAction];
-    [alertController addAction:canelAction];
-    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [viewController presentViewController:alertController animated:YES completion:nil];
-}
 #pragma mark - nav
 -(void)setNavTitle:(NSString *)title{
     self.navigationItem.title = title;

@@ -62,6 +62,12 @@
 		4C4AD90823B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
 		4C4AD90923B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
 		4C4AD90A23B366D8005DEDE4 /* AktWSigninListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */; };
+		4C58EEC02428A027006E5483 /* AktFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C58EEBE2428A027006E5483 /* AktFeedBackVC.m */; };
+		4C58EEC12428A027006E5483 /* AktFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C58EEBE2428A027006E5483 /* AktFeedBackVC.m */; };
+		4C58EEC22428A027006E5483 /* AktFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C58EEBE2428A027006E5483 /* AktFeedBackVC.m */; };
+		4C58EEC32428A027006E5483 /* AktFeedBackVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C58EEBF2428A027006E5483 /* AktFeedBackVC.xib */; };
+		4C58EEC42428A027006E5483 /* AktFeedBackVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C58EEBF2428A027006E5483 /* AktFeedBackVC.xib */; };
+		4C58EEC52428A027006E5483 /* AktFeedBackVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C58EEBF2428A027006E5483 /* AktFeedBackVC.xib */; };
 		4C59615723A8A35300969CB5 /* AktServiceRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */; };
 		4C59615823A8A35300969CB5 /* AktServiceRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */; };
 		4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615A23A8D60700969CB5 /* AktDateView.m */; };
@@ -374,6 +380,9 @@
 		4C4AD90223B366D8005DEDE4 /* AktWSigninListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktWSigninListVC.h; sourceTree = "<group>"; };
 		4C4AD90323B366D8005DEDE4 /* AktWSigninListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktWSigninListVC.m; sourceTree = "<group>"; };
 		4C4AD90423B366D8005DEDE4 /* AktWSigninListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktWSigninListVC.xib; sourceTree = "<group>"; };
+		4C58EEBD2428A027006E5483 /* AktFeedBackVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktFeedBackVC.h; sourceTree = "<group>"; };
+		4C58EEBE2428A027006E5483 /* AktFeedBackVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktFeedBackVC.m; sourceTree = "<group>"; };
+		4C58EEBF2428A027006E5483 /* AktFeedBackVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktFeedBackVC.xib; sourceTree = "<group>"; };
 		4C59615423A8A35300969CB5 /* AktServiceRemarkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServiceRemarkCell.h; sourceTree = "<group>"; };
 		4C59615523A8A35300969CB5 /* AktServiceRemarkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServiceRemarkCell.m; sourceTree = "<group>"; };
 		4C59615623A8A35300969CB5 /* AktServiceRemarkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServiceRemarkCell.xib; sourceTree = "<group>"; };
@@ -1159,6 +1168,9 @@
 				AD4DAA9F1F8F093800610281 /* SettingsTableViewCell.xib */,
 				AD4DAAA01F8F093800610281 /* AboutUs */,
 				AD4DAAA81F8F093800610281 /* EditPassWord */,
+				4C58EEBD2428A027006E5483 /* AktFeedBackVC.h */,
+				4C58EEBE2428A027006E5483 /* AktFeedBackVC.m */,
+				4C58EEBF2428A027006E5483 /* AktFeedBackVC.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1552,6 +1564,7 @@
 				4CD674EF22E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				ADD562BD1FDFB5D400898AC3 /* HandCodeController.xib in Resources */,
 				4C89D65823A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
+				4C58EEC32428A027006E5483 /* AktFeedBackVC.xib in Resources */,
 				AD4DAAD61F8F093800610281 /* SettingsController.xib in Resources */,
 				AD7B007F1FA2E3C400DCCB5F /* PlanTaskCell.xib in Resources */,
 				AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */,
@@ -1572,6 +1585,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C58EEC42428A027006E5483 /* AktFeedBackVC.xib in Resources */,
 				4C158A152403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67423A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
 				4C37975C2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
@@ -1590,6 +1604,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C58EEC52428A027006E5483 /* AktFeedBackVC.xib in Resources */,
 				4C158A162403DEAA007A1EB6 /* AktAgreementVC.xib in Resources */,
 				4C89D67523A78CDE0024456F /* AktAddOrderUserInfoCell.xib in Resources */,
 				4C37975D2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
@@ -1732,6 +1747,7 @@
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C9B9766240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
+				4C58EEC02428A027006E5483 /* AktFeedBackVC.m in Sources */,
 				AD552F481F8F651E001FFE1C /* DicToString.m in Sources */,
 				4C4AD90523B366D8005DEDE4 /* AktWSigninListVC.m in Sources */,
 				4C869A91240940700018B943 /* AddWaterMark.m in Sources */,
@@ -1806,6 +1822,7 @@
 				4CD6752F22EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CDAD74C240F7E0E00CF9129 /* UILabel+Plus.m in Sources */,
 				4CD674FF22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
+				4C58EEC12428A027006E5483 /* AktFeedBackVC.m in Sources */,
 				4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
 				4CDAD749240F7E0E00CF9129 /* UIButton+Badge.m in Sources */,
 				4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */,
@@ -1869,6 +1886,7 @@
 				4CD6753022EAF23000AB76AF /* SignoutController.m in Sources */,
 				4CDAD74D240F7E0E00CF9129 /* UILabel+Plus.m in Sources */,
 				4CD6750022E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
+				4C58EEC22428A027006E5483 /* AktFeedBackVC.m in Sources */,
 				4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
 				4CDAD74A240F7E0E00CF9129 /* UIButton+Badge.m in Sources */,
 				4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */,
@@ -2081,7 +2099,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
@@ -2179,7 +2197,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",

@@ -13,6 +13,7 @@
 #import "AboutUsController.h"
 #import "SaveDocumentArray.h"
 #import <SDImageCache.h>
+#import "AktFeedBackVC.h"
 
 @interface SettingsController ()<UITableViewDelegate,UITableViewDataSource>
 @property(weak,nonatomic)IBOutlet UITableView * settingTableView;
@@ -32,7 +33,7 @@
     
     if(!self.itemArray){
         self.itemArray = [NSArray array];
-        self.itemArray=@[@"密码修改",@"清除缓存",@"当前版本",@"关于我们"];
+        self.itemArray=@[@"密码修改",@"清除缓存",@"当前版本",@"关于我们",@"意见反馈"];
     }
     [self setNavTitle:@"设置"];
     
@@ -72,7 +73,8 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingsTableViewCell" owner:self options:nil] objectAtIndex:0];
     }
-    [cell setuserSetInfo:self.itemArray Index:indexPath];
+    float size = [[SDImageCache sharedImageCache]getSize]/1024.0/1024.0;
+    [cell setuserSetInfo:self.itemArray Index:indexPath CacheSize:[NSString stringWithFormat:@"%.1lf",size]];
     return cell;
 }
 #pragma mark - table delegate
@@ -96,7 +98,7 @@
             break;
             case 1:
                      {
-                    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"警告提示" message:@"是否清除离线的工单信息?" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否清除缓存?" preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         //清除配置信息缓存
                         [[SaveDocumentArray sharedInstance] deleteDocumentArray];
@@ -134,6 +136,11 @@
                          [self.navigationController pushViewController:aboutUs animated:YES];
                      }
                      break;
+        case 4:{
+            AktFeedBackVC *feedback = [[AktFeedBackVC alloc] init];
+            [self.navigationController pushViewController:feedback animated:YES];
+        }
+            break;
         default:
             break;
     }
