@@ -16,6 +16,9 @@
 		4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3124207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3224207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
+		4C1AAE75242DE5EB00114C91 /* AktUserImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AAE74242DE5EB00114C91 /* AktUserImageVC.m */; };
+		4C1AAE76242DE5EB00114C91 /* AktUserImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AAE74242DE5EB00114C91 /* AktUserImageVC.m */; };
+		4C1AAE77242DE5EB00114C91 /* AktUserImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AAE74242DE5EB00114C91 /* AktUserImageVC.m */; };
 		4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F099241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F09A241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
@@ -353,6 +356,8 @@
 		4C158A102403DEAA007A1EB6 /* AktAgreementVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktAgreementVC.xib; sourceTree = "<group>"; };
 		4C17AD2E24207CFD0006C45F /* AktLoginCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktLoginCmd.h; sourceTree = "<group>"; };
 		4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktLoginCmd.m; sourceTree = "<group>"; };
+		4C1AAE73242DE5EB00114C91 /* AktUserImageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktUserImageVC.h; sourceTree = "<group>"; };
+		4C1AAE74242DE5EB00114C91 /* AktUserImageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktUserImageVC.m; sourceTree = "<group>"; };
 		4C31F096241F58FF0084AC82 /* AktVipCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktVipCmd.h; sourceTree = "<group>"; };
 		4C31F097241F58FF0084AC82 /* AktVipCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktVipCmd.m; sourceTree = "<group>"; };
 		4C37973A242205EE00DC9EFB /* VisitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitCell.m; sourceTree = "<group>"; };
@@ -1270,6 +1275,8 @@
 				ADBE01621FE7C53B00B30488 /* EditUserInfoController.xib */,
 				4C39E58423A090E900D34F16 /* AktSexView.h */,
 				4C39E58523A090E900D34F16 /* AktSexView.m */,
+				4C1AAE73242DE5EB00114C91 /* AktUserImageVC.h */,
+				4C1AAE74242DE5EB00114C91 /* AktUserImageVC.m */,
 			);
 			path = EditUserInfo;
 			sourceTree = "<group>";
@@ -1706,6 +1713,7 @@
 				AD9264051F94B69C00C43972 /* GroupShadowTableView.m in Sources */,
 				AD475FF61F8B6578003DC2F0 /* FindPswController.m in Sources */,
 				AD332A231FEBB9E7003D801B /* SearchDateCell.m in Sources */,
+				4C1AAE75242DE5EB00114C91 /* AktUserImageVC.m in Sources */,
 				4C89D67023A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				AD4DAADA1F8F093800610281 /* MineController.m in Sources */,
 				4CAED3F923B9FBEC00BAF2E3 /* DataModel.m in Sources */,
@@ -1840,6 +1848,7 @@
 				4CD674EA22E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				4CD6754922F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C9B974F240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
+				4C1AAE76242DE5EB00114C91 /* AktUserImageVC.m in Sources */,
 				4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C89D67123A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				4CDAD74F240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
@@ -1904,6 +1913,7 @@
 				4CD674EB22E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				4CD6754A22F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C9B9750240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
+				4C1AAE77242DE5EB00114C91 /* AktUserImageVC.m in Sources */,
 				4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C89D67223A78CDE0024456F /* AktAddOrderUserInfoCell.m in Sources */,
 				4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */,

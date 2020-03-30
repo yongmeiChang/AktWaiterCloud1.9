@@ -44,8 +44,10 @@
 @property(nonatomic,strong) NSString <Optional>*  waiterUkey;//唯一码
 @property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
 @property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
+@property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
 @property(nonatomic,strong) NSString * isclickOff_line;  //0开启离线模式   1禁用启用模式
--(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition ByisclickOff_line:(NSString*)isclickOff_line;
+
+-(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName ByisclickOff_line:(NSString*)isclickOff_line;
 @end
 
 

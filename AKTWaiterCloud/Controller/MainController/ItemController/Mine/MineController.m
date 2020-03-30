@@ -22,6 +22,8 @@
 @property(weak,nonatomic) IBOutlet UILabel * namelabel;//名称
 @property(weak,nonatomic) IBOutlet UILabel * phoneNumberLabel;//电话
 @property(weak,nonatomic) IBOutlet UILabel * levelLabel;//级别
+@property (weak, nonatomic) IBOutlet UILabel *serviceNameLab; // 服务站名称
+
 @property(weak,nonatomic) IBOutlet UIView * secondView;//4个查询按钮的父视图
 @property (weak, nonatomic) IBOutlet UIView *editView; // 编辑资料父视图
 @property (weak, nonatomic) IBOutlet UIView *renZhengView;
@@ -187,6 +189,7 @@
     self.headImageView.layer.cornerRadius =35;
     self.namelabel.text = appDelegate.userinfo.waiterName;
     self.phoneNumberLabel.text = appDelegate.userinfo.mobile;
+    self.serviceNameLab.text = appDelegate.userinfo.tenantsName;
     NSString *strLv;
     if ([appDelegate.userinfo.level isEqualToString:@""]) {// 默认为0
         strLv = [NSString stringWithFormat:@"0"];

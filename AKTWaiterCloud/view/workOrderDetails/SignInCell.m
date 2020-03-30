@@ -21,6 +21,14 @@
     self.singOutServiceLengthLab.hidden = YES;
     self.remarklab.hidden = YES;
     // 时间
+    if ([orderinfo.isLate integerValue] == 1) {
+        self.lateLabel.textColor = kColor(@"C14");
+        self.lateLabel.text = @"迟到";
+    }else{
+        self.lateLabel.textColor = kColor(@"C15");
+        self.lateLabel.text = @"正常";
+    }
+    
     NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actrueBegin).length == 0 ? @"无":orderinfo.actrueBegin] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;
@@ -45,6 +53,13 @@
     self.titleLabel.text = @"签出情况";
     
     // 时间
+    if ([orderinfo.isEarly integerValue] == 1) {
+          self.lateLabel.textColor = kColor(@"C14");
+          self.lateLabel.text = @"早退";
+      }else{
+          self.lateLabel.textColor = kColor(@"C15");
+          self.lateLabel.text = @"正常";
+      }
     NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actrueEnd).length == 0 ? @"无":orderinfo.actrueEnd] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;

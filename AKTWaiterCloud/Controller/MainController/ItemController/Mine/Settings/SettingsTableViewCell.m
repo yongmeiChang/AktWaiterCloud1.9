@@ -38,9 +38,9 @@
         case 1:
         {
             self.headImageView.image = [UIImage imageNamed:@"clean.png"];
-            self.accessoryType = UITableViewCellAccessoryNone;
-            self.labserviceCode.hidden = NO;
-            self.labserviceCode.text = [NSString stringWithFormat:@"%@MB",cache];
+//            self.accessoryType = UITableViewCellAccessoryNone;
+//            self.labserviceCode.hidden = NO;
+//            self.labserviceCode.text = [NSString stringWithFormat:@"%@MB",cache];
         }
             break;
         case 2:{

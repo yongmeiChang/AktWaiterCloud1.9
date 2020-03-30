@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -104,6 +103,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Z3-et-HwV">
+                                <rect key="frame" x="122" y="51.5" width="0.0" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -120,13 +125,16 @@
                             <constraint firstAttribute="trailing" secondItem="hoC-Vb-ubh" secondAttribute="trailing" constant="14" id="Sog-Jy-zSl"/>
                             <constraint firstItem="YuG-9U-N2I" firstAttribute="leading" secondItem="yEi-iF-iQs" secondAttribute="leading" id="SzE-g3-5QJ"/>
                             <constraint firstItem="hoC-Vb-ubh" firstAttribute="leading" secondItem="DgF-Di-WIY" secondAttribute="leading" constant="17" id="TVz-kW-Mm5"/>
+                            <constraint firstItem="3Z3-et-HwV" firstAttribute="bottom" secondItem="yEi-iF-iQs" secondAttribute="bottom" id="Wdw-ko-Liq"/>
                             <constraint firstItem="yr3-cP-ktC" firstAttribute="leading" secondItem="yEi-iF-iQs" secondAttribute="leading" id="Xbq-O3-EWP"/>
                             <constraint firstItem="hU3-Lr-A6g" firstAttribute="top" secondItem="uWZ-by-pF3" secondAttribute="bottom" constant="10" id="a9e-hZ-G28"/>
                             <constraint firstItem="yEi-iF-iQs" firstAttribute="top" secondItem="CrY-qH-sJU" secondAttribute="bottom" constant="20.5" id="aMI-wm-boh"/>
+                            <constraint firstItem="3Z3-et-HwV" firstAttribute="leading" secondItem="yEi-iF-iQs" secondAttribute="trailing" constant="8" id="hSB-gs-bOl"/>
                             <constraint firstItem="hU3-Lr-A6g" firstAttribute="leading" secondItem="yEi-iF-iQs" secondAttribute="leading" id="mHx-75-vO1"/>
                             <constraint firstItem="uHd-Vg-i6A" firstAttribute="top" secondItem="DgF-Di-WIY" secondAttribute="top" constant="15" id="nAd-hf-AVA"/>
                             <constraint firstItem="CrY-qH-sJU" firstAttribute="top" secondItem="DgF-Di-WIY" secondAttribute="top" constant="13" id="nRH-SO-vHc"/>
                             <constraint firstAttribute="trailing" secondItem="D4Y-YC-Peh" secondAttribute="trailing" constant="8" id="nYl-0p-lxT"/>
+                            <constraint firstItem="3Z3-et-HwV" firstAttribute="top" secondItem="yEi-iF-iQs" secondAttribute="top" id="oiR-2X-a2m"/>
                             <constraint firstItem="gfi-GO-63G" firstAttribute="centerX" secondItem="D4Y-YC-Peh" secondAttribute="centerX" id="qru-On-plw"/>
                             <constraint firstItem="yQ3-Ol-J1B" firstAttribute="top" secondItem="yEi-iF-iQs" secondAttribute="bottom" constant="10" id="rcu-Ae-LLv"/>
                             <constraint firstItem="CrY-qH-sJU" firstAttribute="leading" secondItem="uHd-Vg-i6A" secondAttribute="trailing" constant="5.5" id="ybL-XE-5KM"/>
@@ -144,6 +152,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="btnCheckImage" destination="D4Y-YC-Peh" id="L9C-WR-Z8P"/>
+                <outlet property="lateLabel" destination="3Z3-et-HwV" id="t0l-eE-fYi"/>
                 <outlet property="remarklab" destination="YuG-9U-N2I" id="7Cb-RP-rnz"/>
                 <outlet property="signInAddressLabel" destination="hU3-Lr-A6g" id="Agl-F2-pDe"/>
                 <outlet property="signInDateLabel" destination="yEi-iF-iQs" id="eKJ-5N-LHM"/>
