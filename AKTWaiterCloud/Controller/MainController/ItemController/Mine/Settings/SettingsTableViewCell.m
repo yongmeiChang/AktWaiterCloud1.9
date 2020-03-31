@@ -55,7 +55,7 @@
              self.headImageView.image = [UIImage imageNamed:@"aboutus.png"];
             break;
             case 4:
-            self.headImageView.image = [UIImage imageNamed:@"aboutus.png"];
+            self.headImageView.image = [UIImage imageNamed:@"feedback.png"];
             break;
         default:
             break;
