@@ -16,6 +16,7 @@
 #define AKTNoticeDetailsMethod @"getWorkOrder" // 通知详情
 #define AKTOrderTypeNumberMethod @"findToBeHandleCount" // 工单数量
 #define AKTSaveUserinfoMethod @"waiterEdit" // 保存个人信息
+#define AKTFeedBackMethod @"" // 意见反馈
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,6 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
                  failure:(void (^)(NSError *error))failure;
 /*保存个人信息*/
 -(void)requestedSaveUserInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
+/*意见反馈*/
+-(void)requestPushFeedbackInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
 failure:(void (^)(NSError *error))failure;
 
 @end

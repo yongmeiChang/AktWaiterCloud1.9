@@ -20,7 +20,7 @@
 #import "PhotoCell.h"
 #import <LxGridView.h>
 #import <LxGridViewCell.h>
-@interface AktFeedBackVC ()<UIScrollViewDelegate,TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
+@interface AktFeedBackVC ()<UIScrollViewDelegate,TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     UIScrollView *scrollBg; // 背景
     UITextView *tvRemark; // 反馈内容
@@ -220,6 +220,24 @@
 }
 - (IBAction)updateAllInfo:(UIButton *)sender {
     NSLog(@"提交数据");
+    /*图片加密
+    NSMutableArray * basearr = [NSMutableArray array];
+    NSString * baseStr = @"";
+    if(_selectedPhotos.count>=1){
+        for(int i = 0; i < _selectedPhotos.count;i++){
+            UIImage * image = _selectedPhotos[i];
+            NSString * baseCode = [self imageToBaseString:image];
+            [basearr addObject:baseCode];
+        }
+    }
+    baseStr = [basearr componentsJoinedByString:@","];
+   
+    [[AktVipCmd sharedTool] requestPushFeedbackInfo:@{} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
+    }];
+      */
 }
 
 #pragma mark - UICollectionView
@@ -331,6 +349,8 @@
     if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
         // 无相机权限 做一个友好的提示
         [[AppDelegate sharedDelegate] showAlertView:@"无法使用相机" des:@"请在iPhone的""设置-隐私-相机""中允许访问相机" cancel:@"取消" action:@"设置" acHandle:^(UIAlertAction *action) {
+             // 去设置界面，开启相机访问权限
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
         }];
     } else if (authStatus == AVAuthorizationStatusNotDetermined) {
         // fix issue 466, 防止用户首次拍照拒绝授权时相机页黑屏
@@ -348,7 +368,9 @@
         // 拍照之前还需要检查相册权限
     } else if ([TZImageManager authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
         [[AppDelegate sharedDelegate] showAlertView:@"无法使用相册" des:@"请在iPhone的""设置-隐私-相册""中允许访问相册" cancel:@"取消" action:@"设置" acHandle:^(UIAlertAction *action) {
-               }];
+            // 去设置界面，开启相机访问权限
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }];
     } else if ([TZImageManager authorizationStatus] == 0) { // 未请求过相册权限
         [[TZImageManager manager] requestAuthorizationWithCompletion:^{
             [self takePhoto];
@@ -489,21 +511,11 @@
     return _imagePickerVc;
 }
 #pragma mark - UIActionSheetDelegate
-
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // take photo / 去拍照
         [self takePhoto];
     } else if (buttonIndex == 1) {
         [self pushTZImagePickerController];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) { // 去设置界面，开启相机访问权限
-        if (iOS8Later) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }
     }
 }
 

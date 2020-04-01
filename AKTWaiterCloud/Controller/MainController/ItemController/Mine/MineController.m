@@ -189,7 +189,7 @@
     self.headImageView.layer.cornerRadius =35;
     self.namelabel.text = appDelegate.userinfo.waiterName;
     self.phoneNumberLabel.text = appDelegate.userinfo.mobile;
-    self.serviceNameLab.text = appDelegate.userinfo.tenantsName;
+    self.serviceNameLab.text = [NSString stringWithFormat:@": %@",appDelegate.userinfo.tenantsName];
     NSString *strLv;
     if ([appDelegate.userinfo.level isEqualToString:@""]) {// 默认为0
         strLv = [NSString stringWithFormat:@"0"];

@@ -92,5 +92,13 @@ static AktVipCmd * aq_instance = nil;
         failure(error);
     }];
 }
-
+/*意见反馈*/
+-(void)requestPushFeedbackInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                       failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFeedBackMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
 @end
