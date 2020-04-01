@@ -20,12 +20,13 @@
 #import "PhotoCell.h"
 #import <LxGridView.h>
 #import <LxGridViewCell.h>
-@interface AktFeedBackVC ()<UIScrollViewDelegate,TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface AktFeedBackVC ()<UIScrollViewDelegate,TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>
 {
     UIScrollView *scrollBg; // 背景
     UITextView *tvRemark; // 反馈内容
     UITextField *tfPhone; // 联系方式
     UIView *viewPic; // 上传图片背景view
+    UILabel *labNumber; // 字数
     
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
@@ -146,8 +147,14 @@
     labRemark.textColor = kColor(@"C1");
     [viewRemark addSubview:labRemark];
     
+    UILabel *labTag = [[UILabel alloc] init];
+    labTag.textColor = kColor(@"C17");
+    labTag.text = @"*";
+    [viewRemark addSubview:labTag];
+    
     tvRemark = [[UITextView alloc] init];
     tvRemark.font = [UIFont systemFontOfSize:13];
+    tvRemark.delegate = self;
     [viewRemark addSubview:tvRemark];
     // _placeholderLabel
     UILabel *placeHolderLabel = [[UILabel alloc] init];
@@ -158,6 +165,11 @@
     placeHolderLabel.font = [UIFont systemFontOfSize:13.f];
     [tvRemark addSubview:placeHolderLabel];
     [tvRemark setValue:placeHolderLabel forKey:@"_placeholderLabel"];
+    labNumber = [[UILabel alloc] init];
+    labNumber.textColor = kColor(@"C18");
+    labNumber.font = [UIFont systemFontOfSize:13];
+    labNumber.text = @"0/200";
+    [viewRemark addSubview:labNumber];
     
     
     [viewRemark mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,15 +180,25 @@
     
     [labRemark mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
-        make.right.mas_equalTo(-15);
         make.top.mas_equalTo(viewRemark.mas_top).offset(8);
         make.height.mas_equalTo(20);
+    }];
+    
+    [labTag mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(labRemark.mas_right).offset(5);
+        make.top.bottom.mas_equalTo(labRemark);
     }];
     
     [tvRemark mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
         make.right.mas_equalTo(-15);
         make.top.mas_equalTo(labRemark.mas_bottom).offset(8);
+        make.height.mas_equalTo(100);
+    }];
+    [labNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.top.mas_equalTo(tvRemark.mas_bottom).offset(8);
+        make.height.mas_equalTo(15);
         make.bottom.mas_equalTo(viewRemark.mas_bottom).offset(-20);
     }];
     
@@ -238,6 +260,16 @@
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
       */
+}
+
+#pragma mark - textView delegate
+-(void)textViewDidChange:(UITextView *)textView{
+    if (textView.text.length>200) {
+        tvRemark.text = [textView.text substringToIndex:200];
+    }else{
+        tvRemark.text = textView.text;
+    }
+    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
 }
 
 #pragma mark - UICollectionView
@@ -567,13 +599,6 @@
 }
 // 决定相册显示与否
 - (BOOL)isAlbumCanSelect:(NSString *)albumName result:(id)result {
-    /*
-     if ([albumName isEqualToString:@"个人收藏"]) {
-     return NO;
-     }
-     if ([albumName isEqualToString:@"视频"]) {
-     return NO;
-     }*/
     return YES;
 }
 // 决定asset显示与否
@@ -622,7 +647,6 @@
 
 -(void)dealloc{
     //第一种方法.这里可以移除该控制器下的所有通知
-    // 移除当前所有通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
