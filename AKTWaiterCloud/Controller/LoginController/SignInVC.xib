@@ -173,7 +173,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tld-Bf-06R">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tld-Bf-06R">
                             <rect key="frame" x="284" y="6" width="80" height="28"/>
                             <color key="backgroundColor" red="0.36862745098039218" green="0.52156862745098043" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>

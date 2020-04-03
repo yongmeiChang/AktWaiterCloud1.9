@@ -21,15 +21,15 @@
 @interface UserInfo : JSONModel
 @property(nonatomic,strong) NSString <Optional>*  id;
 @property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样
-@property(nonatomic,strong) NSString <Optional>*  icon;
-@property(nonatomic,strong) NSString <Optional>*  mobile;
+@property(nonatomic,strong) NSString <Optional>*  icon; // 头像
+@property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
 @property(nonatomic,strong) NSString <Optional>*  tenantsId;
 @property(nonatomic,strong) NSString <Optional>*  location;
 @property(nonatomic,strong) NSString <Optional>*  cooperationState;
 @property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
-@property(nonatomic,strong) NSString <Optional>*  sex;
-@property(nonatomic,strong) NSString <Optional>*  sexName;
+@property(nonatomic,strong) NSString <Optional>*  sex; // 性别类型
+@property(nonatomic,strong) NSString <Optional>*  sexName; // 性别
 @property(nonatomic,strong) NSString <Optional>*  stationNo;
 @property(nonatomic,strong) NSString <Optional>*  saleId;
 @property(nonatomic,strong) NSString <Optional>*  synopsis;

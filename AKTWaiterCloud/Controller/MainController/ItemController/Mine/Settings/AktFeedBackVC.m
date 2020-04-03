@@ -241,8 +241,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)updateAllInfo:(UIButton *)sender {
-    NSLog(@"提交数据");
-    /*图片加密
+    // 图片加密
     NSMutableArray * basearr = [NSMutableArray array];
     NSString * baseStr = @"";
     if(_selectedPhotos.count>=1){
@@ -253,13 +252,15 @@
         }
     }
     baseStr = [basearr componentsJoinedByString:@","];
-   
-    [[AktVipCmd sharedTool] requestPushFeedbackInfo:@{} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
-        
+    NSDictionary *dicParam = @{@"tenantsId":kString(appDelegate.userinfo.tenantsId),@"waiterUkey":appDelegate.userinfo.waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; // @"mobile":tfPhone.text,
+    [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = responseObject;
+        [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
     } failure:^(NSError * _Nonnull error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
-      */
+      
+    NSLog(@"内容：%@ \n 联系方式:%@",tvRemark.text,tfPhone.text);
 }
 
 #pragma mark - textView delegate

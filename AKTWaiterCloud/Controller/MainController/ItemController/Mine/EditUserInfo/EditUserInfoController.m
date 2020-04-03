@@ -117,7 +117,7 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
-    NSDictionary * params = @{@"id":kString(appDelegate.userinfo.uuid),@"sex":appDelegate.userinfo.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString(appDelegate.userinfo.tenantsId)};
+    NSDictionary * params = @{@"id":kString(appDelegate.userinfo.uuid),@"sex":appDelegate.userinfo.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString(appDelegate.userinfo.tenantsId),@"mobile":appDelegate.userinfo.mobile};
     [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = [responseObject objectForKey:@"object"];
         NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
