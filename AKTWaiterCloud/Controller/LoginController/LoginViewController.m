@@ -224,8 +224,9 @@
                             [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];
                             [[NSUserDefaults standardUserDefaults] synchronize];
                             [self dismissViewControllerAnimated:YES completion:^{
-                                UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
-                                [tabViewController setSelectedIndex:1];
+//                                UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
+//                                [tabViewController setSelectedIndex:1];
+                                [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                             }];
                           
                         }else{

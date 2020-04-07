@@ -52,6 +52,7 @@
     //注册通知 获取自定义消息内容
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeRootViewController:) name:ChangeRootViewController object:nil]; // 根视图通知
     //定位通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judegeRange:) name:@"localaction" object:nil];
     // 注册bugly
@@ -70,8 +71,6 @@
     }
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
-    self.rootViewController = [self getRootTabVBarAction];
-    self.window.rootViewController = self.rootViewController;
     [self showLoginPage];
     [self setTabBarAndNavigationBarStyle];
 
@@ -84,11 +83,14 @@
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
     }else{
+        self.rootViewController = [self getRootTabVBarAction];
+        self.window.rootViewController = self.rootViewController;
         //获取各类工单数量
         NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
         [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
-        UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
-        [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
+//        UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
+//        [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
+        
     }
 }
 #pragma mark - jpush
@@ -322,7 +324,11 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
     }
 }
-
+#pragma mark - notice
+- (void)changeRootViewController:(NSNotification*)notiInfo
+{
+    [self showLoginPage];
+}
 #pragma mark -
 - (void)setTabBarAndNavigationBarStyle{
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kColor(@"T2"), NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal]; //tab 正常字体颜色
@@ -342,9 +348,10 @@
         [navs addObject:[self getViewControllerWithNav:ary[i]]];
     UITabBarController *tabbar = [[UITabBarController alloc] init];
     tabbar.viewControllers = navs;
-    UIView *tabBackgroundView = [[UIView alloc] init];
-    [tabBackgroundView setBackgroundColor:kColor(@"C3")];
-    [tabbar.tabBar insertSubview:tabBackgroundView atIndex:0];
+//    UIView *tabBackgroundView = [[UIView alloc] init];
+//    [tabBackgroundView setBackgroundColor:kColor(@"C3")];
+//    [tabbar.tabBar insertSubview:tabBackgroundView atIndex:0];
+    tabbar.selectedIndex = 1;
     //默认显示的item
     return tabbar;
 }

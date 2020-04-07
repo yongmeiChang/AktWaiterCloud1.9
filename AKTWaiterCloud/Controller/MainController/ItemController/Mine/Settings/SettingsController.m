@@ -199,17 +199,19 @@
     UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"用户退出登录");
-        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
         [[[UserFmdb alloc] init] deleteAllUserInfo];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
+        /*
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
-        
+//        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+        appDelegate.window.rootViewController = nav;
+        */
     }];
     [alertController addAction:canelAction];
     [alertController addAction:okAction];

@@ -129,12 +129,14 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
+    [[[UserFmdb alloc] init] deleteAllUserInfo];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-    [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+//    BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+//    [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
 }
 
 #pragma mark - TextFieldDelgate
