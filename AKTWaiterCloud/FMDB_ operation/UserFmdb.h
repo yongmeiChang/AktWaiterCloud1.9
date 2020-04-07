@@ -11,7 +11,7 @@
 //本地缓存用户数据
 @interface UserFmdb : NSObject
 -(void)saveUserInfo:(UserInfo *)userinfo;
--(void)deleteUserInfo;
+-(void)deleteAllUserInfo;
 -(UserInfo *)findByrow:(NSInteger)row;
 -(void)updateObject:(UserInfo *)userinfo;
 -(int)size;

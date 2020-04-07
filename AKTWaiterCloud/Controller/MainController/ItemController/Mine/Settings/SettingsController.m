@@ -202,7 +202,7 @@
         [self.navigationController popViewControllerAnimated:YES];
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
-        
+        [[[UserFmdb alloc] init] deleteAllUserInfo];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         

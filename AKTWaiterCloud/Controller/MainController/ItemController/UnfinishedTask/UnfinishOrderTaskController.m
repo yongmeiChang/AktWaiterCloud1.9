@@ -38,7 +38,7 @@
     searchETime = [NSString stringWithFormat:@""];
     searchWorkNo = [NSString stringWithFormat:@""];
 
-    [self initTaskTableView];
+
     pageSize = 1;
     self.dataArray = [[NSMutableArray alloc] init];
     [self.view bringSubviewToFront:self.netWorkErrorView];
@@ -47,11 +47,14 @@
     [self initWithNavLeftImageName:@"search" RightImageName:@"qrcode"];
     [self setNavTitle:@"任务"];
     self.dataArray = [NSMutableArray array];
-    [self checkNetWork];
+//    [self checkNetWork];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetWork) name:@"requestUnFinish" object:nil];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self initTaskTableView];
+}
 #pragma mark - init table
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
@@ -63,6 +66,7 @@
   
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
+    [self.taskTableview.mj_header beginRefreshing];
 
 }
 #pragma mark - nav click
@@ -102,13 +106,13 @@
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     // 马上进入刷新状态
     pageSize = 1;
-    [self.taskTableview.mj_header beginRefreshing];
+//    [self.taskTableview.mj_header beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_header endRefreshing];
 }
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
     pageSize = pageSize+1;
-    [self.taskTableview.mj_footer beginRefreshing];
+//    [self.taskTableview.mj_footer beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_footer endRefreshing];
 }

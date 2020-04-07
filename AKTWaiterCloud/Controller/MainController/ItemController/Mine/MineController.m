@@ -51,18 +51,21 @@
     self.navigationItem.title = @"个人资料";
     self.dataSourceArray = @[@"通知",@"设置"];
     [self collectionViewinit];
-    [self initLayout];
+    
     //给整个编辑资料视图添加手势以便用户点击
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEditUserInfo)];
     [_editView addGestureRecognizer:tapGesture];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [self initLayout]; // 个人信息
     //获取各类工单数量
     [self resetWorkNumber];
     //编辑页面成功更新头像后，返回时刷新当前页面头像
     if ([appDelegate.userinfo.icon containsString:@"http"]) {
         self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",appDelegate.userinfo.icon]]]];
+    }else{
+        self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
     }
 }
 #pragma mark - 工单数量
