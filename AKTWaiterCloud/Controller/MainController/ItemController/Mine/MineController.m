@@ -22,6 +22,8 @@
 @property(weak,nonatomic) IBOutlet UILabel * namelabel;//名称
 @property(weak,nonatomic) IBOutlet UILabel * phoneNumberLabel;//电话
 @property(weak,nonatomic) IBOutlet UILabel * levelLabel;//级别
+@property (weak, nonatomic) IBOutlet UILabel *serviceNameLab; // 服务站名称
+
 @property(weak,nonatomic) IBOutlet UIView * secondView;//4个查询按钮的父视图
 @property (weak, nonatomic) IBOutlet UIView *editView; // 编辑资料父视图
 @property (weak, nonatomic) IBOutlet UIView *renZhengView;
@@ -41,7 +43,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DDLogInfo(@"个人");
     self.view.backgroundColor = kColor(@"B2");
     self.renZhengView.layer.masksToBounds = YES;
     self.renZhengView.layer.cornerRadius = self.renZhengView.frame.size.height/2;
@@ -50,25 +51,53 @@
     self.navigationItem.title = @"个人资料";
     self.dataSourceArray = @[@"通知",@"设置"];
     [self collectionViewinit];
-    [self initLayout];
+    
     //给整个编辑资料视图添加手势以便用户点击
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEditUserInfo)];
     [_editView addGestureRecognizer:tapGesture];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    //显示登陆时请求的各状态工单数
-    self.unfinishBtn.shouldHideBadgeAtZero = YES;
-    self.ongoingBtn.shouldHideBadgeAtZero = YES;
-    self.finishBtn.shouldHideBadgeAtZero = YES;
-    self.unfinishBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
-    self.ongoingBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
-    self.finishBtn.badgeValue = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
+    [self initLayout]; // 个人信息
+    //获取各类工单数量
+    [self resetWorkNumber];
     //编辑页面成功更新头像后，返回时刷新当前页面头像
     if ([appDelegate.userinfo.icon containsString:@"http"]) {
         self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",appDelegate.userinfo.icon]]]];
+    }else{
+        self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
     }
-    NSLog(@"头像：%@",appDelegate.userinfo.icon);
+}
+#pragma mark - 工单数量
+-(void)resetWorkNumber{
+    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+       [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+       //显示登陆时请求的各状态工单数
+       self.unfinishBtn.shouldHideBadgeAtZero = YES;
+       self.ongoingBtn.shouldHideBadgeAtZero = YES;
+       self.finishBtn.shouldHideBadgeAtZero = YES;
+    NSString *strUnfinish;
+    NSString *strDoing;
+    NSString *strFinish;
+       if ([appDelegate.unfinish integerValue]>99) { // 超过99 显示99+
+           strUnfinish = [NSString stringWithFormat:@"99+"];
+       }else{
+           strUnfinish = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
+       }
+       if ([appDelegate.doing integerValue]>99) {
+           strDoing = [NSString stringWithFormat:@"99+"];
+       }else{
+           strDoing = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
+       }
+       if ([appDelegate.finish integerValue]>99) {
+           strFinish = [NSString stringWithFormat:@"99+"];
+       }else{
+           strFinish = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
+       }
+    self.unfinishBtn.badgeValue = strUnfinish;
+    self.ongoingBtn.badgeValue = strDoing;
+    self.finishBtn.badgeValue = strFinish;
+
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图
@@ -105,7 +134,6 @@
     return cell;
 }
 
-#pragma mark -  点击事件 目前除了设置按钮都不开放
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
    switch (index) {
@@ -156,7 +184,6 @@
 }
 
 -(void)initLayout{
-    self.firsViewtop.constant = AktNavHight+AktStatusHight;
     CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     //背景图
     float firstviewHeight = (SCREEN_HEIGHT-60-rectStatus.size.height-44)/10;
@@ -165,7 +192,14 @@
     self.headImageView.layer.cornerRadius =35;
     self.namelabel.text = appDelegate.userinfo.waiterName;
     self.phoneNumberLabel.text = appDelegate.userinfo.mobile;
-    self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",appDelegate.userinfo.level];
+    self.serviceNameLab.text = [NSString stringWithFormat:@": %@",appDelegate.userinfo.tenantsName];
+    NSString *strLv;
+    if ([appDelegate.userinfo.level isEqualToString:@""]) {// 默认为0
+        strLv = [NSString stringWithFormat:@"0"];
+    }else{
+        strLv = [NSString stringWithFormat:@"%@",appDelegate.userinfo.level];
+    }
+    self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",strLv];
     //工单
     self.orderWidthConstraint.constant = SCREEN_WIDTH/4;
     //九宫格

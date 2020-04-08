@@ -13,5 +13,5 @@
 @property(weak,nonatomic) IBOutlet UIImageView * headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *labserviceCode;
 
--(void)setuserSetInfo:(NSArray *)ary Index:(NSIndexPath *)index;
+-(void)setuserSetInfo:(NSArray *)ary Index:(NSIndexPath *)index CacheSize:(NSString *)cache;
 @end

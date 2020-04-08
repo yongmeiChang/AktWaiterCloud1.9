@@ -8,7 +8,5 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseControllerViewController.h"
-@class LoginViewController;
 @interface FindPswController : BaseControllerViewController
--(id)initWithFindPswController:(LoginViewController *)logincontoller;
 @end

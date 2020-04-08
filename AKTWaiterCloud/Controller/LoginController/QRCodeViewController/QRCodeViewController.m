@@ -30,10 +30,10 @@
     isOpen = false;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect viewFrame = self.view.frame;
-    viewFrame.origin.y+=rectStatus.size.height+44;
-    self.view.frame = viewFrame;
+//    CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+//    CGRect viewFrame = self.view.frame;
+//    viewFrame.origin.y+=rectStatus.size.height+44;
+//    self.view.frame = viewFrame;
     
     [self setNavTitle:@"二维码扫描"];
     self.netWorkErrorView.hidden = YES;
@@ -102,28 +102,28 @@
     
     //设置扫描区域外部上部的视图
     UIView *topView = [[UIView alloc]init];
-    topView.frame = CGRectMake(0, 64, SCREEN_WIDTH, (SCREEN_HEIGHT-64-_QRCodeWidth)/2.0-64+50);
+    topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (SCREEN_HEIGHT-_QRCodeWidth)/2.0-64+50);
     //topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (SCREEN_HEIGHT-64-_QRCodeWidth)/2.0-64+50);
     topView.backgroundColor = color;
     topView.alpha = alpha;
     
     //设置扫描区域外部左边的视图
     UIView *leftView = [[UIView alloc]init];
-    leftView.frame = CGRectMake(0, 64+topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
+    leftView.frame = CGRectMake(0, topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
 //    leftView.frame = CGRectMake(0, topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
     leftView.backgroundColor = color;
     leftView.alpha = alpha;
     
     //设置扫描区域外部右边的视图
     UIView *rightView = [[UIView alloc]init];
-    rightView.frame = CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0+_QRCodeWidth,64+topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
+    rightView.frame = CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0+_QRCodeWidth,topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
     //rightView.frame = CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0+_QRCodeWidth,topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
     rightView.backgroundColor = color;
     rightView.alpha = alpha;
     
     //设置扫描区域外部底部的视图
     UIView *botView = [[UIView alloc]init];
-    botView.frame = CGRectMake(0, 64+_QRCodeWidth+topView.frame.size.height,SCREEN_WIDTH,SCREEN_HEIGHT-64-_QRCodeWidth-topView.frame.size.height);
+    botView.frame = CGRectMake(0, _QRCodeWidth+topView.frame.size.height,SCREEN_WIDTH,SCREEN_HEIGHT-_QRCodeWidth-topView.frame.size.height);
     //botView.frame = CGRectMake(0, _QRCodeWidth+topView.frame.size.height,SCREEN_WIDTH,SCREEN_HEIGHT-_QRCodeWidth-topView.frame.size.height);
     botView.backgroundColor = color;
     botView.alpha = alpha;
@@ -139,11 +139,7 @@
 - (void)setupScanWindowView
 {
     //设置扫描区域的位置(考虑导航栏和电池条的高度为64)
-    UIView *scanWindow = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0,(SCREEN_HEIGHT-_QRCodeWidth-64)/2.0+50,_QRCodeWidth,_QRCodeWidth)];
-    //UIView *scanWindow = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0,(SCREEN_HEIGHT-_QRCodeWidth)/2.0-46,_QRCodeWidth,_QRCodeWidth)];
-    
-    
-    
+    UIView *scanWindow = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0,(SCREEN_HEIGHT-_QRCodeWidth)/2.0-14,_QRCodeWidth,_QRCodeWidth)];
     scanWindow.clipsToBounds = YES;
     [self.view addSubview:scanWindow];
     
@@ -189,23 +185,6 @@
     UIButton *bottomRight = [[UIButton alloc]initWithFrame:CGRectMake(_QRCodeWidth-buttonWH,_QRCodeWidth-buttonWH, buttonWH, buttonWH)];
     [bottomRight setImage:[UIImage imageNamed:@"3"]forState:UIControlStateNormal];
     [scanWindow addSubview:bottomRight];
-    
-//    _lightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, scanWindow.frame.size.height+scanWindow.frame.origin.y + 10, 100, 80)];
-//    [_lightBtn addTarget:self action:@selector(OpenLight) forControlEvents:UIControlEventTouchUpInside];
-//    //[lightBtn setTitle:@"闪光灯" forState:UIControlStateNormal];
-//    [_lightBtn setBackgroundColor:[UIColor clearColor]];
-//    [_lightBtn setTintColor:[UIColor yellowColor]];
-//    UIImage * image = [UIImage imageNamed:@"shanguangdengoff"];
-//    [_lightBtn setBackgroundImage:image forState:UIControlStateNormal];
-//    [self.view addSubview:_lightBtn];
-//    [_lightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(scanWindow.mas_bottom).offset(15);
-//        if(SCREEN_WIDTH<375){
-//            make.left.mas_equalTo((SCREEN_WIDTH-_QRCodeWidth)/2.0+25);
-//        }else{
-//            make.left.mas_equalTo((SCREEN_WIDTH-_QRCodeWidth)/2.0+23);
-//        }
-//    }];
     
     _lightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, scanWindow.frame.origin.y + 10, 100, 80)];
     _lightLabel.text = @"轻触点亮";
@@ -269,7 +248,7 @@
     AVCaptureMetadataOutput * output = [[AVCaptureMetadataOutput alloc]init];
     
     //特别注意的地方：有效的扫描区域，定位是以设置的右顶点为原点。屏幕宽所在的那条线为y轴，屏幕高所在的线为x轴
-    CGFloat x = ((SCREEN_HEIGHT-_QRCodeWidth-64)/2.0)/SCREEN_HEIGHT;
+    CGFloat x = ((SCREEN_HEIGHT-_QRCodeWidth)/2.0)/SCREEN_HEIGHT;
     CGFloat y = ((SCREEN_WIDTH-_QRCodeWidth)/2.0)/SCREEN_WIDTH;
     CGFloat width = _QRCodeWidth/SCREEN_HEIGHT;
     CGFloat height = _QRCodeWidth/SCREEN_WIDTH;

@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AktDateSearchVC : WorkBaseViewController
-@property (nonatomic,assign) NSInteger type; //0未开始 1进行中 2已完成
+
 @end
 
 NS_ASSUME_NONNULL_END

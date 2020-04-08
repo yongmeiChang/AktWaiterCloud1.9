@@ -43,15 +43,8 @@ static AFNetWorkingTool * a_instance = nil;
     }else{
         manager.requestSerializer.timeoutInterval = 20.0f;
     }
-    NSDictionary * dic = parameters;
-    
-    NSString * url = @"";
-    if([[dic allKeys] containsObject:@"appstore"]){
-        url = [NSString stringWithFormat:@"%@%@",appstoreURl,URLString];
-    }
-    else{
-        url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
-    }
+    NSString *url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
+
     NSLog(@"requst:%@\n参数:%@",url,parameters);
     switch (type) {
             
@@ -66,11 +59,12 @@ static AFNetWorkingTool * a_instance = nil;
                     NSLog(@"response:%@",jsons);
                     success(jsons);
                 }
-                
+                [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if (failure) {
                     failure(error);
                 }
+                [[AppDelegate sharedDelegate] hidHUD];
             }];
         }
             break;
@@ -85,13 +79,14 @@ static AFNetWorkingTool * a_instance = nil;
                      NSLog(@"response:%@",jsons);
                     success(jsons);
                 }
+                [[AppDelegate sharedDelegate] hidHUD];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
                 if (failure) {
                     failure(error);
                 }
-                
+                [[AppDelegate sharedDelegate] hidHUD];
             }];
         }
             break;

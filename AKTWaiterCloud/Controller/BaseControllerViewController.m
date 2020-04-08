@@ -12,6 +12,11 @@
 @end
 
 @implementation BaseControllerViewController
++ (instancetype)createViewControllerWithName:(NSString *)vcName createArgs:(id)args{
+    BaseControllerViewController *vc = [[NSClassFromString(vcName) alloc] init];
+    vc.createArgs = args;
+    return vc;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,8 +26,7 @@
     //默认view的背景色
     self.view.backgroundColor = RGB(226, 231, 237);
     
-      // mj
-        //下拉、上拉动画图片
+      // mj 下拉、上拉动画图片
         NSMutableArray * arr = [NSMutableArray array];
         for(int i=1; i<=32;i++){
             NSString * imagename = [NSString stringWithFormat:@"loading%d.png",i];
@@ -51,6 +55,12 @@
        self.mj_footer.triggerAutomaticallyRefreshPercent = 50.0;
     
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSString *className = NSStringFromClass([self class]);
+    BOOL isHidden = ([className isEqualToString:@"LoginViewController"]);
+    self.navigationController.navigationBarHidden = isHidden;
+}
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
 }
@@ -61,29 +71,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)switchMode:(UIViewController *)viewController DoWorkBlock:(void(^)(void))okblock canelBlock:(void(^)(void))canelblock{
-    NSString * messages =@"您当前处于离线模式,无法进行此操作!是否需要尝试切换成在线模式?";
-    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        messages = @"当前网络不可用,无法进行此操作!已切换成离线模式,是否需要尝试切换成在线模式?";
-        appDelegate.netWorkType = Off_line;
-    }
-    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"状态提示" message:messages preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if(okblock){
-            okblock();
-        }
-    }];
-    
-    UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        if(canelblock){
-            canelblock();
-        }
-    }];
-    [alertController addAction:okAction];
-    [alertController addAction:canelAction];
-    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [viewController presentViewController:alertController animated:YES completion:nil];
-}
 #pragma mark - nav
 -(void)setNavTitle:(NSString *)title{
     self.navigationItem.title = title;
@@ -247,20 +234,18 @@
 -(void)logoffUser{
     [self showMessageAlertWithController:self title:@"" Message:@"当前账号已在其他设备登陆" canelBlock:^{
         NSLog(@"用户退出登录");
+        [self.navigationController popToRootViewControllerAnimated:YES];
         //不能自动登陆
-        appDelegate.IsAutoLogin=false;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:@"login"];
-        //下次能否自动登陆
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isAutologin"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+               
+        BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
     }];
 }
+
 #pragma mark -
--(void)dealloc
-{
-
-}
-
 -(void)backClick:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

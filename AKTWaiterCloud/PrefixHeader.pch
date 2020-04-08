@@ -15,7 +15,6 @@
 #import <MapKit/MapKit.h>
 #import "PhoneSize.h"
 #import "BaseControllerViewController.h"
-#import "LoginRequest.h"
 #import "Vaildate.h"
 #import "NSMutableDictionary+Utils.h"
 #import "DataManager.h"
@@ -25,10 +24,11 @@
 #import "UIColor+Hex.h"
 #import "AppInfoDefult.h"
 #import "AktUtil.h"
-
+//#import "AFNetWorkingTool.h"
+#import "AFNetWorkingRequest.h" // 工单cmd
+#import "AktVipCmd.h" // 个人cmd
+#import "AktLoginCmd.h" // 登录cmd
 // 第三方SDK
-#import "AFNetWorkingTool.h"
-#import "AFNetWorkingRequest.h"
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -96,7 +96,7 @@ static const int ddLogLevel = DDLogLevelError;
 #define appid @"1294211974"
 #define GAODEAPPKEY @"d7fac2d3810fa204fa0246c7fead9806"
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
-#define Bugly_AppId @"d5a027a07b"
+#define Bugly_AppId @"d5a027a07b"  // 个人账号
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -107,14 +107,9 @@ static const int ddLogLevel = DDLogLevelError;
 
 //正式环境
 //#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service/appNewService"
-//#define SERVICEURL @"http://172.16.100.59:8089/ankangtong-outwork/appService"
 #define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
 // 测试环境
 //#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
-
-// App Store
-#define appstoreURl @"https://itunes.apple.com/cn/"
-
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

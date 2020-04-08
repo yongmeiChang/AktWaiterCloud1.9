@@ -8,11 +8,12 @@
 
 #import "SignInVC.h"
 #import "AktWSigninListVC.h"
-#import "LoginViewController.h"
+#import "AktAgreementVC.h"
+#import "ZHAttributeTextView.h" // 
 
 @interface SignInVC ()
 {
-   
+    BOOL isAgreement; // 
 }
 @property (weak, nonatomic) IBOutlet UIView *checkZuhu;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNavH;
@@ -24,22 +25,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfSurePwd;
 @property (weak, nonatomic) IBOutlet UITextField *tfzuhu;
 @property (weak, nonatomic) IBOutlet UIButton *btnCode;
+
+@property (weak, nonatomic) IBOutlet UIView *viewBgAgreement;
+
 @property (nonatomic, assign) int second; // 倒计时
 @property (nonatomic, strong) NSTimer *coldTimer; // 定时器
-
 @property(nonatomic,copy) SigninDetailsInfo * selectZuhuDetailsInfo; // 选择的租户详情
-@property (nonatomic,strong) LoginViewController * loginController;
 
 @end
 
 @implementation SignInVC
-
--(id)initWithSigninWController:(LoginViewController *)logincontoller{
-    if (self = [super init]) {
-        self.loginController = logincontoller;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,11 +42,13 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"注册";
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-    self.topNavH.constant = AktNavAndStatusHight;
     self.btnCode.layer.masksToBounds = YES;
     self.btnCode.layer.cornerRadius = 5;
     UITapGestureRecognizer *tapZuhu = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkZuhuList:)];
     [_checkZuhu addGestureRecognizer:tapZuhu];
+    // 隐私
+    isAgreement = YES;
+    [self initAgreementView];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -85,7 +82,6 @@
 
 #pragma mark - click
 -(void)LeftBarClick{
-    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -95,8 +91,7 @@
           return;
       }
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
-    NSString * url = @"getCheckCode";
-    [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypePost success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;
             [self.btnCode setTitle:@"60秒后重发" forState:UIControlStateNormal];
@@ -171,27 +166,30 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写密码！"];
           return;
       }
-    if ([kString(self.tfSurePwd.text) isEqualToString:@"self.tfPwd.text"] ) {
-             [[AppDelegate sharedDelegate] showTextOnly:@"两次密码不一致"];
-             return;
-         }
+      if (!self.tfSurePwd || ![self.tfPwd.text isEqualToString:self.tfSurePwd.text]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"两次密码不一致"];
+            return;
+        }
     if (kString(self.tfzuhu.text).length == 0) {
             [[AppDelegate sharedDelegate] showTextOnly:@"请选择租户！！"];
             return;
         }
     
-    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
-       NSString * url = @"waiterRegister";
-       [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:param type:HttpRequestTypePost success:^(id responseObject) {
-           [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
-           [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
-           [self.navigationController popViewControllerAnimated:YES];
-       } failure:^(NSError *error) {
-           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-       }];
-    
+    if (isAgreement) {
+          [self requestSigninInfo];
+      }else{
+          [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
+      }
 }
-
+-(void)requestSigninInfo{
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
+    [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSError *error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
+}
 #pragma mark - tap
 -(void)checkZuhuList:(UITapGestureRecognizer *)tap{ // 选择租户
     AktWSigninListVC *listvc = [[AktWSigninListVC alloc] init];
@@ -199,7 +197,38 @@
     [self.navigationController pushViewController:listvc animated:YES];
 }
 
-
+#pragma mark - 隐私
+-(void)initAgreementView{
+     ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
+     myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
+     myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
+     myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
+     myTextView.fontSize = 13;                            // 可点击的字体大小
+     myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
+     // 设置了上面后要在最后设置内容
+     myTextView.content = @"阅读并同意《隐私政策》";
+     myTextView.agreeBtnClick = ^(UIButton *btn) {
+          btn.selected = !btn.selected;
+         if(btn.selected == YES){
+             NSLog(@"左侧按钮选中状态为YES");
+             isAgreement = YES;
+         }else{
+             NSLog(@"左侧按钮选中状态为NO");
+             isAgreement = NO;
+         }
+     };
+     myTextView.eventblock = ^(NSAttributedString *contentStr) {
+         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] init];
+         [self.navigationController pushViewController:Agreementvc animated:YES];
+     };
+     [self.view addSubview:myTextView];
+     [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.width.mas_equalTo(self.viewBgAgreement.mas_width);
+         make.height.mas_equalTo(35);
+         make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
+         make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
+     }];
+}
 
 /*
 #pragma mark - Navigation

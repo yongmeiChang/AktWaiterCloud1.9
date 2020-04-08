@@ -39,7 +39,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
     searchAddress = [NSString stringWithFormat:@""];
      searchWorkNo = [NSString stringWithFormat:@""];
@@ -158,12 +157,6 @@
     //网络状态判断
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self Message:ContinueError];
-            }else{
-                [self showMessageAlertWithController:self Message:LoadingError];
-            }
-            appDelegate.netWorkType = Off_line;
             self.orderfmdb = [[OrderTaskFmdb alloc] init];
             _dataArray = [self.orderfmdb findAllOrderInfo];
             if(_dataArray.count==0){
@@ -247,14 +240,6 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }
-
-        if(appDelegate.netWorkType == Off_line){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-                }];
-                appDelegate.netWorkType = On_line;
-            });
-        }
         [[AppDelegate sharedDelegate] hidHUD];
     }
         failure:^(NSError *error) {
@@ -269,21 +254,7 @@
     pageSize=0;
     DDLogInfo(@"点击了刷新按钮");
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showOffLineAlertWithTime:1.0  message:ContinueError DoSomethingBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }else{
-                [self showOffLineAlertWithTime:1.0  message:LoadingError DoSomethingBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }
-            appDelegate.netWorkType = Off_line;
-            return;
-        }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
-        }
+        [self showMessageAlertWithController:self Message:NetWorkMessage];
     }
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     self.netWorkErrorLabel.text = Loading;
@@ -354,48 +325,5 @@
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-#pragma mark -
--(void)RequestgetWorkByDay:(NSString *)dateStr{
-    //NSString * date = [NSString stringWithFormat:@"%@ 00:00:00",dateStr];
-    //type=doing  进行中工单   type=undo 未开始工单  type=done 已完成工单
-    NSDictionary * dic =  @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"date":dateStr,@"type":@"undo"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkByDay:dic type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dicc = responseObject;
-        NSLog(@"%@",dicc);
-        int code = [dicc[@"code"] intValue];
-        if(code==1){
-            tableviewtype = 1;
-            [self.dateArray removeAllObjects];
-            NSArray * arr = dicc[@"object"];
-            if(arr.count>0){
-                for(NSMutableDictionary * ordrerDic in arr){
-                    NSDictionary * createBydic = [ordrerDic objectForKey:@"createBy"];
-                    NSDictionary * updateBydic = [ordrerDic objectForKey:@"updateBy"];
-                    NSString * createBy = [createBydic objectForKey:@"id"];
-                    NSString * updateBy = [updateBydic objectForKey:@"id"];
-                    [ordrerDic removeObjectForKey:@"createBy"];
-                    [ordrerDic removeObjectForKey:@"updateBy"];
-                    [ordrerDic setObject:createBy forKeyedSubscript:@"createBy"];
-                    [ordrerDic setObject:updateBy forKeyedSubscript:@"updateBy"];
-                    OrderInfo * order = [[OrderInfo alloc] initWithDictionary:ordrerDic error:nil];
-                    [self.dateArray addObject:order];
-                }
-                [self.taskTableview reloadData];
-            }
-        }else{
-//            [self showMessageAlertWithController:self Message:[dicc objectForKey:@"message"]];
-            self.netWorkErrorLabel.text = [dicc objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:@"暂无数据"];
-            self.taskTableview.hidden = YES;
-            self.netWorkErrorView.hidden = NO;
-            self.netWorkErrorView.userInteractionEnabled = NO;
-        }
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
-}
-
 
 @end

@@ -11,10 +11,11 @@
 #import "PlanTaskCell.h"
 #import "SignInCell.h"
 #import "SignoutController.h"
-#import "EditOrderController.h"
 #import "VisitCell.h"
 #import "NoDateCell.h"
 #import <CoreLocation/CoreLocation.h>
+#import "AktOrderDetailsCheckImageVC.h"
+
 @interface MinuteTaskController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,PlanTaskPhoneDelegate>
 {
     CLGeocoder *_geocoder;
@@ -53,7 +54,7 @@
     [super viewDidLoad];
     [self setTitle:@"任务详情"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
-    self.tableTop.constant = AktNavAndStatusHight;
+//    self.tableTop.constant = AktNavAndStatusHight;
     self.bgviewTop.constant = AktNavAndStatusHight+200;
     
     self.netWorkErrorView.hidden = YES;
@@ -70,6 +71,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    self.tabBarController.tabBar.hidden = YES;
     _sgController = [[SignoutController alloc] init];
     if([self.orderinfo.workStatus isEqualToString:@"4"]){
         _sgController.type = 1;
@@ -78,46 +80,6 @@
         _sgController.type = 0;
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
     }
-}
-
-#pragma mark - showUserMoney
--(void)showUserMoney{ //显示用户余额
- 
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"请求中..."];
-    NSDictionary * param = @{@"customerId":_orderinfo.customerId,@"customerName":_orderinfo.customerName,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [[AFNetWorkingRequest sharedTool] requestWithGetCustomerBalanceParameters:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = [dic objectForKey:@"code"];
-        NSString * message = @"";
-        if([code intValue] == 1){
-            NSString * object = dic[@"object"];
-            message = [[object componentsSeparatedByString:@"："] objectAtIndex:1];
-            [self showMessageAlertWithController:self title:@"" Message:message canelBlock:^{
-                
-            }];
-        }else{
-            message = [dic objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:message];
-        }
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
-}
-
--(void)clickEdit{
-    EditOrderController * eoController = [[EditOrderController alloc] init];
-    eoController.serviceid = self.orderinfo.serviceItemId;
-    eoController.untype = self.orderinfo.unitType;
-    eoController.oldmoney = self.orderinfo.serviceMoney;
-    eoController.oldBeginTime = self.orderinfo.serviceBegin;
-    eoController.workstuats = self.orderinfo.workStatus;
-    eoController.oldEndTime = self.orderinfo.serviceEnd;
-    eoController.workid = self.orderinfo.id;
-    eoController.workNo = self.orderinfo.workNo;
-    eoController.stationId = self.orderinfo.stationId;
-    eoController.oldService = self.orderinfo.serviceItemName;
-    [self.navigationController pushViewController:eoController animated:YES];
 }
 
 #pragma mark - nav back
@@ -164,14 +126,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.01f;
+    return 0.01;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-       return 0.01;
+       return 0;
 }
 
-/**Cell生成*/
+/*Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentify = @"PlanTaskCell";
     static NSString *cellidentify1 = @"SignInCell";
@@ -272,68 +234,10 @@
 
 #pragma mark - showImageIn
 -(void)showImageIn{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"signType":@"101"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = dic[@"code"];
-        if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
-            if(obj.count>0){
-                
-                UIView * popview = [[UIView alloc] init];
-                popview.backgroundColor = [UIColor grayColor];
-                [popview setTag:10];
-                [self.view addSubview:popview];
-
-                UIScrollView *scollBg = [[UIScrollView alloc] init];
-                scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
-                scollBg.pagingEnabled = YES;
-                [popview addSubview:scollBg];
-                
-                for (int i = 0; i<obj.count; i++) {
-                    NSDictionary * object = obj[i];
-                    NSString * affixName = object[@"affixUrl"];
-                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                    UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                    photoImageView.image = [UIImage imageWithData:imageData];
-                    [scollBg addSubview:photoImageView];
-                    
-                }
-                
-                UIButton * closeBtn = [[UIButton alloc] init];
-                [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-                [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
-                [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-                [popview addSubview: closeBtn];
-
-                [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(AktNavAndStatusHight);
-                    make.left.mas_equalTo(0);
-                    make.right.mas_equalTo(0);
-                    make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
-                }];
-                [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.bottom.left.right.mas_equalTo(0);
-                }];
-                
-                [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(popview.mas_right).offset(0);
-                    make.top.equalTo(popview.mas_top).offset(0);
-                    make.width.mas_equalTo(40);
-                    make.height.mas_equalTo(30);
-                }];
-                
-            }
-        }else{
-            [self showMessageAlertWithController:self Message:@"没有图片"];
-        }
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
+    AktOrderDetailsCheckImageVC *detailsImgVC = [[AktOrderDetailsCheckImageVC alloc] init];
+    detailsImgVC.orderId =self.orderinfo.id;
+    detailsImgVC.imgtype = @"1";
+    [self.navigationController pushViewController:detailsImgVC animated:YES];
 }
 
 -(void)closedPopview{
@@ -345,67 +249,10 @@
 }
 
 -(void)showImageOut{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId,@"signType":@"102"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = dic[@"code"];
-        if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
-            
-            UIView * popview = [[UIView alloc] init];
-            popview.backgroundColor = [UIColor grayColor];
-            [self.view addSubview:popview];
-            
-            UIScrollView *scollBg = [[UIScrollView alloc] init];
-            scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
-            scollBg.pagingEnabled = YES;
-            [popview addSubview:scollBg];
-            
-            for (int i = 0; i<obj.count; i++) {
-                NSDictionary * object = obj[i];
-                NSString * affixName = object[@"affixUrl"];
-                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                photoImageView.image = [UIImage imageWithData:imageData];
-                [scollBg addSubview:photoImageView];
-                
-            }
-            
-            UIButton * closeBtn = [[UIButton alloc] init];
-                [popview setTag:10];
-                [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-                [closeBtn addTarget:self action:@selector(closedPopview) forControlEvents:UIControlEventTouchUpInside];
-                [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [closeBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-                [popview addSubview: closeBtn];
-         
-            [popview mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(AktNavAndStatusHight);
-                make.left.mas_equalTo(0);
-                make.right.mas_equalTo(0);
-                make.bottom.mas_equalTo(SCREEN_HEIGHT-AktNavAndStatusHight);
-            }];
-            [scollBg mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.bottom.left.right.mas_equalTo(0);
-            }];
-            
-            [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(popview.mas_right).offset(0);
-                make.top.equalTo(popview.mas_top).offset(0);
-                make.width.mas_equalTo(40);
-                make.height.mas_equalTo(30);
-            }];
-            
-        }else{
-            [self showMessageAlertWithController:self Message:@"没有图片"];
-        }
-        
-        [[AppDelegate sharedDelegate] hidHUD];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] hidHUD];
-    }];
+    AktOrderDetailsCheckImageVC *detailsImgVC = [[AktOrderDetailsCheckImageVC alloc] init];
+    detailsImgVC.orderId =self.orderinfo.id;
+    detailsImgVC.imgtype = @"2";
+    [self.navigationController pushViewController:detailsImgVC animated:YES];
 }
 #pragma mark - cell phone
 -(void)didSelectPhonecomster:(NSString *)phone{

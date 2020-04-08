@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AktFeedBackVC">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewBg" destination="Dng-Jl-AqG" id="jce-Ev-etZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htd-eJ-fuQ">
+                    <rect key="frame" x="30" y="793" width="354" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Ir1-dc-fdN"/>
+                    </constraints>
+                    <state key="normal" title="提交" backgroundImage="btn_bg"/>
+                    <connections>
+                        <action selector="updateAllInfo:" destination="-1" eventType="touchUpInside" id="1wD-is-aqY"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dng-Jl-AqG">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="793"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="htd-eJ-fuQ" secondAttribute="trailing" constant="30" id="1no-x7-CPe"/>
+                <constraint firstItem="Dng-Jl-AqG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9Mb-lx-Aol"/>
+                <constraint firstItem="Dng-Jl-AqG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Gbx-K2-UJx"/>
+                <constraint firstAttribute="bottom" secondItem="htd-eJ-fuQ" secondAttribute="bottom" constant="39" id="I36-m8-TL6"/>
+                <constraint firstAttribute="trailing" secondItem="Dng-Jl-AqG" secondAttribute="trailing" id="KY6-Mm-D3A"/>
+                <constraint firstItem="htd-eJ-fuQ" firstAttribute="top" secondItem="Dng-Jl-AqG" secondAttribute="bottom" id="OVm-RJ-y3x"/>
+                <constraint firstItem="htd-eJ-fuQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="igl-Vo-gxI"/>
+            </constraints>
+            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_bg" width="291.5" height="62.5"/>
+    </resources>
+</document>

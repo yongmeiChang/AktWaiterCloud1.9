@@ -46,7 +46,7 @@
     Wbg.layer.masksToBounds = YES;
     Wbg.layer.cornerRadius = 5;
     [Wbg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(Fsize.height+130);
+        make.height.mas_equalTo(Fsize.height+180);
         make.left.mas_equalTo(20);
         make.right.mas_equalTo(-20);
         make.centerY.mas_equalTo(self);
@@ -73,7 +73,7 @@
     labSubName.numberOfLines = 0;
     [Wbg addSubview:labSubName];
     [labSubName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(labTilte.mas_bottom);
+        make.top.mas_equalTo(labTilte.mas_bottom).offset(15.5);
         make.left.mas_equalTo(19);
         make.right.mas_equalTo(-19);
     }];
@@ -82,7 +82,7 @@
     labLine.backgroundColor = kColor(@"C12");
     [Wbg addSubview:labLine];
     [labLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(labSubName.mas_bottom);
+        make.top.mas_equalTo(labSubName.mas_bottom).mas_offset(35.5);
         make.height.mas_equalTo(1);
         make.left.right.mas_equalTo(Wbg);
     }];

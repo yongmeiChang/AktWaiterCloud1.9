@@ -32,15 +32,13 @@
 }
 //初始化网络错误页面
 -(UIView *)initsNoDataView{
-    UITabBarController *tabBarVC = [[UITabBarController alloc] init];
-    CGFloat tabBarHeight = tabBarVC.tabBar.frame.size.height;
-    self.netWorkErrorView = [[UIView alloc]initWithFrame:CGRectMake(0, appStatusBarFrame.size.height+44, SCREEN_WIDTH, SCREEN_HEIGHT-tabBarHeight)];
+    self.netWorkErrorView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-AktNavAndStatusHight)];
     [self.netWorkErrorView setBackgroundColor:[UIColor colorWithRed:226/255.0 green:232/255.0 blue:239/255.0 alpha:1]];
     
     self.netWorkErrorImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nohave.png"]];
     [self.netWorkErrorView addSubview:self.netWorkErrorImageView];
     [ self.netWorkErrorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.netWorkErrorView).offset(-self.netWorkErrorImageView.frame.size.height/2-30);
+        make.centerY.equalTo(self.netWorkErrorView).offset(-self.netWorkErrorImageView.frame.size.height/2-100);
         make.centerX.equalTo(self.netWorkErrorView);
     }];
     
@@ -61,9 +59,7 @@
     // 2. 将点击事件添加到label上
     [self.netWorkErrorView addGestureRecognizer:tapGesture];
     self.netWorkErrorView.userInteractionEnabled = YES;
-    
-    self.constraintTop.constant=appStatusBarFrame.size.height+44.0f;
-    
+        
     return self.netWorkErrorView;
 }
 

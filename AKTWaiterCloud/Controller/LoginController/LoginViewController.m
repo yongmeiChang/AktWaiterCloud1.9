@@ -7,20 +7,16 @@
 //
 #import <JPUSHService.h>
 #import "LoginViewController.h"
-#import "MainController.h"
 #import "FindPswController.h"
 #import "QRCodeViewController.h"
 #import "SignInVC.h" // 注册
 #import "UserFmdb.h"
-#import "AktResetAppView.h" // 更新提示view
 #import "AktAgreementVC.h"
 #import "ZHAttributeTextView.h" //
 
-@interface LoginViewController ()<UITextFieldDelegate,AktResetAppDelegate>{
+@interface LoginViewController ()<UITextFieldDelegate>{
     NSString * testUserName ;
     NSString * testPassWord ;
-    NSString *trackViewUrl; // appst网址
-    AktResetAppView *resetView;
     BOOL isAgreement;
 }
 @property (weak, nonatomic) IBOutlet UIView *userviewBg;
@@ -61,59 +57,54 @@
     self.pwdViewbg.layer.borderColor = RGB(210, 210, 210).CGColor;
     self.pwdViewbg.layer.borderWidth = 1;
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
-    
     // 隐私
-    ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
-    myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
-    myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
-    myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
-    myTextView.fontSize = 13;                            // 可点击的字体大小
-    myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
-    // 设置了上面后要在最后设置内容
-    myTextView.content = @"阅读并同意《隐私政策》";
-    myTextView.agreeBtnClick = ^(UIButton *btn) {
-        btn.selected = !btn.selected;
-        if(btn.selected == YES){
-            NSLog(@"左侧按钮选中状态为YES");
-            isAgreement = YES;
-        }else{
-            NSLog(@"左侧按钮选中状态为NO");
-            isAgreement = NO;
-        }
-    };
-    myTextView.eventblock = ^(NSAttributedString *contentStr) {
-        AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] initWithSigninWController:self];
-        [self.navigationController pushViewController:Agreementvc animated:YES];
-    };
-    [self.viewBgAgreement setBackgroundColor:[UIColor clearColor]];
-    [self.viewBgAgreement addSubview:myTextView];
-    [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(self.viewBgAgreement.mas_width);
-        make.height.mas_equalTo(35);
-        make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
-        make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
-    }];
-    
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-
+    isAgreement = YES;
+      [self initAgreementView];
     // 获取缓存
     if(appDelegate.userinfo){
         self.unameText.text = appDelegate.userinfo.waiterUkey;
         self.upswText.text = appDelegate.userinfo.password;
     }
-    //检查更新
-    [self getTheCurrentVersion];
     self.cqCodeUserName = @"";
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //开启定时器
     if(![self.cqCodeUserName isEqualToString:@""]){
         self.unameText.text = self.cqCodeUserName;
     }
 }
-
+#pragma mark - 隐私
+-(void)initAgreementView{
+     ZHAttributeTextView *myTextView = [[ZHAttributeTextView alloc]initWithFrame:CGRectMake(0, 0, self.viewBgAgreement.bounds.size.width - 20, 35)];
+     myTextView.numClickEvent = 1;                        // 有几个点击事件(这里只能设为1个或2个)
+     myTextView.oneClickLeftBeginNum = 5;                 // 第一个点击的起始坐标数字是几
+     myTextView.oneTitleLength = 6;                      // 第一个点击的文本长度是几
+     myTextView.fontSize = 13;                            // 可点击的字体大小
+     myTextView.titleTapColor = kColor(@"C8");    // 可点击富文本字体颜色
+     // 设置了上面后要在最后设置内容
+     myTextView.content = @"阅读并同意《隐私政策》";
+     myTextView.agreeBtnClick = ^(UIButton *btn) {
+          btn.selected = !btn.selected;
+         if(btn.selected == YES){
+             NSLog(@"左侧按钮选中状态为YES");
+             isAgreement = YES;
+         }else{
+             NSLog(@"左侧按钮选中状态为NO");
+             isAgreement = NO;
+         }
+     };
+     myTextView.eventblock = ^(NSAttributedString *contentStr) {
+         AktAgreementVC *Agreementvc = [[AktAgreementVC alloc] init];
+         [self.navigationController pushViewController:Agreementvc animated:YES];
+     };
+     [self.viewBgAgreement addSubview:myTextView];
+     [myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.width.mas_equalTo(self.viewBgAgreement.mas_width);
+         make.height.mas_equalTo(35);
+         make.centerX.mas_equalTo(self.viewBgAgreement.mas_centerX);
+         make.centerY.mas_equalTo(self.viewBgAgreement.mas_centerY);
+     }];
+}
 #pragma mark - 适配
 -(void)setConstraint{
     if (SCREEN_WIDTH>375) {
@@ -156,7 +147,6 @@
     NSString * netWorkType = [ReachbilityTool internetStatus];
     if([netWorkType isEqualToString:@"notReachable"]){
         [self showMessageAlertWithController:self Message:NetWorkMessage];
-        appDelegate.netWorkType = On_line;
     }
     if (isAgreement) {
         [self Userlogin];
@@ -166,12 +156,12 @@
 }
 /**忘记密码按钮*/
 -(IBAction)findPswBtn:(id)sender{
-    FindPswController * findPswController = [[FindPswController alloc]initWithFindPswController:self];
+    FindPswController * findPswController = [[FindPswController alloc]init];
     [self.navigationController pushViewController:findPswController animated:YES];
 }
 // 注册
 - (IBAction)sigInClickBtn:(UIButton *)sender {
-    SignInVC *signvc = [[SignInVC alloc] initWithSigninWController:self];
+    SignInVC *signvc = [[SignInVC alloc] init];
     [self.navigationController pushViewController:signvc animated:YES];
 }
 #pragma mark - login
@@ -203,98 +193,53 @@
         if(resCode == 0){
             NSLog(@"registrationID获取成功：%@",registrationID);
             appDelegate.Registration_ID = registrationID;
-
-            NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-            NSString * url = @"waiterLogin";
-            
-            [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-                NSDictionary * result = responseObject;
-               // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-                NSNumber * code = [result objectForKey:@"code"];
-                if([code intValue] == 1){
-                    NSDictionary * userdic = [result objectForKey:@"object"];
-                    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                    [dic setObject:@"1" forKey:@"isclickOff_line"];
-                    UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-                    user.uuid = user.id;
-                    appDelegate.userinfo = user;
-                    appDelegate.mainController = [[MainController alloc]init];
-                    UserFmdb * userdb = [[UserFmdb alloc] init];
-                    UserInfo * useroldinfo = [[UserInfo alloc] init];
-                    useroldinfo = [userdb findByrow:0];
-                    if(useroldinfo.uuid){
-                        [userdb updateObject:appDelegate.userinfo];
-                    }else{
-                        [userdb saveUserInfo:appDelegate.userinfo];
-                    }
-                    appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
-                    [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-            
-                    //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                    [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                        
-                    } failure:^(NSError *error) {
-                        
-                    }];
-                }else{
-                    NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [self showMessageAlertWithController:self Message:messageDic];
-                }
-               
-                 [[AppDelegate sharedDelegate] hidHUD];
-            } failure:^(NSError *error) {
-                 [[AppDelegate sharedDelegate] hidHUD];
-                NSLog(@"请求错误，code==%lu",error.code);
-                [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
-            }];
-        }
-        else{
+        }else{
             NSLog(@"registrationID获取失败，code：%d",resCode);
-            // 测试登陆接口
-            NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-            NSString * url = @"waiterLogin";
-            
-            [[AFNetWorkingTool sharedTool] requestWithURLString:url parameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-                NSDictionary * result = responseObject;
-                // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-                NSNumber * code = [result objectForKey:@"code"];
-                if([code intValue] == 1){
-                    NSDictionary * userdic = [result objectForKey:@"object"];
-                    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                    [dic setObject:@"1" forKey:@"isclickOff_line"];
-                    UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-                    user.uuid = user.id;
-                    appDelegate.userinfo = user;
-                    appDelegate.mainController = [[MainController alloc]init];
-                    UserFmdb * userdb = [[UserFmdb alloc] init];
-                    UserInfo * useroldinfo = [[UserInfo alloc] init];
-                    useroldinfo = [userdb findByrow:0];
-                    if(useroldinfo.uuid){
-                        [userdb updateObject:appDelegate.userinfo];
-                    }else{
-                        [userdb saveUserInfo:appDelegate.userinfo];
-                    }
-                   appDelegate.mainController.modalPresentationStyle = UIModalPresentationFullScreen;
-                    [self presentViewController: appDelegate.mainController  animated:YES completion:nil];
-                    //获取各类工单数量
-                    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                    [[AFNetWorkingRequest sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                        
-                    } failure:^(NSError *error) {
-                        
-                    }];
-                }else{
-                    NSString * messageDic = [responseObject objectForKey:@"message"];
-                    [self showMessageAlertWithController:self Message:messageDic];
-                }
-                 [[AppDelegate sharedDelegate] hidHUD];
-            } failure:^(NSError *error) {
-                 [[AppDelegate sharedDelegate] hidHUD];
-                NSLog(@"请求错误，code==%lu",error.code);
-                [self showMessageAlertWithController:self Message:@"登陆失败，请稍后再试"];
-            }];
         }
+        NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
+                    [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+                        NSDictionary * result = responseObject;
+                       // 目前后台没有存储开启离线模式字段 手动添加默认关闭
+                        NSNumber * code = [result objectForKey:@"code"];
+                        if([code intValue] == 1){
+                            NSDictionary * userdic = [result objectForKey:@"object"];
+                            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
+                            [dic setObject:@"1" forKey:@"isclickOff_line"];
+                            UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
+                            user.uuid = user.id;
+                            appDelegate.userinfo = user;
+                            UserFmdb * userdb = [[UserFmdb alloc] init];
+                            UserInfo * useroldinfo = [[UserInfo alloc] init];
+                            useroldinfo = [userdb findByrow:0];
+                            if(useroldinfo.uuid){
+                                [userdb updateObject:appDelegate.userinfo];
+                            }else{
+                                [userdb saveUserInfo:appDelegate.userinfo];
+                            }
+                            //获取各类工单数量
+                            NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+                            [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
+                                                                              } failure:^(NSError *error) {}];
+                            // 登录成功
+                            [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [self dismissViewControllerAnimated:YES completion:^{
+//                                UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
+//                                [tabViewController setSelectedIndex:1];
+                                [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
+                            }];
+                          
+                        }else{
+                            NSString * messageDic = [responseObject objectForKey:@"message"];
+                            [self showMessageAlertWithController:self Message:messageDic];
+                        }
+                       
+                         [[AppDelegate sharedDelegate] hidHUD];
+                    } failure:^(NSError *error) {
+                         [[AppDelegate sharedDelegate] hidHUD];
+                        NSLog(@"请求错误，code==%lu",error.code);
+                        [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
+                    }];
     }];
 }
 #pragma mark TextFieldDelgate
@@ -326,66 +271,6 @@
         return YES;
     }
     return YES;
-}
-
-#pragma mark 检查更新
--(void)getTheCurrentVersion{
-    //获取版本号
-    NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    [[AFNetWorkingTool sharedTool] requestWithURLString:@"getAppVersion" parameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject[@"object"];
-        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
-            // 最新版本号
-            NSString *iTunesVersion = dic[@"versions"];
-            // 应用程序介绍网址(用户升级跳转URL)
-            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
-            
-            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
-                NSLog(@"不是最新版本,需要更新");
-                resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
-                 resetView.tag = 102;
-                 resetView.delegate = self;
-                resetView.strContent = dic[@"updateContent"];
-                [[UIApplication sharedApplication].keyWindow addSubview:resetView];
-            } else {
-                NSLog(@"已是最新版本,不需要更新!");
-                if(appDelegate.userinfo){
-                    self.unameText.text = appDelegate.userinfo.waiterUkey;
-                    self.upswText.text = appDelegate.userinfo.password;
-                    if(appDelegate.IsAutoLogin){
-                        [self loginBtnClick:nil];
-                    }
-                    //账号默认关闭离线模式
-                    appDelegate.userinfo.isclickOff_line = @"1";
-                }
-            }
-        }
-    } failure:^(NSError *error) {
-        if(appDelegate.userinfo){
-            if(appDelegate.IsAutoLogin){
-                [self loginBtnClick:nil];
-            }
-            //账号默认关闭离线模式
-            appDelegate.userinfo.isclickOff_line = @"1";
-        }
-    }];
-}
-
-#pragma mark - delegate
--(void)didNoResetAppClose:(NSInteger)type{
-     [[[UIApplication sharedApplication].keyWindow  viewWithTag:102] removeFromSuperview];
-    if (type ==0) {
-        if(appDelegate.userinfo){
-           if(appDelegate.IsAutoLogin){
-            [self loginBtnClick:nil];
-           }
-            //账号默认关闭离线模式
-            appDelegate.userinfo.isclickOff_line = @"1";
-        }
-    }else{
-        // 内容包含中文，需要转码之后才能跳转  否则无法跳转
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[trackViewUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] options:@{} completionHandler:nil];
-    }
 }
 
 @end

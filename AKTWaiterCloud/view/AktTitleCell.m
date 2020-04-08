@@ -52,7 +52,11 @@
         case 2:{
           
             self.labName.text = @"性别";
+            if ([userInfo.sex isEqualToString:@""]) {
+                self.labvalue.text = @"未知";
+            }else{
             self.labvalue.text = kString(userInfo.sexName);
+            }
         }
             break;
         case 3:{
@@ -63,8 +67,8 @@
         }
             break;
         case 4:{
-            self.accessoryType = UITableViewCellAccessoryNone;
-            self.labValueConstraint.constant = 43.5;
+//            self.accessoryType = UITableViewCellAccessoryNone;
+//            self.labValueConstraint.constant = 43.5;
             self.labName.text = @"手机号";
             self.labvalue.text = kString(userInfo.mobile);
         }

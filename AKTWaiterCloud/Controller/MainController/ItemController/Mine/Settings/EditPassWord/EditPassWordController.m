@@ -30,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"B1");
-    self.oldViewTop.constant = AktNavAndStatusHight+11.5;
     [self setNavTitle:@"修改密码"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     
@@ -96,7 +95,7 @@
     NSDictionary * param = @{@"waiterId":appDelegate.userinfo.uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":appDelegate.userinfo.tenantsId};
     
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"操作中"];
-    [[AFNetWorkingRequest sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
     
         NSDictionary * result = responseObject;
         NSNumber * code = [result objectForKey:@"code"];
@@ -127,17 +126,17 @@
 #pragma mark - delegate
 -(void)didSelectClose{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:101] removeFromSuperview];
-    
-  //不能自动登陆
-    appDelegate.IsAutoLogin=false;
-    LoginViewController * loginContoller = [[LoginViewController alloc] init];
-    [loginContoller.navigationController setNavigationBarHidden:YES animated:nil];
-    [self.navigationController pushViewController:loginContoller animated:YES];
-    //下次能否自动登陆
-    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isAutologin"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
+    [[[UserFmdb alloc] init] deleteAllUserInfo];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+//    BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+//    [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
 }
 
 #pragma mark - TextFieldDelgate

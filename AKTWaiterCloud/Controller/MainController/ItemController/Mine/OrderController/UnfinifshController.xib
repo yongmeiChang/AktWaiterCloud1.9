@@ -24,7 +24,7 @@
                     <state key="normal" backgroundImage="orderbg"/>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ufn-lH-62A">
-                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
@@ -37,7 +37,7 @@
                 <constraint firstAttribute="bottom" secondItem="Ufn-lH-62A" secondAttribute="bottom" id="dFN-zC-Cg0"/>
                 <constraint firstItem="Ufn-lH-62A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kf2-cU-8ng"/>
                 <constraint firstAttribute="trailing" secondItem="Ufn-lH-62A" secondAttribute="trailing" id="vY5-xh-0Yf"/>
-                <constraint firstItem="Ufn-lH-62A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="zvz-vU-gS2"/>
+                <constraint firstItem="Ufn-lH-62A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zvz-vU-gS2"/>
             </constraints>
             <point key="canvasLocation" x="31.199999999999999" y="72.413793103448285"/>
         </view>

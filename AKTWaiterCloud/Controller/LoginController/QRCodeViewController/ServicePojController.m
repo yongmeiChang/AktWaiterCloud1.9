@@ -9,7 +9,7 @@
 #import "ServicePojController.h"
 #import "ServicePojCell.h"
 #import "DownOrderController.h"
-#import "EditOrderController.h"
+
 @interface ServicePojController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong) IBOutlet UITableView * tableview;
 @property(nonatomic,strong) NSArray * dataArray;
@@ -31,7 +31,6 @@
     _tableview.dataSource = self;
     _dataArray = [NSArray array];
     [self requestServicePoj];
-    self.toptableview.constant = AktNavHight+AktStatusHight;
 }
 
 -(void)requestServicePoj{
@@ -84,18 +83,15 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
-/**行数*/;
+/**行数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _dataArray.count;
 }
-
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // 设置section背景颜色
     view.tintColor = [UIColor colorWithRed:226/255.0f green:231/255.0f blue:237/255.0f alpha:1];
 }
-
 /**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentify = @"ServicePojCell";
@@ -128,12 +124,8 @@
     if(_DoContoller){
         _DoContoller.servicepojInfo = spInfo;
     }
-    if(_EoController){
-        _EoController.servicepojInfo = spInfo;
-    }
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 //让section的头部跟着一起滑动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == self.tableview)

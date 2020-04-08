@@ -140,7 +140,7 @@
 
 #pragma mark - init
 -(void)initTableview{
-    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, AktNavAndStatusHight, SCREEN_WIDTH, SCREEN_HEIGHT-123) style:UITableViewStyleGrouped];
+    self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStyleGrouped];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
@@ -213,7 +213,7 @@
     [paremeter addUnEmptyString:_bTime forKey:@"serviceBegin"];
     [paremeter addUnEmptyString:_eTime forKey:@"serviceEnd"];
     [paremeter addUnEmptyString:strRemark forKey:@"serviceContent"]; // 服务内容
-    [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];
+    [paremeter addUnEmptyString:@"" forKey:@"serviceMoney"];//_money 传空值
     [paremeter addUnEmptyString:appDelegate.userinfo.uuid forKey:@"waiterId"];
     [paremeter addUnEmptyString:appDelegate.userinfo.waiterName forKey:@"waiterName"];
     [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
@@ -229,7 +229,7 @@
                     [view removeFromSuperview];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"changerootview" object:nil userInfo:nil];
+                [self.navigationController popToRootViewControllerAnimated:YES];
                  [[AppDelegate sharedDelegate] hidHUD];;
                 
             });

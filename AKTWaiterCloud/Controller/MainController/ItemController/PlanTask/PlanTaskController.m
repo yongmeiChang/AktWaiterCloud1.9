@@ -32,10 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initTaskTableView];
+    
     searchBTime = [NSString stringWithFormat:@""];
     searchETime = [NSString stringWithFormat:@""];
-    self.topConstant.constant = AktNavAndStatusHight;
     pageSize = 1;
     [self.view bringSubviewToFront:self.netWorkErrorView];
     self.taskTableview.hidden = YES;
@@ -43,7 +42,7 @@
     [self initWithNavLeftImageName:@"" RightImageName:@"calendar"];
     self.navigationItem.title = @"计划";
     self.dataArray = [NSMutableArray array];
-    [self checkNetWork];
+//    [self checkNetWork];
     // 注册日历筛选通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchNoticeDate:) name:@"searchDateVC" object:nil];
 }
@@ -52,6 +51,7 @@
     DDLogInfo(@"点击了待办任务item");
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.tabBarController.tabBar.hidden = NO;
+     [self initTaskTableView];
 }
 
 #pragma mark -
@@ -72,7 +72,7 @@
 
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
     pageSize = pageSize+1;
-    [self.taskTableview.mj_footer beginRefreshing];
+//    [self.taskTableview.mj_footer beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_footer endRefreshing];
 }
@@ -199,27 +199,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self.navigationController pushViewController:minuteTaskContoller animated:YES];
 }
-
--(void)ClickName:(id)sender{
-    UIButton * btn = (UIButton*)sender;
-    NSInteger tag = btn.tag;
-    OrderInfo * orderinfo = _dataArray[tag-1];
-    NSDictionary * param = @{@"customerId":orderinfo.customerId,@"customerName":orderinfo.customerName,@"tenantsId":appDelegate.userinfo.tenantsId};
-    [[AFNetWorkingRequest sharedTool] requestWithGetCustomerBalanceParameters:param type:HttpRequestTypePost success:^(id responseObject) {
-        NSDictionary * dic = responseObject;
-        NSNumber * code = [dic objectForKey:@"code"];
-        NSString * message = @"";
-        if([code intValue] == 2){
-            message = [dic objectForKey:@"message"];
-            [self showMessageAlertWithController:self Message:message];
-        }else{
-            
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
 #pragma mark - notice
 -(void)searchNoticeDate:(NSNotification *)searchDate{
     if (searchDate) {

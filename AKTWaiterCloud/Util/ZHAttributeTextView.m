@@ -15,6 +15,7 @@
         self.backgroundColor = [UIColor clearColor];
         // 左侧是否选中按钮
         self.leftAgreeBtn = [UIButton buttonWithType:0];
+        self.leftAgreeBtn.selected = YES;
         [self.leftAgreeBtn addTarget:self action:@selector(leftAgreeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_normal.png"] forState:UIControlStateNormal];
         [self.leftAgreeBtn setImage:[UIImage imageNamed:@"duihao_select.png"] forState:UIControlStateSelected];
@@ -29,14 +30,14 @@
         _myTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:_myTextView];
         [_myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.bounds.size.width - 35);
+            make.width.mas_equalTo(self.bounds.size.width - 40);
             make.height.mas_equalTo(self.bounds.size.height);
-            make.centerX.mas_equalTo(self.mas_centerX).offset(35);
+            make.centerX.mas_equalTo(self.mas_centerX).offset(40);
             make.centerY.mas_equalTo(self.mas_centerY);
         }];
         
         [self.leftAgreeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_myTextView.mas_left);
+            make.right.mas_equalTo(_myTextView.mas_left).offset(10);
             make.width.mas_equalTo(35);
             make.height.mas_equalTo(self.bounds.size.height);
             make.centerY.mas_equalTo(self.mas_centerY);

@@ -7,7 +7,6 @@
 //
 
 #import "FindPswController.h"
-#import "LoginViewController.h"
 #import "Vaildate.h"
 @interface FindPswController ()<UITextFieldDelegate>{
 
@@ -16,24 +15,15 @@
 @property (weak,nonatomic) IBOutlet UITextField * waiterField;
 
 @property (weak,nonatomic) IBOutlet UIButton * rightBtn;
-@property (nonatomic,strong) LoginViewController * loginController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNavConsraint;
 
 @end
 
 @implementation FindPswController
 
--(id)initWithFindPswController:(LoginViewController *)logincontoller{
-    if (self = [super init]) {
-        self.loginController = logincontoller;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.topNavConsraint.constant = AktNavAndStatusHight;
     self.mobleField.keyboardType = UIKeyboardTypeNumberPad;
     self.waiterField.keyboardType = UIKeyboardTypeNumberPad;
 
@@ -42,7 +32,6 @@
 }
 #pragma mark - click
 -(void)LeftBarClick{
-    [self.loginController.navigationController setNavigationBarHidden:YES animated:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -55,9 +44,9 @@
         [self showMessageAlertWithController:self Message:@"唯一码不能为空"];
         return;
     }
-     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"mobile":self.mobleField.text,@"waiterUkey":self.waiterField.text};
-    [[AFNetWorkingRequest sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue] == 1){
@@ -70,7 +59,7 @@
     } failure:^(NSError *error) {
         [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
     }];
-     [[AppDelegate sharedDelegate] hidHUD];
+    [[AppDelegate sharedDelegate] hidHUD];
 }
 
 #pragma mark TextFieldDelgate

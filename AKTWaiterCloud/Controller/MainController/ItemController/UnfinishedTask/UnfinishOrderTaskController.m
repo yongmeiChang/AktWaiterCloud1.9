@@ -32,14 +32,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableTop.constant = AktNavAndStatusHight;
     searchKey = [NSString stringWithFormat:@""];
     searchAddress = [NSString stringWithFormat:@""];
     searchBTime = [NSString stringWithFormat:@""];
     searchETime = [NSString stringWithFormat:@""];
     searchWorkNo = [NSString stringWithFormat:@""];
 
-    [self initTaskTableView];
+
     pageSize = 1;
     self.dataArray = [[NSMutableArray alloc] init];
     [self.view bringSubviewToFront:self.netWorkErrorView];
@@ -48,11 +47,15 @@
     [self initWithNavLeftImageName:@"search" RightImageName:@"qrcode"];
     [self setNavTitle:@"任务"];
     self.dataArray = [NSMutableArray array];
-    [self checkNetWork];
+//    [self checkNetWork];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetWork) name:@"requestUnFinish" object:nil];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self initTaskTableView];
+}
+#pragma mark - init table
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
@@ -63,9 +66,9 @@
   
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
+    [self.taskTableview.mj_header beginRefreshing];
 
 }
-
 #pragma mark - nav click
 -(void)RightBarClick{
     DDLogInfo(@"点击了扫码功能");
@@ -103,13 +106,13 @@
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     // 马上进入刷新状态
     pageSize = 1;
-    [self.taskTableview.mj_header beginRefreshing];
+//    [self.taskTableview.mj_header beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_header endRefreshing];
 }
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
     pageSize = pageSize+1;
-    [self.taskTableview.mj_footer beginRefreshing];
+//    [self.taskTableview.mj_footer beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_footer endRefreshing];
 }
@@ -117,23 +120,13 @@
 -(void)checkNetWork{
     //判断网络状态
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self Message:ContinueError];
-            }else{
-                [self showMessageAlertWithController:self Message:LoadingError];
-            }
-            appDelegate.netWorkType = Off_line;
-            self.orderfmdb = [[OrderTaskFmdb alloc] init];
-            _dataArray = [self.orderfmdb findAllOrderInfo];
-            if(_dataArray.count==0){
-                self.netWorkErrorView.hidden = NO;
-            }else{
-                self.netWorkErrorView.hidden = YES;
-                [self.taskTableview reloadData];
-            }
+        self.orderfmdb = [[OrderTaskFmdb alloc] init];
+        _dataArray = [self.orderfmdb findAllOrderInfo];
+        if(_dataArray.count==0){
+            self.netWorkErrorView.hidden = NO;
         }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
+            self.netWorkErrorView.hidden = YES;
+            [self.taskTableview reloadData];
         }
     }else{
         [self requestUnFinishedTask];
@@ -197,13 +190,6 @@
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
         }
-        if(appDelegate.netWorkType == Off_line){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showOffLineAlertWithTime:0.7  message:NetWorkSuccess DoSomethingBlock:^{
-                }];
-                appDelegate.netWorkType = On_line;
-            });
-        }
         [[AppDelegate sharedDelegate] hidHUD];
     }failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] hidHUD];
@@ -217,21 +203,7 @@
     DDLogInfo(@"点击了刷新按钮");
     pageSize=1;
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            if(appDelegate.netWorkType==Off_line){
-                [self showMessageAlertWithController:self title:@"提示" Message:ContinueError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }else{
-                [self showMessageAlertWithController:self title:@"提示" Message:LoadingError canelBlock:^{
-                    self.netWorkErrorView.hidden = NO;
-                }];
-            }
-            appDelegate.netWorkType = Off_line;
-            return;
-        }else{
-            [self showMessageAlertWithController:self Message:@"网络状态不佳,请稍后再试!"];
-        }
+        self.netWorkErrorView.hidden = NO;
     }
     
     self.netWorkErrorLabel.text = Loading;
@@ -367,7 +339,7 @@
     [self presentViewController:ac animated:YES completion:nil];
 
 }
-#pragma mark =====定位
+#pragma mark - 定位
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode{
     if (reGeocode)
     {
@@ -382,14 +354,14 @@
                                @"status":@"99",
                                @"referenceId":self.LocationwaiterId
                                };
-        [[AFNetWorkingRequest sharedTool] uploadLocateInformation:dic Url:@"uploadLocateInformation" type:HttpRequestTypeGet success:^(id responseObject) {
+        [[AFNetWorkingRequest sharedTool] uploadLocateInformation:dic type:HttpRequestTypeGet success:^(id responseObject) {
             
         } failure:^(NSError *error) {
             
         }];
-        
     }
 }
+
 @end
 
 

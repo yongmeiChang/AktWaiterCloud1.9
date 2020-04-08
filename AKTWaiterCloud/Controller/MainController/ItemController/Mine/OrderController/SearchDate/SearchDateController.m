@@ -7,7 +7,6 @@
 //
 
 #import "SearchDateController.h"
-#import "FilterController.h"
 #import "AktRangePickerView.h"
 
 @interface SearchDateController ()<AktRangePickerViewDelegate>{
@@ -47,9 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = kColor(@"B1");
-    self.topviewLayout.constant = AktNavAndStatusHight;
- 
+    self.view.backgroundColor = kColor(@"B1"); 
     //初始化日期选择器的内容
     [self setTitle:@"筛选日期"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];

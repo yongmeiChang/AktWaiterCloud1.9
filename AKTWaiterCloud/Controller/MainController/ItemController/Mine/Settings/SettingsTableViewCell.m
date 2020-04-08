@@ -27,7 +27,7 @@
     // Configure the view for the selected state
 }
 
--(void)setuserSetInfo:(NSArray *)ary Index:(NSIndexPath *)index{
+-(void)setuserSetInfo:(NSArray *)ary Index:(NSIndexPath *)index CacheSize:(NSString *)cache{
     self.titleLabel.text = [ary objectAtIndex:index.row];
     switch (index.row) {
         case 0:
@@ -38,6 +38,9 @@
         case 1:
         {
             self.headImageView.image = [UIImage imageNamed:@"clean.png"];
+//            self.accessoryType = UITableViewCellAccessoryNone;
+//            self.labserviceCode.hidden = NO;
+//            self.labserviceCode.text = [NSString stringWithFormat:@"%@MB",cache];
         }
             break;
         case 2:{
@@ -50,6 +53,9 @@
             break;
             case 3:
              self.headImageView.image = [UIImage imageNamed:@"aboutus.png"];
+            break;
+            case 4:
+            self.headImageView.image = [UIImage imageNamed:@"feedback.png"];
             break;
         default:
             break;
