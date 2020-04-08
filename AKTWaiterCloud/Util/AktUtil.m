@@ -125,7 +125,7 @@
 +(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode{
     NSArray *aryOld = [oldCode componentsSeparatedByString:@"."];
     NSArray *aryNew = [newCode componentsSeparatedByString:@"."];
-    
+    /*
     if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
         return NO;
     }else if([[aryNew objectAtIndex:0] integerValue]<[[aryOld objectAtIndex:0] integerValue]){
@@ -136,6 +136,26 @@
         }else{
             return YES;
         }
+    }*/
+    if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
+        return NO;
+    }else if ([[aryNew objectAtIndex:1] integerValue]>[[aryOld objectAtIndex:1] integerValue]){
+        return NO;
+    }else{
+        if (aryNew.count == 3 && aryOld.count == 3) {
+            if ([[aryNew objectAtIndex:2] integerValue]>=[[aryOld objectAtIndex:2] integerValue]){
+                       return NO;
+                   }else{
+                       return YES;
+                   }
+        }else{
+            if ([[aryNew objectAtIndex:1] integerValue]>=[[aryOld objectAtIndex:1] integerValue]){
+                       return NO;
+                   }else{
+                       return YES;
+                   }
+        }
+       
     }
 }
 
