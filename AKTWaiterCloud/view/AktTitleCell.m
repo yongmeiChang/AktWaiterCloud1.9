@@ -67,8 +67,8 @@
         }
             break;
         case 4:{
-            self.accessoryType = UITableViewCellAccessoryNone;
-            self.labValueConstraint.constant = 43.5;
+//            self.accessoryType = UITableViewCellAccessoryNone;
+//            self.labValueConstraint.constant = 43.5;
             self.labName.text = @"手机号";
             self.labvalue.text = kString(userInfo.mobile);
         }

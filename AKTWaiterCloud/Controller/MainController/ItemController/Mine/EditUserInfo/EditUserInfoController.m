@@ -11,6 +11,7 @@
 #import "AktTitleCell.h"
 #import "AktSexView.h"
 #import "AktUserImageVC.h" // 放大头像
+#import "AKTChangePhoneVC.h" // 更换手机号
 
 @interface EditUserInfoController ()<UITableViewDelegate,UITableViewDataSource,AktSexSelectDelegate>{
         NSMutableArray *_selectedAssets;//选择的图片
@@ -96,13 +97,26 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        AktUserImageVC *imgVC = [[AktUserImageVC alloc] init];
-        imgVC.strImg = [NSString stringWithFormat:@"%@",appDelegate.userinfo.icon];
-        [self.navigationController pushViewController:imgVC animated:YES];
-    }else if (indexPath.row == 2){
-        [[UIApplication sharedApplication].keyWindow addSubview:sexView];
-        [sexView selectSexTypeNomal:appDelegate.userinfo];
+    switch (indexPath.row) {
+        case 0:{
+                AktUserImageVC *imgVC = [[AktUserImageVC alloc] init];
+                imgVC.strImg = [NSString stringWithFormat:@"%@",appDelegate.userinfo.icon];
+                [self.navigationController pushViewController:imgVC animated:YES];
+            }
+            break;
+        case 2:{
+            [[UIApplication sharedApplication].keyWindow addSubview:sexView];
+            [sexView selectSexTypeNomal:appDelegate.userinfo];
+        }
+            break;
+        case 4:{
+            AKTChangePhoneVC *changePhone = [AKTChangePhoneVC new];
+            changePhone.strPhone = appDelegate.userinfo.mobile;
+            [self.navigationController pushViewController:changePhone animated:YES];
+        }
+            break;
+        default:
+            break;
     }
 }
 
