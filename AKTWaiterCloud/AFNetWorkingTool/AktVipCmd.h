@@ -17,6 +17,8 @@
 #define AKTOrderTypeNumberMethod @"findToBeHandleCount" // 工单数量
 #define AKTSaveUserinfoMethod @"waiterEdit" // 保存个人信息
 #define AKTFeedBackMethod @"submitFeedBack" // 意见反馈
+#define AKTUserInfoMethod @"" // 个人信息
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,6 +51,10 @@ failure:(void (^)(NSError *error))failure;
 
 /*意见反馈*/
 -(void)requestPushFeedbackInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
+/*个人信息*/
+-(void)requestUserInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
 failure:(void (^)(NSError *error))failure;
 
 @end

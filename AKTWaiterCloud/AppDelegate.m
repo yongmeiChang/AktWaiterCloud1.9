@@ -78,13 +78,14 @@
 }
 #pragma mark - show login
 - (void)showLoginPage{
+    self.rootViewController = [self getRootTabVBarAction];
+    self.window.rootViewController = self.rootViewController;
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
+        
     }else{
-        self.rootViewController = [self getRootTabVBarAction];
-        self.window.rootViewController = self.rootViewController;
         //获取各类工单数量
         NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
         [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
@@ -286,7 +287,7 @@
     //dispatch_semaphore_wait(self.sema, DISPATCH_TIME_FOREVER);
 }
 
-#pragma mark 检查更新
+#pragma mark - 检查更新
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
