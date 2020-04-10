@@ -84,10 +84,13 @@
         [[AppDelegate sharedDelegate] showTextOnly:@"请填写验证码"];
         return;
     }
-    
-    
-    
-    
+    NSDictionary *parma = @{@"tenantsId":kString(appDelegate.userinfo.tenantsId),@"mobile":kString(self.tfPhone.text),@"checkCode":self.tfCode.text};
+    [[[AktVipCmd alloc] init] requestChangePhone:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = responseObject;
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
 }
 
 /*

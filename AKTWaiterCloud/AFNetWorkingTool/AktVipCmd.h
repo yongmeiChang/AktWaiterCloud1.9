@@ -17,8 +17,8 @@
 #define AKTOrderTypeNumberMethod @"findToBeHandleCount" // 工单数量
 #define AKTSaveUserinfoMethod @"waiterEdit" // 保存个人信息
 #define AKTFeedBackMethod @"submitFeedBack" // 意见反馈
-#define AKTUserInfoMethod @"" // 个人信息
-
+#define AKTUserInfoMethod @"findWaiterById" // 个人信息
+#define AKTChangePhoneMethod @"editMobile" // 更换手机号
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,6 +55,10 @@ failure:(void (^)(NSError *error))failure;
 
 /*个人信息*/
 -(void)requestUserInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
+/*更换手机号*/
+-(void)requestChangePhone:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
 failure:(void (^)(NSError *error))failure;
 
 @end
