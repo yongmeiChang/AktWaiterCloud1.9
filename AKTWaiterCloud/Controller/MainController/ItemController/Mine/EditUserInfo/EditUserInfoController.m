@@ -17,6 +17,7 @@
         NSMutableArray *_selectedAssets;//选择的图片
         BOOL _isSelectOriginalPhoto;
     AktSexView*sexView;
+    UserInfo *modelUser;
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableTop;
 @property (weak, nonatomic) IBOutlet UITableView *tableUser;
@@ -51,9 +52,24 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UserFmdb * userdb = [[UserFmdb alloc] init];
-    appDelegate.userinfo = [userdb findByrow:0];
-    NSLog(@"头像----%@",appDelegate.userinfo.icon);
+    NSLog(@"头像----%@ \n %@",modelUser.icon,self.himage);
+    if (!self.himage) {
+        [self requestUserInfoTenantsid:[LoginModel gets].tenantsId UserId:[LoginModel gets].uuid]; // 获取数据
+    }
+}
+
+#pragma mark - 个人信息
+-(void)requestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
+    NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
+    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        modelUser = [[UserInfo alloc] initWithDictionary:dic error:nil];
+        modelUser.uuid = modelUser.id;
+        [modelUser saveUser];
+        [self.tableUser reloadData];
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
 }
 
 #pragma mark - tableview datesouce
@@ -84,7 +100,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"AktTitleCell" owner:self options:nil] objectAtIndex:0];
     }
-    [cell setUserInfoDetails:appDelegate.userinfo indexPath:indexPath IconImage:self.himage];
+    [cell setUserInfoDetails:modelUser indexPath:indexPath IconImage:self.himage];
     return cell;
 }
 #pragma mark - table delegate
@@ -100,18 +116,19 @@
     switch (indexPath.row) {
         case 0:{
                 AktUserImageVC *imgVC = [[AktUserImageVC alloc] init];
-                imgVC.strImg = [NSString stringWithFormat:@"%@",appDelegate.userinfo.icon];
+                imgVC.strImg = [NSString stringWithFormat:@"%@",modelUser.icon];
+                imgVC.himage = self.himage;
                 [self.navigationController pushViewController:imgVC animated:YES];
             }
             break;
         case 2:{
             [[UIApplication sharedApplication].keyWindow addSubview:sexView];
-            [sexView selectSexTypeNomal:appDelegate.userinfo];
+            [sexView selectSexTypeNomal:modelUser];
         }
             break;
         case 4:{
             AKTChangePhoneVC *changePhone = [AKTChangePhoneVC new];
-            changePhone.strPhone = appDelegate.userinfo.mobile;
+            changePhone.strPhone = modelUser.mobile;
             [self.navigationController pushViewController:changePhone animated:YES];
         }
             break;
@@ -131,24 +148,17 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
-    NSDictionary * params = @{@"id":kString(appDelegate.userinfo.uuid),@"sex":appDelegate.userinfo.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString(appDelegate.userinfo.tenantsId),@"mobile":appDelegate.userinfo.mobile};
+    NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":modelUser.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantsId),@"mobile":modelUser.mobile};
     [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = [responseObject objectForKey:@"object"];
         NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
         self.minecontroller.headimage = self.himage;
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];
         if ([code integerValue] == 1) {
-            appDelegate.userinfo.icon = kString([dic objectForKey:@"icon"]);
-            appDelegate.userinfo.sex = [dic objectForKey:@"sex"];
-            UserFmdb * userdb = [[UserFmdb alloc] init];
-            [userdb updateObject:appDelegate.userinfo];
             [self.tableUser reloadData];
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError * _Nonnull error) {
-        
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
-        
     }];
 }
 
@@ -166,6 +176,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)SearchBarClick{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"imageUser"]; // 删除
+    [[NSUserDefaults standardUserDefaults] synchronize];
      [self saveClick];
 }
 #pragma mark - sex delegate
@@ -174,11 +186,10 @@
 }
 -(void)theSexviewSureTypeEnd:(NSInteger)type{
     [[[UIApplication sharedApplication].keyWindow viewWithTag:100] removeFromSuperview];
-    appDelegate.userinfo.sex = [NSString stringWithFormat:@"%ld",(long)type];
     if (type ==0) {
-        appDelegate.userinfo.sexName = @"男";
+        modelUser.sex = @"0";//男
     }else{
-        appDelegate.userinfo.sexName = @"女";
+        modelUser.sex = @"1";// 女
     }
     [self.tableUser reloadData];
 }

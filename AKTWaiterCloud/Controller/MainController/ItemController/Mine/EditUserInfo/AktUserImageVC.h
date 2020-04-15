@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AktUserImageVC : BaseControllerViewController
 
 @property(strong,nonatomic)NSString *strImg; // 头像URL
+@property(nonatomic,strong) UIImage * himage; // 更换的图片
 
 @end
 

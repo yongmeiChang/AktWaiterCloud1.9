@@ -13,6 +13,22 @@
 #define RGBACOLOR(r, g, b, a)   [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
 @implementation AktUtil
+
++ (NSString *)getDocumentPath:(NSString *)_fileName{
+    NSString *documnetPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    return [documnetPath stringByAppendingPathComponent:_fileName];
+}
+
++ (NSString *)getCachePath:(NSString *)_fileName{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    return [path stringByAppendingPathComponent:_fileName];
+}
+
++ (NSString *)getTemPath:(NSString *)_fileName{
+    NSString *tem = NSTemporaryDirectory();
+    return [tem stringByAppendingPathComponent:_fileName];
+}
+
 + (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName
 {
     // 文件路径
@@ -27,7 +43,7 @@
     Date = [Date stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     
     
-    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", appDelegate.userinfo.uuid,Date];
+    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", [LoginModel gets].uuid,Date];
     NSString *filePath = [filePathOld stringByAppendingString:fileName];
     NSLog(@"%@",filePath);
     

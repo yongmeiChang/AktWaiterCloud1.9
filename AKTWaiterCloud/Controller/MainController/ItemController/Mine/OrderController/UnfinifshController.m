@@ -156,18 +156,15 @@
 -(void)requestTask{
     //网络状态判断
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        if([appDelegate.userinfo.isclickOff_line isEqualToString:@"0"]){
-            self.orderfmdb = [[OrderTaskFmdb alloc] init];
-            _dataArray = [self.orderfmdb findAllOrderInfo];
-            if(_dataArray.count==0){
-                self.netWorkErrorView.hidden = NO;
-            }else{
-                self.netWorkErrorView.hidden = YES;
-                [self.taskTableview reloadData];
-            }
+        self.orderfmdb = [[OrderTaskFmdb alloc] init];
+        _dataArray = [self.orderfmdb findAllOrderInfo];
+        if(_dataArray.count==0){
+            self.netWorkErrorView.hidden = NO;
         }else{
-            [self showMessageAlertWithController:self Message:NetWorkMessage];
+            self.netWorkErrorView.hidden = YES;
+            [self.taskTableview reloadData];
         }
+        
     }else{
         [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     }
@@ -177,8 +174,9 @@
     if (pageSize == 1) {
         [self.dataArray removeAllObjects];
     }
-    NSLog(@"%@",appDelegate.userinfo);
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSLog(@"%@",[LoginModel gets]);
+    LoginModel *model = [LoginModel gets];
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":model.uuid,@"tenantsId":model.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];

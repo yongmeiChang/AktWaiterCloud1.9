@@ -48,12 +48,12 @@
     return db;
     
 }
-
+#pragma mark - user info
 -(void)saveUserInfo:(UserInfo *)userinfo;
 {
     FMDatabase *db=[self Fmdbdatabase];
-    NSString *savedata=[NSString stringWithFormat:@"insert into USERINFO(uuid,icon, mobile,password,tenantsId,location,cooperationState,cooperationStateName,sex,sexName,stationNo,saleId,synopsis,waiterName,waiterNo,locationX,locationY,missionTrans,maxOrders,level,startPermission,waiterUkey,locationFlag,isPosition,tenantsName,isclickOff_line)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"];
-    BOOL res=[db executeUpdate:savedata,userinfo.uuid,userinfo.icon,userinfo.mobile,userinfo.password,userinfo.tenantsId,userinfo.location,userinfo.cooperationState,userinfo.cooperationStateName,userinfo.sex,userinfo.sexName,userinfo.stationNo,userinfo.saleId,userinfo.synopsis,userinfo.waiterName,userinfo.waiterNo,userinfo.locationX,userinfo.locationY,userinfo.missionTrans,userinfo.maxOrders,userinfo.level,userinfo.startPermission,userinfo.waiterUkey,userinfo.locationFlag,userinfo.isPosition,userinfo.tenantsName,userinfo.isclickOff_line];
+    NSString *savedata=[NSString stringWithFormat:@"insert into USERINFO(uuid,icon, mobile,password,tenantsId,location,cooperationState,cooperationStateName,sex,sexName,stationNo,saleId,synopsis,waiterName,waiterNo,locationX,locationY,missionTrans,maxOrders,level,startPermission,waiterUkey,locationFlag,isPosition,tenantsName)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"];
+    BOOL res=[db executeUpdate:savedata,userinfo.uuid,userinfo.icon,userinfo.mobile,userinfo.password,userinfo.tenantsId,userinfo.location,userinfo.cooperationState,userinfo.cooperationStateName,userinfo.sex,userinfo.sexName,userinfo.stationNo,userinfo.saleId,userinfo.synopsis,userinfo.waiterName,userinfo.waiterNo,userinfo.locationX,userinfo.locationY,userinfo.missionTrans,userinfo.maxOrders,userinfo.level,userinfo.startPermission,userinfo.waiterUkey,userinfo.locationFlag,userinfo.isPosition,userinfo.tenantsName];
     if (!res) {
         NSLog(@"save File");
         NSLog(@"%@",[db lastErrorMessage]);
@@ -102,7 +102,7 @@
     FMResultSet *rs=[db executeQuery:sql,row,nil];
     while ([rs next]) {
         object = [[UserInfo alloc]init];
-        [object getUserInfoById:[rs stringForColumn:@"uuid"] Byicon:[rs stringForColumn:@"icon"] Bymobile:[rs stringForColumn:@"mobile"] Bypassword:[rs stringForColumn:@"password"] BytenantsId:[rs stringForColumn:@"tenantsId"] Bylocation:[rs stringForColumn:@"location"] BycooperationState:[rs stringForColumn:@"cooperationState"] BycooperationStateName:[rs stringForColumn:@"cooperationStateName"] Bysex:[rs stringForColumn:@"sex"] BysexName:[rs stringForColumn:@"sexName"] BystationNo:[rs stringForColumn:@"stationNo"] BysaleId:[rs stringForColumn:@"saleId"] Bysynopsis:[rs stringForColumn:@"synopsis"] BywaiterName:[rs stringForColumn:@"waiterName"] BywaiterNo:[rs stringForColumn:@"waiterNo"] BylocationX:[rs stringForColumn:@"locationX"] BylocationY:[rs stringForColumn:@"locationY"] BymissionTrans:[rs stringForColumn:@"missionTrans"] BymaxOrders:[rs stringForColumn:@"maxOrders"] Bylevel:[rs stringForColumn:@"level"] BystartPermission:[rs stringForColumn:@"startPermission"] BywaiterUkey:[rs stringForColumn:@"waiterUkey"] BylocationFlag:[rs stringForColumn:@"locationFlag"] ByisPosition:[rs stringForColumn:@"isPosition"] BytenantsName:@"tenantsName" ByisclickOff_line:[rs stringForColumn:@"isclickOff_line"]];
+        [object getUserInfoById:[rs stringForColumn:@"uuid"] Byicon:[rs stringForColumn:@"icon"] Bymobile:[rs stringForColumn:@"mobile"] Bypassword:[rs stringForColumn:@"password"] BytenantsId:[rs stringForColumn:@"tenantsId"] Bylocation:[rs stringForColumn:@"location"] BycooperationState:[rs stringForColumn:@"cooperationState"] BycooperationStateName:[rs stringForColumn:@"cooperationStateName"] Bysex:[rs stringForColumn:@"sex"] BysexName:[rs stringForColumn:@"sexName"] BystationNo:[rs stringForColumn:@"stationNo"] BysaleId:[rs stringForColumn:@"saleId"] Bysynopsis:[rs stringForColumn:@"synopsis"] BywaiterName:[rs stringForColumn:@"waiterName"] BywaiterNo:[rs stringForColumn:@"waiterNo"] BylocationX:[rs stringForColumn:@"locationX"] BylocationY:[rs stringForColumn:@"locationY"] BymissionTrans:[rs stringForColumn:@"missionTrans"] BymaxOrders:[rs stringForColumn:@"maxOrders"] Bylevel:[rs stringForColumn:@"level"] BystartPermission:[rs stringForColumn:@"startPermission"] BywaiterUkey:[rs stringForColumn:@"waiterUkey"] BylocationFlag:[rs stringForColumn:@"locationFlag"] ByisPosition:[rs stringForColumn:@"isPosition"] BytenantsName:@"tenantsName" ];
     }
     [rs close];
     [db close];
@@ -111,8 +111,8 @@
 -(void)updateObject:(UserInfo *)userinfo
 {
     FMDatabase *db=[self Fmdbdatabase];
-    NSString * sql =@"update USERINFO set uuid=?,icon=?, mobile=?,password=? ,tenantsId=? ,location=? ,cooperationState=?,cooperationStateName=?,sex=?,sexName=?,stationNo=?,saleId=?,synopsis=?,waiterName=?,waiterNo=?,locationX=?,locationY=?,missionTrans=?,maxOrders=?,level=?,startPermission=?,waiterUkey=?,locationFlag=?,isPosition=?,tenantsName=?,isclickOff_line=?";
-    BOOL res=[db executeUpdate:sql,userinfo.uuid,userinfo.icon,userinfo.mobile,userinfo.password,userinfo.tenantsId,userinfo.location,userinfo.cooperationState,userinfo.cooperationStateName,userinfo.sex,userinfo.sexName,userinfo.stationNo,userinfo.saleId,userinfo.synopsis,userinfo.waiterName,userinfo.waiterNo,userinfo.locationX,userinfo.locationY,userinfo.missionTrans,userinfo.maxOrders,userinfo.level,userinfo.startPermission,userinfo.waiterUkey,userinfo.locationFlag,userinfo.isPosition,userinfo.tenantsName,userinfo.isclickOff_line];
+    NSString * sql =@"update USERINFO set uuid=?,icon=?, mobile=?,password=? ,tenantsId=? ,location=? ,cooperationState=?,cooperationStateName=?,sex=?,sexName=?,stationNo=?,saleId=?,synopsis=?,waiterName=?,waiterNo=?,locationX=?,locationY=?,missionTrans=?,maxOrders=?,level=?,startPermission=?,waiterUkey=?,locationFlag=?,isPosition=?,tenantsName=?";
+    BOOL res=[db executeUpdate:sql,userinfo.uuid,userinfo.icon,userinfo.mobile,userinfo.password,userinfo.tenantsId,userinfo.location,userinfo.cooperationState,userinfo.cooperationStateName,userinfo.sex,userinfo.sexName,userinfo.stationNo,userinfo.saleId,userinfo.synopsis,userinfo.waiterName,userinfo.waiterNo,userinfo.locationX,userinfo.locationY,userinfo.missionTrans,userinfo.maxOrders,userinfo.level,userinfo.startPermission,userinfo.waiterUkey,userinfo.locationFlag,userinfo.isPosition,userinfo.tenantsName];
     if(!res)
     {
         NSLog(@"update fail");

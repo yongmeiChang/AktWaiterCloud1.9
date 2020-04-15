@@ -76,7 +76,9 @@ static AFNetWorkingTool * a_instance = nil;
                 
                 if (success) {
                     id jsons = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers  error:nil];
-                     NSLog(@"response:%@",jsons);
+                    NSData *retData = responseObject;
+                    NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
+                     NSLog(@"response:%@",result);
                     success(jsons);
                 }
                 [[AppDelegate sharedDelegate] hidHUD];

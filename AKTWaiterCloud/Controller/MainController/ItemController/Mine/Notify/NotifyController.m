@@ -42,7 +42,7 @@
 #pragma mark - request
 -(void)getPushRecordService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    NSDictionary * dic = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+    NSDictionary * dic = @{@"waiterId":[LoginModel gets].uuid,@"tenantsId":[LoginModel gets].tenantsId};
     [[AktVipCmd sharedTool] requestgetPushRecordService:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
 
@@ -105,7 +105,7 @@
     NSString * workid = dic[@"workId"];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if(workid){
-        NSDictionary * dic = @{@"workOrderId":workid,@"tenantsId":appDelegate.userinfo.tenantsId};
+        NSDictionary * dic = @{@"workOrderId":workid,@"tenantsId":[LoginModel gets].tenantsId};
         [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
         [[AktVipCmd sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;

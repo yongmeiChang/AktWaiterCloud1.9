@@ -20,6 +20,7 @@
     NSString *searchBTime; // 服务开始时间
     NSString *searchETime; // 服务结束时间
     NSString *searchWorkNo;// 服务单号
+    LoginModel *model; // 登录
 }
 
 @property(nonatomic,strong) NSDate * locationServiceEndDate;
@@ -53,6 +54,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    model = [LoginModel gets];
     [self initTaskTableView];
 }
 #pragma mark - init table
@@ -136,8 +138,9 @@
 #pragma mark - 请求工单列表
 -(void)requestUnFinishedTask{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
-    NSLog(@"---%@",appDelegate.userinfo);
-    NSDictionary * parameters =@{@"waiterId":kString(appDelegate.userinfo.uuid),@"tenantsId":kString(appDelegate.userinfo.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSLog(@"---%@",model);
+    model = [LoginModel gets];
+    NSDictionary * parameters =@{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
 
     [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -283,8 +286,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([appDelegate.userinfo.missionTrans isEqualToString:@"1"]){
+{    UserInfo *modelUser = [UserInfo getsUser];
+    if([modelUser.missionTrans isEqualToString:@"1"]){
         [self showMessageAlertWithController:self Message:@"您尚未拥有此权限"];
         return;
     }
@@ -350,7 +353,7 @@
         NSDictionary * dic = @{@"longitude":longitude,
                                @"latitude":latitude,
                                @"location":location,
-                               @"tenantsId":appDelegate.userinfo.tenantsId,
+                               @"tenantsId":model.tenantsId,
                                @"status":@"99",
                                @"referenceId":self.LocationwaiterId
                                };

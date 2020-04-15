@@ -93,7 +93,7 @@ static AppInfoDefult *app_instance = nil;
 
 
 -(Boolean)isLogin{
-    if(appDelegate.userinfo){
+    if([LoginModel gets]){
         return YES;
     }else{
         return NO;
@@ -101,7 +101,7 @@ static AppInfoDefult *app_instance = nil;
 }
 
 -(Boolean)isNaTali{
-    NSString * userid = [appDelegate.userinfo.waiterUkey substringWithRange:NSMakeRange(0,3)];
+    NSString * userid = [[UserInfo getsUser].waiterUkey substringWithRange:NSMakeRange(0,3)];
     if([userid isEqualToString:@"888"]){
         return YES;
     }else{
