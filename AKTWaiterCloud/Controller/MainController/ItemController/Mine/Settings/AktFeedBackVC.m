@@ -252,7 +252,7 @@
         }
     }
     baseStr = [basearr componentsJoinedByString:@","];
-    NSDictionary *dicParam = @{@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; // @"mobile":tfPhone.text,
+    NSDictionary *dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; //
     [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = responseObject;
         [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
