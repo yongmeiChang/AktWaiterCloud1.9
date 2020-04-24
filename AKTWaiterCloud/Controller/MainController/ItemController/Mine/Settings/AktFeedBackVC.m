@@ -216,6 +216,11 @@
     tfPhone.font = [UIFont systemFontOfSize:13];
     [viewPhone addSubview:tfPhone];
     
+    UILabel *labPhoneTag = [[UILabel alloc] init];
+    labPhoneTag.textColor = kColor(@"C17");
+    labPhoneTag.text = @"*";
+    [viewPhone addSubview:labPhoneTag];
+    
       // 约束
       [viewPhone mas_makeConstraints:^(MASConstraintMaker *make) {
           make.top.mas_equalTo(viewRemark.mas_bottom).offset(10);
@@ -227,12 +232,19 @@
         make.left.mas_equalTo(15);
         make.height.mas_equalTo(20);
     }];
+    
+    [labPhoneTag mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(labPhonetitle.mas_right).offset(5);
+        make.top.bottom.mas_equalTo(labPhonetitle);
+    }];
+    
     [tfPhone mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(labPhonetitle.mas_bottom).offset(8);
         make.left.mas_equalTo(15);
         make.right.mas_equalTo(-15);
         make.bottom.mas_equalTo(-20);
     }];
+    
    
 }
 
@@ -252,10 +264,17 @@
         }
     }
     baseStr = [basearr componentsJoinedByString:@","];
-    NSDictionary *dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; //
+    NSDictionary *dicParam;
+    if (baseStr.length>1) {
+        dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; //
+    }else{
+      dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":@"",@"imageType":@""}; //
+    }
+   
     [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = responseObject;
         [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError * _Nonnull error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
