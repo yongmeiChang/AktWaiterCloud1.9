@@ -44,6 +44,13 @@
     }else{
         if ([kString(self.strImg) containsString:@"http"] && kString(self.strImg).length>5) {
             imgUserView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.strImg]]]];
+        }else{
+            UIImageView *imgNormal = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-100)/2, 120, 100, 100)];
+            imgNormal.backgroundColor = kColor(@"C8");
+            imgNormal.image = [UIImage imageNamed:@"defaultuserhead"];
+            [self.view addSubview:imgNormal];
+            imgNormal.layer.masksToBounds = YES;
+            imgNormal.layer.cornerRadius = 50;
         }
     }
     imgUserView.contentMode = UIViewContentModeScaleAspectFit;

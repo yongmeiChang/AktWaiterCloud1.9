@@ -222,9 +222,7 @@
                 // 登录成功
                 [[NSUserDefaults standardUserDefaults] setObject:model.uuid forKey:@"AKTserviceToken"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
-                }];
+                [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 
                 //获取各类工单数量
                 NSDictionary * params = @{@"waiterId":model.uuid,@"tenantsId":model.tenantsId};

@@ -253,6 +253,15 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)updateAllInfo:(UIButton *)sender {
+    if (tvRemark.text.length < 10) {
+          [[AppDelegate sharedDelegate] showTextOnly:@"请填写至少10字以上内容!"];
+          return;
+      }
+    if (tfPhone.text.length == 0) {
+        [[AppDelegate sharedDelegate] showTextOnly:@"请填写联系方式!"];
+        return;
+    }
+  
     // 图片加密
     NSMutableArray * basearr = [NSMutableArray array];
     NSString * baseStr = @"";
@@ -274,7 +283,9 @@
     [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = responseObject;
         [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
-        [self.navigationController popViewControllerAnimated:YES];
+        if([[dic objectForKey:@"code"] integerValue] == 1){
+         [self.navigationController popViewControllerAnimated:YES];
+        }
     } failure:^(NSError * _Nonnull error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
     }];
