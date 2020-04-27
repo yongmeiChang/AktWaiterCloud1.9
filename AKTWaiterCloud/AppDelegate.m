@@ -65,31 +65,35 @@
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
          [self getTheCurrentVersion];//版本提示
     }
+    // 模式 强制白色
+    if (@available(iOS 13.0, *)) {
+        self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+    } else {
+        // Fallback on earlier versions
+    }
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
     [self showLoginPage];
     [self setTabBarAndNavigationBarStyle];
+    
 
     return YES;
 }
 #pragma mark - show login
 - (void)showLoginPage{
     NSLog(@"token：%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]);
-    self.rootViewController = [self getRootTabVBarAction];
-    self.window.rootViewController = self.rootViewController;
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
-        
+        self.window.rootViewController = nav;
     }else{
         //获取各类工单数量
         LoginModel *model = [LoginModel gets];
         NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId)};
         [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
-//        UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
-//        [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
-        
+        // 重新设置根视图
+        self.rootViewController = [self getRootTabVBarAction];
+        self.window.rootViewController = self.rootViewController;
     }
 }
 #pragma mark - jpush

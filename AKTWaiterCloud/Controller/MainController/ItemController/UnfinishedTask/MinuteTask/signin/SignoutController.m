@@ -362,7 +362,7 @@
                     long m = h * 60;
                     long s = m + dateCom.second;
                     leaveIntime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)d+dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
                 }
 
             }
