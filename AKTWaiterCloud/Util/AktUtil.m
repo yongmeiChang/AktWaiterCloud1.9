@@ -90,7 +90,7 @@
         return filePath;
     }
 }
-
+#pragma mark - 获取时间
 // 获取当前时间
 +(NSString *)getNowDateAndTime{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -119,7 +119,7 @@
 +(NSString *)rangeDateAndTime:(NSString *)oldDateAndTime{
      return [NSString stringWithFormat:@"%@年%@月%@日 %@时%@分",[oldDateAndTime substringToIndex:4],[oldDateAndTime substringWithRange:NSMakeRange(5, 2)],[oldDateAndTime substringWithRange:NSMakeRange(8,2)],[oldDateAndTime substringWithRange:NSMakeRange(11,2)],[oldDateAndTime substringWithRange:NSMakeRange(14,2)]];
 }
-
+#pragma mark - 文字 颜色 大小
 + (UIColor *)getColorFormResouce:(NSString *)key{
     NSString *colorStr = NSLocalizedStringFromTable(key, @"AKTColorString", @"");
     NSArray *colorAry = [colorStr componentsSeparatedByString:@","];
@@ -138,6 +138,7 @@
         return [UIFont fontWithName:fontAry[0] size:[fontAry[1] floatValue]];
 }
 
+#pragma mark - 对比版本号
 +(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode{
     NSArray *aryOld = [oldCode componentsSeparatedByString:@"."];
     NSArray *aryNew = [newCode componentsSeparatedByString:@"."];
@@ -175,13 +176,14 @@
     }
 }
 
+#pragma mark - 日期
 +(NSDate *)StringtoDate:(NSString *)dateStr{
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
     dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
     NSDate * date = [dateFormatter dateFromString:dateStr];
     return date;
 }
-
+#pragma mark -
 + (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width{
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
     paragraph.alignment = NSLineBreakByWordWrapping;
