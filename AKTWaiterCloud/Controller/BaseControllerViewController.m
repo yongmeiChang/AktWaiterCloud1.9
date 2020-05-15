@@ -7,6 +7,8 @@
 //
 
 #import "BaseControllerViewController.h"
+#import "SaveDocumentArray.h"
+
 @interface BaseControllerViewController ()
 
 @end
@@ -234,14 +236,12 @@
 -(void)logoffUser{
     [self showMessageAlertWithController:self title:@"" Message:@"当前账号已在其他设备登陆" canelBlock:^{
         NSLog(@"用户退出登录");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        //不能自动登陆
+        //注销登录删除用户数据
+        [[SaveDocumentArray sharedInstance] removefmdb];
+        [[[UserFmdb alloc] init] deleteAllUserInfo];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-               
-        BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
     }];
 }
 
@@ -253,4 +253,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
+
 @end
+
+
+

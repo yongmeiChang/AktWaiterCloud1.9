@@ -13,6 +13,22 @@
 #define RGBACOLOR(r, g, b, a)   [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
 @implementation AktUtil
+
++ (NSString *)getDocumentPath:(NSString *)_fileName{
+    NSString *documnetPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    return [documnetPath stringByAppendingPathComponent:_fileName];
+}
+
++ (NSString *)getCachePath:(NSString *)_fileName{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    return [path stringByAppendingPathComponent:_fileName];
+}
+
++ (NSString *)getTemPath:(NSString *)_fileName{
+    NSString *tem = NSTemporaryDirectory();
+    return [tem stringByAppendingPathComponent:_fileName];
+}
+
 + (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName
 {
     // 文件路径
@@ -27,7 +43,7 @@
     Date = [Date stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     
     
-    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", appDelegate.userinfo.uuid,Date];
+    NSString *fileName = [NSString stringWithFormat:@"%@%@.mp3", [LoginModel gets].uuid,Date];
     NSString *filePath = [filePathOld stringByAppendingString:fileName];
     NSLog(@"%@",filePath);
     
@@ -74,7 +90,7 @@
         return filePath;
     }
 }
-
+#pragma mark - 获取时间
 // 获取当前时间
 +(NSString *)getNowDateAndTime{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -103,7 +119,7 @@
 +(NSString *)rangeDateAndTime:(NSString *)oldDateAndTime{
      return [NSString stringWithFormat:@"%@年%@月%@日 %@时%@分",[oldDateAndTime substringToIndex:4],[oldDateAndTime substringWithRange:NSMakeRange(5, 2)],[oldDateAndTime substringWithRange:NSMakeRange(8,2)],[oldDateAndTime substringWithRange:NSMakeRange(11,2)],[oldDateAndTime substringWithRange:NSMakeRange(14,2)]];
 }
-
+#pragma mark - 文字 颜色 大小
 + (UIColor *)getColorFormResouce:(NSString *)key{
     NSString *colorStr = NSLocalizedStringFromTable(key, @"AKTColorString", @"");
     NSArray *colorAry = [colorStr componentsSeparatedByString:@","];
@@ -122,10 +138,11 @@
         return [UIFont fontWithName:fontAry[0] size:[fontAry[1] floatValue]];
 }
 
+#pragma mark - 对比版本号
 +(BOOL)serviceOldCode:(NSString *)oldCode serviceNewCode:(NSString *)newCode{
     NSArray *aryOld = [oldCode componentsSeparatedByString:@"."];
     NSArray *aryNew = [newCode componentsSeparatedByString:@"."];
-    
+    /*
     if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
         return NO;
     }else if([[aryNew objectAtIndex:0] integerValue]<[[aryOld objectAtIndex:0] integerValue]){
@@ -136,16 +153,37 @@
         }else{
             return YES;
         }
+    }*/
+    if ([[aryNew objectAtIndex:0] integerValue]>[[aryOld objectAtIndex:0] integerValue]) {
+        return NO;
+    }else if ([[aryNew objectAtIndex:1] integerValue]>[[aryOld objectAtIndex:1] integerValue]){
+        return NO;
+    }else{
+        if (aryNew.count == 3 && aryOld.count == 3) {
+            if ([[aryNew objectAtIndex:2] integerValue]>=[[aryOld objectAtIndex:2] integerValue]){
+                       return NO;
+                   }else{
+                       return YES;
+                   }
+        }else{
+            if ([[aryNew objectAtIndex:1] integerValue]>=[[aryOld objectAtIndex:1] integerValue]){
+                       return NO;
+                   }else{
+                       return YES;
+                   }
+        }
+       
     }
 }
 
+#pragma mark - 日期
 +(NSDate *)StringtoDate:(NSString *)dateStr{
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
     dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
     NSDate * date = [dateFormatter dateFromString:dateStr];
     return date;
 }
-
+#pragma mark -
 + (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width{
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
     paragraph.alignment = NSLineBreakByWordWrapping;

@@ -15,7 +15,6 @@
 
 }
 @property(nonatomic,strong) NSString * Registration_ID;//极光ID
-@property(nonatomic,strong) UserInfo * userinfo;
 @property(nonatomic,strong) NSString * unfinish;//未开始数量
 @property(nonatomic,strong) NSString * doing;//进行中数量
 @property(nonatomic,strong) NSString * finish;//已完成数量

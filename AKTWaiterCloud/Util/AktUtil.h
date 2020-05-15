@@ -11,6 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AktUtil : NSObject
+// 获取 文件 路径 该目录保存文件需要标记 禁止同步 icloud
+ + (NSString *)getDocumentPath:(NSString *)_fileName;
+// 获取 缓存 路径 该目录保存文件不需要标记
++ (NSString *)getCachePath:(NSString *)_fileName;
+// 获取 临时 路径 该目录保存文件 程序退出后会被清除
++ (NSString *)getTemPath:(NSString *)_fileName;
+
 + (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName;  // 转换录音格式 mp3
 
 // 获取当前时间

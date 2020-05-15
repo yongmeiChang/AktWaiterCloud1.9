@@ -77,9 +77,12 @@
 #define AktNavHight self.navigationController.navigationBar.frame.size.height  // 导航栏高度
 #define AktStatusHight [[UIApplication sharedApplication] statusBarFrame].size.height // 状态栏高度
 #define AktTabbarHight self.tabBarController.tabBar.frame.size.height  // 底部tabbar高度
+#define AktImgHeight(W,H) (SCREEN_WIDTH*H/W) // 宽度固定 适配高度
+/*
+ W图片 H图片？ W已知 H已知
+ W图片/H图片？ w已知 h已知
+ */
 #define IS_IOS7    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)/*判断系统版本*/
-
-
 #define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
 
 // Include any system framework and library headers here that should be included in all compilation units.
@@ -106,10 +109,9 @@ static const int ddLogLevel = DDLogLevelError;
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-//#define SERVICEURL @"http://service.ankangtong.com/ankangtong-service/appNewService"
 #define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
 // 测试环境
-//#define SERVICEURL @"http://172.16.100.11:8089/ankangtong-outwork/appService" // 新测试环境
+//#define SERVICEURL @"http://172.16.30.90:8089/ankangtong-outwork/appService" // 新测试环境
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

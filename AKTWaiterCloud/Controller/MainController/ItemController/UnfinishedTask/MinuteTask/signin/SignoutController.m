@@ -47,6 +47,8 @@
 
     NSString * isLess; // 时长是否正常 0正常  1不正常
     SinoutReasonView *reasonView; // 提交失败的原因 弹框
+    
+    LoginModel *model;
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
@@ -148,6 +150,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];//键盘的消失
+    model = [LoginModel gets];
     
     if(self.type==0){
         [self setTitle:@"任务签入"];
@@ -359,7 +362,7 @@
                     long m = h * 60;
                     long s = m + dateCom.second;
                     leaveIntime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
+                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)d+dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
                 }
 
             }
@@ -1069,7 +1072,7 @@
     if([contentStr isEqualToString:@""]){
         contentStr = @"暂无备注";
     }
-    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":appDelegate.userinfo.tenantsId};
+    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantsId};
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -1097,7 +1100,7 @@
         CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
         [self distanceBetween:distance];
         // 判断是否可以提交工单
-                       [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":appDelegate.userinfo.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
+                       [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
                            
                            NSDictionary *dicObje = [responseObject objectForKey:@"object"];
                            NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
@@ -1164,7 +1167,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     self.nowdate = [formatter stringFromDate:date];
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
+    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
     [param addUnEmptyString:self.orderinfo.id forKey:@"id"];
     [param addUnEmptyString:self.orderinfo.workNo forKey:@"workNo"];
     [param addUnEmptyString:baseStr forKey:@"imageData"];
@@ -1174,7 +1177,7 @@
         [param addUnEmptyString:self.textview.text forKey:@"serviceResult"];
     }
     [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
-    [param addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
+    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
     [param addUnEmptyString:@"test" forKey:@"test"];
     [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
@@ -1209,7 +1212,7 @@
         }];
         
     }else{
-        [param addUnEmptyString:appDelegate.userinfo.uuid forKey:@"waiterId"];
+        [param addUnEmptyString:model.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离

@@ -11,6 +11,9 @@
 #import "DownOrderController.h"
 
 @interface ServicePojController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    LoginModel *model;
+}
 @property(nonatomic,strong) IBOutlet UITableView * tableview;
 @property(nonatomic,strong) NSArray * dataArray;
 @property (weak, nonatomic) IBOutlet UIImageView *imgNodata;
@@ -26,6 +29,7 @@
     self.view.backgroundColor = kColor(@"B2");
     [self setNavTitle:@"服务项目"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    model = [LoginModel gets];
     
     _tableview.delegate = self;
     _tableview.dataSource = self;
@@ -36,8 +40,7 @@
 -(void)requestServicePoj{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
-    [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
-//    [paremeter addUnEmptyString:appDelegate.userinfo.tenantsId forKey:@"tenantsId"];
+    [paremeter addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
     [[AFNetWorkingRequest sharedTool] requestWithGetServicePojCustomerUkeyParameters:paremeter type:HttpRequestTypePost success:^(id responseObject) {
        
         NSMutableArray *arr = [NSMutableArray array];

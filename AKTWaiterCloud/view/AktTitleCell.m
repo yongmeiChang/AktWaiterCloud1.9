@@ -52,10 +52,12 @@
         case 2:{
           
             self.labName.text = @"性别";
-            if ([userInfo.sex isEqualToString:@""]) {
-                self.labvalue.text = @"未知";
+            if ([userInfo.sex isEqualToString:@"1"]) {
+                self.labvalue.text = @"女";
+            }else if([userInfo.sex isEqualToString:@"0"]){
+               self.labvalue.text = @"男";
             }else{
-            self.labvalue.text = kString(userInfo.sexName);
+                self.labvalue.text = @"未知";
             }
         }
             break;

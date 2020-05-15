@@ -10,7 +10,6 @@
 #import "FindPswController.h"
 #import "QRCodeViewController.h"
 #import "SignInVC.h" // 注册
-#import "UserFmdb.h"
 #import "AktAgreementVC.h"
 #import "ZHAttributeTextView.h" //
 
@@ -61,9 +60,9 @@
     isAgreement = YES;
       [self initAgreementView];
     // 获取缓存
-    if(appDelegate.userinfo){
-        self.unameText.text = appDelegate.userinfo.waiterUkey;
-        self.upswText.text = appDelegate.userinfo.password;
+    if([UserInfo getsUser]){
+        self.unameText.text = [UserInfo getsUser].waiterUkey;
+        self.upswText.text = [UserInfo getsUser].password;
     }
     self.cqCodeUserName = @"";
 }
@@ -164,6 +163,19 @@
     SignInVC *signvc = [[SignInVC alloc] init];
     [self.navigationController pushViewController:signvc animated:YES];
 }
+#pragma mark - user Info
+-(void)reauestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
+    NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
+    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        
+        UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
+        user.uuid = user.id;
+        [user saveUser];
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
+}
 #pragma mark - login
 -(void)Userlogin{
     [self.view endEditing:YES];
@@ -190,56 +202,39 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     //返回极光的id
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
+        NSLog(@"registrationID获取：%@",registrationID);
         if(resCode == 0){
-            NSLog(@"registrationID获取成功：%@",registrationID);
             appDelegate.Registration_ID = registrationID;
-        }else{
-            NSLog(@"registrationID获取失败，code：%d",resCode);
         }
         NSDictionary * dic =@{@"waiterUkey":self.unameText.text,@"password":self.upswText.text,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-                    [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-                        NSDictionary * result = responseObject;
-                       // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-                        NSNumber * code = [result objectForKey:@"code"];
-                        if([code intValue] == 1){
-                            NSDictionary * userdic = [result objectForKey:@"object"];
-                            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                            [dic setObject:@"1" forKey:@"isclickOff_line"];
-                            UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-                            user.uuid = user.id;
-                            appDelegate.userinfo = user;
-                            UserFmdb * userdb = [[UserFmdb alloc] init];
-                            UserInfo * useroldinfo = [[UserInfo alloc] init];
-                            useroldinfo = [userdb findByrow:0];
-                            if(useroldinfo.uuid){
-                                [userdb updateObject:appDelegate.userinfo];
-                            }else{
-                                [userdb saveUserInfo:appDelegate.userinfo];
-                            }
-                            //获取各类工单数量
-                            NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-                            [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {
-                                                                              } failure:^(NSError *error) {}];
-                            // 登录成功
-                            [[NSUserDefaults standardUserDefaults] setObject:user.uuid forKey:@"AKTserviceToken"];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
-                            [self dismissViewControllerAnimated:YES completion:^{
-//                                UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
-//                                [tabViewController setSelectedIndex:1];
-                                [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
-                            }];
-                          
-                        }else{
-                            NSString * messageDic = [responseObject objectForKey:@"message"];
-                            [self showMessageAlertWithController:self Message:messageDic];
-                        }
-                       
-                         [[AppDelegate sharedDelegate] hidHUD];
-                    } failure:^(NSError *error) {
-                         [[AppDelegate sharedDelegate] hidHUD];
-                        NSLog(@"请求错误，code==%lu",error.code);
-                        [self showMessageAlertWithController:self Message:@"登录失败，请稍后再试"];
-                    }];
+        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+            NSDictionary * result = responseObject;
+           // 目前后台没有存储开启离线模式字段 手动添加默认关闭
+            NSNumber * code = [result objectForKey:@"code"];
+            NSString * messageDic = [responseObject objectForKey:@"message"];
+            if([code intValue] == 1){
+                NSDictionary * userdic = [result objectForKey:@"object"];
+                NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
+                LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
+                model.uuid = model.id;
+                [model save];
+                [self reauestUserInfoTenantsid:kString(model.tenantsId) UserId:kString(model.uuid)]; // 获取个人信息
+                // 登录成功
+                [[NSUserDefaults standardUserDefaults] setObject:model.uuid forKey:@"AKTserviceToken"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
+                
+                //获取各类工单数量
+                NSDictionary * params = @{@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
+                [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+            }else{
+                [self showMessageAlertWithController:self Message:messageDic];
+            }
+             [[AppDelegate sharedDelegate] hidHUD];
+        } failure:^(NSError *error) {
+             [[AppDelegate sharedDelegate] hidHUD];
+            [self showMessageAlertWithController:self Message:error.domain];
+        }];
     }];
 }
 #pragma mark TextFieldDelgate

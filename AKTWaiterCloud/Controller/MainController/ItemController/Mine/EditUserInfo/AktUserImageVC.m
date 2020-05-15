@@ -25,7 +25,7 @@
 @property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) NSString *nowdate;
 
-@property(nonatomic,strong) UIImage * himage; // 更换的图片
+
 @property(nonatomic,strong) NSString * headBaseStr;//图片转base64字符串
 
 @end
@@ -39,8 +39,19 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@"user_resetImg.png"];
     
     imgUserView = [[UIImageView alloc] init];
-    if ([kString(self.strImg) containsString:@"http"] && kString(self.strImg).length>5) {
-        imgUserView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.strImg]]]];
+    if (self.himage) {
+        imgUserView.image = self.himage;
+    }else{
+        if ([kString(self.strImg) containsString:@"http"] && kString(self.strImg).length>5) {
+            imgUserView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.strImg]]]];
+        }else{
+            UIImageView *imgNormal = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-100)/2, 120, 100, 100)];
+            imgNormal.backgroundColor = kColor(@"C8");
+            imgNormal.image = [UIImage imageNamed:@"defaultuserhead"];
+            [self.view addSubview:imgNormal];
+            imgNormal.layer.masksToBounds = YES;
+            imgNormal.layer.cornerRadius = 50;
+        }
     }
     imgUserView.contentMode = UIViewContentModeScaleAspectFit;
     imgUserView.autoresizesSubviews = YES;

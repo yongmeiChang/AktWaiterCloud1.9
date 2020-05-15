@@ -101,4 +101,25 @@ static AktVipCmd * aq_instance = nil;
         failure(error);
     }];
 }
+
+/*个人信息*/
+-(void)requestUserInfo:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+               failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTUserInfoMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*更换手机号*/
+-(void)requestChangePhone:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                  failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTChangePhoneMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
 @end

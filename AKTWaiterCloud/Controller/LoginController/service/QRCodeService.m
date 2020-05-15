@@ -15,10 +15,10 @@
 
 -(void)QRorderRequest:(BaseControllerViewController *)controller Code:(NSString *)str{
     [[AppDelegate sharedDelegate] showLoadingHUD:controller.view msg:Loading];
-    
+    LoginModel *model = [LoginModel gets];
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
-        NSDictionary * param = @{@"customerUkey":str,@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
         [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSString * message = [dic objectForKey:@"message"];
@@ -112,7 +112,7 @@
         }];
         
     }else if(self.type==1){//扫码添加工单
-        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":appDelegate.userinfo.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
@@ -139,7 +139,7 @@
         }];
         
     }else if(self.type==2){//手动添加工单
-        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":appDelegate.userinfo.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];

@@ -15,7 +15,9 @@
 #import "EditUserInfoController.h"
 #import "UIButton+Badge.h"
 #import "NotifyController.h"
-@interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
+    UserInfo *modelUser;
+}
 @property (weak, nonatomic) IBOutlet UIButton *unfinishBtn;
 @property (weak, nonatomic) IBOutlet UIButton *ongoingBtn;
 @property (weak, nonatomic) IBOutlet UIButton *finishBtn;
@@ -58,19 +60,45 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    modelUser = [UserInfo getsUser];
     [self initLayout]; // 个人信息
-    //获取各类工单数量
+    // 获取各类工单数量
     [self resetWorkNumber];
-    //编辑页面成功更新头像后，返回时刷新当前页面头像
-    if ([appDelegate.userinfo.icon containsString:@"http"]) {
-        self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",appDelegate.userinfo.icon]]]];
-    }else{
-        self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
-    }
+    // 获取个人信息
+    [self requestUserInfoTenantsid:kString([LoginModel gets].tenantsId) UserId:kString([LoginModel gets].uuid)];
+}
+#pragma mark - 获取个人信息
+-(void)requestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
+    NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
+    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
+        user.uuid = user.id;
+        [user saveUser];
+        //刷新当前页面头像
+        if ([user.icon containsString:@"http"]) {
+            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",modelUser.icon]]]];
+        }else{
+            self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
+        }
+        self.namelabel.text = user.waiterName; // 用户名
+        self.phoneNumberLabel.text = user.mobile; // 电话
+        self.serviceNameLab.text = [NSString stringWithFormat:@": %@",user.tenantsName]; // 所属服务站
+        NSString *strLv;
+        if ([modelUser.level isEqualToString:@""]) {// 默认为0
+            strLv = [NSString stringWithFormat:@"0"];
+        }else{
+            strLv = [NSString stringWithFormat:@"%@",user.level];// 等级
+        }
+        self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",strLv];
+    
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
 }
 #pragma mark - 工单数量
 -(void)resetWorkNumber{
-    NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
+    NSDictionary * params = @{@"waiterId":modelUser.uuid,@"tenantsId":modelUser.tenantsId};
        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
        //显示登陆时请求的各状态工单数
        self.unfinishBtn.shouldHideBadgeAtZero = YES;
@@ -190,16 +218,6 @@
     
     self.headImageView.layer.masksToBounds =YES;
     self.headImageView.layer.cornerRadius =35;
-    self.namelabel.text = appDelegate.userinfo.waiterName;
-    self.phoneNumberLabel.text = appDelegate.userinfo.mobile;
-    self.serviceNameLab.text = [NSString stringWithFormat:@": %@",appDelegate.userinfo.tenantsName];
-    NSString *strLv;
-    if ([appDelegate.userinfo.level isEqualToString:@""]) {// 默认为0
-        strLv = [NSString stringWithFormat:@"0"];
-    }else{
-        strLv = [NSString stringWithFormat:@"%@",appDelegate.userinfo.level];
-    }
-    self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",strLv];
     //工单
     self.orderWidthConstraint.constant = SCREEN_WIDTH/4;
     //九宫格

@@ -17,6 +17,7 @@
 @interface AppDelegate ()<JPUSHRegisterDelegate,MBProgressHUDDelegate,AktResetAppDelegate>{
     MBProgressHUD *HUD;
     NSString *trackViewUrl; // appst网址
+    UserInfo *modeluser;
 }
 @property (nonatomic,assign) BOOL isShoPush;//抢单推送距离是否显示通知栏
 @end
@@ -36,11 +37,6 @@
     /**极光推送初始化*/
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
     entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        // 可以添加自定义categories
-        // NSSet<UNNotificationCategory *> *categories for iOS10 or later
-        // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
-    }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     [JPUSHService setupWithOption:launchOptions
                            appKey:JgPushAppKey
@@ -65,32 +61,39 @@
     //日志初始化
     [self initCocoaLumberjack];
     //查找本地缓存用户数据
-    self.userinfo = [[[UserFmdb alloc] init] findByrow:0];
+    modeluser = [UserInfo getsUser];
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
          [self getTheCurrentVersion];//版本提示
+    }
+    // 模式 强制白色
+    if (@available(iOS 13.0, *)) {
+        self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+    } else {
+        // Fallback on earlier versions
     }
     [self.window makeKeyAndVisible];
     /*新版APP基础架构*/
     [self showLoginPage];
     [self setTabBarAndNavigationBarStyle];
+    
 
     return YES;
 }
 #pragma mark - show login
 - (void)showLoginPage{
+    NSLog(@"token：%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]);
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        [[AppDelegate getCurrentVC] presentViewController:nav animated:NO completion:nil];
+        self.window.rootViewController = nav;
     }else{
+        //获取各类工单数量
+        LoginModel *model = [LoginModel gets];
+        NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId)};
+        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+        // 重新设置根视图
         self.rootViewController = [self getRootTabVBarAction];
         self.window.rootViewController = self.rootViewController;
-        //获取各类工单数量
-        NSDictionary * params = @{@"waiterId":appDelegate.userinfo.uuid,@"tenantsId":appDelegate.userinfo.tenantsId};
-        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
-//        UITabBarController *tabViewController = (UITabBarController *)appDelegate.window.rootViewController;
-//        [tabViewController setSelectedIndex:1]; // 默认显示“任务”模块
-        
     }
 }
 #pragma mark - jpush
@@ -229,7 +232,7 @@
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 收到远程通知:%@",userInfo);
-        if(self.userinfo){
+        if(modeluser){
             [[NSNotificationCenter defaultCenter] postNotificationName:@"grabSingle" object:nil userInfo:nil];
         }else{
             return;
@@ -286,7 +289,7 @@
     //dispatch_semaphore_wait(self.sema, DISPATCH_TIME_FOREVER);
 }
 
-#pragma mark 检查更新
+#pragma mark - 检查更新
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];

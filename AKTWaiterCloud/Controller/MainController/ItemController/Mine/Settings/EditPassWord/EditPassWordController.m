@@ -10,7 +10,6 @@
 #import "SettingsController.h"
 #import "LoginViewController.h"
 #import "SaveDocumentArray.h"
-#import "UserFmdb.h"
 #import "AktSuccseView.h"
 
 @interface EditPassWordController ()<UITextFieldDelegate,AktSuccseDelegate>
@@ -92,7 +91,7 @@
         return;
     }
     
-    NSDictionary * param = @{@"waiterId":appDelegate.userinfo.uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":appDelegate.userinfo.tenantsId};
+    NSDictionary * param = @{@"waiterId":[LoginModel gets].uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":[LoginModel gets].tenantsId};
     
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"操作中"];
     [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
@@ -100,15 +99,6 @@
         NSDictionary * result = responseObject;
         NSNumber * code = [result objectForKey:@"code"];
         if([code intValue] == 1){
-            UserFmdb * userdb = [[UserFmdb alloc] init];
-            appDelegate.userinfo.password = nPsw;
-            UserInfo * baseuser = [[UserInfo alloc]init];
-            baseuser = [userdb findByrow:0];
-            if(baseuser.uuid==NULL||[baseuser.uuid isEqualToString:@""]||baseuser.uuid==nil){
-                [userdb saveUserInfo:appDelegate.userinfo];
-            }else{
-                [userdb updateObject:appDelegate.userinfo];
-            }
             [[UIApplication sharedApplication].keyWindow addSubview:succseView];
         }else if([code intValue]== 2){
             NSString * message = [result objectForKey:@"message"];
@@ -126,16 +116,12 @@
 #pragma mark - delegate
 -(void)didSelectClose{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:101] removeFromSuperview];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
     [[[UserFmdb alloc] init] deleteAllUserInfo];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-//    BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-//    [[AppDelegate getCurrentVC] presentViewController:nav animated:YES completion:nil];
     [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
 }
 
