@@ -61,7 +61,7 @@
     self.minuteTaskTableView.delegate = self;
     self.minuteTaskTableView.dataSource = self;
     
-    if([self.type isEqualToString:@"1"]){ // 我的-工单任务
+    if([self.type isEqualToString:@"1"] || [self.type isEqualToString:@"2"]){ // 我的-工单任务、计划工单
         self.viewHeightConstraint.constant = 0;
     }else{ // 任务
         self.viewHeightConstraint.constant = 84;
