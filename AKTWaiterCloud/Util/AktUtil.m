@@ -193,5 +193,120 @@
     NSDictionary *attribute = @{NSFontAttributeName:font, NSParagraphStyleAttributeName: paragraph};
     return [_text boundingRectWithSize:CGSizeMake(_width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil].size;
 }
+#pragma mark - 签出 出勤状态
++(NSUInteger)isstatus:(NSString *)serviceEnd{
+    // 截止时间data格式
+       NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+       [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+       NSDate *expireDate = [formatter dateFromString:serviceEnd];
+       // 当前日历
+       NSCalendar *calendar = [NSCalendar currentCalendar];
+       // 需要对比的时间数据
+       NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+       | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+       // 对比时间差
+       NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+       if(dateCom.year==0&&dateCom.month==0&&dateCom.day==0&&dateCom.hour==0&&dateCom.minute==0&&dateCom.second==0){// @"正常";
+           return 0;
+       }else{
+           return 1;
+       }
+}
+// 计算天数
++(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents    * comp = [calendar components:NSCalendarUnitDay
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.day;
+}
+// 计算秒
++(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents * comp = [calendar components:NSCalendarUnitSecond
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.second;
+}
+// 任务签入、签出 出勤状态
++ (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend{
+    // 截止时间data格式
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSDate *expireDate = [formatter dateFromString:serviceend];
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+    
+    if ([self isstatus:serviceend] == 0) { // 正常
+        return @"正常";
+    }else{        
+        NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
+        NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
+        NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];
+                          
+        if ([strHours containsString:@"-"]) {
+            strHours = [strHours substringFromIndex:1];
+        }
+        if ([strMiute containsString:@"-"]) {
+            strMiute = [strMiute substringFromIndex:1];
+        }
+        if ([strSecond containsString:@"-"]) {
+            strSecond = [strSecond substringFromIndex:1];
+        }
+        
+        NSString *strnewDay;
+        NSString *strnewHours;
+        NSString *strnewMiute;
+        NSString *strNewSecond;
+        
+        if ([self getDaysFrom:nowdate To:expireDate] == 0) {
+            strnewDay = @"";
+        }else{
+            strnewDay = [NSString stringWithFormat:@"%ld天",[self getDaysFrom:nowdate To:expireDate]];
+        }
+        if ([strHours integerValue] == 0) {
+            strnewHours = @"";
+        }else{
+            strnewHours = [NSString stringWithFormat:@"%@时",strHours];
+        }
+        if ([strMiute integerValue] == 0) {
+            strnewMiute = @"";
+        }else{
+            strnewMiute = [NSString stringWithFormat:@"%@分",strMiute];
+        }
+        if ([strSecond integerValue] == 0) {
+            strNewSecond = @"";
+        }else{
+            strNewSecond = [NSString stringWithFormat:@"%@秒",strSecond];
+        }
+        return [NSString stringWithFormat:@"%@%@%@%@",strnewDay,strnewHours,strnewMiute,strNewSecond];
+    }
+}
+//比较日期大小
++(int)compareDate:(NSDate *)bdate End:(NSDate *)edate{
+    NSComparisonResult result = [bdate compare:edate];
+    NSLog(@"date1 : %@, date2 : %@", bdate, edate);
+    //1 a>b  0 a=b  -1 a<b
+    if (result == NSOrderedDescending) {
+        return 1;
+    }
+    else if (result == NSOrderedAscending){
+        return -1;
+    }
+    return 0;
+}
 
 @end

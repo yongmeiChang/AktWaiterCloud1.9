@@ -32,11 +32,11 @@
 #define PI 3.1415926
 @interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
     
-    long unservicetime;//记录服务时长不足的时间
+    long unservicetime;//记录服务时长不足的时间 秒
     
     long SSunservicetime;//记录服务时长不足毫秒
-    long leaveIntime;//早退时间毫秒
-    long leaveOuttime;//迟到时间毫秒
+    long leaveIntime;//迟到时间毫秒
+    long leaveOuttime;//早退时间毫秒
     
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
@@ -140,16 +140,16 @@
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
     self.textview.delegate = self;
-    if (@available(iOS 11.0, *)) {
-           self.scrollviewBg.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-           NSLog(@"11.0f");
-           } else {
-               self.automaticallyAdjustsScrollViewInsets = NO;
-               NSLog(@"10f");
-           }
+//    if (@available(iOS 11.0, *)) {
+//           self.scrollviewBg.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//           NSLog(@"11.0f");
+//           } else {
+//               self.automaticallyAdjustsScrollViewInsets = NO;
+//               NSLog(@"10f");
+//           }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];//键盘的消失
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];//键盘的消失
     model = [LoginModel gets];
     
     if(self.type==0){
@@ -214,218 +214,60 @@
 #pragma mark - service time
 -(void)ComputeServiceTime{
     //截止时间
-    NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    //计算工单签入时间与当前时间  去比较 工单开始时间与结束时间
-    NSDate * enddate = [formatter dateFromString:self.orderinfo.actrueBegin];
-    // 当前日历
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    // 需要对比的时间数据
-    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    // 对比时间差
-    NSDateComponents *dateCom = [calendar components:unit fromDate:enddate toDate:date options:0];
-    //服务时长
-    long servicetime = 0;
-    if(dateCom.year>0){
-        servicetime = dateCom.year*365*24*3600;
-    }
-    if(dateCom.month>0){
-        servicetime+= dateCom.month*30*24*3600;
-    }
-    if(dateCom.day>0){
-        servicetime+= dateCom.day*24*3600;
-    }
-    if(dateCom.hour>0){
-        servicetime+= dateCom.hour*3600;
-    }
-    if(dateCom.minute>0){
-        servicetime+= dateCom.minute*60;
-    }
-    if(dateCom.second>0){
-        servicetime+= dateCom.second;
-    }
+
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]];
+    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
-    
-//    NSDate * orderbdate = [formatter dateFromString:self.orderinfo.serviceBegin];
-    // 当前日历
-//    NSCalendar *ordercalendar = [NSCalendar currentCalendar];
-    // 需要对比的时间数据
-//    NSCalendarUnit orderunit = NSCalendarUnitYear | NSCalendarUnitMonth
-//    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    // 对比时间差
-//    NSDateComponents *orderCom = [ordercalendar components:orderunit fromDate:enddate toDate:date options:0];
-    //工单要求时长
-    long ordertime = 0;
-    if(dateCom.year>0){
-        ordertime = dateCom.year*365*24*3600;
-    }
-    if(dateCom.month>0){
-        ordertime+= dateCom.month*30*24*3600;
-    }
-    if(dateCom.day>0){
-        ordertime+= dateCom.day*24*3600;
-    }
-    if(dateCom.hour>0){
-        ordertime+= dateCom.hour*3600;
-    }
-    if(dateCom.minute>0){
-        ordertime+= dateCom.minute*60;
-    }
-    if(dateCom.second>0){
-        ordertime+= dateCom.second;
-    }
-    
-    if(servicetime>=ordertime){
+    if(strServiceSt>strActrueSt){ //servicetime>=ordertime
+      SSunservicetime = (strServiceSt - strActrueSt)*1000;
+      self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
+      isLess = @"1";
+      self.ShowSingOutServiceTimelabel.textColor = [UIColor redColor];
+      self.ShowSingOutServiceTimelabel.hidden = NO;
+      unservicetime = strServiceSt - strActrueSt; // 单位 秒
+      leaveOuttime = unservicetime * 1000; // 单位 毫秒
+      NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(showInOutTimer) userInfo:nil repeats:YES];
+      [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+      [timer invalidate];
+    }else{
         self.ShowSingOutServiceTimelabel.text = @"正常";
         isLess = @"0";
-    }else{
-        SSunservicetime = ordertime - servicetime * 1000;
-        self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
-        isLess = @"1";
-        self.ShowSingOutServiceTimelabel.textColor = [UIColor redColor];
-        self.ShowSingOutServiceTimelabel.hidden = NO;
-        unservicetime = ordertime - servicetime;
-        leaveOuttime = unservicetime * 1000;
-        NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(showInOutTimer) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-        [timer invalidate];
     }
 }
 
-//比较日期大小
--(int)compareDate:(NSDate *)bdate End:(NSDate *)edate{
-    NSComparisonResult result = [bdate compare:edate];
-    NSLog(@"date1 : %@, date2 : %@", bdate, edate);
-    //1 a>b  0 a=b  -1 a<b
-    if (result == NSOrderedDescending) {
-        return 1;
-    }
-    else if (result == NSOrderedAscending){
-        return -1;
-    }
-    return 0;
-}
-
-//是否迟到
+//是否迟到 早退
 -(void)isLate{
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     if(self.type==0){
-        NSDate * bdate = [formatter dateFromString:self.orderinfo.serviceBegin];
-        if([self compareDate:date End:bdate]==1){
-            // 截止时间data格式
-            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
-            // 当前日历
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            // 需要对比的时间数据
-            NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-            | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            // 对比时间差
-            NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-            if(dateCom.second<0){
-                self.orderinfo.isLate = @"0";
-                self.latelabel.text = @"正常";
-            }else{
-                self.orderinfo.isLate = @"1";
-                self.latelabel.textColor = [UIColor redColor];
-                NSInteger year = 0;
-                NSInteger month = 0;
-                if(dateCom.year>0){
-                    year = dateCom.year*12;
-                }
-                month = dateCom.month;
-                month += year;
-                if(month==0){
-                    long h = dateCom.day * 24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveIntime = s * 1000;
-                    if (dateCom.day>0) {
-                        self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                    }else{
-                        if (dateCom.hour>0){
-                            self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
-                        }else{
-                            if (dateCom.minute>0) {
-                                self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld分",(long)dateCom.minute];
-                            }
-                        }
-                    }
-                }else{
-                    long d = dateCom.month * 30;
-                    long h = (dateCom.day + d)*24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveIntime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)d+dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                }
-
-            }
-        }else{
+        if ([AktUtil isstatus:self.orderinfo.serviceBegin] == 0) {
             self.orderinfo.isLate = @"0";
             self.latelabel.text = @"正常";
-        }
-    }else{
-        NSDate * edate = [formatter dateFromString:self.orderinfo.serviceEnd];
-        if([self compareDate:date End:edate]==-1){
-            // 截止时间data格式
-            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceEnd];
-            // 当前日历
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            // 需要对比的时间数据
-            NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-            | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            // 对比时间差
-            NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-            if(dateCom.second<0){
-                self.orderinfo.isEarly = @"0";
-                self.latelabel.text = @"正常";
-            }else{
-                self.orderinfo.isEarly = @"1";
-                self.latelabel.textColor = [UIColor redColor];
-                NSInteger year = 0;
-                NSInteger month = 0;
-                if(dateCom.year>0){
-                    year = dateCom.year*12;
-                }
-                month = dateCom.month;
-                month += year;
-                if(month==0){
-                    long h = dateCom.day * 24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveOuttime = s * 1000;
-                   if (dateCom.day>0) {
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld日%ld小时%ld分",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                                      }else{
-                                      if (dateCom.hour>0){
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
-                                      }else{
-                                      if (dateCom.minute>0) {
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld分",(long)dateCom.minute];
-                                      }
-                        }
-                    }
-                }else{
-                    long d = dateCom.month * 30;
-                    long h = (dateCom.day + d)*24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveOuttime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"早退%ld个月%ld日%ld小时%ld分",(long)month,(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                }
-
-            }
         }else{
+            self.orderinfo.isLate = @"1";
+            self.latelabel.textColor = [UIColor redColor];
+            self.latelabel.text = [NSString stringWithFormat:@"迟到%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceBegin]];
+            
+            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
+            NSLog(@"秒数：%ld",(long)[AktUtil getSecondFrom:date To:expireDate]*1000);
+            leaveIntime = [AktUtil getSecondFrom:date To:expireDate]*1000;
+        }
+        
+    }else{
+        if ([AktUtil isstatus:self.orderinfo.serviceEnd] == 0) {
             self.orderinfo.isEarly = @"0";
             self.latelabel.text = @"正常";
+        }else{
+            self.orderinfo.isEarly = @"1";
+            self.latelabel.textColor = [UIColor redColor];
+            self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceEnd]];
+            
+            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceEnd];
+            NSLog(@"秒数：%ld",(long)[AktUtil getSecondFrom:date To:expireDate]*1000);
+            leaveOuttime = [AktUtil getSecondFrom:date To:expireDate]*1000;
         }
     }
 }
@@ -980,7 +822,7 @@
                  }
         
     }else*/
-        if (distance>500){
+        if (distance>400){
             if (self.type ==0) {
                 self.statusPost = @"签入定位异常";
             }else{
@@ -1292,29 +1134,29 @@
 
 
 #pragma mark - 键盘收缩
--(void)keyboardWillChangeFrame:(NSNotification *)note{
-//    NSDictionary* info = [note userInfo];
-//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationCurve:7];
-    if(SCREEN_WIDTH<375){
-        self.view.frame = CGRectMake(0,-30 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-    }else{
-        self.view.frame = CGRectMake(0,-50 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-    }
-    [UIView commitAnimations];
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationCurve:7];
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [UIView commitAnimations];
-}
+//-(void)keyboardWillChangeFrame:(NSNotification *)note{
+////    NSDictionary* info = [note userInfo];
+////    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+//
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.25];
+//    [UIView setAnimationCurve:7];
+//    if(SCREEN_WIDTH<375){
+//        self.view.frame = CGRectMake(0,-30 ,SCREEN_WIDTH , SCREEN_HEIGHT);
+//    }else{
+//        self.view.frame = CGRectMake(0,-50 ,SCREEN_WIDTH , SCREEN_HEIGHT);
+//    }
+//    [UIView commitAnimations];
+//}
+//
+//- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+//{
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.25];
+//    [UIView setAnimationCurve:7];
+//    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//    [UIView commitAnimations];
+//}
 #pragma mark - textfield delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

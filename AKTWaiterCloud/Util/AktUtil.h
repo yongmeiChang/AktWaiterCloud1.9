@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
 // 计算字符串的size
 + (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width;
 
+// 任务签入、签出 出勤状态
++(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate;
++(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate;// 计算秒
++(NSUInteger)isstatus:(NSString *)serviceEnd;
++ (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend;
+//比较日期大小
++(int)compareDate:(NSDate *)bdate End:(NSDate *)edate;
+
 @end
 
 NS_ASSUME_NONNULL_END
