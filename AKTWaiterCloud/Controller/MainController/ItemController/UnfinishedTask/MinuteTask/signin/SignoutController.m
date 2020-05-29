@@ -30,6 +30,9 @@
 #import "AddWaterMark.h" // 水印
 
 #define PI 3.1415926
+#define DefaultLocationTimeout 10
+#define DefaultReGeocodeTimeout 5
+
 @interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
     
     long unservicetime;//记录服务时长不足的时间 秒
@@ -49,6 +52,7 @@
     SinoutReasonView *reasonView; // 提交失败的原因 弹框
     
     LoginModel *model;
+    BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
@@ -84,6 +88,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnPostWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollH;
 
+@property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic,strong) AMapLocationManager * unfinishManager; // 地址管理
 @property (nonatomic,strong) AMapSearchAPI * searchAPI;  // 逆地理编码
 @property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标
@@ -131,6 +136,88 @@
     }
     return _imagePickerVc;
 }
+#pragma mark - init
+-(void)refurbishBtnClick{
+    //1.将两个经纬度点转成投影点
+    MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
+    MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.locaitonLatitude doubleValue],[self.locaitonLongitude doubleValue])); //用户当前位置
+    //2.计算距离
+    CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
+    [self distanceBetween:distance];
+}
+
+- (void)configLocationManager
+{
+    self.unfinishManager = [[AMapLocationManager alloc] init];
+    
+    [self.unfinishManager setDelegate:self];
+    
+    //设置期望定位精度
+    [self.unfinishManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    
+    //设置不允许系统暂停定位
+    [self.unfinishManager setPausesLocationUpdatesAutomatically:NO];
+    
+    //设置允许在后台定位
+    [self.unfinishManager setAllowsBackgroundLocationUpdates:YES];
+    
+    //设置定位超时时间
+    [self.unfinishManager setLocationTimeout:DefaultLocationTimeout];
+    
+    //设置逆地理超时时间
+    [self.unfinishManager setReGeocodeTimeout:DefaultReGeocodeTimeout];
+}
+- (void)initCompleteBlock
+{
+    __weak SignoutController *weakSelf = self;
+    self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
+    {
+        if (error != nil && error.code == AMapLocationErrorLocateFailed)
+        {
+            //定位错误：此时location和regeocode没有返回值，不进行annotation的添加
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            NSLog(@"定位错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else if (error != nil
+                 && (error.code == AMapLocationErrorReGeocodeFailed
+                     || error.code == AMapLocationErrorTimeOut
+                     || error.code == AMapLocationErrorCannotFindHost
+                     || error.code == AMapLocationErrorBadURL
+                     || error.code == AMapLocationErrorNotConnectedToInternet
+                     || error.code == AMapLocationErrorCannotConnectToHost))
+        {
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            //逆地理错误：在带逆地理的单次定位中，逆地理过程可能发生错误，此时location有返回值，regeocode无返回值，进行annotation的添加
+            NSLog(@"逆地理错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+        }
+        else if (error != nil && error.code == AMapLocationErrorRiskOfFakeLocation)
+        {
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            //存在虚拟定位的风险：此时location和regeocode没有返回值，不进行annotation的添加
+            NSLog(@"存在虚拟定位的风险:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else
+        {
+            //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
+            weakSelf.locaitonLatitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude]; // 当前位置 经度
+            weakSelf.locaitonLongitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude]; // 当前位置 纬度
+        }
+        //修改label显示内容
+        if (regeocode)
+        {
+            weakSelf.orderinfo.isAbnormal = @"0";
+            [weakSelf.addressLabel setText:[NSString stringWithFormat:@"%@", regeocode.formattedAddress]];
+            //返回用户经纬度，计算两点间的距离
+            [weakSelf refurbishBtnClick];
+        }
+
+    };
+}
 #pragma mark - viewDidLoad
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -140,16 +227,7 @@
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
     self.textview.delegate = self;
-//    if (@available(iOS 11.0, *)) {
-//           self.scrollviewBg.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//           NSLog(@"11.0f");
-//           } else {
-//               self.automaticallyAdjustsScrollViewInsets = NO;
-//               NSLog(@"10f");
-//           }
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];//键盘的消失
+
     model = [LoginModel gets];
     
     if(self.type==0){
@@ -183,9 +261,12 @@
     [self configCollectionView]; // 选择图片
     [self initOtherView]; // UI视图编辑
     [self isLate];
-    if(!self.orderinfo.serviceLocationX||!self.orderinfo.serviceLocationY){// 判断接口是否直接返回经纬度
+    /*定位 正地理编码*/
+    isPostLocation = NO;
+    [self initCompleteBlock]; //地理回调
+    [self configLocationManager]; // 位置管理
+    if(!self.orderinfo.serviceLocationX||!self.orderinfo.serviceLocationY){// 无返回经纬度
         self.searchAPI = [[AMapSearchAPI alloc] init];
-        //地理编码查询
         self.searchAPI.delegate = self;
         //构造AMapGeocodeSearchRequest对象，address为必选项，city为可选项
         AMapGeocodeSearchRequest *searchRequest = [[AMapGeocodeSearchRequest alloc] init];
@@ -193,8 +274,8 @@
         //发起正向地理编码
         [self.searchAPI AMapGeocodeSearch: searchRequest];
     }else{
-        //定位当前位置
-        [self refurbishBtnClick];
+        //进行单次带逆地理定位请求
+        [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
     
     // 填写失败的原因
@@ -215,9 +296,9 @@
 -(void)ComputeServiceTime{
     //截止时间
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-
-    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *nowDate = [AktUtil getNowDateAndTime];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:nowDate]];
     long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
     if(strServiceSt>strActrueSt){ //servicetime>=ordertime
@@ -232,7 +313,7 @@
       [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
       [timer invalidate];
     }else{
-        self.ShowSingOutServiceTimelabel.text = @"正常";
+        self.ShowSingOutServiceTimelabel.text = @"服务时长正常";
         isLess = @"0";
     }
 }
@@ -241,7 +322,11 @@
 -(void)isLate{
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *nowDate = [AktUtil getNowDateAndTime];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:nowDate]];
+    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
+    
     if(self.type==0){
         if ([AktUtil isstatus:self.orderinfo.serviceBegin] == 0) {
             self.orderinfo.isLate = @"0";
@@ -257,18 +342,15 @@
         }
         
     }else{
-        if ([AktUtil isstatus:self.orderinfo.serviceEnd] == 0) {
-            self.orderinfo.isEarly = @"0";
-            self.latelabel.text = @"正常";
-        }else{
-            self.orderinfo.isEarly = @"1";
-            self.latelabel.textColor = [UIColor redColor];
-            self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceEnd]];
-            
-            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceEnd];
-            NSLog(@"秒数：%ld",(long)[AktUtil getSecondFrom:date To:expireDate]*1000);
-            leaveOuttime = [AktUtil getSecondFrom:date To:expireDate]*1000;
-        }
+            if(strServiceSt>strActrueSt){// 判断早退的逻辑是：设定服务时长差 与 实际服务时长差相对比
+                self.orderinfo.isEarly = @"1";
+                self.latelabel.textColor = [UIColor redColor];
+                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceEnd]];
+                leaveOuttime = (strServiceSt-strActrueSt)*1000;
+            }else{
+                self.orderinfo.isEarly = @"0";
+                self.latelabel.text = @"正常";
+            }
     }
 }
 
@@ -810,18 +892,7 @@
 }
 #pragma mark - 距离
 -(void)distanceBetween:(CLLocationDistance)distance{
-    /*if (distance>1000) {
-                 if (self.type ==0) {
-                     self.distanceLabel.textColor = [UIColor redColor];
-                     self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
-                     self.statusPost = @"签入定位异常";
-                 }else{
-                     self.distanceLabel.textColor = [UIColor redColor];
-                     self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
-                     self.statusPost = @"签出定位异常";
-                 }
-        
-    }else*/
+
         if (distance>400){
             if (self.type ==0) {
                 self.statusPost = @"签入定位异常";
@@ -832,50 +903,45 @@
         self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
     }else{
             if (self.type ==0) {
-                self.distanceLabel.text = @"正常";
                 self.statusPost = @"签入定位正常";
             }else{
-                self.distanceLabel.text = @"正常";
                 self.statusPost = @"签出定位正常";
             }
+         self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f米",distance];
     }
     self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
+    if (isPostLocation) {
+        NSLog(@"---可以提交");
+        // 判断是否可以提交工单
+              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
+
+                  NSDictionary *dicObje = [responseObject objectForKey:@"object"];
+                  NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
+                  NSString *strtime = [dicObje objectForKey:@"isTimeStatement"];// 1或null 可以提交  0不可以提交
+                  BOOL bolLocation = ([strlocation isKindOfClass:[NSNull class]] || [strlocation isEqualToString:@"1"] || ([strlocation integerValue] ==1));
+                  BOOL bolTime = ([strtime isKindOfClass:[NSNull class]] || [strtime isEqualToString:@"1"] || ([strtime integerValue] == 1));
+
+                  if (bolLocation || bolTime) {
+                      NSLog(@"=====可以提交=");
+                      [self postDataAllInfo:@""];
+                  }else{
+                      NSLog(@"=====不可以提交==");
+                      if ([isLess isEqualToString:@"1"] || [self.distanceLabel.text containsString:@"超出"]) {
+                          reasonView.hidden = NO;
+                      }else{
+                           [self postDataAllInfo:@""];
+                      }
+                  }
+
+              } failure:^(NSError *error) {
+                  [[AppDelegate sharedDelegate] hidHUD];
+                  [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
+                      [self.navigationController popToRootViewControllerAnimated:YES];
+                  }];
+              }];
+    }
 }
-#pragma mark - 高德定位
--(void)reloadLocation:(void(^)(id))Rloction Error:(void(^)(id))error{
-       
-       self.unfinishManager = [[AMapLocationManager alloc] init];
-       self.unfinishManager.delegate = self;
-       
-      [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"定位中"];
-       // 带逆地理信息的一次定位（返回坐标和地址信息）
-       [self.unfinishManager setDesiredAccuracy:kCLLocationAccuracyBest];
-       //   定位超时时间，最低2s，此处设置为10s
-       self.unfinishManager.locationTimeout =10;
-       //   逆地理请求超时时间，最低2s，此处设置为10s
-       self.unfinishManager.reGeocodeTimeout = 10;
-       // 带逆地理（返回坐标和地址信息）。将下面代码中的 YES 改成 NO ，则不会返回地址信息。
-       [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-               
-               if (error)
-               {
-                   self.orderinfo.isAbnormal = @"1";
-                   [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
-                   if (error.code == AMapLocationErrorLocateFailed)
-                   {return;}
-               }
-               if (regeocode)
-               {
-                   self.orderinfo.isAbnormal = @"0";
-                   self.addressLabel.text = [NSString stringWithFormat:@"%@",regeocode.formattedAddress];
-               }
-               Rloction(location);
-               [[AppDelegate sharedDelegate] hidHUD];
-           }];
-}
--(void)amapLocationManager:(AMapLocationManager *)manager doRequireLocationAuth:(CLLocationManager *)locationManager{
-    [locationManager requestWhenInUseAuthorization];
-}
+#pragma mark - AMapSearchAPI delegate
 - (void)onGeocodeSearchDone:(AMapGeocodeSearchRequest *)request response:(AMapGeocodeSearchResponse *)response{ // 逆地理编码
     if (response.geocodes.count == 0)
     {
@@ -884,24 +950,13 @@
     //解析response获取地理信息
     self.orderinfo.serviceLocationX = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.longitude];
     self.orderinfo.serviceLocationY = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.latitude];
-    [self refurbishBtnClick];
+    //进行单次带逆地理定位请求
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];;
 }
 #pragma mark -  刷新重新定位
 - (IBAction)btnReloadAddressClick:(UIButton *)sender {
-    [self refurbishBtnClick];
-}
--(void)refurbishBtnClick{
-    [self reloadLocation:^(CLLocation *strLoaction) {
-     NSLog(@"nowLocation:%f   %f \n user:%@  %@",strLoaction.coordinate.latitude,strLoaction.coordinate.longitude,self.orderinfo.serviceLocationY,self.orderinfo.serviceLocationX);
-     self.locaitonLatitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.latitude];
-     self.locaitonLongitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.longitude];
-     //1.将两个经纬度点转成投影点
-     MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
-     MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake(strLoaction.coordinate.latitude,strLoaction.coordinate.longitude)); //用户当前位置
-     //2.计算距离
-     CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
-     [self distanceBetween:distance];
-    } Error:nil];
+    isPostLocation = NO;
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
 }
 #pragma mark - 服务流程
 -(IBAction)submitWorkNode:(id)sender{
@@ -932,59 +987,12 @@
 }
 #pragma mark - 提交信息
 -(IBAction)submitClick:(id)sender{
-    [self reloadLocation:^(CLLocation *strLoaction) {
-        self.locaitonLatitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.latitude];
-        self.locaitonLongitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.longitude];
-        //1.将两个经纬度点转成投影点
-        MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
-        MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake(strLoaction.coordinate.latitude,strLoaction.coordinate.longitude)); //用户当前位置
-        //2.计算距离
-        CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
-        [self distanceBetween:distance];
-        // 判断是否可以提交工单
-                       [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
-                           
-                           NSDictionary *dicObje = [responseObject objectForKey:@"object"];
-                           NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
-                           NSString *strtime = [dicObje objectForKey:@"isTimeStatement"];// 1或null 可以提交  0不可以提交
-                           BOOL bolLocation = ([strlocation isKindOfClass:[NSNull class]] || [strlocation isEqualToString:@"1"] || ([strlocation integerValue] ==1));
-                           BOOL bolTime = ([strtime isKindOfClass:[NSNull class]] || [strtime isEqualToString:@"1"] || ([strtime integerValue] == 1));
-                           
-                           if (bolLocation || bolTime) {
-                               NSLog(@"=====可以提交=");
-                               [self postDataAllInfo:@""];
-                           }else{
-                               NSLog(@"=====不可以提交==");
-                               if ([isLess isEqualToString:@"1"] || [self.distanceLabel.text containsString:@"超出"]) {
-                                   reasonView.hidden = NO;
-                               }else{
-                                    [self postDataAllInfo:@""];
-                               }
-                           }
-
-                       } failure:^(NSError *error) {
-                           [[AppDelegate sharedDelegate] hidHUD];
-                           [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
-                               [self.navigationController popToRootViewControllerAnimated:YES];
-                           }];
-                       }];
-    } Error:nil];
+     isPostLocation = YES;
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
 }
 -(void)postDataAllInfo:(NSString *)reason{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     if(self.type==1){
-        NSDate * date = [NSDate date];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-        // 截止时间data格式
-        NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
-        // 当前日历
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        // 需要对比的时间数据
-        NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-        | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-        // 对比时间差
-        NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
         [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
     }else{
         [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
@@ -1006,10 +1014,9 @@
     }
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     self.nowdate = [formatter stringFromDate:date];
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
     [param addUnEmptyString:self.orderinfo.id forKey:@"id"];
     [param addUnEmptyString:self.orderinfo.workNo forKey:@"workNo"];
     [param addUnEmptyString:baseStr forKey:@"imageData"];
@@ -1023,6 +1030,7 @@
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
     [param addUnEmptyString:@"test" forKey:@"test"];
     [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
+    [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"]; // 定位异常
     //签出
     if(self.type==1){
         
@@ -1031,7 +1039,6 @@
         [param addUnEmptyString:self.distancePost forKey:@"signOutDistance"];// 签出距离
         [param addUnEmptyString:self.statusPost forKey:@"signOutStatus"]; // 签出状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signOutLocation"]; // 签出 当前地址
-        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
         [param addUnEmptyString:self.nowdate forKey:@"actrueEnd"];
         [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
         [param addUnEmptyString:wavStr forKey:@"tapeName"];
@@ -1060,7 +1067,6 @@
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
         [param addUnEmptyString:self.statusPost forKey:@"signInStatus"]; // 状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signInLocation"];
-        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
         [param addUnEmptyString:self.nowdate forKey:@"actrueBegin"];
         [param addUnEmptyString:self.orderinfo.isLate forKey:@"isLate"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveIntime] forKey:@"lateTimeLength"];//0正常 1迟到
@@ -1132,31 +1138,6 @@
     return YES;
 }
 
-
-#pragma mark - 键盘收缩
-//-(void)keyboardWillChangeFrame:(NSNotification *)note{
-////    NSDictionary* info = [note userInfo];
-////    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-//
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.25];
-//    [UIView setAnimationCurve:7];
-//    if(SCREEN_WIDTH<375){
-//        self.view.frame = CGRectMake(0,-30 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-//    }else{
-//        self.view.frame = CGRectMake(0,-50 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-//    }
-//    [UIView commitAnimations];
-//}
-//
-//- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-//{
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.25];
-//    [UIView setAnimationCurve:7];
-//    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//    [UIView commitAnimations];
-//}
 #pragma mark - textfield delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -1169,15 +1150,8 @@
     return YES;
 }
 
-
 -(void)dealloc{
-    //第一种方法.这里可以移除该控制器下的所有通知
     // 移除当前所有通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    //第二种方法.这里可以移除该控制器下名称为tongzhi的通知
-    //移除名称为tongzhi的那个通知
-//    NSLog(@"移除了名称为tongzhi的通知");
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"tongzhi" object:nil];
 }
 @end

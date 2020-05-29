@@ -179,7 +179,7 @@
 #pragma mark - 日期
 +(NSDate *)StringtoDate:(NSString *)dateStr{
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
-    dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
+    dateFormatter.dateFormat=@"yyyy-MM-dd HH:mm:ss";
     NSDate * date = [dateFormatter dateFromString:dateStr];
     return date;
 }
@@ -197,7 +197,7 @@
 +(NSUInteger)isstatus:(NSString *)serviceEnd{
     // 截止时间data格式
        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-       [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+       [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
        NSDate *expireDate = [formatter dateFromString:serviceEnd];
        // 当前日历
        NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -221,7 +221,7 @@
                                              fromDate:fromDate
                                                 toDate:endDate
                                               options:NSCalendarWrapComponents];
-    NSLog(@" -- >>  comp : %@  << --",comp);
+//    NSLog(@" -- >>  comp : %@  << --",comp);
     return comp.day;
 }
 // 计算秒
@@ -233,14 +233,14 @@
                                              fromDate:fromDate
                                                 toDate:endDate
                                               options:NSCalendarWrapComponents];
-    NSLog(@" -- >>  comp : %@  << --",comp);
+//    NSLog(@" -- >>  comp : %@  << --",comp);
     return comp.second;
 }
 // 任务签入、签出 出勤状态
 + (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend{
     // 截止时间data格式
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *expireDate = [formatter dateFromString:serviceend];
     // 当前日历
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -252,11 +252,15 @@
     
     if ([self isstatus:serviceend] == 0) { // 正常
         return @"正常";
-    }else{        
+    }else{
+        NSString *strDay = [NSString stringWithFormat:@"%ld",[self getDaysFrom:nowdate To:expireDate]];
         NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
         NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
         NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];
-                          
+             
+        if ([strDay containsString:@"-"]) {
+            strDay = [strDay substringFromIndex:1];
+        }
         if ([strHours containsString:@"-"]) {
             strHours = [strHours substringFromIndex:1];
         }
@@ -275,7 +279,7 @@
         if ([self getDaysFrom:nowdate To:expireDate] == 0) {
             strnewDay = @"";
         }else{
-            strnewDay = [NSString stringWithFormat:@"%ld天",[self getDaysFrom:nowdate To:expireDate]];
+            strnewDay = [NSString stringWithFormat:@"%@天",strDay];
         }
         if ([strHours integerValue] == 0) {
             strnewHours = @"";
