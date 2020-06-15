@@ -213,7 +213,7 @@
     [paremeter addUnEmptyString:_bTime forKey:@"serviceBegin"];
     [paremeter addUnEmptyString:_eTime forKey:@"serviceEnd"];
     [paremeter addUnEmptyString:strRemark forKey:@"serviceContent"]; // 服务内容
-    [paremeter addUnEmptyString:@"" forKey:@"serviceMoney"];//_money 传空值
+    [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];//_money 传空值
     [paremeter addUnEmptyString:[UserInfo getsUser].uuid forKey:@"waiterId"];
     [paremeter addUnEmptyString:[UserInfo getsUser].waiterName forKey:@"waiterName"];
     [paremeter addUnEmptyString:[UserInfo getsUser].tenantsId forKey:@"tenantsId"];
