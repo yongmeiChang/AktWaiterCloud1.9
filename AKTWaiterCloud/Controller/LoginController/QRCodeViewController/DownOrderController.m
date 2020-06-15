@@ -230,15 +230,15 @@
                 }
                 
                 [self.navigationController popToRootViewControllerAnimated:YES];
-                 [[AppDelegate sharedDelegate] hidHUD];;
+                 [[AppDelegate sharedDelegate] hidHUD];
                 
             });
         }else{
-             [[AppDelegate sharedDelegate] hidHUD];;
+             [[AppDelegate sharedDelegate] hidHUD];
             [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
             }
     } failure:^(NSError *error) {
-             [[AppDelegate sharedDelegate] hidHUD];;
+             [[AppDelegate sharedDelegate] hidHUD];
             [[AppDelegate sharedDelegate] showTextOnly:error.domain];
     }];
 }
