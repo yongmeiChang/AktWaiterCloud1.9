@@ -92,6 +92,26 @@ static AFNetWorkingTool * a_instance = nil;
             }];
         }
             break;
+        case HttpRequestTypePut:
+        {
+            [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (success) {
+                    id jsons = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers  error:nil];
+                    NSData *retData = responseObject;
+                    NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
+                     NSLog(@"response:%@",result);
+                    success(jsons);
+                }
+                [[AppDelegate sharedDelegate] hidHUD];
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+               if (failure) {
+                    failure(error);
+                }
+                [[AppDelegate sharedDelegate] hidHUD];
+            }];
+        }
+            break;
         default:
             break;
     }
