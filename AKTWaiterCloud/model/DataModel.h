@@ -40,30 +40,30 @@
 @property(nonatomic,strong) NSString <Optional>*  icon; // 头像
 @property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
-@property(nonatomic,strong) NSString <Optional>*  tenantsId;
-@property(nonatomic,strong) NSString <Optional>*  location;
-@property(nonatomic,strong) NSString <Optional>*  cooperationState;
-@property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
+//@property(nonatomic,strong) NSString <Optional>*  tenantsId;
+//@property(nonatomic,strong) NSString <Optional>*  location;
+//@property(nonatomic,strong) NSString <Optional>*  cooperationState;
+//@property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
 @property(nonatomic,strong) NSString <Optional>*  sex; // 性别类型 0男 1女
-@property(nonatomic,strong) NSString <Optional>*  sexName; // 性别
-@property(nonatomic,strong) NSString <Optional>*  stationNo;
-@property(nonatomic,strong) NSString <Optional>*  saleId;
-@property(nonatomic,strong) NSString <Optional>*  synopsis;
-@property(nonatomic,strong) NSString <Optional>*  waiterName;
+//@property(nonatomic,strong) NSString <Optional>*  sexName; // 性别
+//@property(nonatomic,strong) NSString <Optional>*  stationNo;
+//@property(nonatomic,strong) NSString <Optional>*  saleId;
+@property(nonatomic,strong) NSString <Optional>*  address;  // 地址
+@property(nonatomic,strong) NSString <Optional>*  name;  // 用户名
 @property(nonatomic,strong) NSString <Optional>*  waiterNo;
-@property(nonatomic,strong) NSString <Optional>*  locationX;
-@property(nonatomic,strong) NSString <Optional>*  locationY;
-@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
-@property(nonatomic,strong) NSString <Optional>*  maxOrders;//是总金额
+//@property(nonatomic,strong) NSString <Optional>*  locationX;
+//@property(nonatomic,strong) NSString <Optional>*  locationY;
+//@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
+@property(nonatomic,strong) NSString <Optional>*  identifyNo;// 身份证号
 @property(nonatomic,strong) NSString <Optional>*  level;//是等级
-@property(nonatomic,strong) NSString <Optional>*  startPermission;//主动发起工单权限 0表示否，1表示是
-@property(nonatomic,strong) NSString <Optional>*  waiterUkey;//唯一码
-@property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
-@property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
+//@property(nonatomic,strong) NSString <Optional>*  startPermission;//主动发起工单权限 0表示否，1表示是
+//@property(nonatomic,strong) NSString <Optional>*  uniqueKey;//唯一码
+//@property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
+//@property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
 @property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
 + (UserInfo *)getsUser; // 获取
 - (void)saveUser; // 保存
--(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName;
+//-(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName;
 @end
 
 

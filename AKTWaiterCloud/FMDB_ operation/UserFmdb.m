@@ -93,7 +93,7 @@
     }
     [db close];
 }
-
+/*
 -(UserInfo *)findByrow:(NSInteger)row
 {
     FMDatabase *db=[self Fmdbdatabase];
@@ -107,7 +107,7 @@
     [rs close];
     [db close];
     return  object;
-}
+}*/
 -(void)updateObject:(UserInfo *)userinfo
 {
     FMDatabase *db=[self Fmdbdatabase];

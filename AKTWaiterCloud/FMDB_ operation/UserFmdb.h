@@ -12,7 +12,7 @@
 @interface UserFmdb : NSObject
 -(void)saveUserInfo:(UserInfo *)userinfo;
 -(void)deleteAllUserInfo;
--(UserInfo *)findByrow:(NSInteger)row;
+//-(UserInfo *)findByrow:(NSInteger)row;
 -(void)updateObject:(UserInfo *)userinfo;
 -(int)size;
 

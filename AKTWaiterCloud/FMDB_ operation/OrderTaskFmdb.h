@@ -13,7 +13,7 @@
 @interface OrderTaskFmdb : NSObject
 -(void)saveOrderTask:(OrderInfo *)orderinfo;
 -(void)deleteAllOrderTask;
--(OrderInfo *)findByrow:(NSInteger)row;
+//-(OrderInfo *)findByrow:(NSInteger)row;
 -(NSMutableArray *)findAllOrderInfo;
 -(void)updateObject:(OrderInfo *)orderinfo;
 -(void)deleteOrderTaskByWorkNo:(NSString *)WorkNo;

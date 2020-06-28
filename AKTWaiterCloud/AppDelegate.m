@@ -90,7 +90,7 @@
         //获取各类工单数量
         LoginModel *model = [LoginModel gets];
         NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId)};
-        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
         // 重新设置根视图
         self.rootViewController = [self getRootTabVBarAction];
         self.window.rootViewController = self.rootViewController;

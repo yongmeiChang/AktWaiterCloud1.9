@@ -111,7 +111,7 @@
     [db close];
     return  orderArray;
 }
-
+/*
 -(OrderInfo *)findByrow:(NSInteger)row
 {
     FMDatabase *db=[self Fmdbdatabase];
@@ -126,7 +126,7 @@
     [db close];
     return  object;
 }
-
+*/
 
 
 -(void)updateObject:(OrderInfo *)orderinfo
