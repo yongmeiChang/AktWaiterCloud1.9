@@ -91,7 +91,7 @@
           return;
       }
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
-    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;
             [self.btnCode setTitle:@"60秒后重发" forState:UIControlStateNormal];
@@ -183,7 +183,7 @@
 }
 -(void)requestSigninInfo{
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
-    [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {

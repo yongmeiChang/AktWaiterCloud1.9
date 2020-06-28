@@ -38,7 +38,7 @@
 
 #pragma mark - request
 -(void)reloadListZuhu{
-    [[AktLoginCmd sharedTool] requestTenantsListParameters:@{} type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestTenantsListParameters:@{} type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *code = [dic objectForKey:@"code"];
         NSString *msg = [dic objectForKey:@"message"];

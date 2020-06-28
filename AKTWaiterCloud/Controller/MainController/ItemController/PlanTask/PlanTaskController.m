@@ -96,7 +96,7 @@
 
 -(void)requestUnFinishedTask{
      [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    NSDictionary * parameters =@{@"waiterId":[LoginModel gets].uuid,@"tenantsId":[LoginModel gets].tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime};
+    NSDictionary * parameters =@{@"tenantsId":[LoginModel gets].tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];

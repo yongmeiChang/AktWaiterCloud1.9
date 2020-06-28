@@ -140,7 +140,7 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     NSLog(@"---%@",model);
     model = [LoginModel gets];
-    NSDictionary * parameters =@{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSDictionary * parameters =@{@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)}; // @"waiterId":kString(model.uuid),
 
     [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
