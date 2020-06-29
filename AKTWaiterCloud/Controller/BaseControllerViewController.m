@@ -238,7 +238,6 @@
         NSLog(@"用户退出登录");
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
-        [[[UserFmdb alloc] init] deleteAllUserInfo];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];

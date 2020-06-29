@@ -23,7 +23,7 @@
 #import <LxGridViewCell.h>
 #import "SaveDocumentArray.h"
 #import <math.h>
-#import "CheckInJudge.h"
+//#import "CheckInJudge.h"
 #import "AppInfoDefult.h"
 #import "SinoutReasonView.h" // 提交失败的原因
 #import "AktWCMp3.h" // 录音
@@ -37,7 +37,7 @@
     
     long unservicetime;//记录服务时长不足的时间 秒
     
-    long SSunservicetime;//记录服务时长不足毫秒
+    long SSunservicetime;//记录服务时长不足毫秒gr
     long leaveIntime;//迟到时间毫秒
     long leaveOuttime;//早退时间毫秒
     

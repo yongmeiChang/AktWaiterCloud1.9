@@ -8,11 +8,11 @@
 
 #import "DownOrdersController.h"
 #import "QRCodeViewController.h"
-#import "DownOrderView.h"
+//#import "DownOrderView.h"
 #import "HandCodeController.h"
 
-@interface DownOrdersController ()<HandDelegate,SearchDelegate>
-@property (nonatomic,strong) DownOrderView * doView;
+@interface DownOrdersController () //<HandDelegate,SearchDelegate>
+//@property (nonatomic,strong) DownOrderView * doView;
 @property (weak,nonatomic) IBOutlet UIButton * QRCodeBtn;
 @property (weak,nonatomic) IBOutlet UIButton * HandCodeBtn;
 @end

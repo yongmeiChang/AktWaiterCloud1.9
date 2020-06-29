@@ -100,7 +100,7 @@
     
 }
 -(void)selectSexTypeNomal:(UserInfo *)info{
-    NSLog(@"%@  %@",info.sex,info.sexName);
+    NSLog(@"%@",info.sex);
     if ([info.sex integerValue] == 0) {
         btnMen.selected = YES;
         btnWomen.selected = NO;
