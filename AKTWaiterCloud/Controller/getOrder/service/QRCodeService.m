@@ -19,7 +19,7 @@
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
         NSDictionary * param = @{@"customerUkey":str,@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
-        [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+        [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSString * message = [dic objectForKey:@"message"];
             NSNumber * code = [dic objectForKey:@"code"];
@@ -113,7 +113,7 @@
         
     }else if(self.type==1){//扫码添加工单
         NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
-        [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+        [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
             if([code intValue] == 2){
@@ -140,7 +140,7 @@
         
     }else if(self.type==2){//手动添加工单
         NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
-        [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+        [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
             if([code intValue] == 2){

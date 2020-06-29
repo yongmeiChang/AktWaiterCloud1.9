@@ -19,7 +19,6 @@
 #import "NSMutableDictionary+Utils.h"
 #import "DataManager.h"
 #import "DataModel.h"
-#import "UserFmdb.h"
 
 #import "UIColor+Hex.h"
 #import "AppInfoDefult.h"
@@ -109,9 +108,9 @@ static const int ddLogLevel = DDLogLevelError;
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
+//#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
 // 测试环境
-//#define SERVICEURL @"http://172.16.30.90:8089/ankangtong-outwork/appService" // 新测试环境
+#define SERVICEURL @"http://172.16.31.133:7010/ankangtong-outwork/appService" // 新测试环境
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

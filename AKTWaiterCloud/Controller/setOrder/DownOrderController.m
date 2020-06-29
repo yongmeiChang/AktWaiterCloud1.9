@@ -9,7 +9,7 @@
 #import "DownOrderController.h"
 #import "DownOrderCell.h"
 #import "ServicePojController.h"
-#import "DownOrderView.h"
+//#import "DownOrderView.h"
 #import "AktAddOrderUserInfoCell.h" // 用户信息
 #import "AktServiceRemarkCell.h" // 服务内容
 #import "DatePickerView.h"
@@ -27,7 +27,7 @@
 @property(nonatomic,strong) NSString * bTime;//给后台
 @property(nonatomic,strong) NSString * eTime;//给后台
 
-@property (nonatomic,strong) DownOrderView * doView;
+//@property (nonatomic,strong) DownOrderView * doView;
 @property(nonatomic,strong) NSDictionary * addressDic;
 @property(nonatomic) int type;
 // 服务日期选项
@@ -215,7 +215,7 @@
     [paremeter addUnEmptyString:strRemark forKey:@"serviceContent"]; // 服务内容
     [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];//_money 传空值
     [paremeter addUnEmptyString:[UserInfo getsUser].uuid forKey:@"waiterId"];
-    [paremeter addUnEmptyString:[UserInfo getsUser].waiterName forKey:@"waiterName"];
+    [paremeter addUnEmptyString:[UserInfo getsUser].name forKey:@"waiterName"];
     [paremeter addUnEmptyString:[UserInfo getsUser].tenantsId forKey:@"tenantsId"];
     
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
