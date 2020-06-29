@@ -49,6 +49,7 @@
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     self.titlelabel.text = itemName; // 服务项目名称
+    /*
     if([orderinfo.workStatus isEqualToString:@"3"]||[orderinfo.workStatus isEqualToString:@"7"]){
         self.bgimageview.image = [UIImage imageNamed:@"undo"];
     }else if([orderinfo.workStatus isEqualToString:@"4"]){
@@ -57,7 +58,15 @@
         self.bgimageview.image = [UIImage imageNamed:@"finish"];
     }else if([orderinfo.workStatus isEqualToString:@"11"]){
         self.bgimageview.image = [UIImage imageNamed:@"editorder"];
+    }*/
+    if([orderinfo.nodeName isEqualToString:@"待签入"]){
+        self.bgimageview.image = [UIImage imageNamed:@"undo"];
+    }else if([orderinfo.nodeName isEqualToString:@"待签出"]){
+        self.bgimageview.image = [UIImage imageNamed:@"doing"];
+    }else {
+        self.bgimageview.image = [UIImage imageNamed:@"finish"];
     }
+    
     self.addresslabel.text = orderinfo.serviceAddress; // 服务地址
            
 }

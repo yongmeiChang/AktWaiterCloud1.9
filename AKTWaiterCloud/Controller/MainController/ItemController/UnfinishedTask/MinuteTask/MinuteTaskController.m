@@ -73,10 +73,10 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
     _sgController = [[SignoutController alloc] init];
-    if([self.orderinfo.workStatus isEqualToString:@"4"]){
+    if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
         _sgController.type = 1;
          [self.btnSingInOrSingOut setTitle:@"任务签出" forState:UIControlStateNormal];
-    }else if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]){
+    }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
         _sgController.type = 0;
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
     }
@@ -104,19 +104,19 @@
     if(indexPath.section==0){
         return 200;
     }else if(indexPath.section==1){
-        if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]||[self.orderinfo.workStatus isEqualToString:@"11"]){
+        if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
             return 105.5;
         }else{
             return 180;
         }
     }else if(indexPath.section==2){
-        if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]||[self.orderinfo.workStatus isEqualToString:@"4"]||[self.orderinfo.workStatus isEqualToString:@"11"]){
+        if([self.orderinfo.nodeName isEqualToString:@"待签入"] || [self.orderinfo.nodeName isEqualToString:@"待签出"]){
             return 105.5;
         }else{
             return 240;
         }
     }else if(indexPath.section==3){
-        if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]||[self.orderinfo.workStatus isEqualToString:@"4"]||[self.orderinfo.workStatus isEqualToString:@"11"]){
+        if([self.orderinfo.nodeName isEqualToString:@"已结单"] || [self.orderinfo.nodeName isEqualToString:@"待处理"]){
             return 105.5;
         }else{
             return 177;
@@ -151,7 +151,7 @@
         return cell;
     }else if(indexPath.section==1){
 
-        if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]||[self.orderinfo.workStatus isEqualToString:@"11"]){
+        if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
 
             NoDateCell * sCell;
             sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
@@ -174,7 +174,7 @@
             return sCell;
         }
     }else if(indexPath.section==2){
-        if([self.orderinfo.workStatus isEqualToString:@"3"]||[self.orderinfo.workStatus isEqualToString:@"7"]||[self.orderinfo.workStatus isEqualToString:@"4"]||[self.orderinfo.workStatus isEqualToString:@"11"]){
+        if([self.orderinfo.nodeName isEqualToString:@"待签入"] || [self.orderinfo.nodeName isEqualToString:@"待签出"]){
         
             NoDateCell * sCell;
             sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
@@ -199,7 +199,7 @@
         }
     }else if(indexPath.section==3){
             
-            if([self.orderinfo.workStatus isEqualToString:@"6"]||[self.orderinfo.workStatus isEqualToString:@"8"]||[self.orderinfo.workStatus isEqualToString:@"10"]){
+            if([self.orderinfo.nodeName isEqualToString:@"已结单"] || [self.orderinfo.nodeName isEqualToString:@"待处理"]){
               VisitCell * visitCell;
               visitCell = (VisitCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify3];
               if (visitCell == nil) {

@@ -19,7 +19,7 @@
 @interface LoginModel : JSONModel
 @property(nonatomic,strong) NSString <Optional>*  id;
 @property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样，是将id的值赋予uuid
-//@property(nonatomic,strong) NSString <Optional>*  tenantsId; // 租户ID
+@property(nonatomic,strong) NSString <Optional>*  tenantsId; // 租户ID
 //@property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
 @property(nonatomic,strong) NSString <Optional>*  name; // 用户名
 @property(nonatomic,strong) NSString <Optional>*  sex; // 性别
@@ -40,7 +40,7 @@
 @property(nonatomic,strong) NSString <Optional>*  icon; // 头像
 @property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
-//@property(nonatomic,strong) NSString <Optional>*  tenantsId;
+@property(nonatomic,strong) NSString <Optional>*  tenantsId; // 租户ID
 //@property(nonatomic,strong) NSString <Optional>*  location;
 //@property(nonatomic,strong) NSString <Optional>*  cooperationState;
 //@property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
@@ -53,11 +53,11 @@
 @property(nonatomic,strong) NSString <Optional>*  waiterNo;
 //@property(nonatomic,strong) NSString <Optional>*  locationX;
 //@property(nonatomic,strong) NSString <Optional>*  locationY;
-//@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
+@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
 @property(nonatomic,strong) NSString <Optional>*  identifyNo;// 身份证号
 @property(nonatomic,strong) NSString <Optional>*  level;//是等级
 //@property(nonatomic,strong) NSString <Optional>*  startPermission;//主动发起工单权限 0表示否，1表示是
-//@property(nonatomic,strong) NSString <Optional>*  uniqueKey;//唯一码
+@property(nonatomic,strong) NSString <Optional>*  uniqueKey;//唯一码
 //@property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
 //@property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
 @property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
@@ -93,7 +93,8 @@
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaName;//服务区域
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaFullPath;//区域全路径
 @property(nonatomic,strong) NSString  <Optional>* workNo;//工单号
-@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  3、7  未开始   4 进行中  6、8、10 已结束
+//@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  3、7  未开始   4 进行中  6、8、10 已结束
+@property(nonatomic,strong) NSString  <Optional>* nodeName; // 工单状态 待签入=未开始   待签出=进行中，其他都是已完成
 @property(nonatomic,strong) NSString  <Optional>* workStatusName;//
 @property(nonatomic,strong) NSString  <Optional>* customerId;//服务用户ID
 @property(nonatomic,strong) NSString  <Optional>* customerNo;//档案号

@@ -69,20 +69,20 @@
                         if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
-                            if([orderinfo.workStatus isEqualToString:@"11"]){
-                                [editArray addObject:orderinfo];
-                            }else{
+//                            if([orderinfo.workStatus isEqualToString:@"11"]){
+//                                [editArray addObject:orderinfo];
+//                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
-                            }
+//                            }
                             [qv.unfinishController.orderfmdb saveOrderTask:orderinfo];
                         }else{
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
-                            if([orderinfo.workStatus isEqualToString:@"11"]){
-                                [editArray addObject:orderinfo];
-                            }else{
+//                            if([orderinfo.workStatus isEqualToString:@"11"]){
+//                                [editArray addObject:orderinfo];
+//                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
-                            }
+//                            }
                             [qv.unfinishController.orderfmdb updateObject:orderinfo];
                         }
                     }

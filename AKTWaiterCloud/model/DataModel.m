@@ -180,7 +180,7 @@
     self.affixFlag = affixFlag;
     self.serviceAreaName = serviceAreaName;
     self.serviceAreaFullPath = serviceAreaFullPath;
-    self.workStatus = workStatus;
+    self.nodeName = workStatus;
     self.workStatusName = workStatusName;
     self.customerId = customerId;
     self.customerNo = customerNo;

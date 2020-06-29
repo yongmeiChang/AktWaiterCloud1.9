@@ -375,7 +375,7 @@
     _layout.minimumLineSpacing = 10;
     _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    if([self.orderinfo.workStatus isEqualToString:@"4"]){
+    if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
         if([self.orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound ||[self.orderinfo.serviceItemName rangeOfString:@"陪诊"].location != NSNotFound){
             self.lcView.hidden = NO;
         }
