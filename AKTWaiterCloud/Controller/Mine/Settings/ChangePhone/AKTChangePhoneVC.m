@@ -59,7 +59,7 @@
 }
 - (IBAction)getPhoneCodeClick:(id)sender {
      NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
-    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;
             [self.btnCode setTitle:@"60秒后重发" forState:UIControlStateNormal];
@@ -85,7 +85,7 @@
         return;
     }
     NSDictionary *parma = @{@"tenantsId":kString([LoginModel gets].tenantsId),@"mobile":kString(self.tfPhone.text),@"checkCode":self.tfCode.text};
-    [[[AktVipCmd alloc] init] requestChangePhone:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+    [[[AktVipCmd alloc] init] requestChangePhone:parma type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = responseObject;
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
     } failure:^(NSError * _Nonnull error) {

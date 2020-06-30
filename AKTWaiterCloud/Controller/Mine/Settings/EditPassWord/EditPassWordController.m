@@ -94,7 +94,7 @@
     NSDictionary * param = @{@"waiterId":[LoginModel gets].uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":[LoginModel gets].tenantsId};
     
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"操作中"];
-    [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePost success:^(id responseObject) {
+    [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePut success:^(id responseObject) {
     
         NSDictionary * result = responseObject;
         NSNumber * code = [result objectForKey:@"code"];
@@ -119,7 +119,6 @@
     
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
-    [[[UserFmdb alloc] init] deleteAllUserInfo];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];

@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "AFNetWorkingTool.h"
 
-#define AKTGetBalanceMethod @"getCustomerBalance" // 获取余额
 #define AKTGetPwdMethod @"getPassword" // 忘记密码
 #define AKTEditPwdMethod @"editPassword" // 修改密码
 #define AKTGetNoticeListMethod @"getPushRecordService" // 通知

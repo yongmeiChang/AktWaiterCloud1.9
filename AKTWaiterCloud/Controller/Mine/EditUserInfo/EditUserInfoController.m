@@ -61,7 +61,7 @@
 #pragma mark - 个人信息
 -(void)requestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
     NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
-    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypeGet success:^(id  _Nonnull responseObject) {
         NSDictionary *dic = [responseObject objectForKey:@"object"];
         modelUser = [[UserInfo alloc] initWithDictionary:dic error:nil];
         modelUser.uuid = modelUser.id;
@@ -149,7 +149,7 @@
     _headBaseStr = [self imageToBaseString:self.himage];
  
     NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":modelUser.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantsId),@"mobile":modelUser.mobile};
-    [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+    [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
         NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
         self.minecontroller.headimage = self.himage;
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];

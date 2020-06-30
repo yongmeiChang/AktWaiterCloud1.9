@@ -41,7 +41,7 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
     [paremeter addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
-    [[AFNetWorkingRequest sharedTool] requestWithGetServicePojCustomerUkeyParameters:paremeter type:HttpRequestTypePost success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool] requestWithGetServicePojCustomerUkeyParameters:paremeter type:HttpRequestTypeGet success:^(id responseObject) {
        
         NSMutableArray *arr = [NSMutableArray array];
         if([[responseObject objectForKey:@"code"] intValue] == 1){

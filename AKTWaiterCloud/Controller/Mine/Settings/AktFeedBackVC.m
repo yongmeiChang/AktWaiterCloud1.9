@@ -275,9 +275,9 @@
     baseStr = [basearr componentsJoinedByString:@","];
     NSDictionary *dicParam;
     if (baseStr.length>1) {
-        dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; //
+        dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].uniqueKey,@"content":tvRemark.text,@"imageData":basearr,@"imageType":@"png"}; //
     }else{
-      dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].waiterUkey,@"content":tvRemark.text,@"imageData":@"",@"imageType":@""}; //
+      dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantsId),@"waiterUkey":[UserInfo getsUser].uniqueKey,@"content":tvRemark.text,@"imageData":@"",@"imageType":@""}; //
     }
    
     [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {

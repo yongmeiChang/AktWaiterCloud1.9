@@ -61,7 +61,7 @@
       [self initAgreementView];
     // 获取缓存
     if([UserInfo getsUser]){
-        self.unameText.text = [UserInfo getsUser].waiterUkey;
+        self.unameText.text = [UserInfo getsUser].uniqueKey;
         self.upswText.text = [UserInfo getsUser].password;
     }
     self.cqCodeUserName = @"";
@@ -226,7 +226,7 @@
                 
                 //获取各类工单数量
                 NSDictionary * params = @{@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
-                [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypePost success:^(id responseObject) {} failure:^(NSError *error) {}];
+                [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
             }else{
                 [self showMessageAlertWithController:self Message:messageDic];
             }

@@ -177,7 +177,7 @@
     NSLog(@"%@",[LoginModel gets]);
     LoginModel *model = [LoginModel gets];
     NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":model.uuid,@"tenantsId":model.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypePost success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];

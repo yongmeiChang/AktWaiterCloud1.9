@@ -44,7 +44,7 @@
             break;
         case 1:{
             self.labName.text = @"姓名";
-            self.labvalue.text = kString(userInfo.waiterName);
+            self.labvalue.text = kString(userInfo.name);
             self.accessoryType = UITableViewCellAccessoryNone;
             self.labValueConstraint.constant = 43.5;
         }
@@ -65,7 +65,7 @@
             self.accessoryType = UITableViewCellAccessoryNone;
             self.labValueConstraint.constant = 43.5;
             self.labName.text = @"唯一码";
-            self.labvalue.text = kString(userInfo.waiterUkey); 
+            self.labvalue.text = kString(userInfo.uniqueKey); 
         }
             break;
         case 4:{

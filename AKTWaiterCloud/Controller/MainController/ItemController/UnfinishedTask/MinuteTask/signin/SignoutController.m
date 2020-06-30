@@ -913,7 +913,7 @@
     if (isPostLocation) {
         NSLog(@"---可以提交");
         // 判断是否可以提交工单
-              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
+              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypeGet success:^(id responseObject) {
 
                   NSDictionary *dicObje = [responseObject objectForKey:@"object"];
                   NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
@@ -971,7 +971,7 @@
     }
     NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantsId};
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypeGet success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         if([dic[@"code"] intValue]==1){
             [self showMessageAlertWithController:self Message:@"提交成功"];
@@ -1031,9 +1031,11 @@
     [param addUnEmptyString:@"test" forKey:@"test"];
     [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
     [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"]; // 定位异常
+//    [param addUnEmptyString:@".png" forKey:@"imageType"]; // 新增加 图片类型
+//    [param addUnEmptyString:self.orderinfo.serviceAddress forKey:@"serviceAddress"]; // 新增加 服务地址
     //签出
     if(self.type==1){
-        
+        // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signOutLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signOutDistance"];// 签出距离
@@ -1061,6 +1063,9 @@
         }];
         
     }else{
+//        [param addUnEmptyString:self.orderinfo.serviceLocationX forKey:@"serviceLocationX"]; // 新增加
+//        [param addUnEmptyString:self.orderinfo.serviceLocationY forKey:@"serviceLocationY"]; // 新增加
+        
         [param addUnEmptyString:model.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];

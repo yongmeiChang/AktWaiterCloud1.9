@@ -140,9 +140,9 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     NSLog(@"---%@",model);
     model = [LoginModel gets];
-    NSDictionary * parameters =@{@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)}; // @"waiterId":kString(model.uuid),
+    NSDictionary * parameters =@{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)}; // @"waiterId":kString(model.uuid),
 
-    [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypePost success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool] requesthistoryNoHandled:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];
         
@@ -249,7 +249,7 @@
         DataManager * dm = [[DataManager alloc] init];
         
         if([orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound){
-            if(![orderinfo.workStatus isEqualToString:@"3"]&&![orderinfo.workStatus isEqualToString:@"7"] ){
+            if(![orderinfo.nodeName isEqualToString:@"待签入"] ){
                 
             }else{
                 if([self compareDate:[dm changeTime:orderinfo.serviceEnd] End:[dm getNowDate]]==-1){
