@@ -96,7 +96,7 @@
 
 -(void)requestUnFinishedTask{
      [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    NSDictionary * parameters =@{@"waiterId":[LoginModel gets].uuid,@"tenantsId":[LoginModel gets].tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
+    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"tenantsId":kString([LoginModel gets].tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];
@@ -105,8 +105,8 @@
             }
         if([code intValue]==1){
             NSArray * arr = [NSArray array];
-            NSDictionary * obj = [dic objectForKey:@"object"];
-            arr = obj[@"result"];
+            NSDictionary * obj = [dic objectForKey:ResponseData];
+            arr = obj[@"list"];
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {

@@ -80,7 +80,7 @@
 
 //手机号有效性
 +(BOOL)isMobileNumber:(NSString *)mobile{
-    NSString *regex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+    NSString *regex = @"^((1[0-9][0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
     BOOL isMatch = [self isValidateByRegex:regex Param:mobile];
     return isMatch;
 }

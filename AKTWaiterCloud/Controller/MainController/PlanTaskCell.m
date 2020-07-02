@@ -42,8 +42,8 @@
         [self.viewPhone addSubview:btnPhone];
     }
     
-    NSString * serviceBeg = [orderinfo.serviceBegin substringToIndex:16];
-    NSString * serviceEn = [orderinfo.serviceEnd substringToIndex:16];
+    NSString * serviceBeg = [kString(orderinfo.serviceBegin) substringToIndex:16];
+    NSString * serviceEn = [kString(orderinfo.serviceEnd) substringToIndex:16];
     self.datelabel.text = [NSString stringWithFormat:@"%@ —— %@",serviceBeg,serviceEn]; // 开始 结束时间
     self.workNolabel.text = [NSString stringWithFormat:@"%@",orderinfo.workNo];// 工单号
     NSString * itemName = orderinfo.serviceItemName;

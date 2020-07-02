@@ -43,6 +43,9 @@ static AFNetWorkingTool * a_instance = nil;
     }else{
         manager.requestSerializer.timeoutInterval = 20.0f;
     }
+    //将token封装入请求头
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
     NSString *url = [NSString stringWithFormat:@"%@/%@",SERVICEURL,URLString];
 
     NSLog(@"requst:%@\n参数:%@",url,parameters);

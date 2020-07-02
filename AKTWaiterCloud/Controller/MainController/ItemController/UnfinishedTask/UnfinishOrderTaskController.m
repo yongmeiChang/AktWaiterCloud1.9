@@ -148,8 +148,8 @@
         
         if([code intValue]==1){
             NSArray * arr = [NSArray array];
-            NSDictionary * obj = [dic objectForKey:@"object"];
-            arr = obj[@"result"];
+            NSDictionary * obj = [dic objectForKey:ResponseData];
+            arr = obj[@"list"];
             // 分页数据判断
             if (pageSize == 1) {
                 [_dataArray removeAllObjects];

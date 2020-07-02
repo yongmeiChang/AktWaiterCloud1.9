@@ -176,15 +176,15 @@
     }
     NSLog(@"%@",[LoginModel gets]);
     LoginModel *model = [LoginModel gets];
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":model.uuid,@"tenantsId":model.tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
         if([code intValue]==1){
             NSArray * arr = [NSArray array];
-            NSDictionary * obj = [dic objectForKey:@"object"];
-            arr = obj[@"result"];
+            NSDictionary * obj = [dic objectForKey:ResponseData];
+            arr = obj[@"list"];
             if([message isEqualToString:@"当前没有工单任务!"]){
                 [self showOffLineAlertWithTime:1.0  message:@"当前没有工单任务!" DoSomethingBlock:^{
                     self.netWorkErrorView.hidden = NO;

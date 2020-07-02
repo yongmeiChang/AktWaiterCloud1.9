@@ -167,7 +167,7 @@
 -(void)reauestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
     NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
     [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypeGet success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        NSDictionary *dic = [responseObject objectForKey:ResponseData];
         
         UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
         user.uuid = user.id;
@@ -213,19 +213,19 @@
             NSNumber * code = [result objectForKey:@"code"];
             NSString * messageDic = [responseObject objectForKey:@"message"];
             if([code intValue] == 1){
-                NSDictionary * userdic = [result objectForKey:@"object"];
+                NSDictionary * userdic = [result objectForKey:ResponseData];
                 NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
                 LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
                 model.uuid = model.id;
                 [model save];
                 [self reauestUserInfoTenantsid:kString(model.tenantsId) UserId:kString(model.uuid)]; // 获取个人信息
                 // 登录成功
-                [[NSUserDefaults standardUserDefaults] setObject:model.uuid forKey:@"AKTserviceToken"];
+                [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:@"AKTserviceToken"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
+                NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId)};
                 [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
             }else{
                 [self showMessageAlertWithController:self Message:messageDic];

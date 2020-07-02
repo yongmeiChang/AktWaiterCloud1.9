@@ -43,7 +43,7 @@
         NSString *code = [dic objectForKey:@"code"];
         NSString *msg = [dic objectForKey:@"message"];
         if ([code integerValue] == 1) {
-            [aryAll addObjectsFromArray:[dic objectForKey:@"object"]];
+            [aryAll addObjectsFromArray:[dic objectForKey:ResponseData]];
             for (int s=0; s<aryAll.count; s++) {
                  [_flagArray addObject:@"0"];
             }

@@ -28,6 +28,7 @@
 @property(nonatomic,strong) NSString <Optional>*  address; // 助老员地址
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
 @property(nonatomic,strong) NSString <Optional>*  uniqueKey;  // 唯一码
+@property(nonatomic,strong) NSString <Optional>*  token;  // 唯一码
 
 + (LoginModel *)gets; // 获取
 - (void)save; // 保存

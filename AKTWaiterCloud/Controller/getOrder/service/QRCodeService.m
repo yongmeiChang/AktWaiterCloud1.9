@@ -18,7 +18,7 @@
     LoginModel *model = [LoginModel gets];
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
-        NSDictionary * param = @{@"customerUkey":str,@"waiterId":model.uuid,@"tenantsId":model.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"waiterId":model.uuid,@"tenantsId":kString(model.tenantsId)};
         [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSString * message = [dic objectForKey:@"message"];
@@ -112,7 +112,7 @@
         }];
         
     }else if(self.type==1){//扫码添加工单
-        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":kString(model.tenantsId)};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
@@ -139,7 +139,7 @@
         }];
         
     }else if(self.type==2){//手动添加工单
-        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":model.tenantsId};
+        NSDictionary * param = @{@"customerUkey":str,@"tenantsId":kString(model.tenantsId)};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
@@ -148,7 +148,7 @@
                  [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
-            NSDictionary * object = dic[@"object"];
+            NSDictionary * object = [dic objectForKey:ResponseData];
             DownOrderFirstInfo *font = [[DownOrderFirstInfo alloc]initWithDictionary:object error:nil];
             DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
             [controller.navigationController pushViewController:doController animated:YES];
