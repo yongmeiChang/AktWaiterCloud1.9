@@ -26,9 +26,7 @@
             if([code longValue]==1){
 
                 NSArray * arr = [[NSArray alloc] init];
-//                NSDictionary * obj = [dic objectForKey:@"object"];
-//                arr = obj[@"result"];
-                arr = [dic objectForKey:@"object"];
+                arr = [dic objectForKey:ResponseData];
                 if(arr.count==0){
                     [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
                         QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
@@ -124,7 +122,7 @@
                 }];
                 return;
             }
-            NSDictionary * object = dic[@"object"];
+            NSDictionary * object = [dic objectForKey:ResponseData];
             DownOrderFirstInfo *font = [[DownOrderFirstInfo alloc]initWithDictionary:object error:nil];
             DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
             [controller.navigationController pushViewController:doController animated:YES];

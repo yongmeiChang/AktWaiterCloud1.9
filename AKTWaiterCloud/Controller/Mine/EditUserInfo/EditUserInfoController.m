@@ -62,7 +62,7 @@
 -(void)requestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
     NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
     [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypeGet success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = [responseObject objectForKey:@"object"];
+        NSDictionary *dic = [responseObject objectForKey:ResponseData];
         modelUser = [[UserInfo alloc] initWithDictionary:dic error:nil];
         modelUser.uuid = modelUser.id;
         [modelUser saveUser];

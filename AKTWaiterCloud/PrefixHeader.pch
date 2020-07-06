@@ -122,4 +122,7 @@ static const int ddLogLevel = DDLogLevelError;
 
 #define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
 
+#define ResponseCode @"code"
+#define ResponseMsg @"message"
 #define ResponseData @"object"
+

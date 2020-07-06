@@ -37,7 +37,7 @@
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
+            NSArray * obj = [dic objectForKey:ResponseData];
             if(obj.count>0){
                 
                 UIView * popview = [[UIView alloc] init];
@@ -85,7 +85,7 @@
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
+            NSArray * obj = [dic objectForKey:ResponseData];
             
             UIView * popview = [[UIView alloc] init];
             popview.backgroundColor = [UIColor grayColor];

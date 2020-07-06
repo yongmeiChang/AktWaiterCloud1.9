@@ -47,11 +47,11 @@
         NSDictionary * dic = responseObject;
 
         if([dic[@"code"] intValue]==1){
-            if(![dic objectForKey:@"object"]){
+            if(![dic objectForKey:ResponseData]){
                 [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
-            NSArray * arr = dic[@"object"];
+            NSArray * arr = [dic objectForKey:ResponseData];
           if(arr && arr.count>0){
               self.tabeleview.hidden = NO;
               self.netWorkErrorView.hidden = YES;
@@ -110,7 +110,7 @@
         [[AktVipCmd sharedTool] requestgetWorkOrder:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
-                NSMutableDictionary * dicc = dic[@"object"];
+                NSMutableDictionary * dicc = [dic objectForKey:ResponseData];
                 NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                 NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
                 NSString * createBy = [createBydic objectForKey:@"id"];

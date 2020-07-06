@@ -151,7 +151,7 @@
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
     [[AktLoginCmd sharedTool] requestAppVersionParameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypeGet success:^(id responseObject) {
-        NSDictionary * dic = responseObject[@"object"];
+        NSDictionary * dic = [responseObject objectForKey:ResponseData];
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             // 最新版本号
             NSString *iTunesVersion = dic[@"versions"];

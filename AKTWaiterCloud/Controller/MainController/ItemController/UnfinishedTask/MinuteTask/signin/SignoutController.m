@@ -915,7 +915,7 @@
         // 判断是否可以提交工单
               [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypeGet success:^(id responseObject) {
 
-                  NSDictionary *dicObje = [responseObject objectForKey:@"object"];
+                  NSDictionary *dicObje = [responseObject objectForKey:ResponseData];
                   NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
                   NSString *strtime = [dicObje objectForKey:@"isTimeStatement"];// 1或null 可以提交  0不可以提交
                   BOOL bolLocation = ([strlocation isKindOfClass:[NSNull class]] || [strlocation isEqualToString:@"1"] || ([strlocation integerValue] ==1));
