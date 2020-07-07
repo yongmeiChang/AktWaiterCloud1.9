@@ -417,8 +417,11 @@
         UIAlertAction *action = [UIAlertAction actionWithTitle:(ac==nil?@"确定":ac) style:UIAlertActionStyleDefault handler:handler];
         [actionSheet addAction:action];
     }
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:(cl==nil?@"取消":cl) style:UIAlertActionStyleCancel handler:nil];
-    [actionSheet addAction:cancel];
+    if ([cl isEqualToString:@"取消"] || cl == nil) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:(cl==nil?@"取消":cl) style:UIAlertActionStyleCancel handler:nil];
+        [actionSheet addAction:cancel];
+    }
+   
     [[AppDelegate getCurrentVC] presentViewController:actionSheet animated:YES completion:nil];
 }
 @end

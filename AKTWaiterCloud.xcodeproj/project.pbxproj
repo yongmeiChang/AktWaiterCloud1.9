@@ -375,6 +375,9 @@
 		4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDAD741240F7E0E00CF9129 /* UIImage+Color.m */; };
 		4CE6A04A23AB0B1600C41114 /* AktSuccseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6A04923AB0B1600C41114 /* AktSuccseView.m */; };
 		4CE6A04D23AB268300C41114 /* AktResetAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6A04C23AB268300C41114 /* AktResetAppView.m */; };
+		4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
+		4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
+		4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0861D41FD014C80003F692 /* MyGaodeMap.m */; };
 		AD0BC44B1FA6F2D30083661C /* OrderTaskFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */; };
 		AD1739C71FD0ED6300DAC4A5 /* AFNetWorkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */; };
@@ -669,6 +672,8 @@
 		4CE6A04923AB0B1600C41114 /* AktSuccseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktSuccseView.m; sourceTree = "<group>"; };
 		4CE6A04B23AB268300C41114 /* AktResetAppView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktResetAppView.h; sourceTree = "<group>"; };
 		4CE6A04C23AB268300C41114 /* AktResetAppView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktResetAppView.m; sourceTree = "<group>"; };
+		4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSONToDictionary.m"; sourceTree = "<group>"; };
+		4CFE1F6424B31BDE003B058D /* NSString+JSONToDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSONToDictionary.h"; sourceTree = "<group>"; };
 		85608984DD85E9CE41839972 /* Pods-AKTWaiterCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.release.xcconfig"; sourceTree = "<group>"; };
 		920492DD240A35FAC7AD3743 /* libPods-AKTWaiterCloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AKTWaiterCloud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0861D31FD014C80003F692 /* MyGaodeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyGaodeMap.h; sourceTree = "<group>"; };
@@ -884,18 +889,18 @@
 		4C3D755724A88ABF00D0F79A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				4C3D756A24A88ABF00D0F79A /* SettingsTableViewCell.h */,
 				4C3D755824A88ABF00D0F79A /* SettingsTableViewCell.m */,
-				4C3D755924A88ABF00D0F79A /* SettingsController.h */,
 				4C3D755A24A88ABF00D0F79A /* SettingsTableViewCell.xib */,
 				4C3D755B24A88ABF00D0F79A /* AboutUs */,
-				4C3D755F24A88ABF00D0F79A /* AktFeedBackVC.m */,
 				4C3D756024A88ABF00D0F79A /* EditPassWord */,
-				4C3D756424A88ABF00D0F79A /* AktFeedBackVC.xib */,
 				4C3D756524A88ABF00D0F79A /* ChangePhone */,
+				4C3D755924A88ABF00D0F79A /* SettingsController.h */,
 				4C3D756924A88ABF00D0F79A /* SettingsController.m */,
-				4C3D756A24A88ABF00D0F79A /* SettingsTableViewCell.h */,
-				4C3D756B24A88ABF00D0F79A /* AktFeedBackVC.h */,
 				4C3D756C24A88ABF00D0F79A /* SettingsController.xib */,
+				4C3D756B24A88ABF00D0F79A /* AktFeedBackVC.h */,
+				4C3D755F24A88ABF00D0F79A /* AktFeedBackVC.m */,
+				4C3D756424A88ABF00D0F79A /* AktFeedBackVC.xib */,
 				4C3D756D24A88ABF00D0F79A /* CheckUpdate */,
 			);
 			path = Settings;
@@ -1295,6 +1300,8 @@
 		AD4A446B1F8C6FB700D6E5C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4CFE1F6424B31BDE003B058D /* NSString+JSONToDictionary.h */,
+				4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */,
 				4CDAD736240F7E0E00CF9129 /* viewPlus */,
 				4C869A8E240940700018B943 /* CzJWaterMark */,
 				4C869A8A24092B390018B943 /* ZHAttributeTextView.h */,
@@ -1910,6 +1917,7 @@
 				4C3DABA524A9820F009126D5 /* QRCodeViewController.m in Sources */,
 				AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
+				4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,
 				ADD835F3205779AF0003A1C5 /* AppInfoDefult.m in Sources */,
 				4CD6750922EAAB6600AB76AF /* PhotoView.m in Sources */,
@@ -2008,6 +2016,7 @@
 				4CD674EA22E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				4CD6754922F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C3D753824A87CBB00D0F79A /* AktWSigninListVC.m in Sources */,
+				4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4C9B974F240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
 				4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C3D75D024A88ABF00D0F79A /* NotifyController.m in Sources */,
@@ -2100,6 +2109,7 @@
 				4CD674EB22E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,
 				4CD6754A22F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C3D753924A87CBB00D0F79A /* AktWSigninListVC.m in Sources */,
+				4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4C9B9750240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
 				4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C3D75D124A88ABF00D0F79A /* NotifyController.m in Sources */,
