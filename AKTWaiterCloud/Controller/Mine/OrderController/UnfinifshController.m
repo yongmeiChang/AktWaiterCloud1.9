@@ -195,13 +195,13 @@
                     self.netWorkErrorView.hidden = YES;
 
                     for (NSMutableDictionary * dicc in arr) {
-                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
+//                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                         NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                        NSString * createBy = [createBydic objectForKey:@"id"];
+//                        NSString * createBy = [createBydic objectForKey:@"id"];
                         NSString * updateBy = [updateBydic objectForKey:@"id"];
-                        [dicc removeObjectForKey:@"createBy"];
+//                        [dicc removeObjectForKey:@"createBy"];
                         [dicc removeObjectForKey:@"updateBy"];
-                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
+//                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                         [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                         NSDictionary * objdic = (NSDictionary*)dicc;
                         self.orderfmdb = [[OrderTaskFmdb alloc]init];

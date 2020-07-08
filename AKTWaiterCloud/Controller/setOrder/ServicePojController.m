@@ -49,13 +49,13 @@
             [object enumerateObjectsUsingBlock:^(id  _Nonnull
                                                  obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSMutableDictionary * Obj = [NSMutableDictionary dictionaryWithDictionary:obj];
-                NSDictionary * dic = [Obj objectForKey:@"createBy"];
-                NSString * createByid = [dic objectForKey:@"id"];
-                if(!createByid){
-                    createByid= @"";
-                }
-                [Obj removeObjectForKey:@"createBy"];
-                [Obj setObject:createByid forKey:@"createBy"];
+//                NSDictionary * dic = [Obj objectForKey:@"createBy"];
+//                NSString * createByid = [dic objectForKey:@"id"];
+//                if(!createByid){
+//                    createByid= @"";
+//                }
+//                [Obj removeObjectForKey:@"createBy"];
+//                [Obj setObject:createByid forKey:@"createBy"];
                 ServicePojInfo *font = [[ServicePojInfo alloc]initWithDictionary:Obj error:nil];
                 
                 if(font) {

@@ -111,13 +111,13 @@
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
                 NSMutableDictionary * dicc = [dic objectForKey:ResponseData];
-                NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
+//                NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                 NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                NSString * createBy = [createBydic objectForKey:@"id"];
+//                NSString * createBy = [createBydic objectForKey:@"id"];
                 NSString * updateBy = [updateBydic objectForKey:@"id"];
-                [dicc removeObjectForKey:@"createBy"];
+//                [dicc removeObjectForKey:@"createBy"];
                 [dicc removeObjectForKey:@"updateBy"];
-                [dicc setObject:createBy forKeyedSubscript:@"createBy"];
+//                [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                 [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                 NSDictionary * objdic = (NSDictionary*)dicc;
                 OrderInfo * orderinfo = [[OrderInfo alloc] initWithDictionary:objdic error:nil];
