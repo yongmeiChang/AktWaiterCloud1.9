@@ -9,13 +9,11 @@
 #import "DownOrderController.h"
 #import "DownOrderCell.h"
 #import "ServicePojController.h"
-//#import "DownOrderView.h"
 #import "AktAddOrderUserInfoCell.h" // 用户信息
 #import "AktServiceRemarkCell.h" // 服务内容
-#import "DatePickerView.h"
 #import "DateAndTimePickerView.h"
 
-@interface DownOrderController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AktServiceRemarkCellDelegate,DatePickerViewDelegate,DateAndTimePickerViewDelegate>
+@interface DownOrderController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AktServiceRemarkCellDelegate,DateAndTimePickerViewDelegate>
 {
     NSString *strAddress; // 详细地址
     NSString *strArea; //  市区
@@ -27,11 +25,9 @@
 @property(nonatomic,strong) NSString * bTime;//给后台
 @property(nonatomic,strong) NSString * eTime;//给后台
 
-//@property (nonatomic,strong) DownOrderView * doView;
 @property(nonatomic,strong) NSDictionary * addressDic;
 @property(nonatomic) int type;
 // 服务日期选项
-//@property (nonatomic, strong) DatePickerView *datePickerView;
 @property (nonatomic, strong) DateAndTimePickerView *timePickerView;
 
 @end
@@ -354,11 +350,6 @@
 }
 -(void)didPostInfo{
     [self SubmitBtnClick];
-}
-#pragma mark - click
--(void)ClickReload{
-    NSLog(@"点击了重新计算");
-    [self showMessageAlertWithController:self Message:@"计算完毕"];
 }
 
 #pragma mark - time pickerview

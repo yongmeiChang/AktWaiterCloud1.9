@@ -8,12 +8,8 @@
 
 #import <CocoaLumberjack.h>
 #import "ReachbilityTool.h"
-#import "DicToString.h"
 
-#import "CheckObject.h"
 #import "AppDelegate.h"
-#import <MapKit/MapKit.h>
-#import "PhoneSize.h"
 #import "BaseControllerViewController.h"
 #import "Vaildate.h"
 #import "NSMutableDictionary+Utils.h"
@@ -23,11 +19,11 @@
 #import "UIColor+Hex.h"
 #import "AppInfoDefult.h"
 #import "AktUtil.h"
-//#import "AFNetWorkingTool.h"
 #import "AFNetWorkingRequest.h" // 工单cmd
 #import "AktVipCmd.h" // 个人cmd
 #import "AktLoginCmd.h" // 登录cmd
 // 第三方SDK
+#import <MapKit/MapKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -81,8 +77,8 @@
  W图片 H图片？ W已知 H已知
  W图片/H图片？ w已知 h已知
  */
-#define IS_IOS7    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)/*判断系统版本*/
-#define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
+//#define IS_IOS7    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)/*判断系统版本*/
+//#define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

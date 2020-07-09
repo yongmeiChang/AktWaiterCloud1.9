@@ -29,7 +29,6 @@
 @property(nonatomic,strong) NSMutableArray * dateArray;//日历选中某天的数据源
 
 @property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
-@property(nonatomic) int b;
 
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 

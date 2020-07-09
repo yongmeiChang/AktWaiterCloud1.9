@@ -127,43 +127,8 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self toDictionary]];
     [dict writeToFile:path atomically:YES];
 }
-/*
--(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName{
-    self.uuid = userid;
-    self.icon = icon;
-    self.mobile = mobile;
-    self.password = password;
-    self.tenantsId = tenantsId;
-    self.location = location;
-    self.cooperationState = cooperationState;
-    self.cooperationStateName = cooperationStateName;
-    self.sex = sex;
-    self.sexName = sexName;
-    self.stationNo = stationNo;
-    self.saleId = saleId;
-    self.synopsis = synopsis;
-    self.waiterName = waiterName;
-    self.waiterNo = waiterNo;
-    self.locationX = locationX;
-    self.locationY = locationY;
-    self.missionTrans = missionTrans;
-    self.maxOrders = maxOrders;
-    self.level = level;
-    self.startPermission = startPermission;
-    self.waiterUkey = waiterUkey;
-    self.locationFlag = locationFlag;
-    self.isPosition = isPosition;
-    self.tenantsName = tenantsName;
-}
-*/
-@end
-
-
-#pragma mark --- 我的钱包
-@implementation WorkMoneyInfo
 
 @end
-
 
 #pragma mark --- 我的工单
 @implementation OrderInfo

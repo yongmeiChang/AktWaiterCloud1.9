@@ -64,19 +64,7 @@
 @property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
 + (UserInfo *)getsUser; // 获取
 - (void)saveUser; // 保存
-//-(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName;
-@end
 
-
-#pragma mark --- 我的钱包
-@interface WorkMoneyInfo : JSONModel
-@property(nonatomic,strong) NSString  <Optional>* workNo;
-@property(nonatomic,strong) NSString  <Optional>* delFlag;
-@property(nonatomic,strong) NSString  <Optional>* serviceBegin;
-@property(nonatomic,strong) NSString  <Optional>* affixFlag;
-@property(nonatomic,strong) NSString  <Optional>* begin;
-@property(nonatomic,strong) NSString  <Optional>* serviceMoney;
-@property(nonatomic,strong) NSString  <Optional>* total;
 @end
 
 

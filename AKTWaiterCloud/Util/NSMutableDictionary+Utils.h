@@ -16,7 +16,7 @@
 /**
  *  添加非空字符串
  *
- *  @param date 字符串
+ *  @param stringObject 字符串
  *  @param key  关键字
  */
 - (void)addUnEmptyString:(NSString *)stringObject forKey:(NSString *)key;

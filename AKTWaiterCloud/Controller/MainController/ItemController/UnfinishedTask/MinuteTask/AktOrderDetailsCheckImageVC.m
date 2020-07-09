@@ -117,7 +117,8 @@
             }];
             
         }else{
-            [self showMessageAlertWithController:self Message:@"没有图片"];
+            [[AppDelegate sharedDelegate] showTextOnly:@"没有图片"];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
