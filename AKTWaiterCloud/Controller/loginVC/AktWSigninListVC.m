@@ -66,10 +66,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([_flagArray[indexPath.section] isEqualToString:@"0"])
+    if ([_flagArray[indexPath.section] isEqualToString:@"0"]){
            return 0;
-       else
+    } else {
            return 44;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

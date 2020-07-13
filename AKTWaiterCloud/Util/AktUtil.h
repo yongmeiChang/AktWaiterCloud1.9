@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getTemPath:(NSString *)_fileName;
 
 + (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName;  // 转换录音格式 mp3
-
+// 获取 当前毫秒
++(NSString *)getNowTimes;
 // 获取当前时间
 +(NSString *)getNowDateAndTime;
 // 获取当前日期

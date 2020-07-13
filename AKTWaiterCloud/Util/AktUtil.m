@@ -91,7 +91,15 @@
     }
 }
 #pragma mark - 获取时间
-// 获取当前时间
+// 获取 当前毫秒
++(NSString *)getNowTimes{
+    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
+    NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+    return timeString;
+}
+
+// 获取当前时间 - 截止到秒
 +(NSString *)getNowDateAndTime{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];

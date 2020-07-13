@@ -9,6 +9,9 @@
 #import "AKTChangePhoneVC.h"
 
 @interface AKTChangePhoneVC ()
+{
+    NSString *encryptStr;
+}
 @property (weak, nonatomic) IBOutlet UITextField *tfPhone;
 @property (weak, nonatomic) IBOutlet UITextField *tfCode;
 @property (weak, nonatomic) IBOutlet UIButton *btnCode;
@@ -58,7 +61,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)getPhoneCodeClick:(id)sender {
-     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
+    //原始数据
+    NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
+    //使用字符串格式的公钥加密
+    NSString *encryptStr = [RSAEncryptor encryptString:phoneAndDataStr publicKey:RSA_Public_KEY];
+    
+     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":encryptStr};
     [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;

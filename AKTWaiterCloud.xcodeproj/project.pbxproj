@@ -37,6 +37,9 @@
 		4C37975B2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
 		4C37975C2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
 		4C37975D2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */; };
+		4C3B0C5A24BC01F800588D63 /* RSAEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3B0C5924BC01F800588D63 /* RSAEncryptor.m */; };
+		4C3B0C5B24BC01F800588D63 /* RSAEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3B0C5924BC01F800588D63 /* RSAEncryptor.m */; };
+		4C3B0C5C24BC01F800588D63 /* RSAEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3B0C5924BC01F800588D63 /* RSAEncryptor.m */; };
 		4C3D753724A87CBB00D0F79A /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D752824A87CBB00D0F79A /* AktWSigninListVC.m */; };
 		4C3D753824A87CBB00D0F79A /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D752824A87CBB00D0F79A /* AktWSigninListVC.m */; };
 		4C3D753924A87CBB00D0F79A /* AktWSigninListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D752824A87CBB00D0F79A /* AktWSigninListVC.m */; };
@@ -447,6 +450,8 @@
 		4C3797552422088D00DC9EFB /* AktOrderDetailsCheckImageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOrderDetailsCheckImageVC.h; sourceTree = "<group>"; };
 		4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderDetailsCheckImageVC.m; sourceTree = "<group>"; };
 		4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOrderDetailsCheckImageVC.xib; sourceTree = "<group>"; };
+		4C3B0C5824BC01F800588D63 /* RSAEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAEncryptor.h; sourceTree = "<group>"; };
+		4C3B0C5924BC01F800588D63 /* RSAEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAEncryptor.m; sourceTree = "<group>"; };
 		4C3D752824A87CBB00D0F79A /* AktWSigninListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktWSigninListVC.m; sourceTree = "<group>"; };
 		4C3D752924A87CBB00D0F79A /* AktAgreementVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktAgreementVC.m; sourceTree = "<group>"; };
 		4C3D752A24A87CBB00D0F79A /* SignInVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInVC.xib; sourceTree = "<group>"; };
@@ -1252,6 +1257,8 @@
 		AD4A446B1F8C6FB700D6E5C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4C3B0C5824BC01F800588D63 /* RSAEncryptor.h */,
+				4C3B0C5924BC01F800588D63 /* RSAEncryptor.m */,
 				4CFE1F6424B31BDE003B058D /* NSString+JSONToDictionary.h */,
 				4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */,
 				4CDAD736240F7E0E00CF9129 /* viewPlus */,
@@ -1838,6 +1845,7 @@
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C9B9766240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
+				4C3B0C5A24BC01F800588D63 /* RSAEncryptor.m in Sources */,
 				4C869A91240940700018B943 /* AddWaterMark.m in Sources */,
 				ADDCEDE91FAB202800BB14A6 /* UnfinishOrderTaskController.m in Sources */,
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
@@ -1907,6 +1915,7 @@
 				4C9B9755240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
 				4CD674E722E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3DABC124A9820F009126D5 /* QRCodeService.m in Sources */,
+				4C3B0C5B24BC01F800588D63 /* RSAEncryptor.m in Sources */,
 				4C9B9758240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C3D753B24A87CBB00D0F79A /* AktAgreementVC.m in Sources */,
 				4C9B9776240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
@@ -1997,6 +2006,7 @@
 				4C9B9756240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
 				4CD674E822E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3DABC224A9820F009126D5 /* QRCodeService.m in Sources */,
+				4C3B0C5C24BC01F800588D63 /* RSAEncryptor.m in Sources */,
 				4C9B9759240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C3D753C24A87CBB00D0F79A /* AktAgreementVC.m in Sources */,
 				4C9B9777240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,

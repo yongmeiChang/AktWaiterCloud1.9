@@ -348,17 +348,17 @@
 }
 
 //日期比较
--(int)compareDate:(NSDate *)btime endtime:(NSDate *)etime{
-    NSComparisonResult result = [btime compare:etime];
-    NSLog(@"date1 : %@, date2 : %@", btime, etime);
-    if (result == NSOrderedDescending) {
-        return 1;
-    }
-    else if (result == NSOrderedAscending){
-        return -1;
-    }
-    return 0;
-}
+//-(int)compareDate:(NSDate *)btime endtime:(NSDate *)etime{
+//    NSComparisonResult result = [btime compare:etime];
+//    NSLog(@"date1 : %@, date2 : %@", btime, etime);
+//    if (result == NSOrderedDescending) {
+//        return 1;
+//    }
+//    else if (result == NSOrderedAscending){
+//        return -1;
+//    }
+//    return 0;
+//}
 
 #pragma mark - UIGestureRecognizerDelegate
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

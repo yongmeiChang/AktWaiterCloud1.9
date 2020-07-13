@@ -13,7 +13,7 @@
 
 @interface SignInVC ()
 {
-    BOOL isAgreement; // 
+    BOOL isAgreement; //
 }
 @property (weak, nonatomic) IBOutlet UIView *checkZuhu;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topNavH;
@@ -54,7 +54,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectZuhuInfoDetails:) name:@"selectZuhu" object:nil];
-   
 }
 #pragma mark - notice
 -(void)selectZuhuInfoDetails:(NSNotification *)info{
@@ -90,7 +89,12 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
       }
-    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":@"fe75fd1473264e43be4a8a32eba98537"};
+    //原始数据
+    NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
+    //使用字符串格式的公钥加密
+    NSString *encryptStr = [RSAEncryptor encryptString:phoneAndDataStr publicKey:RSA_Public_KEY];
+
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":encryptStr};
     [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
             self.second = 60;

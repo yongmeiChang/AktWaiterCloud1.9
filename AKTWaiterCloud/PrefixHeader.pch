@@ -15,7 +15,7 @@
 #import "NSMutableDictionary+Utils.h"
 #import "DataManager.h"
 #import "DataModel.h"
-
+#import "RSAEncryptor.h"  // RSA加密 解密
 #import "UIColor+Hex.h"
 #import "AppInfoDefult.h"
 #import "AktUtil.h"
@@ -95,6 +95,7 @@ static const int ddLogLevel = DDLogLevelError;
 #define GAODEAPPKEY @"d7fac2d3810fa204fa0246c7fead9806"
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
 #define Bugly_AppId @"d5a027a07b"  // 个人账号
+#define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
