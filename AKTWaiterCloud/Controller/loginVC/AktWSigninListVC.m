@@ -62,7 +62,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
      modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:section] error:nil];
-    return [modellist.tenantsList count];
+    return [modellist.children count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -80,7 +80,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] objectAtIndex:0];
     }
     modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:indexPath.section] error:nil];
-    SigninDetailsInfo *modelDetails = [modellist.tenantsList objectAtIndex:indexPath.row];
+    SigninDetailsInfo *modelDetails = [modellist.children objectAtIndex:indexPath.row];
     [cell setSigninDetailsCellInfo:modelDetails selectCellInfo:self.selectZuhuInfo];
     
     return cell;
@@ -96,7 +96,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:section] error:nil];
+//    modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:section] error:nil];
     
     UIView *viewbg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     viewbg.tag = 100+section;
@@ -108,7 +108,7 @@
     UILabel *labName = [[UILabel alloc] init];
     labName.font = [UIFont systemFontOfSize:14];
     labName.textAlignment = NSTextAlignmentLeft;
-    labName.text = kString(modellist.pname);
+    labName.text = kString([[aryAll objectAtIndex:section] objectForKey:@"name"]);
     [viewbg addSubview:labName];
     [labName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labLeft.mas_right).offset(6);
@@ -154,7 +154,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:indexPath.section] error:nil];
-    SigninDetailsInfo *modelDetails = [modellist.tenantsList objectAtIndex:indexPath.row];
+    SigninDetailsInfo *modelDetails = [modellist.children objectAtIndex:indexPath.row];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"selectZuhu" object:modelDetails userInfo:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -223,8 +223,8 @@
 
 @interface SigninListInfo : JSONModel
 @property (strong, nonatomic) NSString<Optional>* pid;
-@property (strong, nonatomic) NSString<Optional>* pname;
-@property (strong, nonatomic) NSArray <SigninDetailsInfo> *tenantsList;
+@property (strong, nonatomic) NSString<Optional>* name;
+@property (strong, nonatomic) NSArray <SigninDetailsInfo> *children;
 @end
 
 @interface SigninDetailsInfo : JSONModel
@@ -244,4 +244,7 @@
 @property (strong, nonatomic) NSString<Optional>* spread;
 @property (strong, nonatomic) NSString<Optional>* state;
 @property (strong, nonatomic) NSString<Optional>* tenantsCode;
+@property (strong, nonatomic) NSString<Optional>* orgId; // 组织ID
+@property (strong, nonatomic) NSString<Optional>* tenantId;
+
 @end

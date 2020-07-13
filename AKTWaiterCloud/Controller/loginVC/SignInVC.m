@@ -89,7 +89,7 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
       }
-    //原始数据
+    //原始数据  手机号前三位+手机号后四位+&毫秒
     NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
     //使用字符串格式的公钥加密
     NSString *encryptStr = [RSAEncryptor encryptString:phoneAndDataStr publicKey:RSA_Public_KEY];
@@ -185,8 +185,8 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
       }
 }
--(void)requestSigninInfo{
-    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.id,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text};
+-(void)requestSigninInfo{ // orgId
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.tenantId,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text,@"orgId":self.selectZuhuDetailsInfo.orgId};
     [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
         [self.navigationController popViewControllerAnimated:YES];
