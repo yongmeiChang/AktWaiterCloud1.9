@@ -49,6 +49,22 @@ NS_ASSUME_NONNULL_BEGIN
 //比较日期大小
 +(int)compareDate:(NSDate *)bdate End:(NSDate *)edate;
 
+/**
+ *  判断对象是否为空
+ *  PS：nil、NSNil、@""、@0 以上4种返回YES
+ *
+ *  @return YES 为空  NO 为实例对象
+ */
++ (BOOL)dx_isNullOrNilWithObject:(id)object;
+
+
+#pragma mark - 正则相关
++(BOOL)isValidateByRegex:(NSString *)regex Param:(NSString *)param;
+//手机号分服务商
++(BOOL)isMobileNumberClassification:(NSString *)param;
+//手机号有效性
++(BOOL)isMobileNumber:(NSString *)mobile;
+
 @end
 
 NS_ASSUME_NONNULL_END

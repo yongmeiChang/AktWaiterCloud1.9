@@ -7,7 +7,7 @@
 //
 
 #import "FindPswController.h"
-#import "Vaildate.h"
+
 @interface FindPswController ()<UITextFieldDelegate>{
 
 }
@@ -36,7 +36,7 @@
 }
 
 -(IBAction)clickRightBtn:(id)sender{
-    if(![Vaildate isMobileNumber:self.mobleField.text]){
+    if(![AktUtil isMobileNumber:self.mobleField.text]){
         [self showMessageAlertWithController:self Message:@"手机格式不符合"];
         return;
     }
@@ -52,10 +52,9 @@
         if([code intValue] == 1){
             self.waiterField.text = @"";
             self.mobleField.text = @"";
-            [[AppDelegate sharedDelegate] showTextOnly:@"发送成功!"];
-        }else{
-            [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
         }
+        [self showMessageAlertWithController:self Message:[dic objectForKey:ResponseMsg]];
+        
     } failure:^(NSError *error) {
         [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
     }];

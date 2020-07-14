@@ -8,7 +8,6 @@
 
 #import "NotifyController.h"
 #import "NotifyCell.h"
-#import "Vaildate.h"
 #import "MinuteTaskController.h"
 
 @interface NotifyController ()<UITableViewDelegate,UITableViewDataSource>

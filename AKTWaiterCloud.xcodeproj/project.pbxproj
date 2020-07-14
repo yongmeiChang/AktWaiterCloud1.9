@@ -396,7 +396,6 @@
 		ADBB6A201F9841E200DDC01C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A1F1F9841E100DDC01C /* Foundation.framework */; };
 		ADBB6A221F9841E700DDC01C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A211F9841E700DDC01C /* UIKit.framework */; };
 		ADBB6A241F9841F000DDC01C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB6A231F9841F000DDC01C /* Security.framework */; };
-		ADBB6A271F988D7900DDC01C /* Vaildate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBB6A261F988D7900DDC01C /* Vaildate.m */; };
 		ADBB6A2A1F9895BC00DDC01C /* BaseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBB6A291F9895BC00DDC01C /* BaseControllerViewController.m */; };
 		ADD09B541F998A1E00CFEC52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD09B531F998A1D00CFEC52 /* Images.xcassets */; };
 		ADD2E16F1F99E77D004DFE76 /* ButtonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD2E16D1F99E77D004DFE76 /* ButtonUtil.m */; };
@@ -706,8 +705,6 @@
 		ADBB6A1F1F9841E100DDC01C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ADBB6A211F9841E700DDC01C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		ADBB6A231F9841F000DDC01C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		ADBB6A251F988D7900DDC01C /* Vaildate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vaildate.h; sourceTree = "<group>"; };
-		ADBB6A261F988D7900DDC01C /* Vaildate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vaildate.m; sourceTree = "<group>"; };
 		ADBB6A281F9895BC00DDC01C /* BaseControllerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseControllerViewController.h; sourceTree = "<group>"; };
 		ADBB6A291F9895BC00DDC01C /* BaseControllerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseControllerViewController.m; sourceTree = "<group>"; };
 		ADD09B531F998A1D00CFEC52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AKTWaiterCloud/Images.xcassets; sourceTree = "<group>"; };
@@ -1282,8 +1279,6 @@
 				AD5F48891FA06BEA00A0C201 /* SaveDocumentArray.m */,
 				AD4DAAEA1F8F546700610281 /* ReachbilityTool.h */,
 				AD4DAAEB1F8F546700610281 /* ReachbilityTool.m */,
-				ADBB6A251F988D7900DDC01C /* Vaildate.h */,
-				ADBB6A261F988D7900DDC01C /* Vaildate.m */,
 				ADD2E16E1F99E77D004DFE76 /* ButtonUtil.h */,
 				ADD2E16D1F99E77D004DFE76 /* ButtonUtil.m */,
 				AD1E03431FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.h */,
@@ -1873,7 +1868,6 @@
 				4C379752242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C3D75CC24A88ABF00D0F79A /* NotifyCell.m in Sources */,
 				4C9B9751240CCF1D00576F7C /* FSCalendarDelegationFactory.m in Sources */,
-				ADBB6A271F988D7900DDC01C /* Vaildate.m in Sources */,
 				4C3D754F24A87CBC00D0F79A /* SignInVC.m in Sources */,
 				4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E922E94CDF00AB76AF /* QBAssetsCollectionViewCell.m in Sources */,

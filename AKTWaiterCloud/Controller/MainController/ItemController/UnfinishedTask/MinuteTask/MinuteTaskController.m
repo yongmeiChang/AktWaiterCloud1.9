@@ -94,7 +94,7 @@
 }
 /**行数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([Vaildate dx_isNullOrNilWithObject:self.orderinfo]){
+    if([AktUtil dx_isNullOrNilWithObject:self.orderinfo]){
         return 0;
     }
     return 1;
