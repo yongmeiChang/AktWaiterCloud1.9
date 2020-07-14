@@ -913,7 +913,7 @@
     if (isPostLocation) {
         NSLog(@"---可以提交");
         // 判断是否可以提交工单
-              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypeGet success:^(id responseObject) {
+              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantId} type:HttpRequestTypeGet success:^(id responseObject) {
 
                   NSDictionary *dicObje = [responseObject objectForKey:ResponseData];
                   NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
@@ -969,7 +969,7 @@
     if([contentStr isEqualToString:@""]){
         contentStr = @"暂无备注";
     }
-    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantsId};
+    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantId};
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -1026,7 +1026,7 @@
         [param addUnEmptyString:self.textview.text forKey:@"serviceResult"];
     }
     [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
-    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
+    [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
     [param addUnEmptyString:@"test" forKey:@"test"];
     [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由

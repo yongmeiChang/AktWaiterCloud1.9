@@ -19,8 +19,8 @@
 @interface LoginModel : JSONModel
 @property(nonatomic,strong) NSString <Optional>*  id;
 @property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样，是将id的值赋予uuid
-@property(nonatomic,strong) NSString <Optional>*  tenantsId; // 租户ID
-//@property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
+@property(nonatomic,strong) NSString <Optional>*  tenantId; // 租户ID
+@property(nonatomic,strong) NSString <Optional>*  tenantName; // 租户站名称
 @property(nonatomic,strong) NSString <Optional>*  name; // 用户名
 @property(nonatomic,strong) NSString <Optional>*  sex; // 性别
 @property(nonatomic,strong) NSString <Optional>*  identifyNo; // 身份证

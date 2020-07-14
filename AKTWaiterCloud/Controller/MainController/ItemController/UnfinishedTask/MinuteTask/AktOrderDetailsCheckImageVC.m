@@ -32,7 +32,7 @@
 #pragma mark - 查看签入图片
 -(void)showImageIn{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantsId,@"signType":@"101"};
+    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"101"};
     [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
@@ -80,7 +80,7 @@
 #pragma mark - 查看签出图片
 -(void)showImageOut{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantsId,@"signType":@"102"};
+    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"102"};
     [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];

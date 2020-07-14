@@ -218,14 +218,14 @@
                 LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
                 model.uuid = model.id;
                 [model save];
-                [self reauestUserInfoTenantsid:kString(model.tenantsId) UserId:kString(model.uuid)]; // 获取个人信息
+                [self reauestUserInfoTenantsid:kString(model.tenantId) UserId:kString(model.uuid)]; // 获取个人信息
                 // 登录成功
                 [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:@"AKTserviceToken"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 
                 //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantsId)};
+                NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
                 [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
             }else{
                 [self showMessageAlertWithController:self Message:messageDic];

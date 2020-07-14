@@ -40,7 +40,7 @@
 -(void)requestServicePoj{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
-    [paremeter addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
+    [paremeter addUnEmptyString:model.tenantId forKey:@"tenantsId"];
     [[AFNetWorkingRequest sharedTool] requestWithGetServicePojCustomerUkeyParameters:paremeter type:HttpRequestTypeGet success:^(id responseObject) {
        
         NSMutableArray *arr = [NSMutableArray array];

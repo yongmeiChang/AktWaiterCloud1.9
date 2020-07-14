@@ -91,7 +91,7 @@
         return;
     }
     
-    NSDictionary * param = @{@"waiterId":[LoginModel gets].uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":[LoginModel gets].tenantsId};
+    NSDictionary * param = @{@"waiterId":[LoginModel gets].uuid,@"oldPass":oldPsw,@"newPass":nPsw,@"tenantsId":[LoginModel gets].tenantId};
     
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"操作中"];
     [[AktVipCmd sharedTool] requesteditPassword:param type:HttpRequestTypePut success:^(id responseObject) {

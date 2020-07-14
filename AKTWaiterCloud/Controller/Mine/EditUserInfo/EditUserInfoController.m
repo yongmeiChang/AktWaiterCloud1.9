@@ -54,7 +54,7 @@
     [super viewWillAppear:animated];
     NSLog(@"头像----%@ \n %@",modelUser.icon,self.himage);
     if (!self.himage) {
-        [self requestUserInfoTenantsid:[LoginModel gets].tenantsId UserId:[LoginModel gets].uuid]; // 获取数据
+        [self requestUserInfoTenantsid:[LoginModel gets].tenantId UserId:[LoginModel gets].uuid]; // 获取数据
     }
 }
 
@@ -148,7 +148,7 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
-    NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":modelUser.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantsId),@"mobile":modelUser.mobile};
+    NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":modelUser.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantId),@"mobile":modelUser.mobile};
     [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
         NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
         self.minecontroller.headimage = self.himage;
