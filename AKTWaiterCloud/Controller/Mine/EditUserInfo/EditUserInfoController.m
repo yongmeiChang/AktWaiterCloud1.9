@@ -148,7 +148,7 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
-    NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":modelUser.sex,@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantId),@"mobile":modelUser.mobile};
+    NSDictionary * params = @{@"id":kString([LoginModel gets].uuid),@"sex":kString(modelUser.sex),@"iconData":kString(_headBaseStr),@"tenantsId":kString([LoginModel gets].tenantId),@"mobile":kString(modelUser.mobile)};
     [[AktVipCmd sharedTool] requestedSaveUserInfo:params type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
         NSString *code = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"code"]];
         self.minecontroller.headimage = self.himage;
