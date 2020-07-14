@@ -83,11 +83,10 @@
         }
         self.namelabel.text = user.name; // 用户名
         self.phoneNumberLabel.text = user.mobile; // 电话
-        self.serviceNameLab.text = [NSString stringWithFormat:@": %@",user.tenantsName]; // 所属服务站
+        self.serviceNameLab.text = [NSString stringWithFormat:@": %@",user.tenantName]; // 所属服务站
         NSString *strLv;
-        if ([modelUser.level isEqualToString:@""]) {// 默认为0
-            strLv = [NSString stringWithFormat:@"0"];
-        }else{
+        strLv = [NSString stringWithFormat:@"0"];
+        if ([modelUser.level integerValue] != 0) {
             strLv = [NSString stringWithFormat:@"%@",user.level];// 等级
         }
         self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",strLv];
@@ -165,10 +164,11 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
    switch (index) {
-       case 0:{
+       case 0:{/*
            NotifyController * notifyController = [[NotifyController alloc]init];
            notifyController.hidesBottomBarWhenPushed = YES;
-           [self.navigationController pushViewController:notifyController animated:YES];
+           [self.navigationController pushViewController:notifyController animated:YES];*/
+           [[AppDelegate sharedDelegate] showTextOnly:@"该功能正在开发中！敬请期待"];
            break;
        }
        case 1:{

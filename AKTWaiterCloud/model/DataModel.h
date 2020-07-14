@@ -41,7 +41,7 @@
 @property(nonatomic,strong) NSString <Optional>*  icon; // 头像
 @property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
-@property(nonatomic,strong) NSString <Optional>*  tenantsId; // 租户ID
+@property(nonatomic,strong) NSString <Optional>*  tenantId; // 租户ID
 //@property(nonatomic,strong) NSString <Optional>*  location;
 //@property(nonatomic,strong) NSString <Optional>*  cooperationState;
 //@property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
@@ -61,7 +61,7 @@
 @property(nonatomic,strong) NSString <Optional>*  uniqueKey;//唯一码
 //@property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
 //@property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
-@property(nonatomic,strong) NSString <Optional>*  tenantsName; // 租户站名称
+@property(nonatomic,strong) NSString <Optional>*  tenantName; // 租户站名称
 + (UserInfo *)getsUser; // 获取
 - (void)saveUser; // 保存
 

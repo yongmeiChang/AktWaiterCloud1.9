@@ -212,7 +212,7 @@
     [paremeter addUnEmptyString:_money forKey:@"serviceMoney"];//_money 传空值
     [paremeter addUnEmptyString:[UserInfo getsUser].uuid forKey:@"waiterId"];
     [paremeter addUnEmptyString:[UserInfo getsUser].name forKey:@"waiterName"];
-    [paremeter addUnEmptyString:[UserInfo getsUser].tenantsId forKey:@"tenantsId"];
+    [paremeter addUnEmptyString:[UserInfo getsUser].tenantId forKey:@"tenantsId"];
     
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
