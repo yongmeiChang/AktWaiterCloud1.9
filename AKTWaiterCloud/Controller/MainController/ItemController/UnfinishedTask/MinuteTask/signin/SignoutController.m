@@ -987,16 +987,18 @@
 }
 #pragma mark - 提交信息
 -(IBAction)submitClick:(id)sender{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
+    
      isPostLocation = YES;
     [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
 }
 -(void)postDataAllInfo:(NSString *)reason{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    if(self.type==1){
-        [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
-    }else{
-        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
-    }
+     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
+//    if(self.type==1){
+//        [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
+//    }else{
+//        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
+//    }
     NSMutableArray * basearr = [NSMutableArray array];
     NSString * baseStr = @"";
     NSString * wavStr = @"";
@@ -1031,8 +1033,6 @@
     [param addUnEmptyString:@"test" forKey:@"test"];
     [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
     [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"]; // 定位异常
-//    [param addUnEmptyString:@".png" forKey:@"imageType"]; // 新增加 图片类型
-//    [param addUnEmptyString:self.orderinfo.serviceAddress forKey:@"serviceAddress"]; // 新增加 服务地址
     //签出
     if(self.type==1){
         // remarks、serviceLength、signOutLocationStatus
@@ -1047,7 +1047,7 @@
         [param addUnEmptyString:isLess forKey:@"isLess"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
-        
+    
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             [[AppDelegate sharedDelegate] hidHUD];
@@ -1063,9 +1063,6 @@
         }];
         
     }else{
-//        [param addUnEmptyString:self.orderinfo.serviceLocationX forKey:@"serviceLocationX"]; // 新增加
-//        [param addUnEmptyString:self.orderinfo.serviceLocationY forKey:@"serviceLocationY"]; // 新增加
-        
         [param addUnEmptyString:model.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
@@ -1075,16 +1072,16 @@
         [param addUnEmptyString:self.nowdate forKey:@"actrueBegin"];
         [param addUnEmptyString:self.orderinfo.isLate forKey:@"isLate"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveIntime] forKey:@"lateTimeLength"];//0正常 1迟到
-        
+
         [[AFNetWorkingRequest sharedTool] requestsignIn:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSNumber * code = dic[@"code"];
-            [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 [self.unfinishManager stopUpdatingLocation];
                 [AppInfoDefult sharedClict].orderinfoId = @"";
                 [AppInfoDefult sharedClict].islongLocation=0;
             }
+            [[AppDelegate sharedDelegate] hidHUD];
             [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
                [self.navigationController popToRootViewControllerAnimated:YES];
             }];

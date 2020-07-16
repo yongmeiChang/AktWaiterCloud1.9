@@ -54,6 +54,7 @@ static AFNetWorkingTool * a_instance = nil;
         return;
         
     }else{
+        [[AppDelegate sharedDelegate] hidHUD];
         id jsons = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingMutableContainers  error:nil];
         success(jsons);
        return;
@@ -92,7 +93,6 @@ static AFNetWorkingTool * a_instance = nil;
 //                    NSLog(@"response:%@",jsons);
 //                    success(jsons);
 //                }
-                [[AppDelegate sharedDelegate] hidHUD];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if (failure) {
                     failure(error);
@@ -115,7 +115,6 @@ static AFNetWorkingTool * a_instance = nil;
 //                    success(jsons);
 //                }
                 [self doOptionResponse:responseObject success:success failure:failure];
-                [[AppDelegate sharedDelegate] hidHUD];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
@@ -137,7 +136,6 @@ static AFNetWorkingTool * a_instance = nil;
 //                    success(jsons);
 //                }
                 [self doOptionResponse:responseObject success:success failure:failure];
-                [[AppDelegate sharedDelegate] hidHUD];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                if (failure) {
