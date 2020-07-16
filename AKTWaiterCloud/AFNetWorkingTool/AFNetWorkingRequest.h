@@ -24,7 +24,8 @@
 #define AKTOrderImageMethod @"getWorkOrderImages" // 获取签入 签出图片
 #define AKTUploadLocationInfoMethod @"uploadLocateInformation" // 上传连续定位信息
 #define AKTUploadWorkNodeMethod @"uploadWorkNode" // 上传工单节点
-#define AKTOrderDetailsMethod @"" // 工单详情 目前还没有使用
+//#define AKTOrderDetailsMethod @"" // 工单详情 目前还没有使用
+#define AKTFindAdvancedMethod @"findAdvanced" //
 
 
 @interface AFNetWorkingRequest : NSObject
@@ -97,7 +98,10 @@
                        success:(void (^)(id responseObject))success
                        failure:(void (^)(NSError *error))failure;
 /*工单详情页面*/
-
+/*新增接口 */
+-(void)requestFindAdvantage:(NSDictionary *)param type:(HttpRequestType)type
+success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
 
 
 

@@ -178,4 +178,15 @@ static AFNetWorkingRequest * aq_instance = nil;
         failure(error);
     }];
 }
+
+/*新增接口 */
+-(void)requestFindAdvantage:(NSDictionary *)param type:(HttpRequestType)type
+success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFindAdvancedMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
 @end

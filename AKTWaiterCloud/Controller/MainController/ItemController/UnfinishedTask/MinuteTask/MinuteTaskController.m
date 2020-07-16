@@ -228,8 +228,18 @@
 #pragma mark - 签入  签出
 - (IBAction)orderSingInOrSingOutClick:(UIButton *)sender {
     NSLog(@"点击签入 签出按钮");
+    
+    [[AFNetWorkingRequest sharedTool] requestFindAdvantage:@{@"serviceItemId":self.orderinfo.serviceItemId} type:HttpRequestTypeGet success:^(id responseObject) {
+        NSDictionary *dic = responseObject;
+        NSString *strcode = [dic objectForKey:ResponseCode];
+        NSLog(@"%@ \n %@ \n %@",strcode,[dic objectForKey:ResponseMsg],[dic objectForKey:ResponseData]);
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    /*
     _sgController.orderinfo = self.orderinfo;
-       [self.navigationController pushViewController:_sgController animated:YES];
+       [self.navigationController pushViewController:_sgController animated:YES];*/
 }
 
 #pragma mark - showImageIn
