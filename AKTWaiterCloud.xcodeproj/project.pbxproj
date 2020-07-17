@@ -285,6 +285,21 @@
 		4CA9C2D4239F4A0D0029FEF5 /* AktTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA9C2D2239F4A0D0029FEF5 /* AktTitleCell.m */; };
 		4CA9C2D5239F4A0D0029FEF5 /* AktTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA9C2D3239F4A0D0029FEF5 /* AktTitleCell.xib */; };
 		4CAED3F923B9FBEC00BAF2E3 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */; };
+		4CC0AB7424C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */; };
+		4CC0AB7524C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */; };
+		4CC0AB7624C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */; };
+		4CC0AB7A24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7824C03D0200C57A0D /* AktOrderDetailsVC.m */; };
+		4CC0AB7B24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7824C03D0200C57A0D /* AktOrderDetailsVC.m */; };
+		4CC0AB7C24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7824C03D0200C57A0D /* AktOrderDetailsVC.m */; };
+		4CC0AB7D24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7924C03D0200C57A0D /* AktOrderDetailsVC.xib */; };
+		4CC0AB7E24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7924C03D0200C57A0D /* AktOrderDetailsVC.xib */; };
+		4CC0AB7F24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0AB7924C03D0200C57A0D /* AktOrderDetailsVC.xib */; };
+		4CC520F724C1441C00BF425C /* AktOrderScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC520F524C1441C00BF425C /* AktOrderScanVC.m */; };
+		4CC520F824C1441C00BF425C /* AktOrderScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC520F524C1441C00BF425C /* AktOrderScanVC.m */; };
+		4CC520F924C1441C00BF425C /* AktOrderScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC520F524C1441C00BF425C /* AktOrderScanVC.m */; };
+		4CC520FA24C1441C00BF425C /* AktOrderScanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */; };
+		4CC520FB24C1441C00BF425C /* AktOrderScanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */; };
+		4CC520FC24C1441C00BF425C /* AktOrderScanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */; };
 		4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */; };
 		4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
 		4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
@@ -592,6 +607,14 @@
 		4CA9C2D3239F4A0D0029FEF5 /* AktTitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktTitleCell.xib; sourceTree = "<group>"; };
 		4CAED3F723B9FBEC00BAF2E3 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
 		4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
+		4CC0AB7224C02DC200C57A0D /* AktOrderDetailsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOrderDetailsModel.h; sourceTree = "<group>"; };
+		4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderDetailsModel.m; sourceTree = "<group>"; };
+		4CC0AB7724C03D0200C57A0D /* AktOrderDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOrderDetailsVC.h; sourceTree = "<group>"; };
+		4CC0AB7824C03D0200C57A0D /* AktOrderDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderDetailsVC.m; sourceTree = "<group>"; };
+		4CC0AB7924C03D0200C57A0D /* AktOrderDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOrderDetailsVC.xib; sourceTree = "<group>"; };
+		4CC520F424C1441C00BF425C /* AktOrderScanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOrderScanVC.h; sourceTree = "<group>"; };
+		4CC520F524C1441C00BF425C /* AktOrderScanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderScanVC.m; sourceTree = "<group>"; };
+		4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOrderScanVC.xib; sourceTree = "<group>"; };
 		4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AKTColorString.strings; sourceTree = "<group>"; };
 		4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAddImagesView.m; sourceTree = "<group>"; };
 		4CD674C422E94CDF00AB76AF /* UIView+KIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KIAdditions.h"; sourceTree = "<group>"; };
@@ -1115,6 +1138,8 @@
 			children = (
 				4CAED3F723B9FBEC00BAF2E3 /* DataModel.h */,
 				4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */,
+				4CC0AB7224C02DC200C57A0D /* AktOrderDetailsModel.h */,
+				4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1353,6 +1378,9 @@
 		AD65759B1FAAEA0900495D1E /* MinuteTask */ = {
 			isa = PBXGroup;
 			children = (
+				4CC0AB7724C03D0200C57A0D /* AktOrderDetailsVC.h */,
+				4CC0AB7824C03D0200C57A0D /* AktOrderDetailsVC.m */,
+				4CC0AB7924C03D0200C57A0D /* AktOrderDetailsVC.xib */,
 				AD19D8C21FA9A62C006EE8A7 /* MinuteTaskController.h */,
 				AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */,
 				AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */,
@@ -1360,6 +1388,9 @@
 				4C3797552422088D00DC9EFB /* AktOrderDetailsCheckImageVC.h */,
 				4C3797562422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m */,
 				4C3797572422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib */,
+				4CC520F424C1441C00BF425C /* AktOrderScanVC.h */,
+				4CC520F524C1441C00BF425C /* AktOrderScanVC.m */,
+				4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */,
 			);
 			path = MinuteTask;
 			sourceTree = "<group>";
@@ -1600,6 +1631,7 @@
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
 				4C3D75D824A88ABF00D0F79A /* UnfinifshController.xib in Resources */,
 				ADD789231F7DF730008DEC55 /* LaunchScreen.storyboard in Resources */,
+				4CC520FA24C1441C00BF425C /* AktOrderScanVC.xib in Resources */,
 				4C3D75BA24A88ABF00D0F79A /* SettingsController.xib in Resources */,
 				4C3D754C24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				AD6575A11FAAEA5600495D1E /* SignoutController.xib in Resources */,
@@ -1610,6 +1642,7 @@
 				AD93664420AA87D500EEB02C /* china_city_data.json in Resources */,
 				4C3D754324A87CBC00D0F79A /* FindPswController.xib in Resources */,
 				ADD09B541F998A1E00CFEC52 /* Images.xcassets in Resources */,
+				4CC0AB7D24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				AD37AB3D1FF4E78A001D304C /* ZYInputAlertView.xib in Resources */,
 				4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */,
 				ADF1A43E1FE90FFE00A572CE /* PlanTaskController.xib in Resources */,
@@ -1654,6 +1687,7 @@
 				4C3D754D24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				4C3D754424A87CBC00D0F79A /* FindPswController.xib in Resources */,
 				4C3D759D24A88ABF00D0F79A /* SettingsTableViewCell.xib in Resources */,
+				4CC0AB7E24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				4C3D753E24A87CBB00D0F79A /* SignInVC.xib in Resources */,
 				4C3D75B524A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
 				4C3D75BB24A88ABF00D0F79A /* SettingsController.xib in Resources */,
@@ -1661,6 +1695,7 @@
 				4C869A97240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379750242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4CD674F022E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
+				4CC520FB24C1441C00BF425C /* AktOrderScanVC.xib in Resources */,
 				4C3D75F724A88ABF00D0F79A /* EditUserInfoController.xib in Resources */,
 				4C3D75D924A88ABF00D0F79A /* UnfinifshController.xib in Resources */,
 				4C3DABBB24A9820F009126D5 /* ServicePojCell.xib in Resources */,
@@ -1693,6 +1728,7 @@
 				4C3D754E24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				4C3D754524A87CBC00D0F79A /* FindPswController.xib in Resources */,
 				4C3D759E24A88ABF00D0F79A /* SettingsTableViewCell.xib in Resources */,
+				4CC0AB7F24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				4C3D753F24A87CBC00D0F79A /* SignInVC.xib in Resources */,
 				4C3D75B624A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
 				4C3D75BC24A88ABF00D0F79A /* SettingsController.xib in Resources */,
@@ -1700,6 +1736,7 @@
 				4C869A98240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379751242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4CD674F122E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
+				4CC520FC24C1441C00BF425C /* AktOrderScanVC.xib in Resources */,
 				4C3D75F824A88ABF00D0F79A /* EditUserInfoController.xib in Resources */,
 				4C3D75DA24A88ABF00D0F79A /* UnfinifshController.xib in Resources */,
 				4C3DABBC24A9820F009126D5 /* ServicePojCell.xib in Resources */,
@@ -1786,6 +1823,7 @@
 				4C3DABB124A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
 				4C3D75DB24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
 				4C3D75CF24A88ABF00D0F79A /* NotifyController.m in Sources */,
+				4CC520F724C1441C00BF425C /* AktOrderScanVC.m in Sources */,
 				4C9B9772240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C9B976C240CCF1D00576F7C /* FSCalendarConstants.m in Sources */,
 				4C9B974E240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
@@ -1839,6 +1877,7 @@
 				4C9B9757240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C9B9766240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
+				4CC0AB7424C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */,
 				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
 				4C3B0C5A24BC01F800588D63 /* RSAEncryptor.m in Sources */,
 				4C869A91240940700018B943 /* AddWaterMark.m in Sources */,
@@ -1867,6 +1906,7 @@
 				4C3DAB9624A9820F009126D5 /* AktAddOrderUserInfoCell.m in Sources */,
 				4C379752242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C3D75CC24A88ABF00D0F79A /* NotifyCell.m in Sources */,
+				4CC0AB7A24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */,
 				4C9B9751240CCF1D00576F7C /* FSCalendarDelegationFactory.m in Sources */,
 				4C3D754F24A87CBC00D0F79A /* SignInVC.m in Sources */,
 				4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */,
@@ -1925,11 +1965,13 @@
 				4CDAD74C240F7E0E00CF9129 /* UILabel+Plus.m in Sources */,
 				4C3D754724A87CBC00D0F79A /* FindPswController.m in Sources */,
 				4C3DABA624A9820F009126D5 /* QRCodeViewController.m in Sources */,
+				4CC0AB7524C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */,
 				4CD674FF22E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4C3DAB9724A9820F009126D5 /* AktAddOrderUserInfoCell.m in Sources */,
 				4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
 				4C3D755024A87CBC00D0F79A /* SignInVC.m in Sources */,
 				4CDAD749240F7E0E00CF9129 /* UIButton+Badge.m in Sources */,
+				4CC0AB7B24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */,
 				4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E422E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4C379744242205EE00DC9EFB /* VisitCell.m in Sources */,
@@ -1968,6 +2010,7 @@
 				4C9B976A240CCF1D00576F7C /* FSCalendar+Deprecated.m in Sources */,
 				4C4AD7B023B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4C37974A242205EE00DC9EFB /* SignInCell.m in Sources */,
+				4CC520F824C1441C00BF425C /* AktOrderScanVC.m in Sources */,
 				4C3D75FD24A88ABF00D0F79A /* EditUserInfoController.m in Sources */,
 				4CD674F322E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4C3797592422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */,
@@ -2016,11 +2059,13 @@
 				4CDAD74D240F7E0E00CF9129 /* UILabel+Plus.m in Sources */,
 				4C3D754824A87CBC00D0F79A /* FindPswController.m in Sources */,
 				4C3DABA724A9820F009126D5 /* QRCodeViewController.m in Sources */,
+				4CC0AB7624C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */,
 				4CD6750022E94CDF00AB76AF /* QBAssetsCollectionOverlayView.m in Sources */,
 				4C3DAB9824A9820F009126D5 /* AktAddOrderUserInfoCell.m in Sources */,
 				4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */,
 				4C3D755124A87CBC00D0F79A /* SignInVC.m in Sources */,
 				4CDAD74A240F7E0E00CF9129 /* UIButton+Badge.m in Sources */,
+				4CC0AB7C24C03D0200C57A0D /* AktOrderDetailsVC.m in Sources */,
 				4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */,
 				4CD674E522E94CDF00AB76AF /* QBImagePickerGroupCell.m in Sources */,
 				4C379745242205EE00DC9EFB /* VisitCell.m in Sources */,
@@ -2059,6 +2104,7 @@
 				4C9B976B240CCF1D00576F7C /* FSCalendar+Deprecated.m in Sources */,
 				4C4AD7B123B08962005DEDE4 /* DatePickerView.m in Sources */,
 				4C37974B242205EE00DC9EFB /* SignInCell.m in Sources */,
+				4CC520F924C1441C00BF425C /* AktOrderScanVC.m in Sources */,
 				4C3D75FE24A88ABF00D0F79A /* EditUserInfoController.m in Sources */,
 				4CD674F422E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4C37975A2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.m in Sources */,
