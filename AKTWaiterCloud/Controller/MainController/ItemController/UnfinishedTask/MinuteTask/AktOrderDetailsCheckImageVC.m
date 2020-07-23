@@ -53,10 +53,11 @@
                 for (int i = 0; i<obj.count; i++) {
                     NSDictionary * object = obj[i];
                     NSString * affixName = object[@"affixUrl"];
-                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+//                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
                     UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                    photoImageView.image = [UIImage imageWithData:imageData];
+//                    photoImageView.image = [UIImage imageWithData:imageData];
+                     photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                     [scollBg addSubview:photoImageView];
                     
                 }
@@ -99,10 +100,11 @@
             for (int i = 0; i<obj.count; i++) {
                 NSDictionary * object = obj[i];
                 NSString * affixName = object[@"affixUrl"];
-                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+//                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
                 UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                photoImageView.image = [UIImage imageWithData:imageData];
+//                photoImageView.image = [UIImage imageWithData:imageData];
+                photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                 [scollBg addSubview:photoImageView];
                 
             }

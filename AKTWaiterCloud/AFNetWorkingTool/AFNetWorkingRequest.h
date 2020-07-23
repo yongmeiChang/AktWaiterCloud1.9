@@ -25,7 +25,8 @@
 #define AKTUploadLocationInfoMethod @"uploadLocateInformation" // 上传连续定位信息
 #define AKTUploadWorkNodeMethod @"uploadWorkNode" // 上传工单节点
 //#define AKTOrderDetailsMethod @"" // 工单详情 目前还没有使用
-#define AKTFindAdvancedMethod @"findAdvanced" //
+#define AKTFindAdvancedMethod @"findAdvanced" // 工单签入 签出配置
+#define AKTOrderStopMethod @"stopOrder" // 工单终止
 
 
 @interface AFNetWorkingRequest : NSObject
@@ -98,10 +99,17 @@
                        success:(void (^)(id responseObject))success
                        failure:(void (^)(NSError *error))failure;
 /*工单详情页面*/
-/*新增接口 */
--(void)requestFindAdvantage:(NSDictionary *)param type:(HttpRequestType)type
-success:(void (^)(id responseObject))success
-failure:(void (^)(NSError *error))failure;
+/*新增接口 工单签入 签出 配置*/
+-(void)requestFindAdvantage:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure;
+
+/*新增接口 工单签入 签出 配置*/
+-(void)requestOrderStop:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure;
 
 
 

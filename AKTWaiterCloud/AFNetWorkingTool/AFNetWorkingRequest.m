@@ -189,4 +189,16 @@ success:(void (^)(id responseObject))success
         failure(error);
     }];
 }
+
+/*新增接口 工单签入 签出 配置*/
+-(void)requestOrderStop:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOrderStopMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
 @end

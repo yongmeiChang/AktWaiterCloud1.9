@@ -22,7 +22,7 @@
 @end
 
 @implementation QRCodeViewController{
-    BOOL isOpen;
+    BOOL isOpen;//打开手电筒
 }
 
 - (void)viewDidLoad {

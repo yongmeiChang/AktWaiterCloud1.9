@@ -232,6 +232,19 @@
 //    NSLog(@" -- >>  comp : %@  << --",comp);
     return comp.day;
 }
+// 计算分钟
++(NSInteger)getMinuteFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents * comp = [calendar components:NSCalendarUnitMinute
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+//    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.minute;
+}
+
 // 计算秒
 +(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate
 {
@@ -307,6 +320,68 @@
         return [NSString stringWithFormat:@"%@%@%@%@",strnewDay,strnewHours,strnewMiute,strNewSecond];
     }
 }
+// 实际服务时长 格式：3天2小时23分22秒
++ (NSString *)actualBeginTime:(NSString *)begindate actualServiceEndTime:(NSString *)serviceend{
+    // 截止时间data格式
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *expireDate = [formatter dateFromString:serviceend];
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+    
+    
+    NSString *strDay = [NSString stringWithFormat:@"%ld",[self getDaysFrom:[formatter dateFromString:begindate] To:expireDate]];
+        NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
+        NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
+        NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];
+             
+        if ([strDay containsString:@"-"]) {
+            strDay = [strDay substringFromIndex:1];
+        }
+        if ([strHours containsString:@"-"]) {
+            strHours = [strHours substringFromIndex:1];
+        }
+        if ([strMiute containsString:@"-"]) {
+            strMiute = [strMiute substringFromIndex:1];
+        }
+        if ([strSecond containsString:@"-"]) {
+            strSecond = [strSecond substringFromIndex:1];
+        }
+        
+        NSString *strnewDay;
+        NSString *strnewHours;
+        NSString *strnewMiute;
+        NSString *strNewSecond;
+        
+        if ([self getDaysFrom:[formatter dateFromString:begindate] To:expireDate] == 0) {
+            strnewDay = @"";
+        }else{
+            strnewDay = [NSString stringWithFormat:@"%@天",strDay];
+        }
+        if ([strHours integerValue] == 0) {
+            strnewHours = @"";
+        }else{
+            strnewHours = [NSString stringWithFormat:@"%@时",strHours];
+        }
+        if ([strMiute integerValue] == 0) {
+            strnewMiute = @"";
+        }else{
+            strnewMiute = [NSString stringWithFormat:@"%@分",strMiute];
+        }
+        if ([strSecond integerValue] == 0) {
+            strNewSecond = @"";
+        }else{
+            strNewSecond = [NSString stringWithFormat:@"%@秒",strSecond];
+        }
+        return [NSString stringWithFormat:@"%@%@%@%@",strnewDay,strnewHours,strnewMiute,strNewSecond];
+    
+}
+
 //比较日期大小
 +(int)compareDate:(NSDate *)bdate End:(NSDate *)edate{
     NSComparisonResult result = [bdate compare:edate];

@@ -7,28 +7,38 @@
 //
 
 #import "MinuteTaskController.h"
-#import "OrderTaskFmdb.h"
-#import "PlanTaskCell.h"
-#import "SignInCell.h"
+#import "PlanTaskCell.h" // 服务对象信息
+#import "SignInCell.h" // 签入
 #import "SignoutController.h"
-#import "VisitCell.h"
-#import "NoDateCell.h"
+#import "VisitCell.h"  // 回访
+#import "NoDateCell.h" // 无数据
 #import <CoreLocation/CoreLocation.h>
-#import "AktOrderDetailsCheckImageVC.h"
+#import "AktOrderDetailsCheckImageVC.h" // 查看图片
+#import "AktOrderDetailsModel.h"
+#import "AktOrderScanVC.h" // 订单签入 签出 扫一扫
 
-@interface MinuteTaskController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,PlanTaskPhoneDelegate>
+#define PI 3.1415926
+#define DefaultLocationTimeout 10
+#define DefaultReGeocodeTimeout 5
+
+@interface MinuteTaskController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,PlanTaskPhoneDelegate,AMapLocationManagerDelegate,AMapSearchDelegate>
 {
     CLGeocoder *_geocoder;
     NSString *_latitude;//纬度
     NSString *_longitude;//经度
+    
+    double distanceSingin; // 签入定位误差(米)
+    double lateSingin; // 迟到最大时长(分钟)
+    
+    double distanceSingout; // 签出定位误差
 }
-@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
+
 @property(nonatomic,strong) OrderInfo * orderinfo;
 @property(weak,nonatomic) IBOutlet UITableView * minuteTaskTableView;
 
-@property(nonatomic,strong) UILabel * signinDateLabel;//签入日期
-@property(nonatomic,strong) UILabel * signoutDateLabel;//签出日期
-@property(nonatomic,strong) UILabel * signoutDateLengthLabel;//签出服务时长
+//@property(nonatomic,strong) UILabel * signinDateLabel;//签入日期
+//@property(nonatomic,strong) UILabel * signoutDateLabel;//签出日期
+//@property(nonatomic,strong) UILabel * signoutDateLengthLabel;//签出服务时长
 @property(nonatomic,strong) SignoutController * sgController;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnSingInOrSingOut;
@@ -36,6 +46,15 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgviewTop;
+
+/*定位*/
+@property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
+@property (nonatomic,strong) AMapLocationManager * unfinishManager; // 地址管理
+@property (nonatomic,strong) AMapSearchAPI * searchAPI;  // 逆地理编码
+@property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标
+@property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标
+@property (nonatomic,strong) NSString * distancePost; // 距离 单位米
+
 
 @end
 
@@ -68,6 +87,9 @@
     }
     _geocoder=[[CLGeocoder alloc]init];
     [self getCoordinateByAddress:self.orderinfo.serviceAddress];
+    
+    // 获取定位权限
+    [self getlocation];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -79,6 +101,112 @@
     }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
         _sgController.type = 0;
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - 权限获取
+-(void)distanceBetween:(CLLocationDistance)distance{
+    self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
+}
+- (void)onGeocodeSearchDone:(AMapGeocodeSearchRequest *)request response:(AMapGeocodeSearchResponse *)response{ // 逆地理编码
+    if (response.geocodes.count == 0)
+    {
+        return;
+    }
+    //解析response获取地理信息
+    self.orderinfo.serviceLocationX = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.longitude];
+    self.orderinfo.serviceLocationY = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.latitude];
+    //进行单次带逆地理定位请求
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];;
+}
+-(void)refurbishBtnClick{
+    //1.将两个经纬度点转成投影点
+    MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
+    MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.locaitonLatitude doubleValue],[self.locaitonLongitude doubleValue])); //用户当前位置
+    //2.计算距离
+    CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
+    [self distanceBetween:distance];
+}
+
+- (void)configLocationManager
+{
+    self.unfinishManager = [[AMapLocationManager alloc] init];
+    
+    [self.unfinishManager setDelegate:self];
+    
+    //设置期望定位精度
+    [self.unfinishManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    
+    //设置不允许系统暂停定位
+    [self.unfinishManager setPausesLocationUpdatesAutomatically:NO];
+    
+    //设置允许在后台定位
+    [self.unfinishManager setAllowsBackgroundLocationUpdates:YES];
+    
+    //设置定位超时时间
+    [self.unfinishManager setLocationTimeout:DefaultLocationTimeout];
+    
+    //设置逆地理超时时间
+    [self.unfinishManager setReGeocodeTimeout:DefaultReGeocodeTimeout];
+}
+- (void)initCompleteBlock
+{
+    __weak MinuteTaskController *weakSelf = self;
+    self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
+    {
+        if (error != nil && error.code == AMapLocationErrorLocateFailed)
+        {
+            //定位错误：此时location和regeocode没有返回值，不进行annotation的添加
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            NSLog(@"定位错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else if (error != nil
+                 && (error.code == AMapLocationErrorReGeocodeFailed
+                     || error.code == AMapLocationErrorTimeOut
+                     || error.code == AMapLocationErrorCannotFindHost
+                     || error.code == AMapLocationErrorBadURL
+                     || error.code == AMapLocationErrorNotConnectedToInternet
+                     || error.code == AMapLocationErrorCannotConnectToHost))
+        {
+            //逆地理错误：在带逆地理的单次定位中，逆地理过程可能发生错误，此时location有返回值，regeocode无返回值，进行annotation的添加
+            NSLog(@"逆地理错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+        }
+        else if (error != nil && error.code == AMapLocationErrorRiskOfFakeLocation)
+        {
+            //存在虚拟定位的风险：此时location和regeocode没有返回值，不进行annotation的添加
+            NSLog(@"存在虚拟定位的风险:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else
+        {
+            //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
+        }
+        //修改label显示内容
+        if (regeocode)
+        {
+            //返回用户经纬度，计算两点间的距离
+            [weakSelf refurbishBtnClick];
+        }
+
+    };
+}
+-(void)getlocation{
+    /*定位 正地理编码*/
+    [self initCompleteBlock]; //地理回调
+    [self configLocationManager]; // 位置管理
+    if(!self.orderinfo.serviceLocationX||!self.orderinfo.serviceLocationY){// 无返回经纬度
+        self.searchAPI = [[AMapSearchAPI alloc] init];
+        self.searchAPI.delegate = self;
+        //构造AMapGeocodeSearchRequest对象，address为必选项，city为可选项
+        AMapGeocodeSearchRequest *searchRequest = [[AMapGeocodeSearchRequest alloc] init];
+        searchRequest.address = self.orderinfo.serviceAddress;
+        //发起正向地理编码
+        [self.searchAPI AMapGeocodeSearch: searchRequest];
+    }else{
+        //进行单次带逆地理定位请求
+        [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
 }
 
@@ -224,7 +352,7 @@
 {
     [self.minuteTaskTableView deselectRowAtIndexPath:indexPath animated:NO];
 }
-
+ 
 #pragma mark - 签入  签出
 - (IBAction)orderSingInOrSingOutClick:(UIButton *)sender {
     NSLog(@"点击签入 签出按钮");
@@ -232,14 +360,120 @@
     [[AFNetWorkingRequest sharedTool] requestFindAdvantage:@{@"serviceItemId":self.orderinfo.serviceItemId} type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *strcode = [dic objectForKey:ResponseCode];
+        if ([strcode integerValue] == 1) {
+            AktFindAdvanceModel *model = [[AktFindAdvanceModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
+            if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+                    // 签出逻辑判断
+//                    if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
+//                        AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                        scanOrder.ordertype = @"2";
+//                        scanOrder.detailsModel = model;
+//                        scanOrder.orderinfo = self.orderinfo;
+//                        [self.navigationController pushViewController:scanOrder animated:YES];
+//                    }else{
+                        distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+                        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                /**实际服务时间 与最低服务时间的差值 **/
+                        NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actrueBegin]]; // 实际服务的时间 to-from
+                        BOOL bollateSignOut = (mtime-[model.maxEarlyTime integerValue])<0; // 实际服务大于
+                /* 签入时间与当前时间的差值 是否 满足最低服务时长*/
+                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actrueBegin]]; // 服务开始时间与当前时间的差值 负数是正常
+                BOOL bollateSignOutLess = (mtimeless-[model.minServiceLength integerValue])<0; // 实际服务小于最低
+                        
+                if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
+                            
+                            BOOL bollation = ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignOut isEqualToString:@"2"]));
+                            BOOL bolearly = ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"]));
+                           BOOL bolservice = ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"]));
+                           BOOL bolserviceLess = ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]));
+                    
+                            _sgController.isnewLation = bollation;
+                            _sgController.isnewearly = bolearly;
+                            _sgController.isnewserviceTime = bolservice;
+                            _sgController.isnewserviceTimeLess = bolserviceLess;
+                            _sgController.orderinfo = self.orderinfo;
+                            _sgController.findAdmodel = model;
+                            [self.navigationController pushViewController:_sgController animated:YES];
+                        }else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
+                            
+                            [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
+                        }else if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
+                            // 终止 orderId  工单id   stopReason  终止原因
+                            NSString *strReason;
+                            if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
+                                strReason = @"定位异常终止工单";
+                            }else if ([model.earlyAbnormal isEqualToString:@"0"]){
+                                strReason = @"早退异常终止工单";
+                            }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
+                                strReason = @"最低服务时长异常终止工单";
+                            }else{
+                                strReason = @"服务时长异常终止工单";
+                            }
+                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
+                                [self.navigationController popViewControllerAnimated:YES];
+                            } failure:^(NSError *error) {
+                                [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+                            }];
+                            
+                        }else{
+                            _sgController.orderinfo = self.orderinfo;
+                            _sgController.findAdmodel = model;
+                            [self.navigationController pushViewController:_sgController animated:YES];
+                        }
+//                    }
+               }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+                   distanceSingin = [model.maxLocationDistanceSignIn doubleValue]-[self.distancePost doubleValue]; // 相差距离
+                   NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+                   [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                   NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 签入时间与当前时间的差值 负数是正常
+//                   BOOL bolMinuteSignin = mtime>0;
+                   BOOL bollateSignin = (mtime-[model.maxLateTime integerValue])>0; // 超出最大迟到时间
+                   
+                   
+                   if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
+                       NSLog(@"弹框");
+                         
+                       BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]);
+                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && [model.lateAbnormal isEqualToString:@"2"]);
+                       
+                       _sgController.isnewLation = bollation;
+                       _sgController.isnewlate = bolLate;
+                       _sgController.orderinfo = self.orderinfo;
+                       _sgController.findAdmodel = model;
+                       [self.navigationController pushViewController:_sgController animated:YES];
+                       
+                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
+                       NSLog(@"暂停");
+                       [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
+                   }else if ((([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignIn isEqualToString:@"0"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"0"])))){
+                       NSLog(@"返回首页");
+                       // 终止 orderId  工单id   stopReason  终止原因
+                       NSString *strReason;
+                       if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
+                           strReason = @"定位异常终止工单";
+                       }else{
+                           strReason = @"迟到异常终止工单";
+                       }
+                       [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
+                           [self.navigationController popViewControllerAnimated:YES];
+                       } failure:^(NSError *error) {
+                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+                       }];
+                   }else{
+                       NSLog(@"继续");
+                       _sgController.orderinfo = self.orderinfo;
+                       _sgController.findAdmodel = model;
+                       [self.navigationController pushViewController:_sgController animated:YES];
+                   }
+                  
+               }
+        }
         NSLog(@"%@ \n %@ \n %@",strcode,[dic objectForKey:ResponseMsg],[dic objectForKey:ResponseData]);
     } failure:^(NSError *error) {
-        
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
     }];
-    
-    /*
-    _sgController.orderinfo = self.orderinfo;
-       [self.navigationController pushViewController:_sgController animated:YES];*/
+
 }
 
 #pragma mark - showImageIn
@@ -292,14 +526,6 @@
       gaodeMapDic[@"url"] = urlString;
       [maps addObject:gaodeMapDic];
      }
-     //谷歌地图
-    /* if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]) {
-      NSMutableDictionary *googleMapDic = [NSMutableDictionary dictionary];
-      googleMapDic[@"title"] = @"谷歌地图";
-         NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%@&directionsmode=driving",@"导航功能",@"nav123456",self.orderinfo.serviceAddress] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-      googleMapDic[@"url"] = urlString;
-      [maps addObject:googleMapDic];
-     }*/
      //腾讯地图
      if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"qqmap://"]]) {
       NSMutableDictionary *qqMapDic = [NSMutableDictionary dictionary];
@@ -356,19 +582,6 @@
  //       MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]};
  [MKMapItem openMapsWithItems:items launchOptions:dic];
 }
-
-//日期比较
-//-(int)compareDate:(NSDate *)btime endtime:(NSDate *)etime{
-//    NSComparisonResult result = [btime compare:etime];
-//    NSLog(@"date1 : %@, date2 : %@", btime, etime);
-//    if (result == NSOrderedDescending) {
-//        return 1;
-//    }
-//    else if (result == NSOrderedAscending){
-//        return -1;
-//    }
-//    return 0;
-//}
 
 #pragma mark - UIGestureRecognizerDelegate
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

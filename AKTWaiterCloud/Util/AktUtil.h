@@ -43,9 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 任务签入、签出 出勤状态
 +(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate;
+// 计算分钟
++(NSInteger)getMinuteFrom:(NSDate *)fromDate To:(NSDate *)endDate;
 +(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate;// 计算秒
 +(NSUInteger)isstatus:(NSString *)serviceEnd;
 + (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend;
+// 实际服务时长 格式：3天2小时23分22秒
++ (NSString *)actualBeginTime:(NSString *)begindate actualServiceEndTime:(NSString *)serviceend;
 //比较日期大小
 +(int)compareDate:(NSDate *)bdate End:(NSDate *)edate;
 
