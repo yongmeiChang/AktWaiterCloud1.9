@@ -62,20 +62,38 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollviewBg;
 @property (weak, nonatomic) IBOutlet UIView *postPictrueView;  // 上传图片背景图
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pictrueH; // 上传图片背景图 高度
 @property (weak,nonatomic) IBOutlet UIView * lcView;//流程视图
 @property (weak, nonatomic) IBOutlet UIView *serviceInfoView;//服务内容视图
 @property (weak, nonatomic) IBOutlet UIView *locationInfoView; // 签入 签出情况视图
+
+@property (weak,nonatomic) IBOutlet UILabel * checklabel;
+/**出勤状态 相关控件**/
+@property (weak, nonatomic) IBOutlet UIButton *btnTime;
+@property (weak,nonatomic) IBOutlet UILabel * latelabel;  // 出勤状态
+@property (weak, nonatomic) IBOutlet UILabel *labStatus;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTimeH;
+/**距离 相关控件**/
+@property (weak, nonatomic) IBOutlet UIButton *btnDistance;
+@property (weak,nonatomic) IBOutlet UILabel * distanceLabel;// 距离
+@property (weak, nonatomic) IBOutlet UILabel *labdistance;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnDistanceH;
+/**地址 相关控件**/
 @property (weak, nonatomic) IBOutlet UIView *addressInfoView;// 地址 视图
-
-
+@property (weak, nonatomic) IBOutlet UIButton *btnAddress;
+@property (weak,nonatomic) IBOutlet UILabel * addressLabel;//显示地址
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressH;
+/** 服务时长 相关控件**/
 @property (weak, nonatomic) IBOutlet UILabel *serviceTimeTitleLab; // 服务时长标题
 @property (weak, nonatomic) IBOutlet UIButton *btnServiceLength; //服务时长icon
 @property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;//服务时长
-@property (weak,nonatomic) IBOutlet UILabel * checklabel;
-@property (weak,nonatomic) IBOutlet UILabel * latelabel;  // 出勤状态
-@property (weak,nonatomic) IBOutlet UILabel * distanceLabel;// 距离
+/**最低服务时长 相关控件**/
+@property (weak, nonatomic) IBOutlet UIView *viewTimeless;
+@property (weak, nonatomic) IBOutlet UILabel *labTimeless;
+
+/****/
 @property (weak,nonatomic) IBOutlet UILabel * timerLabel;//显示读秒
-@property (weak,nonatomic) IBOutlet UILabel * addressLabel;//显示地址
+
 @property (weak,nonatomic) IBOutlet UIButton * trapBtn;//录音按钮
 @property (weak,nonatomic) IBOutlet UIButton * submitBtn;//提交按钮
 @property (weak,nonatomic) IBOutlet UITextView * textview;//备注
@@ -229,22 +247,34 @@
     self.textview.delegate = self;
 
     model = [LoginModel gets];
-    
+
     if(self.type==0){
         [self setTitle:@"任务签入"];
-        self.trapBtn.hidden = YES;
-        self.btnPostWidth.constant = SCREEN_WIDTH;
+        if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+        }
         [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
         self.scrollH.constant = 50;
     }else{
         [self setTitle:@"任务签出"];
         self.checklabel.text = @"签出情况";
-        self.trapBtn.hidden = NO;
+        if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+        }
+        
         self.btnServiceLength.hidden = NO;
         self.serviceTimeTitleLab.hidden = NO;
         self.ShowSingOutServiceTimelabel.hidden = NO;
-        self.viewAddressHeightConstraint.constant = 137;
-        self.btnPostWidth.constant = SCREEN_WIDTH/2;
+        self.viewTimeless.hidden = NO;
+        self.viewAddressHeightConstraint.constant = 167;
          [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
         self.scrollH.constant = 100;
 
@@ -257,8 +287,12 @@
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     _isSelectOriginalPhoto = NO;
-
-    [self configCollectionView]; // 选择图片
+    /**照片 相册 相关配置权限**/
+    if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"])) {// 签入 签出 隐藏该功能
+        self.pictrueH.constant = 0;
+    }else{
+        [self configCollectionView]; // 选择图片
+    }
     [self initOtherView]; // UI视图编辑
     [self isLate];
     /*定位 正地理编码*/
@@ -282,7 +316,35 @@
     reasonView = [[SinoutReasonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     reasonView.delegate = self;
     reasonView.hidden = YES;
+    if (self.isnewLation || self.isnewlate || self.isnewearly || self.isnewserviceTime || self.isnewserviceTimeLess) {
+        reasonView.hidden = NO;
+    }
     [self.view addSubview:reasonView];
+    
+    /*签入情况的配置权限*/
+    /** 位置 出勤状态 服务时长 最低服务时长**/
+    if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"] || [self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
+        self.btnDistance.hidden = YES;
+        self.labdistance.hidden = YES;
+        self.distanceLabel.hidden = YES;
+        self.btnDistanceH.constant = 0;
+        self.addressInfoView.hidden = YES;
+    }
+    if ([self.findAdmodel.recordLate isEqualToString:@"0"] || [self.findAdmodel.recordEarly isEqualToString:@"0"]) {
+        self.latelabel.hidden = YES;
+        self.btnTime.hidden = YES;
+        self.labStatus.hidden = YES;
+        self.btnTimeH.constant = 0;
+    }
+    if ([self.findAdmodel.recordServiceLength isEqualToString:@"0"]) {
+        self.btnServiceLength.hidden = YES;
+        self.serviceTimeTitleLab.hidden = YES;
+        self.ShowSingOutServiceTimelabel.hidden = YES;
+    }
+    if ([self.findAdmodel.recordMinServiceLength isEqualToString:@"0"]) {
+        self.viewTimeless.hidden = YES;
+        self.viewAddressHeightConstraint.constant = 137;
+       }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -315,6 +377,15 @@
     }else{
         self.ShowSingOutServiceTimelabel.text = @"服务时长正常";
         isLess = @"0";
+    }
+    
+    /**最低服务时长**/
+    if (strActrueSt<([self.findAdmodel.minServiceLength integerValue] *60)) {
+        self.viewAddressHeightConstraint.constant = 167;
+        self.labTimeless.text = [NSString stringWithFormat:@"%@分钟",self.findAdmodel.minServiceLength];
+    }else{
+        self.labTimeless.hidden = YES;
+        self.viewAddressHeightConstraint.constant = 137;
     }
 }
 
@@ -466,18 +537,43 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == _selectedPhotos.count) {
-        if (_selectedPhotos.count <2) {
-            if (_type ==0) {
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
-                [sheet showInView:self.view];
-            }else{
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
-                [sheet showInView:self.view];
-            }
+        if (_type == 0) {
+            if (_selectedPhotos.count <[self.findAdmodel.photosNumberSignIn integerValue]) { // 最大 照片数
+                      if ([self.findAdmodel.photographSignIn isEqualToString:@"1"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) {
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else if ([self.findAdmodel.photographSignIn isEqualToString:@"1"]  && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
+                          [sheet showInView:self.view];
+                      }else if([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else{
+                          
+                      }
+                      
+                  }else{
+                      [self showMessageAlertWithController:self title:@"温馨提示" Message:[NSString stringWithFormat:@"图片最多可以上传%@张哦~",kString(self.findAdmodel.photosNumberSignIn)] canelBlock:^{}];
+                  }
         }else{
-            [self showMessageAlertWithController:self title:@"温馨提示" Message:@"图片最多可以上传两张哦~" canelBlock:^{}];
+            if (_selectedPhotos.count <[self.findAdmodel.photosNumberSignOut integerValue]) { // 最大 照片数
+                      if ([self.findAdmodel.photographSignOut isEqualToString:@"1"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"]) {
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else if ([self.findAdmodel.photographSignOut isEqualToString:@"1"]  && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
+                          [sheet showInView:self.view];
+                      }else if([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else{
+                          
+                      }
+                      
+                  }else{
+                      [self showMessageAlertWithController:self title:@"温馨提示" Message:[NSString stringWithFormat:@"图片最多可以上传%@张哦~",kString(self.findAdmodel.photosNumberSignOut)] canelBlock:^{}];
+                  }
         }
-        
     } else {
         id asset = _selectedAssets[indexPath.row];
         BOOL isVideo = NO;
@@ -709,11 +805,15 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // take photo / 去拍照
-        [self takePhoto];
-    } else if (buttonIndex == 1) {
-        if (_type == 1) {
+        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
             [self pushTZImagePickerController];
+        }else{
+            [self takePhoto];
         }
+    } else if (buttonIndex == 1) {
+//        if (_type == 1) {
+            [self pushTZImagePickerController];
+//        }
     }
 }
 
@@ -863,6 +963,12 @@
 
 //计时器
 -(void)handleTimer{
+    NSInteger intTimeAll; // 配置录音时长
+    if (_type ==1) {
+        intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
+    }else{
+        intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
+    }
     longtime++;
     NSString * timeStr;
     if(longtime<10){
@@ -870,9 +976,9 @@
     }else{
         timeStr = [NSString stringWithFormat:@"00:00:%d",longtime];
     }
-    if(longtime==60){
+    if(longtime==intTimeAll){
         timeStr = [NSString stringWithFormat:@"00:01:00"];
-        [self showMessageAlertWithController:self Message:@"录音时长不能超过60秒"];
+        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
         self.timerLabel.text = timeStr;
         [timer invalidate];
 
@@ -1000,17 +1106,22 @@
 //        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
 //    }
     NSMutableArray * basearr = [NSMutableArray array];
+     NSMutableArray * imgTypearr = [NSMutableArray array];
     NSString * baseStr = @"";
     NSString * wavStr = @"";
+    NSString * imgtypeStr = @""; // 图片类型
+    
     if(_selectedPhotos.count>=1){
         for(int i = 0; i < _selectedPhotos.count;i++){
             UIImage * image = _selectedPhotos[i];
             NSString * baseCode = [self imageToBaseString:image];
             [basearr addObject:baseCode];
+            [imgTypearr addObject:@"png"];
         }
     }
     
     baseStr = [basearr componentsJoinedByString:@","];
+    imgtypeStr = [imgTypearr componentsJoinedByString:@","];
     if(self.type==1){
         wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
     }
@@ -1022,31 +1133,57 @@
     [param addUnEmptyString:self.orderinfo.id forKey:@"id"];
     [param addUnEmptyString:self.orderinfo.workNo forKey:@"workNo"];
     [param addUnEmptyString:baseStr forKey:@"imageData"];
+    [param addUnEmptyString:imgtypeStr forKey:@"imageType"]; // 图片类型
     if([self.textview.text isEqualToString:@"请输入任务内容及完成情况"]){
         [param addUnEmptyString:@"" forKey:@"serviceResult"];
     }else{
         [param addUnEmptyString:self.textview.text forKey:@"serviceResult"];
     }
-    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
-    [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
+//    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
+    
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
-    [param addUnEmptyString:@"test" forKey:@"test"];
-    [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
-    [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"]; // 定位异常
+//    [param addUnEmptyString:@"test" forKey:@"test"];
+//    [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
+     [param addUnEmptyString:model.uuid forKey:@"waiterId"];
+    [param addUnEmptyString:self.orderinfo.waiterName forKey:@"waiterName"];
+    /**2020 7 22 新增字段**/
+    [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
+    [param addUnEmptyString:@"mp3" forKey:@"recordType"]; // 录音格式
     //签出
     if(self.type==1){
+        [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
         // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signOutLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signOutDistance"];// 签出距离
         [param addUnEmptyString:self.statusPost forKey:@"signOutStatus"]; // 签出状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signOutLocation"]; // 签出 当前地址
-        [param addUnEmptyString:self.nowdate forKey:@"actrueEnd"];
-        [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
-        [param addUnEmptyString:wavStr forKey:@"tapeName"];
+        [param addUnEmptyString:self.nowdate forKey:@"actualEnd"];
         [param addUnEmptyString:isLess forKey:@"isLess"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
+        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actrueBegin actualServiceEndTime:self.orderinfo.actrueEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
+        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:self.orderinfo.actrueEnd]]*1000;
+        [param addUnEmptyString:[NSString stringWithFormat:@"%ld",actualserviceLength] forKey:@"actualTimeLength"]; // 实际的服务时长 毫秒
+        /**2020-7-22 新增加**/
+        [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
+        [param addUnEmptyString:reason forKey:@"earlyReason"];//早退的原因
+        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignOut"]; //是否签出定位异常 1:是 0：否
+        [param addUnEmptyString:reason forKey:@"abnormalSignOutReason"]; // 签出定位异常的原因
+        [param addUnEmptyString:isLess forKey:@"isLess"];//是否服务时间不足  1:是 0：否
+        [param addUnEmptyString:reason forKey:@"lessReason"]; // 服务时间不足原因
+        if (self.isnewserviceTimeLess) {
+            [param addUnEmptyString:@"1" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
+            long actrueservicelength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:self.orderinfo.actrueEnd]] * 1000; // 实际服务时长 毫秒
+           long lesslength = ([self.findAdmodel.minServiceLength longLongValue] * 60 * 1000) - actrueservicelength; // 最低服务时长-实际 毫秒
+            [param addUnEmptyString:[NSString stringWithFormat:@"%ld",lesslength] forKey:@"minLessTimeLength"];// 最低服务时间不足的时长 毫秒
+        }else{
+            [param addUnEmptyString:@"0" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
+            [param addUnEmptyString:@"0" forKey:@"minLessTimeLength"];// 最低服务时间不足的时长
+        }
+        [param addUnEmptyString:reason forKey:@"minLessReason"];// 最低服务时间不足原因
+        
+        
     
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
@@ -1063,15 +1200,21 @@
         }];
         
     }else{
-        [param addUnEmptyString:model.uuid forKey:@"waiterId"];
+        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignIn"]; // 定位异常
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
         [param addUnEmptyString:self.statusPost forKey:@"signInStatus"]; // 状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signInLocation"];
-        [param addUnEmptyString:self.nowdate forKey:@"actrueBegin"];
+        [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
+        [param addUnEmptyString:self.nowdate forKey:@"actualBegin"];
         [param addUnEmptyString:self.orderinfo.isLate forKey:@"isLate"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveIntime] forKey:@"lateTimeLength"];//0正常 1迟到
+        /**2020 7 22 新增**/
+        [param addUnEmptyString:self.orderinfo.isLate forKey:@"lateReason"]; // 迟到原因
+        [param addUnEmptyString:self.orderinfo.isLate forKey:@"isAbnormalSignIn"]; //是否是签入定位异常
+        [param addUnEmptyString:self.orderinfo.isLate forKey:@"abnormalSignInReason"];//签入定位异常原因
+        
 
         [[AFNetWorkingRequest sharedTool] requestsignIn:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;

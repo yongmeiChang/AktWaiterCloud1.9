@@ -8,9 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "WorkBaseViewController.h"
+#import "AktOrderDetailsModel.h"
+
 @class OrderInfo;
 @interface SignoutController : WorkBaseViewController
-@property (nonatomic,assign) int type;// 0签入 1签出 (签出有录音,照片一张)
+@property (nonatomic,assign) int type;// 0签入 1签出 (签出有录音,照片一张  ------ 该逻辑在4.0中废弃)
 @property (nonatomic,strong) OrderInfo * orderinfo;
+@property (nonatomic, strong) AktFindAdvanceModel *findAdmodel;
+
+/*新增逻辑*/
+@property (nonatomic)BOOL isnewlate; // 迟到弹框
+@property (nonatomic)BOOL isnewLation; // 定位弹框
+//@property (nonatomic)BOOL isnewPhone; // 拍照
+//@property (nonatomic)BOOL isnewsound; // 录音
+@property (nonatomic)BOOL isnewearly; // 早退弹框
+@property (nonatomic)BOOL isnewserviceTimeLess; // 最低服务时长弹框
+@property (nonatomic)BOOL isnewserviceTime; // 服务时长弹框
+
 -(id)initSignoutControllerWithOrderInfo:(OrderInfo *)orderinfo;
 @end
