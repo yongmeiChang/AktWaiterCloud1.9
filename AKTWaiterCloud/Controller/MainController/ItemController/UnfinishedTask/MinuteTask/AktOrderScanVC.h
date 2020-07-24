@@ -21,6 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) AktFindAdvanceModel * detailsModel;
 
 @property (nonatomic,strong)AVCaptureSession *session; // 扫码
+/*新增逻辑*/
+@property (nonatomic)BOOL isnewlate; // 迟到弹框
+@property (nonatomic)BOOL isnewLation; // 定位弹框
+@property (nonatomic)BOOL isnewearly; // 早退弹框
+@property (nonatomic)BOOL isnewserviceTimeLess; // 最低服务时长弹框
+@property (nonatomic)BOOL isnewserviceTime; // 服务时长弹框
 
 @end
 

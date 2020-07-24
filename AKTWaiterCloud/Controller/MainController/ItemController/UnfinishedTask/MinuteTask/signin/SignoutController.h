@@ -19,8 +19,6 @@
 /*新增逻辑*/
 @property (nonatomic)BOOL isnewlate; // 迟到弹框
 @property (nonatomic)BOOL isnewLation; // 定位弹框
-//@property (nonatomic)BOOL isnewPhone; // 拍照
-//@property (nonatomic)BOOL isnewsound; // 录音
 @property (nonatomic)BOOL isnewearly; // 早退弹框
 @property (nonatomic)BOOL isnewserviceTimeLess; // 最低服务时长弹框
 @property (nonatomic)BOOL isnewserviceTime; // 服务时长弹框
