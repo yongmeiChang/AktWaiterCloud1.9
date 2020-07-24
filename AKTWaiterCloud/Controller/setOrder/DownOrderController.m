@@ -203,7 +203,7 @@
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
     [paremeter addUnEmptyString:_customerUkey forKey:@"customerUkey"];
     [paremeter addUnEmptyString:_servicepojInfo.id forKey:@"serviceItemId"];
-    [paremeter addUnEmptyString:_servicepojInfo.name forKey:@"serviceItemName"];
+    [paremeter addUnEmptyString:_servicepojInfo.showName forKey:@"serviceItemName"];
     [paremeter addUnEmptyString:_dofInfo.serviceAddress forKey:@"serviceAddress"];
     [paremeter addUnEmptyString:_Date forKey:@"serviceDate"];
     [paremeter addUnEmptyString:_bTime forKey:@"serviceBegin"];

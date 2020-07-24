@@ -209,10 +209,10 @@
     self.customerSatisfactionName = customerSatisfactionName;
     self.visitDate = visitDate;
     self.actualCharge = actualCharge;
-    self.actrueBegin = actrueBegin;
+    self.actualBegin = actrueBegin;
     self.isLate = isLate;
     self.isAbnormal = isAbnormal;
-    self.actrueEnd = actrueEnd;
+    self.actualEnd = actrueEnd;
     self.isEarly = isEarly;
 }
 

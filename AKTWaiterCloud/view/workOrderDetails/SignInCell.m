@@ -29,7 +29,7 @@
         self.lateLabel.text = @"正常";
     }
     
-    NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actrueBegin).length == 0 ? @"无":orderinfo.actrueBegin] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
+    NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actualBegin).length == 0 ? @"无":orderinfo.actualBegin] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;
     // 距离
@@ -60,7 +60,7 @@
           self.lateLabel.textColor = kColor(@"C15");
           self.lateLabel.text = @"正常";
       }
-    NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actrueEnd).length == 0 ? @"无":orderinfo.actrueEnd] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
+    NSMutableAttributedString *strTime = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间：%@",kString(orderinfo.actualEnd).length == 0 ? @"无":orderinfo.actualEnd] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
     [strTime addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 2)];
     self.signInDateLabel.attributedText = strTime;
     // 距离

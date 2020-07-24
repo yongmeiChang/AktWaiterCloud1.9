@@ -76,10 +76,10 @@ static AFNetWorkingTool * a_instance = nil;
     }
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"];
-    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+    [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];
     // 登录接口 单独参数
     NSString *url;
-    if ([URLString isEqualToString:@"waiterLogin"]) {
+    if ([URLString isEqualToString:@"appToken"]) {
         url = [NSString stringWithFormat:@"%@/api/auth/jwt/%@",SERVICEURL,URLString];
     }else{
         url = [NSString stringWithFormat:@"%@/api/app/appService/%@",SERVICEURL,URLString];

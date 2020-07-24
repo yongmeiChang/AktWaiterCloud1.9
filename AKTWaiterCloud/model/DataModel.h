@@ -151,10 +151,10 @@
 @property(nonatomic,strong) NSString  <Optional>* signInDistance;//签入距离
 @property(nonatomic,strong) NSString  <Optional>* signOutDistance;//签出距离
 @property(nonatomic,strong) NSString  <Optional>* actualCharge;//
-@property(nonatomic,strong) NSString  <Optional>* actrueBegin;//签入时间
+@property(nonatomic,strong) NSString  <Optional>* actualBegin;//签入时间
 @property(nonatomic,strong) NSString  <Optional>* isLate;//是否迟到((0:正常1:迟到);)
 @property(nonatomic,strong) NSString  <Optional>* isAbnormal;//是否定位异常(0:正常1:异常)
-@property(nonatomic,strong) NSString  <Optional>* actrueEnd;//签出时间
+@property(nonatomic,strong) NSString  <Optional>* actualEnd;//签出时间
 @property(nonatomic,strong) NSString  <Optional>* isEarly;//是否早退(0:正常1:早退)
 
 -(void)getOrderTaskByWorkNo:(NSString *)workNo tid:(NSString *)tid total:(NSString *)total isTrue:(NSString *)isTrue  createDate:(NSString *)createDate  begin:(NSString *)begin  updateDate:(NSString *)updateDate  delFlag:(NSString *)delFlag  affixFlag:(NSString *)affixFlag  serviceAreaName:(NSString *)serviceAreaName  serviceAreaFullPath:(NSString *)serviceAreaFullPath  workStatus:(NSString *)workStatus  workStatusName:(NSString *)workStatusName  customerId:(NSString *)customerId  customerNo:(NSString *)customerNo  machineNo:(NSString *)machineNo  customerName:(NSString *)customerName  customerPhone:(NSString *)customerPhone  serviceAddress:(NSString *)serviceAddress  serviceLocationX:(NSString *)serviceLocationX  serviceLocationY:(NSString *)serviceLocationY  serviceAreaId:(NSString *)serviceAreaId  serviceContent:(NSString *)serviceContent  serviceMoney:(NSString *)serviceMoney  serviceDate:(NSString *)serviceDate  serviceBegin:(NSString *)serviceBegin  serviceEnd:(NSString *)serviceEnd  serviceLength:(NSString *)serviceLength  serviceItemId:(NSString *)serviceItemId  serviceItemName:(NSString *)serviceItemName  stationId:(NSString *)stationId  stationName:(NSString *)stationName  stationPhone:(NSString *)stationPhone  stationAddress:(NSString *)stationAddress  waiterId:(NSString *)waiterId  waiterName:(NSString *)waiterName  waiterPhone:(NSString *)waiterPhone  waiterLocation:(NSString *)waiterLocation  processInstanceId:(NSString *)processInstanceId  processKey:(NSString *)processKey  processKeyName:(NSString *)processKeyName  orderUserId:(NSString *)orderUserId  orderUserName:(NSString *)orderUserName  orderDate:(NSString *)orderDate  sendUserId:(NSString *)sendUserId  sendUserName:(NSString *)sendUserName  sendDate:(NSString *)sendDate  stationUserId:(NSString *)stationUserId  stationUserName:(NSString *)stationUserName  stationDate:(NSString *)stationDate serviceTimeLength:(NSString *)serviceTimeLength unitType:(NSString *)unitType  unitTypeName:(NSString *)unitTypeName  abnormalFlag:(NSString *)abnormalFlag  abnormalFlagName:(NSString *)abnormalFlagName  lessFlagName:(NSString *)lessFlagName  lessFlag:(NSString *)lessFlag  businessType:(NSString *)businessType    field11:(NSString *)field11  field12:(NSString *)field12  field13:(NSString *)field13  createBy:(NSString *)createBy  updateBy:(NSString *)updateBy  serviceFullPath:(NSString *)serviceFullPath  signInLocation:(NSString *)signInLocation  signInStatus:(NSString *)signInStatus  signOutLocation:(NSString *)signOutLocation  signOutStatus:(NSString *)signOutStatus visitUserName:(NSString *)visitUserName signInDistance:(NSString *)signInDistance serviceResult:(NSString *)serviceResult  serviceVisit:(NSString *)serviceVisit CustomerSatisfactionName:(NSString *)CustomerSatisfactionName VisitDate:(NSString *)VisitDate actualCharge:(NSString *)actualCharge actrueBegin:(NSString *)actrueBegin isLate:(NSString *)isLate isAbnormal:(NSString *)isAbnormal actrueEnd:(NSString *)actrueEnd isEarly:(NSString *)isEarly;
@@ -189,12 +189,12 @@
 @property (strong, nonatomic) NSString<Optional>* createDate;
 @property (strong, nonatomic) NSString<Optional>* delFlag;
 @property (strong, nonatomic) NSString<Optional>* govType;
-@property (strong, nonatomic) NSString<Optional>* id;
+//@property (strong, nonatomic) NSString<Optional>* id;
 @property (strong, nonatomic) NSString<Optional>* isShow;
 @property (strong, nonatomic) NSString<Optional>* lessFlag;
 @property (strong, nonatomic) NSString<Optional>* messageType;
 @property (strong, nonatomic) NSString<Optional>* messageTypeName;
-@property (strong, nonatomic) NSString<Optional>* name;
+//@property (strong, nonatomic) NSString<Optional>* name;
 @property (strong, nonatomic) NSString<Optional>* parentId;
 @property (strong, nonatomic) NSString<Optional>* parentIds;
 @property (strong, nonatomic) NSString<Optional>* parentName;
@@ -213,6 +213,18 @@
 @property (strong, nonatomic) NSString<Optional>* unitType;//1是按时收费 2是按次收费
 @property (strong, nonatomic) NSString<Optional>* serviceBegin; // 服务开始时间
 @property (strong, nonatomic) NSString<Optional>* serviceEnd; // 服务结束时间
+
+@property (strong, nonatomic) NSString<Optional>* processId;
+@property (strong, nonatomic) NSString<Optional>* id;
+@property (strong, nonatomic) NSString<Optional>* name;
+@property (strong, nonatomic) NSString<Optional>* showName;
+@property (strong, nonatomic) NSString<Optional>* fullName;
+@property (strong, nonatomic) NSString<Optional>* serviceValidity; // = -2;// 根据开始日期计算结束日期  0：开始日期所在周   -1：开始日期所在月  其他正数表示往后推迟的天数
+@property (strong, nonatomic) NSString<Optional>* serviceTime;//根据开始时间往后推迟的时间
+@property (strong, nonatomic) NSString<Optional>* timeUnit;//根据开始时间往后推迟的时间的单位  1：小时  2:分钟
+
+
+
 
 @end
 

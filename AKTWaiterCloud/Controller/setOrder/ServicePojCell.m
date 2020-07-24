@@ -23,7 +23,7 @@
     // Configure the view for the selected state
 }
 -(void)setCellInfo:(ServicePojInfo *)cellInfo selectCellInf:(ServicePojInfo *)select IndexPath:(NSIndexPath *)indexpath{
-    self.leftlabel.text = cellInfo.name;
+    self.leftlabel.text = cellInfo.fullName;
     if ([cellInfo.id isEqualToString:select.id]) {
         self.btnSelect.selected = YES;
     }

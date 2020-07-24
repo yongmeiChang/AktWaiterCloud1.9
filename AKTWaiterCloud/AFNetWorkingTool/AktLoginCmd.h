@@ -13,7 +13,7 @@
 #define AKTGetTenantsTreeMethod @"getTenantsTree" // 租户列表
 #define AKTGetCheckCodeMethod @"getCheckCode" // 获取验证码
 #define AKTWaiterRegisterMethod @"waiterRegister" // 注册
-#define AKTLoginMethod @"waiterLogin" // 登录
+#define AKTLoginMethod @"appToken" // 登录
 
 NS_ASSUME_NONNULL_BEGIN
 

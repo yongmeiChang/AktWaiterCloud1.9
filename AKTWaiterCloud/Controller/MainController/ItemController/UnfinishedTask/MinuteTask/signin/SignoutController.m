@@ -50,7 +50,7 @@
     int longtime;
 
     NSString * isLess; // 时长是否正常 0正常  1不正常
-    SinoutReasonView *reasonView; // 提交失败的原因 弹框
+//    SinoutReasonView *reasonView; // 提交失败的原因 弹框
     
     LoginModel *model;
     BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
@@ -265,14 +265,13 @@
         [self.serviceInfoView addSubview:labTitle];
         
         
-        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, labTitle.frame.origin.y+20+i*140, SCREEN_WIDTH-32, 130)];
+        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, i*140, SCREEN_WIDTH-32, 130)];
         noticeView.placeholder = @"请输入任务内容及完成情况";
         noticeView.backgroundColor = kColor(@"C19");
         noticeView.tag = i;
         noticeView.delegate = self;
         [self.serviceInfoView addSubview:noticeView];
     }
-
 }
 
 #pragma mark - viewDidLoad
@@ -352,7 +351,7 @@
         //进行单次带逆地理定位请求
         [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
-    
+    /*
     // 填写失败的原因
     reasonView = [[SinoutReasonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     reasonView.delegate = self;
@@ -361,7 +360,7 @@
         reasonView.hidden = NO;
     }
     [self.view addSubview:reasonView];
-    
+    */
     /*签入情况的配置权限*/
     /** 位置 出勤状态 服务时长 最低服务时长**/
     if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"] || [self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
@@ -401,7 +400,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
-    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:nowDate]];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
     long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
     if(strServiceSt>strActrueSt){ //servicetime>=ordertime
@@ -436,7 +435,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
-    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:nowDate]];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
     long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
     if(self.type==0){
@@ -1087,7 +1086,7 @@
                   }else{
                       NSLog(@"=====不可以提交==");
                       if ([isLess isEqualToString:@"1"] || [self.distanceLabel.text containsString:@"超出"]) {
-                          reasonView.hidden = NO;
+//                          reasonView.hidden = NO;
                       }else{
                            [self postDataAllInfo:@""];
                       }
@@ -1215,8 +1214,8 @@
         [param addUnEmptyString:self.nowdate forKey:@"actualEnd"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
-        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actrueBegin actualServiceEndTime:self.orderinfo.actrueEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
-        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:self.orderinfo.actrueEnd]]*1000;
+        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actualBegin actualServiceEndTime:self.orderinfo.actualEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
+        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:self.orderinfo.actualEnd]]*1000;
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",actualserviceLength] forKey:@"actualTimeLength"]; // 实际的服务时长 毫秒
         /**2020-7-22 新增加**/
         [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
@@ -1227,7 +1226,7 @@
         [param addUnEmptyString:kString(strService) forKey:@"lessReason"]; // 服务时间不足原因
         if (self.isnewserviceTimeLess) {
             [param addUnEmptyString:@"1" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
-            long actrueservicelength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:self.orderinfo.actrueEnd]] * 1000; // 实际服务时长 毫秒
+            long actrueservicelength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:self.orderinfo.actualEnd]] * 1000; // 实际服务时长 毫秒
            long lesslength = ([self.findAdmodel.minServiceLength longLongValue] * 60 * 1000) - actrueservicelength; // 最低服务时长-实际 毫秒
             [param addUnEmptyString:[NSString stringWithFormat:@"%ld",lesslength] forKey:@"minLessTimeLength"];// 最低服务时间不足的时长 毫秒
         }else{
@@ -1288,6 +1287,7 @@
     }
 }
 #pragma mark - reason delegate
+/*
 -(void)didselectAction:(UIButton *)sender textviewInfo:(NSString *)info{
     switch (sender.tag) {
         case 1:
@@ -1301,7 +1301,7 @@
         default:
             break;
     }
-}
+}*/
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
     // 水印内容
