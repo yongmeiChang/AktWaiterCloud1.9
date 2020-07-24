@@ -10,6 +10,9 @@
 		4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3124207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3224207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
+		4C25C29F24C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
+		4C25C2A024C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
+		4C25C2A124C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
 		4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F099241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F09A241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
@@ -450,6 +453,8 @@
 		295155AC8DB18CEFF65CCC5D /* Pods-AKTWaiterCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.debug.xcconfig"; sourceTree = "<group>"; };
 		4C17AD2E24207CFD0006C45F /* AktLoginCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktLoginCmd.h; sourceTree = "<group>"; };
 		4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktLoginCmd.m; sourceTree = "<group>"; };
+		4C25C29D24C9644F007AF277 /* WSPlaceholderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSPlaceholderTextView.h; sourceTree = "<group>"; };
+		4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSPlaceholderTextView.m; sourceTree = "<group>"; };
 		4C31F096241F58FF0084AC82 /* AktVipCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktVipCmd.h; sourceTree = "<group>"; };
 		4C31F097241F58FF0084AC82 /* AktVipCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktVipCmd.m; sourceTree = "<group>"; };
 		4C37973A242205EE00DC9EFB /* VisitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitCell.m; sourceTree = "<group>"; };
@@ -1314,6 +1319,8 @@
 				AD576078206B3E0200991FFA /* RangeUtil.m */,
 				4CD6754122EB067F00AB76AF /* AktUtil.h */,
 				4CD6754222EB067F00AB76AF /* AktUtil.m */,
+				4C25C29D24C9644F007AF277 /* WSPlaceholderTextView.h */,
+				4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1885,6 +1892,7 @@
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
 				AD1E03451FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m in Sources */,
 				4CDAD74E240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
+				4C25C29F24C9644F007AF277 /* WSPlaceholderTextView.m in Sources */,
 				4C9B9754240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				4C3DABA524A9820F009126D5 /* QRCodeViewController.m in Sources */,
@@ -1995,6 +2003,7 @@
 				4CDAD74F240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FA24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DC24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
+				4C25C2A024C9644F007AF277 /* WSPlaceholderTextView.m in Sources */,
 				4C9B976D240CCF1D00576F7C /* FSCalendarConstants.m in Sources */,
 				4C3DABB224A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
 				4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
@@ -2089,6 +2098,7 @@
 				4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FB24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DD24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
+				4C25C2A124C9644F007AF277 /* WSPlaceholderTextView.m in Sources */,
 				4C9B976E240CCF1D00576F7C /* FSCalendarConstants.m in Sources */,
 				4C3DABB324A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
 				4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */,

@@ -28,6 +28,7 @@
 #import "SinoutReasonView.h" // 提交失败的原因
 #import "AktWCMp3.h" // 录音
 #import "AddWaterMark.h" // 水印
+#import "WSPlaceholderTextView.h" // 自定义textview
 
 #define PI 3.1415926
 #define DefaultLocationTimeout 10
@@ -53,6 +54,12 @@
     
     LoginModel *model;
     BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
+    
+    NSString *strNotice; // 建议反馈原因
+    NSString *strlocation; // 定位原因
+    NSString *strEarly; // 迟到 、早退原因
+    NSString *lessService; // 最低服务时长原因
+    NSString *strService; // 服务时长原因
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
@@ -96,7 +103,7 @@
 
 @property (weak,nonatomic) IBOutlet UIButton * trapBtn;//录音按钮
 @property (weak,nonatomic) IBOutlet UIButton * submitBtn;//提交按钮
-@property (weak,nonatomic) IBOutlet UITextView * textview;//备注
+//@property (weak,nonatomic) IBOutlet UITextView * textview;//备注
 @property (weak,nonatomic) IBOutlet UITextField * lctitleTextField;//流程视图
 @property (weak,nonatomic) IBOutlet UITextView * lccontentTextView;//流程视图
 @property (weak,nonatomic) IBOutlet UIButton * lcBtn;//流程视图
@@ -113,6 +120,7 @@
 @property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标
 @property (nonatomic,strong) NSString * statusPost;   // 状态  2020、2、27 更改提交数据
 @property (nonatomic,strong) NSString * distancePost; // 距离 单位米
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *reasonViewH; // 原因展示背景图的高度
 
 
 @end
@@ -236,6 +244,37 @@
 
     };
 }
+
+#pragma mark - reson view
+-(void)reasonViewLoadAll{
+    
+    // 建议反馈// 定位异常反馈：//早退反馈：//未达到最低服务时长反馈栏：//未达到最低服务时长反馈栏：
+    NSArray *arytitle;
+    if (_type == 1) {
+        arytitle = [NSArray arrayWithObjects:@"建议反馈内容：",@"定位异常反馈：",@"早退反馈：",@"未达到最低服务时长反馈栏：",@"未达到最低服务时长反馈栏：", nil];
+        self.reasonViewH.constant = 957;
+    }else{
+        self.reasonViewH.constant = 570;
+        arytitle = [NSArray arrayWithObjects:@"建议反馈内容：",@"定位异常反馈：",@"迟到反馈：", nil];
+    }
+    for (int i =0; i<arytitle.count; i++) {
+        UILabel *labTitle = [[UILabel alloc] initWithFrame:CGRectMake(16, 13+i*160, SCREEN_WIDTH-32, 20)];
+        labTitle.textColor = kColor(@"C1");
+        labTitle.font = [UIFont systemFontOfSize:15];
+        labTitle.text = [NSString stringWithFormat:@"%@",[arytitle objectAtIndex:i]];
+        [self.serviceInfoView addSubview:labTitle];
+        
+        
+        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, labTitle.frame.origin.y+20+i*140, SCREEN_WIDTH-32, 130)];
+        noticeView.placeholder = @"请输入任务内容及完成情况";
+        noticeView.backgroundColor = kColor(@"C19");
+        noticeView.tag = i;
+        noticeView.delegate = self;
+        [self.serviceInfoView addSubview:noticeView];
+    }
+
+}
+
 #pragma mark - viewDidLoad
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -244,10 +283,12 @@
     self.lccontentTextView.delegate = self;
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    self.textview.delegate = self;
+//    self.textview.delegate = self;
 
     model = [LoginModel gets];
-
+/****/
+    [self reasonViewLoadAll];
+    /****/
     if(self.type==0){
         [self setTitle:@"任务签入"];
         if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
@@ -258,7 +299,7 @@
             self.btnPostWidth.constant = SCREEN_WIDTH;
         }
         [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        self.scrollH.constant = 50;
+        self.scrollH.constant = 50+760;
     }else{
         [self setTitle:@"任务签出"];
         self.checklabel.text = @"签出情况";
@@ -276,7 +317,7 @@
         self.viewTimeless.hidden = NO;
         self.viewAddressHeightConstraint.constant = 167;
          [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
-        self.scrollH.constant = 100;
+        self.scrollH.constant = 100+760;
 
         //计算服务时间
         [self ComputeServiceTime];
@@ -490,26 +531,39 @@
 }
 
 #pragma mark - UITextViewDelegate
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if(textView.tag == 100){
-        if(textView.text.length < 1){
-            textView.text = @"请输入任务内容及完成情况";
-            textView.textColor = [UIColor grayColor];
-        }
-    }
+-(void)textViewDidChange:(UITextView *)textView{
+     if (textView.tag == 0) {
+           strNotice=textView.text;
+       }else if (textView.tag == 1){
+           strlocation=textView.text;
+       }else if (textView.tag == 2){
+           strEarly=textView.text;
+       }else if (textView.tag == 3){
+           lessService=textView.text;
+       }else{
+           strService=textView.text;
+       }
 }
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if(textView.tag == 100){
-        if([textView.text isEqualToString:@"请输入任务内容及完成情况"]){
-            textView.text=@"";
-            textView.textColor=[UIColor blackColor];
-        }
-    }
-    
-}
+//- (void)textViewDidEndEditing:(UITextView *)textView
+//{
+//    if(textView.tag == 100){
+//        if(textView.text.length < 1){
+//            textView.text = @"请输入任务内容及完成情况";
+//            textView.textColor = [UIColor grayColor];
+//        }
+//    }
+//}
+//
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    if(textView.tag == 100){
+//        if([textView.text isEqualToString:@"请输入任务内容及完成情况"]){
+//            textView.text=@"";
+//            textView.textColor=[UIColor blackColor];
+//        }
+//    }
+//
+//}
 
 #pragma mark UICollectionView
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -1134,10 +1188,10 @@
     [param addUnEmptyString:self.orderinfo.workNo forKey:@"workNo"];
     [param addUnEmptyString:baseStr forKey:@"imageData"];
     [param addUnEmptyString:imgtypeStr forKey:@"imageType"]; // 图片类型
-    if([self.textview.text isEqualToString:@"请输入任务内容及完成情况"]){
+    if([kString(strNotice) isEqualToString:@"请输入任务内容及完成情况"]){
         [param addUnEmptyString:@"" forKey:@"serviceResult"];
     }else{
-        [param addUnEmptyString:self.textview.text forKey:@"serviceResult"];
+        [param addUnEmptyString:kString(strNotice) forKey:@"serviceResult"];
     }
 //    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
     
@@ -1159,7 +1213,6 @@
         [param addUnEmptyString:self.statusPost forKey:@"signOutStatus"]; // 签出状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signOutLocation"]; // 签出 当前地址
         [param addUnEmptyString:self.nowdate forKey:@"actualEnd"];
-        [param addUnEmptyString:isLess forKey:@"isLess"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actrueBegin actualServiceEndTime:self.orderinfo.actrueEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
@@ -1167,11 +1220,11 @@
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",actualserviceLength] forKey:@"actualTimeLength"]; // 实际的服务时长 毫秒
         /**2020-7-22 新增加**/
         [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
-        [param addUnEmptyString:reason forKey:@"earlyReason"];//早退的原因
+        [param addUnEmptyString:kString(strEarly) forKey:@"earlyReason"];//早退的原因
         [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignOut"]; //是否签出定位异常 1:是 0：否
-        [param addUnEmptyString:reason forKey:@"abnormalSignOutReason"]; // 签出定位异常的原因
+        [param addUnEmptyString:kString(strlocation) forKey:@"abnormalSignOutReason"]; // 签出定位异常的原因
         [param addUnEmptyString:isLess forKey:@"isLess"];//是否服务时间不足  1:是 0：否
-        [param addUnEmptyString:reason forKey:@"lessReason"]; // 服务时间不足原因
+        [param addUnEmptyString:kString(strService) forKey:@"lessReason"]; // 服务时间不足原因
         if (self.isnewserviceTimeLess) {
             [param addUnEmptyString:@"1" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
             long actrueservicelength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actrueBegin] To:[formatter dateFromString:self.orderinfo.actrueEnd]] * 1000; // 实际服务时长 毫秒
@@ -1181,8 +1234,7 @@
             [param addUnEmptyString:@"0" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
             [param addUnEmptyString:@"0" forKey:@"minLessTimeLength"];// 最低服务时间不足的时长
         }
-        [param addUnEmptyString:reason forKey:@"minLessReason"];// 最低服务时间不足原因
-        
+        [param addUnEmptyString:kString(lessService) forKey:@"minLessReason"];// 最低服务时间不足原因
         
     
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
@@ -1200,7 +1252,6 @@
         }];
         
     }else{
-        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignIn"]; // 定位异常
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
@@ -1211,9 +1262,9 @@
         [param addUnEmptyString:self.orderinfo.isLate forKey:@"isLate"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveIntime] forKey:@"lateTimeLength"];//0正常 1迟到
         /**2020 7 22 新增**/
-        [param addUnEmptyString:self.orderinfo.isLate forKey:@"lateReason"]; // 迟到原因
-        [param addUnEmptyString:self.orderinfo.isLate forKey:@"isAbnormalSignIn"]; //是否是签入定位异常
-        [param addUnEmptyString:self.orderinfo.isLate forKey:@"abnormalSignInReason"];//签入定位异常原因
+        [param addUnEmptyString:kString(strEarly) forKey:@"lateReason"]; // 迟到原因
+        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignIn"]; // 是否 定位异常
+        [param addUnEmptyString:kString(strlocation) forKey:@"abnormalSignInReason"];//签入定位异常原因
         
 
         [[AFNetWorkingRequest sharedTool] requestsignIn:param type:HttpRequestTypePost success:^(id responseObject) {
@@ -1273,7 +1324,7 @@
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         if (textView.tag==100){
             //在这里做你响应return键的代码
-            [self.textview resignFirstResponder];
+//            [self.textview resignFirstResponder];
         }else{
             [self.lccontentTextView resignFirstResponder];
         }
