@@ -201,4 +201,15 @@ success:(void (^)(id responseObject))success
         failure(error);
     }];
 }
+/*新增接口 判断是否有 工单签入 */
+-(void)requestCheckSignInStatus:(NSDictionary *)param
+   type:(HttpRequestType)type
+success:(void (^)(id responseObject))success
+                        failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTCheckSignInStatusMethod parameters:param type:type success:^(id responseObject) {
+          success(responseObject);
+      } failure:^(NSError *error) {
+          failure(error);
+      }];
+}
 @end

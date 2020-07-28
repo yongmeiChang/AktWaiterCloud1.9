@@ -27,6 +27,7 @@
 //#define AKTOrderDetailsMethod @"" // 工单详情 目前还没有使用
 #define AKTFindAdvancedMethod @"findAdvanced" // 工单签入 签出配置
 #define AKTOrderStopMethod @"stopOrder" // 工单终止
+#define AKTCheckSignInStatusMethod @"checkSignInStatus" // 判断是否有签入工单
 
 
 @interface AFNetWorkingRequest : NSObject
@@ -111,7 +112,11 @@
                     success:(void (^)(id responseObject))success
                     failure:(void (^)(NSError *error))failure;
 
-
+/*新增接口 判断是否有 工单签入 */
+-(void)requestCheckSignInStatus:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure;
 
 @end
 
