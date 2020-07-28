@@ -154,19 +154,19 @@
 #pragma mark - request
 -(void)requestTask{
     //网络状态判断
-    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        self.orderfmdb = [[OrderTaskFmdb alloc] init];
-        _dataArray = [self.orderfmdb findAllOrderInfo];
-        if(_dataArray.count==0){
-            self.netWorkErrorView.hidden = NO;
-        }else{
-            self.netWorkErrorView.hidden = YES;
-            [self.taskTableview reloadData];
-        }
-        
-    }else{
-        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
-    }
+//    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
+//        self.orderfmdb = [[OrderTaskFmdb alloc] init];
+//        _dataArray = [self.orderfmdb findAllOrderInfo];
+//        if(_dataArray.count==0){
+//            self.netWorkErrorView.hidden = NO;
+//        }else{
+//            self.netWorkErrorView.hidden = YES;
+//            [self.taskTableview reloadData];
+//        }
+//
+//    }else{
+//        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
+//    }
     tableviewtype = 0;
     //status：状态(1：未完成 2：服务中 3：已完成)
     NSArray * typeArr = @[@"1",@"2",@"3",@""];
@@ -175,7 +175,7 @@
     }
     NSLog(@"%@",[LoginModel gets]);
     LoginModel *model = [LoginModel gets];
-    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceBegin":kString(searchBTime),@"serviceEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
+    NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceDate":kString(searchBTime),@"serviceDateEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
     [[AFNetWorkingRequest sharedTool] requestgetWorkByStatus:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSString * message = [dic objectForKey:@"message"];
@@ -184,12 +184,12 @@
             NSArray * arr = [NSArray array];
             NSDictionary * obj = [dic objectForKey:ResponseData];
             arr = obj[@"list"];
-            if([message isEqualToString:@"当前没有工单任务!"]){
+            if([message isEqualToString:@"共有0个工单任务！"]){
+                self.netWorkErrorView.hidden = NO;
                 [self showOffLineAlertWithTime:1.0  message:@"当前没有工单任务!" DoSomethingBlock:^{
-                    self.netWorkErrorView.hidden = NO;
                 }];
             }else{
-                if(arr&&arr.count>0){
+//                if(arr&&arr.count>0){
                     self.taskTableview.hidden = NO;
                     self.netWorkErrorView.hidden = YES;
 
@@ -223,14 +223,14 @@
                     [self.taskTableview reloadData];
                     [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
-                }else{
-                    self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-                    self.netWorkErrorView.hidden = NO;
-                    [[AppDelegate sharedDelegate] hidHUD];
-                    self.netWorkErrorView.userInteractionEnabled = YES;
-                }
+//                }else{
+//                    self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
+//                    self.netWorkErrorView.hidden = NO;
+//                    [[AppDelegate sharedDelegate] hidHUD];
+//                    self.netWorkErrorView.userInteractionEnabled = YES;
+//                }
             }
-        }else if(pageSize == 1 && [code integerValue] == 2){
+        }else if(pageSize == 1 && [code integerValue] == 1){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
             [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
@@ -248,7 +248,7 @@
 }
 
 -(void)labelClick{
-    pageSize=0;
+    pageSize=1;
     DDLogInfo(@"点击了刷新按钮");
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         [self showMessageAlertWithController:self Message:NetWorkMessage];

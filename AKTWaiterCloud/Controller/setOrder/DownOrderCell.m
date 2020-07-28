@@ -33,7 +33,7 @@
         self.viewBg.layer.mask = maskLayer;
         
         self.leftLabel.text = @"服务项目";
-    }else if (path.row == 3){
+    }else if (path.row == 4){
         // 绘制圆角 需设置的圆角 使用"|"来组合
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SCREEN_WIDTH-20, 53) byRoundingCorners:UIRectCornerBottomLeft |
         UIRectCornerBottomRight cornerRadii:CGSizeMake(7.5, 7.5)];
@@ -47,7 +47,9 @@
         self.leftLabel.text = @"结束时间";
         [self.labLine setHidden:YES];
     }else if (path.row == 1){
-        self.leftLabel.text = @"服务日期";
+        self.leftLabel.text = @"开始日期";
+    }else if (path.row == 2){
+        self.leftLabel.text = @"结束日期";
     }else{
         self.leftLabel.text = @"开始时间";
     }

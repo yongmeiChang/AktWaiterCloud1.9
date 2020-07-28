@@ -180,45 +180,45 @@
 
 #pragma mark --- 服务项目
 @interface ServicePojInfo : JSONModel
-@property (strong, nonatomic) NSString<Optional>* abnormalFlag;
-@property (strong, nonatomic) NSString<Optional>* affixFlag;
-@property (strong, nonatomic) NSString<Optional>* aktType;
-@property (strong, nonatomic) NSString<Optional>* businessType;
-@property (strong, nonatomic) NSString<Optional>* careType;
-@property (strong, nonatomic) NSString<Optional>* createBy;
-@property (strong, nonatomic) NSString<Optional>* createDate;
-@property (strong, nonatomic) NSString<Optional>* delFlag;
-@property (strong, nonatomic) NSString<Optional>* govType;
-//@property (strong, nonatomic) NSString<Optional>* id;
-@property (strong, nonatomic) NSString<Optional>* isShow;
-@property (strong, nonatomic) NSString<Optional>* lessFlag;
-@property (strong, nonatomic) NSString<Optional>* messageType;
-@property (strong, nonatomic) NSString<Optional>* messageTypeName;
-//@property (strong, nonatomic) NSString<Optional>* name;
-@property (strong, nonatomic) NSString<Optional>* parentId;
-@property (strong, nonatomic) NSString<Optional>* parentIds;
-@property (strong, nonatomic) NSString<Optional>* parentName;
-@property (strong, nonatomic) NSString<Optional>* processKey;
-@property (strong, nonatomic) NSString<Optional>* processKeyName;
-@property (strong, nonatomic) NSString<Optional>* remarks;
-@property (strong, nonatomic) NSString<Optional>* roleKey;
-@property (strong, nonatomic) NSString<Optional>* serviceMoney;
-@property (strong, nonatomic) NSString<Optional>* sort;
-@property (strong, nonatomic) NSString<Optional>* spread;
-@property (strong, nonatomic) NSString<Optional>* startPermission;
-@property (strong, nonatomic) NSString<Optional>* startPermissionName;
-@property (strong, nonatomic) NSString<Optional>* state;
-@property (strong, nonatomic) NSString<Optional>* typeKey;
-@property (strong, nonatomic) NSString<Optional>* unitQuantity;
-@property (strong, nonatomic) NSString<Optional>* unitType;//1是按时收费 2是按次收费
-@property (strong, nonatomic) NSString<Optional>* serviceBegin; // 服务开始时间
-@property (strong, nonatomic) NSString<Optional>* serviceEnd; // 服务结束时间
-
+//@property (strong, nonatomic) NSString<Optional>* abnormalFlag;
+//@property (strong, nonatomic) NSString<Optional>* affixFlag;
+//@property (strong, nonatomic) NSString<Optional>* aktType;
+//@property (strong, nonatomic) NSString<Optional>* businessType;
+//@property (strong, nonatomic) NSString<Optional>* careType;
+//@property (strong, nonatomic) NSString<Optional>* createBy;
+//@property (strong, nonatomic) NSString<Optional>* createDate;
+//@property (strong, nonatomic) NSString<Optional>* delFlag;
+//@property (strong, nonatomic) NSString<Optional>* govType;
+////@property (strong, nonatomic) NSString<Optional>* id;
+//@property (strong, nonatomic) NSString<Optional>* isShow;
+//@property (strong, nonatomic) NSString<Optional>* lessFlag;
+//@property (strong, nonatomic) NSString<Optional>* messageType;
+//@property (strong, nonatomic) NSString<Optional>* messageTypeName;
+////@property (strong, nonatomic) NSString<Optional>* name;
+//@property (strong, nonatomic) NSString<Optional>* parentId;
+//@property (strong, nonatomic) NSString<Optional>* parentIds;
+//@property (strong, nonatomic) NSString<Optional>* parentName;
+//@property (strong, nonatomic) NSString<Optional>* processKey;
+//@property (strong, nonatomic) NSString<Optional>* processKeyName;
+//@property (strong, nonatomic) NSString<Optional>* remarks;
+//@property (strong, nonatomic) NSString<Optional>* roleKey;
+//@property (strong, nonatomic) NSString<Optional>* serviceMoney;
+//@property (strong, nonatomic) NSString<Optional>* sort;
+//@property (strong, nonatomic) NSString<Optional>* spread;
+//@property (strong, nonatomic) NSString<Optional>* startPermission;
+//@property (strong, nonatomic) NSString<Optional>* startPermissionName;
+//@property (strong, nonatomic) NSString<Optional>* state;
+//@property (strong, nonatomic) NSString<Optional>* typeKey;
+//@property (strong, nonatomic) NSString<Optional>* unitQuantity;
+//@property (strong, nonatomic) NSString<Optional>* unitType;//1是按时收费 2是按次收费
+//@property (strong, nonatomic) NSString<Optional>* serviceBegin; // 服务开始时间
+//@property (strong, nonatomic) NSString<Optional>* serviceEnd; // 服务结束时间
+/**4.0 新增接口**/
 @property (strong, nonatomic) NSString<Optional>* processId;
 @property (strong, nonatomic) NSString<Optional>* id;
 @property (strong, nonatomic) NSString<Optional>* name;
 @property (strong, nonatomic) NSString<Optional>* showName;
-@property (strong, nonatomic) NSString<Optional>* fullName;
+@property (strong, nonatomic) NSString<Optional>* fullName; // 服务名称
 @property (strong, nonatomic) NSString<Optional>* serviceValidity; // = -2;// 根据开始日期计算结束日期  0：开始日期所在周   -1：开始日期所在月  其他正数表示往后推迟的天数
 @property (strong, nonatomic) NSString<Optional>* serviceTime;//根据开始时间往后推迟的时间
 @property (strong, nonatomic) NSString<Optional>* timeUnit;//根据开始时间往后推迟的时间的单位  1：小时  2:分钟

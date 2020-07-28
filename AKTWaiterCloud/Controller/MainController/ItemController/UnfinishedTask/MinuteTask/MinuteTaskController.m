@@ -488,6 +488,28 @@
                        } failure:^(NSError *error) {
                            [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                        }];
+                   }else if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"]){ // 请求新的接口
+                       [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
+                           NSDictionary *dic = responseObject;
+                           NSString *strcode = [dic objectForKey:ResponseCode];
+                           if ([strcode integerValue] == 2) { // 有签入工单，暂停
+                               [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
+                               [self.navigationController popViewControllerAnimated:YES];
+                           }else{
+                               if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
+                                   AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+                                   scanOrder.ordertype = @"2";
+                                   scanOrder.detailsModel = model;
+                                   scanOrder.orderinfo = self.orderinfo;
+                                   [self.navigationController pushViewController:scanOrder animated:YES];
+                                                                            
+                                }else{
+                               _sgController.orderinfo = self.orderinfo;
+                               _sgController.findAdmodel = model;
+                               [self.navigationController pushViewController:_sgController animated:YES];
+                                    }
+                           }
+                       } failure:^(NSError *error) {}];
                    }else{
                        NSLog(@"继续");
                        if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出

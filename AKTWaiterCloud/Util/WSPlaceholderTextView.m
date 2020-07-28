@@ -22,7 +22,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         // 设置默认字体
-        self.font = [UIFont systemFontOfSize:15];
+        self.font = [UIFont systemFontOfSize:13];
         
         // 设置默认颜色
         self.placeholderColor = [UIColor grayColor];

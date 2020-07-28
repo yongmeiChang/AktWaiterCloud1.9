@@ -21,9 +21,10 @@
 }
 @property(nonatomic,strong) UITableView * tableview;
 @property(nonatomic,strong) NSString * money; // 金额
-@property(nonatomic,strong) NSString * Date;//给后台
-@property(nonatomic,strong) NSString * bTime;//给后台
-@property(nonatomic,strong) NSString * eTime;//给后台
+@property(nonatomic,strong) NSString * Date;//给后台 开始日期
+@property(nonatomic,strong) NSString * eDate;//给后台 结束日期
+@property(nonatomic,strong) NSString * bTime;//给后台 开始时间
+@property(nonatomic,strong) NSString * eTime;//给后台 结束时间
 
 @property(nonatomic,strong) NSDictionary * addressDic;
 @property(nonatomic) int type;
@@ -33,7 +34,90 @@
 @end
 
 @implementation DownOrderController
+#pragma mark - date time
+-(void)serviceEndDate:(NSString *)Nowdate Validity:(NSString *)type{
+    // 日期格式化类
+    NSDateFormatter *myDateFormatter = [[NSDateFormatter alloc] init];
+    // 设置日期格式 为了转换成功
+    myDateFormatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *newDate = [myDateFormatter dateFromString:Nowdate];
+    
+    
+    if ([type isEqualToString:@"0"]) { // 开始日期所在周
+       if (newDate == nil) {
+             newDate = [NSDate date];
+         }
+         double interval = 0;
+         NSDate *beginDate = nil;
+         NSDate *endDate = nil;
+         
+         NSCalendar *calendar = [NSCalendar currentCalendar];
+         [calendar setFirstWeekday:2];//设定周一为周首日
+         BOOL ok = [calendar rangeOfUnit:NSCalendarUnitWeekOfYear startDate:&beginDate interval:&interval forDate:newDate];
+         // 分别修改为 NSCalendarUnitDay NSCalendarUnitWeekOfYear NSCalendarUnitYear
+         if (ok) {
+             endDate = [beginDate dateByAddingTimeInterval:interval-1];
+         }else {
+             return;
+         }
 
+         NSString *beginString = [myDateFormatter stringFromDate:beginDate];
+         NSString *endString = [myDateFormatter stringFromDate:endDate];
+         NSLog(@"所在周:%@-%@",beginString,endString);
+        _eDate = endString;
+    }else if ([type isEqualToString:@"-1"]){ // 开始日期所在月
+        if (newDate == nil) {
+                 newDate = [NSDate date];
+             }
+             double interval = 0;
+             NSDate *beginDate = nil;
+             NSDate *endDate = nil;
+             
+             NSCalendar *calendar = [NSCalendar currentCalendar];
+             [calendar setFirstWeekday:2];//设定周一为周首日
+             BOOL ok = [calendar rangeOfUnit:NSCalendarUnitMonth startDate:&beginDate interval:&interval forDate:newDate];
+             // 分别修改为 NSCalendarUnitDay NSCalendarUnitWeekOfYear NSCalendarUnitYear
+             if (ok) {
+                 endDate = [beginDate dateByAddingTimeInterval:interval-1];
+             }else {
+                 return;
+             }
+
+             NSString *beginString = [myDateFormatter stringFromDate:beginDate];
+             NSString *endString = [myDateFormatter stringFromDate:endDate];
+             NSLog(@"所在月:%@-%@",beginString,endString);
+            _eDate = endString;
+    }else{
+//        NSDateFormatter *format = [[NSDateFormatter alloc] init];// 设置日期格式 为了转换成功
+//        format.dateFormat = @"yyyy-MM-dd";
+//        NSDate *newDate = [format dateFromString:Nowdate];
+        // 推迟天数
+        int daysLate = [type intValue];
+        NSTimeInterval oneDay = 24 * 60 * 60;  // 一天一共有多少秒
+        NSDate *appointDate = [newDate initWithTimeIntervalSinceNow: oneDay * daysLate];
+        NSString *LastdateStr = [NSString stringWithFormat:@"%@",[myDateFormatter stringFromDate:appointDate]];
+        NSLog(@"days:%@", LastdateStr);
+        _eDate = kString(LastdateStr);
+    }
+}
+
+-(void)serviceEndTime:(NSString *)time serviceTime:(NSString *)length timeUnit:(NSString *)unit{
+    NSString * h; // 时
+    NSString * m; // 分
+    NSString * s; // 秒
+    NSArray * arrTime = [time componentsSeparatedByString:@":"];
+    h  = [NSString stringWithFormat:@"%@",arrTime[0]];
+    m  = [NSString stringWithFormat:@"%@",arrTime[1]];
+    s  = [NSString stringWithFormat:@"%@",arrTime[2]];
+    
+    if ([unit isEqualToString:@"1"]) { // 小时
+        _eTime= [NSString stringWithFormat:@"%d:%@:%@",[h intValue]+[length intValue],m,s];
+    }else{ // 分钟
+        _eTime= [NSString stringWithFormat:@"%@:%d:%@",h,[m intValue]+[length intValue],s];
+    }
+}
+
+#pragma mark - view did load
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColor(@"B2");
@@ -48,6 +132,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    /*
     if(_servicepojInfo){
         //按时计算
         if([_servicepojInfo.unitType intValue]==1){
@@ -72,16 +157,36 @@
         NSLog(@"%@--%@",_servicepojInfo.serviceBegin,_servicepojInfo.serviceEnd);
         if (_servicepojInfo.serviceBegin.length>16) {
             _Date = [[NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin] substringToIndex:10];
+            _eDate = [[NSString stringWithFormat:@"%@",_servicepojInfo.serviceEnd] substringToIndex:10];
+            
             _bTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin];
             _eTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceEnd];
         }
         [_tableview reloadData];
     }else{
         _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
+        _eDate = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceEnd)];
         _bTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceBegin)];
         _eTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceEnd)];
     }
+    */
+    
+    _money = @"0";
+    if (_servicepojInfo) { // 选择服务项目
+        _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
+        [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)]; // 结束日期
+        _bTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
+        [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
+        [_tableview reloadData]; // 结束 时间
+    }else{
+        _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
+        _eDate = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
+        _bTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
+        _eTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceEnd) substringWithRange:NSMakeRange(11, 8)]];
+    }
+    
 }
+
 #pragma mark - init datepickeview
 -(void)initDatePick:(NSString *)selectTime{
     
@@ -103,25 +208,25 @@
     }
 }
 
--(long)computehour{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    NSDate *bdate = [formatter dateFromString:_bTime];
-    NSDate *edate = [formatter dateFromString:_eTime];
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitWeekOfMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    
-    NSDateComponents *cmps = [calendar components:unit fromDate:edate toDate:bdate options:0];
-    long jg = cmps.day*24+cmps.hour;
-    return jg;
-}
+//-(long)computehour{
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//    NSDate *bdate = [formatter dateFromString:_bTime];
+//    NSDate *edate = [formatter dateFromString:_eTime];
+//
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitWeekOfMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+//
+//    NSDateComponents *cmps = [calendar components:unit fromDate:edate toDate:bdate options:0];
+//    long jg = cmps.day*24+cmps.hour;
+//    return jg;
+//}
 
 -(int)compareDate{
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *bdate = [formatter dateFromString:_bTime];
-    NSDate *edate = [formatter dateFromString:_eTime];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *bdate = [formatter dateFromString:_Date];
+    NSDate *edate = [formatter dateFromString:_eDate];
     NSComparisonResult result = [bdate compare:edate];
     NSLog(@"date1 : %@, date2 : %@", bdate, edate);
     if (result == NSOrderedDescending) {
@@ -160,7 +265,7 @@
         return;
     }
     
-    if(kString(_servicepojInfo.name).length==0){
+    if(kString(_servicepojInfo.fullName).length==0){
         [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务项目"];
         return;
     }
@@ -176,24 +281,21 @@
         [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务结束时间"];
         return;
     }
-//    if(_phoneTfield.text==nil){
-//        [[AppDelegate sharedDelegate] showTextOnly:@"用户电话不能为空"];
+
+//    if(strArea.length==0){
+//        [[AppDelegate sharedDelegate] showTextOnly:@"服务区域不能为空"];
 //        return;
 //    }
-    if(strArea.length==0){
-        [[AppDelegate sharedDelegate] showTextOnly:@"服务区域不能为空"];
-        return;
-    }
-    if(strAddress.length==0){
-        [[AppDelegate sharedDelegate] showTextOnly:@"服务地址不能为空"];
-        return;
-    }
-    NSArray * bg =  [_bTime componentsSeparatedByString:@" "];;
-    NSString * btstr = bg[0];
-    if(![_Date isEqualToString:btstr]){
-        [[AppDelegate sharedDelegate] showTextOnly:@"服务日期与服务开始时间不相符"];
-        return;
-    }
+//    if(strAddress.length==0){
+//        [[AppDelegate sharedDelegate] showTextOnly:@"服务地址不能为空"];
+//        return;
+//    }
+//    NSArray * bg =  [_bTime componentsSeparatedByString:@" "];;
+//    NSString * btstr = bg[0];
+//    if(![_Date isEqualToString:btstr]){
+//        [[AppDelegate sharedDelegate] showTextOnly:@"服务日期与服务开始时间不相符"];
+//        return;
+//    }
     NSLog(@"点击下单按钮");
     [self requestSubmit];
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
@@ -213,6 +315,9 @@
     [paremeter addUnEmptyString:[UserInfo getsUser].uuid forKey:@"waiterId"];
     [paremeter addUnEmptyString:[UserInfo getsUser].name forKey:@"waiterName"];
     [paremeter addUnEmptyString:[UserInfo getsUser].tenantId forKey:@"tenantsId"];
+    /**4.0新增字段**/
+    [paremeter addUnEmptyString:_eDate forKey:@"serviceDateEnd"]; // 服务日期结束
+    [paremeter addUnEmptyString:_servicepojInfo.processId forKey:@"processId"];
     
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -249,7 +354,7 @@
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section==1?4:1;
+    return section==1?5:1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -279,15 +384,17 @@
         }
         [cell setOrderInfo:indexPath];
         if (indexPath.row == 0) {
-            cell.labValue.text = _servicepojInfo.name;
+            cell.labValue.text = _servicepojInfo.fullName;
         }else if (indexPath.row == 1){
             cell.labValue.text = _Date;
-        }else if (indexPath.row == 2){
-            NSArray *array = [_bTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[array objectAtIndex:0],[array objectAtIndex:1]]; // 开始时间
+        }else if (indexPath.row == 2){ // 结束日期
+            cell.labValue.text = _eDate;
+        }else if (indexPath.row == 3){
+//            NSArray *array = [_bTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@",_bTime]; // 开始时间
         }else{
-            NSArray *eTimeArray = [_eTime componentsSeparatedByString:@":"];
-            cell.labValue.text = [NSString stringWithFormat:@"%@:%@",[eTimeArray objectAtIndex:0],[eTimeArray objectAtIndex:1]];// 结束时间
+//            NSArray *eTimeArray = [_eTime componentsSeparatedByString:@":"];
+            cell.labValue.text = [NSString stringWithFormat:@"%@",_eTime];// 结束时间
         }
         return cell;
         
@@ -325,19 +432,22 @@
             spController.DoContoller = self;
             spController.selectInfo = self.servicepojInfo;
             [self.navigationController pushViewController:spController animated:YES];
-        }else if(indexPath.row==1){
-            //            _type = 1;
-        }else if(indexPath.row==2){
-            _type = 2;
-            [self initDatePick:self.bTime];
+        }else if(indexPath.row==1){ // 开始日期
+            _type = 1;
+            [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else if(indexPath.row==3){
+        }else if(indexPath.row==3){ // 开始时间
             _type = 3;
-            [self initDatePick:self.eTime];
+            [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
+            self.timePickerView.hidden = NO;
+             [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
+        }else if(indexPath.row==4){ // 结束时间
+            _type = 4;
+            [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.eDate,self.eTime]];
              self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else if(indexPath.row==4){
+        }else { // 结束日期
             
         }
     }
@@ -355,17 +465,38 @@
 #pragma mark - time pickerview
 -(void)DateAndTimePickerView:(NSString *)year withMonth:(NSString *)month withDay:(NSString *)day withHour:(NSString *)hour withMinute:(NSString *)minute withDate:(NSString *)date withTag:(NSInteger)tag{
     if (tag == 1001) {
-        if (_type == 2) {
-            _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-            
-            _bTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00",year,month,day,hour,minute];
-            if ([minute integerValue]+5>59) { // 当分数大于60的时候 小时加一
-                _eTime = [NSString stringWithFormat:@"%@-%@-%@ %ld:%ld:59",year,month,day,[hour integerValue]+1,[minute integerValue]+5-60];
+        if (_type == 3) { // 开始时间
+            _bTime = [NSString stringWithFormat:@"%@:%@:00",hour,minute];
+//            if ([minute integerValue]+5>59) { // 当分数大于60的时候 小时加一
+//                _eTime = [NSString stringWithFormat:@"%ld:%ld:59",[hour integerValue]+1,[minute integerValue]+5-60];
+//            }else{
+//               _eTime = [NSString stringWithFormat:@"%@:%ld:59",hour,[minute integerValue]+5];
+//            }
+            if (self.servicepojInfo) {
+                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
             }else{
-               _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%ld:59",year,month,day,hour,[minute integerValue]+5];
+               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
             }
-        }else if(_type == 3){
-            _eTime = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:59",year,month,day,hour,minute];
+        }else if(_type == 4){ // 结束时间
+            if (self.servicepojInfo) {
+                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
+            }else{
+               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
+            }
+        }else if (_type == 1){ // 开始日期
+            _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+            if (self.servicepojInfo) {
+                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
+            }else{
+                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+            }
+        }else{ // 结束日期
+            if (self.servicepojInfo) {
+                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
+            }else{
+                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+            }
+            
         }
          [self.tableview reloadData];
     }else{//1002：取消

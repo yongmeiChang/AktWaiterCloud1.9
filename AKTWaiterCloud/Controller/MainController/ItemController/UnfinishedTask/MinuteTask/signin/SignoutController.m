@@ -34,7 +34,7 @@
 #define DefaultLocationTimeout 10
 #define DefaultReGeocodeTimeout 5
 
-@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
+@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
     
     long unservicetime;//记录服务时长不足的时间 秒
     
@@ -50,8 +50,6 @@
     int longtime;
 
     NSString * isLess; // 时长是否正常 0正常  1不正常
-//    SinoutReasonView *reasonView; // 提交失败的原因 弹框
-    
     LoginModel *model;
     BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
     
@@ -108,7 +106,7 @@
 @property (weak,nonatomic) IBOutlet UITextView * lccontentTextView;//流程视图
 @property (weak,nonatomic) IBOutlet UIButton * lcBtn;//流程视图
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pictrueTop; // 去除导航栏高度
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddressHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddressHeightConstraint; // 签入情况总高度
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnPostHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnPostWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollH;
@@ -249,23 +247,83 @@
 -(void)reasonViewLoadAll{
     
     // 建议反馈// 定位异常反馈：//早退反馈：//未达到最低服务时长反馈栏：//未达到最低服务时长反馈栏：
-    NSArray *arytitle;
-    if (_type == 1) {
-        arytitle = [NSArray arrayWithObjects:@"建议反馈内容：",@"定位异常反馈：",@"早退反馈：",@"未达到最低服务时长反馈栏：",@"未达到最低服务时长反馈栏：", nil];
-        self.reasonViewH.constant = 957;
-    }else{
-        self.reasonViewH.constant = 570;
-        arytitle = [NSArray arrayWithObjects:@"建议反馈内容：",@"定位异常反馈：",@"迟到反馈：", nil];
+    NSMutableArray *arytitle = [[NSMutableArray alloc] init];
+    [arytitle addObject:@"建议反馈内容："];
+    if (_type == 1) { // 签出
+        if (self.isnewLation) {
+            [arytitle addObject:@"定位异常反馈："];
+        }
+        if (self.isnewserviceTimeLess) {
+            [arytitle addObject:@"未达到最低服务时长反馈栏："];
+        }
+        if (self.isnewearly) {
+            [arytitle addObject:@"早退反馈："];
+        }
+        if (self.isnewserviceTime) {
+            [arytitle addObject:@"未达到服务时长反馈栏："];
+        }
+        
+        /**录音 相关配置**/
+        [self setTitle:@"任务签出"];
+        self.checklabel.text = @"签出情况";
+        if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+             [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
+        }
+        
+        self.btnServiceLength.hidden = NO;
+        self.serviceTimeTitleLab.hidden = NO;
+        self.ShowSingOutServiceTimelabel.hidden = NO;
+        self.viewTimeless.hidden = NO;
+        self.viewAddressHeightConstraint.constant = 167;
+         
+        
+        //计算服务时间
+        [self ComputeServiceTime];
+        
+        if([self.orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound ||[self.orderinfo.serviceItemName rangeOfString:@"陪诊"].location != NSNotFound){
+            self.scrollH.constant = 140+167+44+arytitle.count *150;
+        }else{
+            self.scrollH.constant = 140+167+44+140+arytitle.count *150;
+        }
+        
+    }else{ // 签入
+        [self setTitle:@"任务签入"];
+        if (self.isnewLation) {
+            [arytitle addObject:@"定位异常反馈："];
+        }
+        if (self.isnewlate) {
+            [arytitle addObject:@"迟到反馈："];
+        }
+        
+        /*录音 相关配置*/
+        if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
+        }
+         self.viewAddressHeightConstraint.constant = 167;
+        self.scrollH.constant = 140+100+44+arytitle.count *150;
     }
+    self.reasonViewH.constant = arytitle.count *150; // 输入框的总高度
+    // 签入 签出 原因框
     for (int i =0; i<arytitle.count; i++) {
-        UILabel *labTitle = [[UILabel alloc] initWithFrame:CGRectMake(16, 13+i*160, SCREEN_WIDTH-32, 20)];
+        UILabel *labTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, i*140, SCREEN_WIDTH-40, 20)];
         labTitle.textColor = kColor(@"C1");
         labTitle.font = [UIFont systemFontOfSize:15];
         labTitle.text = [NSString stringWithFormat:@"%@",[arytitle objectAtIndex:i]];
         [self.serviceInfoView addSubview:labTitle];
         
-        
-        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, i*140, SCREEN_WIDTH-32, 130)];
+        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, i*140+22, SCREEN_WIDTH-32, 100)];
         noticeView.placeholder = @"请输入任务内容及完成情况";
         noticeView.backgroundColor = kColor(@"C19");
         noticeView.tag = i;
@@ -282,45 +340,11 @@
     self.lccontentTextView.delegate = self;
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-//    self.textview.delegate = self;
 
     model = [LoginModel gets];
-/****/
+    /****/
     [self reasonViewLoadAll];
     /****/
-    if(self.type==0){
-        [self setTitle:@"任务签入"];
-        if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
-            self.trapBtn.hidden = NO;
-            self.btnPostWidth.constant = SCREEN_WIDTH/2;
-        }else{
-            self.trapBtn.hidden = YES;
-            self.btnPostWidth.constant = SCREEN_WIDTH;
-        }
-        [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        self.scrollH.constant = 50+760;
-    }else{
-        [self setTitle:@"任务签出"];
-        self.checklabel.text = @"签出情况";
-        if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
-            self.trapBtn.hidden = NO;
-            self.btnPostWidth.constant = SCREEN_WIDTH/2;
-        }else{
-            self.trapBtn.hidden = YES;
-            self.btnPostWidth.constant = SCREEN_WIDTH;
-        }
-        
-        self.btnServiceLength.hidden = NO;
-        self.serviceTimeTitleLab.hidden = NO;
-        self.ShowSingOutServiceTimelabel.hidden = NO;
-        self.viewTimeless.hidden = NO;
-        self.viewAddressHeightConstraint.constant = 167;
-         [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
-        self.scrollH.constant = 100+760;
-
-        //计算服务时间
-        [self ComputeServiceTime];
-    }
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""]; // 导航栏
     self.timerLabel.hidden = YES;
     longtime = -1;
@@ -351,16 +375,7 @@
         //进行单次带逆地理定位请求
         [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
-    /*
-    // 填写失败的原因
-    reasonView = [[SinoutReasonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    reasonView.delegate = self;
-    reasonView.hidden = YES;
-    if (self.isnewLation || self.isnewlate || self.isnewearly || self.isnewserviceTime || self.isnewserviceTimeLess) {
-        reasonView.hidden = NO;
-    }
-    [self.view addSubview:reasonView];
-    */
+
     /*签入情况的配置权限*/
     /** 位置 出勤状态 服务时长 最低服务时长**/
     if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"] || [self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
@@ -381,10 +396,10 @@
         self.serviceTimeTitleLab.hidden = YES;
         self.ShowSingOutServiceTimelabel.hidden = YES;
     }
-    if ([self.findAdmodel.recordMinServiceLength isEqualToString:@"0"]) {
-        self.viewTimeless.hidden = YES;
-        self.viewAddressHeightConstraint.constant = 137;
-       }
+//    if ([self.findAdmodel.recordMinServiceLength isEqualToString:@"0"]) {
+//        self.viewTimeless.hidden = YES;
+//        self.viewAddressHeightConstraint.constant = 137;
+//       }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -421,11 +436,11 @@
     
     /**最低服务时长**/
     if (strActrueSt<([self.findAdmodel.minServiceLength integerValue] *60)) {
-        self.viewAddressHeightConstraint.constant = 167;
+//        self.viewAddressHeightConstraint.constant = 167;
         self.labTimeless.text = [NSString stringWithFormat:@"%@分钟",self.findAdmodel.minServiceLength];
     }else{
         self.labTimeless.hidden = YES;
-        self.viewAddressHeightConstraint.constant = 137;
+//        self.viewAddressHeightConstraint.constant = 137;
     }
 }
 
@@ -1071,33 +1086,7 @@
     self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
     if (isPostLocation) {
         NSLog(@"---可以提交");
-        // 判断是否可以提交工单
-              [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantId} type:HttpRequestTypeGet success:^(id responseObject) {
-
-                  NSDictionary *dicObje = [responseObject objectForKey:ResponseData];
-                  NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
-                  NSString *strtime = [dicObje objectForKey:@"isTimeStatement"];// 1或null 可以提交  0不可以提交
-                  BOOL bolLocation = ([strlocation isKindOfClass:[NSNull class]] || [strlocation isEqualToString:@"1"] || ([strlocation integerValue] ==1));
-                  BOOL bolTime = ([strtime isKindOfClass:[NSNull class]] || [strtime isEqualToString:@"1"] || ([strtime integerValue] == 1));
-
-                  if (bolLocation || bolTime) {
-                      NSLog(@"=====可以提交=");
-                      [self postDataAllInfo:@""];
-                  }else{
-                      NSLog(@"=====不可以提交==");
-                      if ([isLess isEqualToString:@"1"] || [self.distanceLabel.text containsString:@"超出"]) {
-//                          reasonView.hidden = NO;
-                      }else{
-                           [self postDataAllInfo:@""];
-                      }
-                  }
-
-              } failure:^(NSError *error) {
-                  [[AppDelegate sharedDelegate] hidHUD];
-                  [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
-                      [self.navigationController popToRootViewControllerAnimated:YES];
-                  }];
-              }];
+        [self postDataAllInfo:@""];
     }
 }
 #pragma mark - AMapSearchAPI delegate
@@ -1153,11 +1142,6 @@
 }
 -(void)postDataAllInfo:(NSString *)reason{
      [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-//    if(self.type==1){
-//        [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
-//    }else{
-//        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
-//    }
     NSMutableArray * basearr = [NSMutableArray array];
      NSMutableArray * imgTypearr = [NSMutableArray array];
     NSString * baseStr = @"";
@@ -1193,17 +1177,14 @@
         [param addUnEmptyString:kString(strNotice) forKey:@"serviceResult"];
     }
 //    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
-    
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
-//    [param addUnEmptyString:@"test" forKey:@"test"];
-//    [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
-     [param addUnEmptyString:model.uuid forKey:@"waiterId"];
+    [param addUnEmptyString:model.uuid forKey:@"waiterId"];
     [param addUnEmptyString:self.orderinfo.waiterName forKey:@"waiterName"];
     /**2020 7 22 新增字段**/
     [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
     [param addUnEmptyString:@"mp3" forKey:@"recordType"]; // 录音格式
-    //签出
-    if(self.type==1){
+    
+    if(self.type==1){//签出
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
         // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
@@ -1235,7 +1216,6 @@
         }
         [param addUnEmptyString:kString(lessService) forKey:@"minLessReason"];// 最低服务时间不足原因
         
-    
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             [[AppDelegate sharedDelegate] hidHUD];
@@ -1286,22 +1266,7 @@
         }];
     }
 }
-#pragma mark - reason delegate
-/*
--(void)didselectAction:(UIButton *)sender textviewInfo:(NSString *)info{
-    switch (sender.tag) {
-        case 1:
-            {
-                [self postDataAllInfo:info];
-            }
-            break;
-        case 2:
-            reasonView.hidden = YES;
-            break;
-        default:
-            break;
-    }
-}*/
+
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
     // 水印内容
