@@ -1032,7 +1032,7 @@
 //计时器
 -(void)handleTimer{
     NSInteger intTimeAll; // 配置录音时长
-    if (_type ==1) {
+    if (_type ==0) {
         intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
     }else{
         intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
@@ -1044,9 +1044,9 @@
     }else{
         timeStr = [NSString stringWithFormat:@"00:00:%d",longtime];
     }
-    if(longtime==intTimeAll){
-        timeStr = [NSString stringWithFormat:@"00:01:00"];
-        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
+    if(longtime>=intTimeAll){
+        timeStr = [NSString stringWithFormat:@"00:00:%ld",(long)intTimeAll];
+//        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
         self.timerLabel.text = timeStr;
         [timer invalidate];
 
@@ -1055,8 +1055,8 @@
         [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
         isclick = NO;
         _timerLabel.hidden = YES;
-        [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
-        [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+        [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
+           [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
         }];
         
     }else{
