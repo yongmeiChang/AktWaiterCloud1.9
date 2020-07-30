@@ -298,6 +298,7 @@
         
         // 扫码完成之后 进入到签入 签出页面
         _sgController.isnewLation = self.isnewLation;
+        _sgController.isnewlate = self.isnewlate;
         _sgController.isnewearly = self.isnewearly;
         _sgController.isnewserviceTime = self.isnewserviceTime;
         _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;

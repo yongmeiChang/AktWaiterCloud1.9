@@ -454,13 +454,13 @@
     long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
     if(self.type==0){
-        if ([AktUtil isstatus:self.orderinfo.serviceBegin] == 0) {
+        if ([AktUtil isNewTimestatus:self.orderinfo.serviceBegin] == 0) {
             self.orderinfo.isLate = @"0";
             self.latelabel.text = @"正常";
         }else{
             self.orderinfo.isLate = @"1";
             self.latelabel.textColor = [UIColor redColor];
-            self.latelabel.text = [NSString stringWithFormat:@"迟到%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceBegin]];
+            self.latelabel.text = [NSString stringWithFormat:@"迟到%@",[AktUtil getTimeFrom:self.orderinfo.serviceBegin To:[nowDate substringFromIndex:11]]];
             
             NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
             NSLog(@"秒数：%ld",(long)[AktUtil getSecondFrom:date To:expireDate]*1000);
@@ -471,7 +471,7 @@
             if(strServiceSt>strActrueSt){// 判断早退的逻辑是：设定服务时长差 与 实际服务时长差相对比
                 self.orderinfo.isEarly = @"1";
                 self.latelabel.textColor = [UIColor redColor];
-                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil NowDate:date ServiceEndTime:self.orderinfo.serviceEnd]];
+                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil getTimeFrom:[nowDate substringFromIndex:11] To:self.orderinfo.serviceEnd]];
                 leaveOuttime = (strServiceSt-strActrueSt)*1000;
             }else{
                 self.orderinfo.isEarly = @"0";

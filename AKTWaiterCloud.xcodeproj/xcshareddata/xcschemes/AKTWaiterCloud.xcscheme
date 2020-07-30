@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ADD789121F7DF730008DEC55"
-               BuildableName = "AKTWaiterCloud.app"
+               BuildableName = "&#x670d;&#x52a1;&#x4e91;(&#x5b98;&#x65b9;).app"
                BlueprintName = "AKTWaiterCloud"
                ReferencedContainer = "container:AKTWaiterCloud.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ADD789121F7DF730008DEC55"
-            BuildableName = "AKTWaiterCloud.app"
+            BuildableName = "&#x670d;&#x52a1;&#x4e91;(&#x5b98;&#x65b9;).app"
             BlueprintName = "AKTWaiterCloud"
             ReferencedContainer = "container:AKTWaiterCloud.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ADD789121F7DF730008DEC55"
-            BuildableName = "AKTWaiterCloud.app"
+            BuildableName = "&#x670d;&#x52a1;&#x4e91;(&#x5b98;&#x65b9;).app"
             BlueprintName = "AKTWaiterCloud"
             ReferencedContainer = "container:AKTWaiterCloud.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ADD789121F7DF730008DEC55"
-            BuildableName = "AKTWaiterCloud.app"
+            BuildableName = "&#x670d;&#x52a1;&#x4e91;(&#x5b98;&#x65b9;).app"
             BlueprintName = "AKTWaiterCloud"
             ReferencedContainer = "container:AKTWaiterCloud.xcodeproj">
          </BuildableReference>

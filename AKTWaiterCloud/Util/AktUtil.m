@@ -220,6 +220,31 @@
            return 1;
        }
 }
++(NSUInteger)isNewTimestatus:(NSString *)serviceEnd{ // 对比时间 是否正常 0：正常  1异常
+    NSArray *aryService = [serviceEnd componentsSeparatedByString:@":"];
+    NSArray *aryNowDate = [[self getNowDateAndTime] componentsSeparatedByString:@" "];
+    NSArray *aryNowTime = [[aryNowDate objectAtIndex:1] componentsSeparatedByString:@":"];
+    if ([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) {
+        return 0;
+    }else if (([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) && ([[aryService objectAtIndex:1] integerValue]>=[[aryNowTime objectAtIndex:1] integerValue])){
+        return 0;
+    }else if (([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) && ([[aryService objectAtIndex:1] integerValue]>=[[aryNowTime objectAtIndex:1] integerValue]) &&([[aryService objectAtIndex:2] integerValue]>=[[aryNowTime objectAtIndex:2] integerValue])){
+        return 0;
+    }else{
+        return 1;
+    }
+}
++(NSString *)getTimeFrom:(NSString *)bTime To:(NSString *)endDate{ // 计算差异的时间
+    NSArray *aryBtime = [bTime componentsSeparatedByString:@":"];
+    NSArray *aryEtime = [endDate componentsSeparatedByString:@":"];
+
+    NSInteger Hours = labs([[aryBtime objectAtIndex:0] integerValue] - [[aryEtime objectAtIndex:0] integerValue]);
+    NSInteger Miute = labs([[aryBtime objectAtIndex:1] integerValue] - [[aryEtime objectAtIndex:1] integerValue]);
+    NSInteger Second = labs([[aryBtime objectAtIndex:2] integerValue] - [[aryEtime objectAtIndex:2] integerValue]);
+    
+    return [NSString stringWithFormat:@"%ld小时%ld分%ld秒",(long)Hours,(long)Miute,(long)Second];
+}
+
 // 计算天数
 +(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate
 {

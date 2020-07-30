@@ -52,11 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)actualBeginTime:(NSString *)begindate actualServiceEndTime:(NSString *)serviceend;
 //比较日期大小
 +(int)compareDate:(NSDate *)bdate End:(NSDate *)edate;
+/**4.0 时间计算**/
++(NSUInteger)isNewTimestatus:(NSString *)serviceEnd; // 对比时间是否异常 1异常
++(NSString *)getTimeFrom:(NSString *)bTime To:(NSString *)endDate; // 计算差异的时间
 
-/**
- *  判断对象是否为空
+/**判断对象是否为空
  *  PS：nil、NSNil、@""、@0 以上4种返回YES
- *
  *  @return YES 为空  NO 为实例对象
  */
 + (BOOL)dx_isNullOrNilWithObject:(id)object;

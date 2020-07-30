@@ -364,9 +364,6 @@
             AktFindAdvanceModel *model = [[AktFindAdvanceModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
             if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
                     // 签出逻辑判断
-//                    if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
-                       
-//                    }else{
                         distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
                         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -454,7 +451,7 @@
                        BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]);
                        BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && [model.lateAbnormal isEqualToString:@"2"]);
                        
-                       if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
+                       if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
                             AktOrderScanVC *scanOrder = [AktOrderScanVC new];
                             scanOrder.ordertype = @"2";
                             scanOrder.detailsModel = model;
@@ -496,7 +493,7 @@
                                [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
                                [self.navigationController popViewControllerAnimated:YES];
                            }else{
-                               if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
+                               if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
                                    AktOrderScanVC *scanOrder = [AktOrderScanVC new];
                                    scanOrder.ordertype = @"2";
                                    scanOrder.detailsModel = model;
@@ -512,7 +509,7 @@
                        } failure:^(NSError *error) {}];
                    }else{
                        NSLog(@"继续");
-                       if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
+                       if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
                            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
                            scanOrder.ordertype = @"2";
                            scanOrder.detailsModel = model;
