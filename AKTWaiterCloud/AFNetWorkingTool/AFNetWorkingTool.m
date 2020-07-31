@@ -47,7 +47,7 @@ static AFNetWorkingTool * a_instance = nil;
         [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您的账户登录过期，请重新登录!" cancel:@"3" action:@"重新登录" acHandle:^(UIAlertAction *action) {
             //注销登录删除用户数据
             [[SaveDocumentArray sharedInstance] removefmdb];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AKTserviceToken"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:Token];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
         }];
@@ -75,7 +75,7 @@ static AFNetWorkingTool * a_instance = nil;
         manager.requestSerializer.timeoutInterval = 20.0f;
     }
     //将token封装入请求头
-    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"];
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
     [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];
     // 登录接口 单独参数
     NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree

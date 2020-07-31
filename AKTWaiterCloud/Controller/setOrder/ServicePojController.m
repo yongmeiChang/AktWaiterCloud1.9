@@ -97,10 +97,10 @@
 }
 /**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentify = @"ServicePojCell";
-    ServicePojCell *cell = (ServicePojCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
+    static NSString *cellidentify = @"serviceListCell";
+    ServicePojCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] lastObject];
     }
     ServicePojInfo * spInfo = [_dataArray objectAtIndex:indexPath.row];
     [cell setCellInfo:spInfo selectCellInf:self.selectInfo IndexPath:indexPath];

@@ -74,10 +74,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentify = @"ServicePojCell";
-    ServicePojCell *cell = (ServicePojCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
+    static NSString *cellidentify = @"listCell";
+    ServicePojCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] lastObject];
     }
     modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:indexPath.section] error:nil];
     SigninDetailsInfo *modelDetails = [modellist.children objectAtIndex:indexPath.row];

@@ -25,7 +25,7 @@
 
 -(AktFindAdvanceModel *)getDetailsModel
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]){
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
               NSString *path = [AktUtil getCachePath:@"AktFindAdvanceModel"];
               if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
                   NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];

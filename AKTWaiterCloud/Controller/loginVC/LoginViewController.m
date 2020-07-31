@@ -210,8 +210,8 @@
         [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * result = responseObject;
            // 目前后台没有存储开启离线模式字段 手动添加默认关闭
-            NSNumber * code = [result objectForKey:@"code"];
-            NSString * messageDic = [responseObject objectForKey:@"message"];
+            NSNumber * code = [result objectForKey:ResponseCode];
+            NSString * messageDic = [responseObject objectForKey:ResponseMsg];
             if([code intValue] == 1){
                 NSDictionary * userdic = [result objectForKey:ResponseData];
                 NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
@@ -220,7 +220,7 @@
                 [model save];
                 [self reauestUserInfoTenantsid:kString(model.tenantId) UserId:kString(model.uuid)]; // 获取个人信息
                 // 登录成功
-                [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:@"AKTserviceToken"];
+                [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:Token];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 

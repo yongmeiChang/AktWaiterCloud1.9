@@ -86,7 +86,7 @@
 @implementation LoginModel
 
 + (LoginModel *)gets{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]){
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
         NSString *path = [AktUtil getCachePath:@"loginModel"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -110,7 +110,7 @@
 #pragma mark --- 用户信息
 @implementation UserInfo
 + (UserInfo *)getsUser{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]){
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
            NSString *path = [AktUtil getCachePath:@"userModel"];
            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
                NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];

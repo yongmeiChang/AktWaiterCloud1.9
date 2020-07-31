@@ -81,8 +81,8 @@
 }
 #pragma mark - show login
 - (void)showLoginPage{
-    NSLog(@"token：%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]);
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]) {
+    NSLog(@"token：%@",[[NSUserDefaults standardUserDefaults] objectForKey:Token]);
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:Token]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         self.window.rootViewController = nav;

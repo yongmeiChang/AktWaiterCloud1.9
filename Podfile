@@ -13,10 +13,10 @@ target 'AKTWaiterCloud' do
     pod 'MBProgressHUD', '~> 1.1.0'
     pod 'JSONModel'
     #    pod 'FSCalendar'  #日历
-    pod 'JPush'
-    pod 'FMDB'
+    pod 'JPush' # 极光推送SDK
+    pod 'FMDB' # 数据库SDK
     pod 'Reachability'
-    pod 'CocoaLumberjack'
+    pod 'CocoaLumberjack'  # DDLog  日志SDK
     pod 'TZImagePickerController', '~> 1.9.6' #图片上传
     pod 'LxGridView'
     pod 'MJRefresh' #下拉刷新

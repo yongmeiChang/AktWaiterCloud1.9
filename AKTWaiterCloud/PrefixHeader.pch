@@ -124,4 +124,5 @@ static const int ddLogLevel = DDLogLevelError;
 #define ResponseCode @"code"
 #define ResponseMsg @"message"
 #define ResponseData @"object"
+#define Token @"AKTserviceNewToken"
 

@@ -285,7 +285,7 @@
     layer.frame=self.view.layer.bounds;
     [self.view.layer insertSublayer:layer atIndex:0];
     //开始捕获
-    [_session startRunning];
+    [_session startRunning];                                                                                                                  
 }
 
 //扫描完毕执行
