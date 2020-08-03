@@ -77,7 +77,7 @@ static AFNetWorkingTool * a_instance = nil;
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
     [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];
-    // 登录接口 单独参数
+    // 登录、获取验证码、找回密码、注册、租户列表  中间连接修改
     NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree
     if ([URLString isEqualToString:@"appToken"] || [URLString isEqualToString:@"getCheckCode"] || [URLString isEqualToString:@"getPassword"] || [URLString isEqualToString:@"getTenantsTree"]) {
         url = [NSString stringWithFormat:@"%@/api/auth/jwt/%@",SERVICEURL,URLString];
@@ -94,11 +94,6 @@ static AFNetWorkingTool * a_instance = nil;
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [self doOptionResponse:responseObject success:success failure:failure];
-//                if (success) {
-//                    id jsons = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers  error:nil];
-//                    NSLog(@"response:%@",jsons);
-//                    success(jsons);
-//                }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if (failure) {
                     failure(error);
@@ -112,14 +107,6 @@ static AFNetWorkingTool * a_instance = nil;
             [manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
-//                if (success) {
-//                    id jsons = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers  error:nil];
-//                    NSData *retData = responseObject;
-//                    NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
-//                     NSLog(@"response:%@",result);
-//                    success(jsons);
-//                }
                 [self doOptionResponse:responseObject success:success failure:failure];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -134,13 +121,6 @@ static AFNetWorkingTool * a_instance = nil;
         case HttpRequestTypePut:
         {
             [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                if (success) {
-//                    id jsons = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers  error:nil];
-//                    NSData *retData = responseObject;
-//                    NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
-//                     NSLog(@"response:%@",result);
-//                    success(jsons);
-//                }
                 [self doOptionResponse:responseObject success:success failure:failure];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

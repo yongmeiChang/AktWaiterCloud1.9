@@ -229,14 +229,12 @@
     NSDate *edate = [formatter dateFromString:_eDate];
     NSComparisonResult result = [bdate compare:edate];
     NSLog(@"date1 : %@, date2 : %@", bdate, edate);
-    if (result == NSOrderedDescending) {
+    if (result == NSOrderedDescending) { // bdate>edate
         return 1;
-    }
-    //b>=e
-    else if (result == NSOrderedAscending){
+    }else if (result == NSOrderedAscending){ // bdate<edate
         return -1;
     }
-    return 0;
+        return 0;
 }
 
 #pragma mark - init
@@ -260,7 +258,7 @@
 -(void)SubmitBtnClick{
     
     int ok = [self compareDate];
-    if(ok!=-1){
+    if(ok == 1){
         [[AppDelegate sharedDelegate] showTextOnly:@"日期格式不符合要求"];
         return;
     }

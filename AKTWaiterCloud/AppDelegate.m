@@ -140,6 +140,7 @@
 //日志初始化
 -(void)initCocoaLumberjack{
     [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     //保存周期
     fileLogger.rollingFrequency = 660 * 660 * 24; // 24 hour rolling
