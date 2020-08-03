@@ -91,7 +91,7 @@ static const int ddLogLevel = DDLogLevelError;
 #endif
 
 #define appid @"1294211974"
-#define GAODEAPPKEY @"d7fac2d3810fa204fa0246c7fead9806"
+#define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
 #define Bugly_AppId @"d5a027a07b"  // 个人账号
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥

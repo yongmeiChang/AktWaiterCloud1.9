@@ -284,10 +284,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    UserInfo *modelUser = [UserInfo getsUser];
-    if([modelUser.missionTrans isEqualToString:@"1"]){
-        [self showMessageAlertWithController:self Message:@"您尚未拥有此权限"];
-        return;
-    }
+//    if([modelUser.missionTrans isEqualToString:@"1"]){
+//        [self showMessageAlertWithController:self Message:@"您尚未拥有此权限"];
+//        return;
+//    }
     OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
     minuteTaskContoller.type = @"0";

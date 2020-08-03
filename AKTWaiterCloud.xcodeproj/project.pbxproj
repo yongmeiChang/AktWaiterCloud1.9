@@ -2365,7 +2365,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ankangtong.service;
 				PRODUCT_NAME = "服务云(官方)";
 				PROVISIONING_PROFILE = "81fbe5a8-7583-44c4-b0ac-68af4300c683";
-				PROVISIONING_PROFILE_SPECIFIER = der_serviceCloud;
+				PROVISIONING_PROFILE_SPECIFIER = der_newServiceCloud;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2378,8 +2378,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = AKTWaiterCloud/AKTWaiterCloud.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jinqiu Antai Calling Service System Co., Ltd. (47QX444MCT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jinqiu Antai Calling Service System Co., Ltd. (47QX444MCT)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
@@ -2463,7 +2463,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ankangtong.service;
 				PRODUCT_NAME = "服务云(官方)";
 				PROVISIONING_PROFILE = "8b5ce4f5-9466-499f-b68e-69db5693471e";
-				PROVISIONING_PROFILE_SPECIFIER = dis_serviceCloud;
+				PROVISIONING_PROFILE_SPECIFIER = dis_newServiceCloud;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

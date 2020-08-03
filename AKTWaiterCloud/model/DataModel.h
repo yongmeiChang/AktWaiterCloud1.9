@@ -36,32 +36,24 @@
 @end
 #pragma mark --- 用户信息
 @interface UserInfo : JSONModel
-@property(nonatomic,strong) NSString <Optional>*  id;
+
 @property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样
-@property(nonatomic,strong) NSString <Optional>*  icon; // 头像
-@property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
+//@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
+//@property(nonatomic,strong) NSString <Optional>*  level;//是等级
+@property(nonatomic,strong) NSString <Optional>*  id;
 @property(nonatomic,strong) NSString <Optional>*  password;  // 密码
-@property(nonatomic,strong) NSString <Optional>*  tenantId; // 租户ID
-//@property(nonatomic,strong) NSString <Optional>*  location;
-//@property(nonatomic,strong) NSString <Optional>*  cooperationState;
-//@property(nonatomic,strong) NSString <Optional>*  cooperationStateName;
-@property(nonatomic,strong) NSString <Optional>*  sex; // 性别类型 0男 1女
-//@property(nonatomic,strong) NSString <Optional>*  sexName; // 性别
-//@property(nonatomic,strong) NSString <Optional>*  stationNo;
-//@property(nonatomic,strong) NSString <Optional>*  saleId;
-@property(nonatomic,strong) NSString <Optional>*  address;  // 地址
-@property(nonatomic,strong) NSString <Optional>*  name;  // 用户名
-@property(nonatomic,strong) NSString <Optional>*  waiterNo;
-//@property(nonatomic,strong) NSString <Optional>*  locationX;
-//@property(nonatomic,strong) NSString <Optional>*  locationY;
-@property(nonatomic,strong) NSString <Optional>*  missionTrans;//1需要扫码
-@property(nonatomic,strong) NSString <Optional>*  identifyNo;// 身份证号
-@property(nonatomic,strong) NSString <Optional>*  level;//是等级
-//@property(nonatomic,strong) NSString <Optional>*  startPermission;//主动发起工单权限 0表示否，1表示是
 @property(nonatomic,strong) NSString <Optional>*  uniqueKey;//唯一码
-//@property(nonatomic,strong) NSString <Optional>*  locationFlag;//来判断是否有更新用户地址的权限
-//@property(nonatomic,strong) NSString <Optional>*  isPosition;//0:不需要判断 1:需要判断
-@property(nonatomic,strong) NSString <Optional>*  tenantName; // 租户站名称
+@property(nonatomic,strong) NSString <Optional>*  name;  // 用户名
+@property(nonatomic,strong) NSString <Optional>*  sex; // 性别类型 0男 1女
+@property(nonatomic,strong) NSString <Optional>*  identifyNo;// 身份证号
+@property(nonatomic,strong) NSString <Optional>*  mobile; // 手机号
+@property(nonatomic,strong) NSString <Optional>*  address;  // 地址
+@property(nonatomic,strong) NSString <Optional>*  icon; // 头像
+@property(nonatomic,strong) NSString <Optional>* registrationId; //
+@property(nonatomic,strong) NSString <Optional>* tenantName; // 租户站名称
+@property(nonatomic,strong) NSString <Optional>* tenantId; // 租户ID
+@property(nonatomic,strong) NSString <Optional>* tenantCode; //
+@property(nonatomic,strong) NSString <Optional>* organizationId; // 组织ID
 + (UserInfo *)getsUser; // 获取
 - (void)saveUser; // 保存
 

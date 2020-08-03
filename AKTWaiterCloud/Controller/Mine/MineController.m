@@ -86,9 +86,9 @@
         self.serviceNameLab.text = [NSString stringWithFormat:@": %@",user.tenantName]; // 所属服务站
         NSString *strLv;
         strLv = [NSString stringWithFormat:@"0"];
-        if ([modelUser.level integerValue] != 0) {
-            strLv = [NSString stringWithFormat:@"%@",user.level];// 等级
-        }
+//        if ([modelUser.level integerValue] != 0) {
+//            strLv = [NSString stringWithFormat:@"%@",user.level];// 等级
+//        }
         self.levelLabel.text = [NSString stringWithFormat:@"LV.%@",strLv];
     
     } failure:^(NSError * _Nonnull error) {
