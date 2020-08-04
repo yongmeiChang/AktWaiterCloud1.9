@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,7 +69,7 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="详细地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pug-sL-Gd2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="详细地址" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pug-sL-Gd2">
                                 <rect key="frame" x="32" y="97.5" width="253" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -88,8 +88,8 @@
                             <constraint firstItem="lzi-XW-yMJ" firstAttribute="leading" secondItem="Wob-r6-YG3" secondAttribute="leading" constant="12.5" id="LEc-vC-bPn"/>
                             <constraint firstAttribute="trailing" secondItem="Pug-sL-Gd2" secondAttribute="trailing" constant="15" id="PEh-OE-eb5"/>
                             <constraint firstItem="N4k-Vq-Haw" firstAttribute="leading" secondItem="Wob-r6-YG3" secondAttribute="leading" constant="12" id="Y6B-tA-BzJ"/>
-                            <constraint firstItem="Pug-sL-Gd2" firstAttribute="centerY" secondItem="N4k-Vq-Haw" secondAttribute="centerY" id="ZZi-Jm-qcd"/>
                             <constraint firstItem="NSa-JL-Blj" firstAttribute="top" secondItem="Wob-r6-YG3" secondAttribute="top" constant="16" id="Zmb-uW-KG0"/>
+                            <constraint firstItem="Pug-sL-Gd2" firstAttribute="top" secondItem="N4k-Vq-Haw" secondAttribute="top" constant="-1" id="aVy-Jn-33h"/>
                             <constraint firstItem="W5F-r3-fvz" firstAttribute="centerY" secondItem="NSa-JL-Blj" secondAttribute="centerY" id="biU-5y-6cq"/>
                             <constraint firstAttribute="trailing" secondItem="W5F-r3-fvz" secondAttribute="trailing" constant="15" id="gZM-gH-StR"/>
                             <constraint firstItem="W5F-r3-fvz" firstAttribute="leading" secondItem="NSa-JL-Blj" secondAttribute="trailing" constant="7" id="iFA-3u-W9H"/>

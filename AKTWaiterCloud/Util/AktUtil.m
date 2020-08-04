@@ -201,25 +201,8 @@
     NSDictionary *attribute = @{NSFontAttributeName:font, NSParagraphStyleAttributeName: paragraph};
     return [_text boundingRectWithSize:CGSizeMake(_width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil].size;
 }
-#pragma mark - 签出 出勤状态
-+(NSUInteger)isstatus:(NSString *)serviceEnd{
-    // 截止时间data格式
-       NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-       [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-       NSDate *expireDate = [formatter dateFromString:serviceEnd];
-       // 当前日历
-       NSCalendar *calendar = [NSCalendar currentCalendar];
-       // 需要对比的时间数据
-       NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-       | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-       // 对比时间差
-       NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
-       if(dateCom.year==0&&dateCom.month==0&&dateCom.day==0&&dateCom.hour==0&&dateCom.minute==0&&dateCom.second==0){// @"正常";
-           return 0;
-       }else{
-           return 1;
-       }
-}
+
+#pragma mark - 4.0APP时间相关判断
 +(NSUInteger)isNewTimestatus:(NSString *)serviceEnd{ // 对比时间 是否正常 0：正常  1异常
     NSArray *aryService = [serviceEnd componentsSeparatedByString:@":"];
     NSArray *aryNowDate = [[self getNowDateAndTime] componentsSeparatedByString:@" "];
@@ -243,6 +226,25 @@
     NSInteger Second = labs([[aryBtime objectAtIndex:2] integerValue] - [[aryEtime objectAtIndex:2] integerValue]);
     
     return [NSString stringWithFormat:@"%ld小时%ld分%ld秒",(long)Hours,(long)Miute,(long)Second];
+}
+#pragma mark - 签出 出勤状态
++(NSUInteger)isstatus:(NSString *)serviceEnd{
+    // 截止时间data格式
+       NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+       [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+       NSDate *expireDate = [formatter dateFromString:serviceEnd];
+       // 当前日历
+       NSCalendar *calendar = [NSCalendar currentCalendar];
+       // 需要对比的时间数据
+       NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+       | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+       // 对比时间差
+       NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+       if(dateCom.year==0&&dateCom.month==0&&dateCom.day==0&&dateCom.hour==0&&dateCom.minute==0&&dateCom.second==0){// @"正常";
+           return 0;
+       }else{
+           return 1;
+       }
 }
 
 // 计算天数

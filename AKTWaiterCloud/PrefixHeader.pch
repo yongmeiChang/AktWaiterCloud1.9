@@ -90,7 +90,7 @@ static const int ddLogLevel = DDLogLevelVerbose;
 static const int ddLogLevel = DDLogLevelError;
 #endif
 
-#define appid @"1294211974"
+//#define appid @"1294211974"
 #define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
 #define Bugly_AppId @"d5a027a07b"  // 个人账号
@@ -108,7 +108,7 @@ static const int ddLogLevel = DDLogLevelError;
 #define SERVICEURL @"http://180.168.24.187:20080" 
 
 // 测试环境
-//#define SERVICEURL @"http://172.16.31.133" // 新测试环境 老王
+//#define SERVICEURL @"http://172.16.31.133" // 新测试环境 王智慧
 //#define SERVICEURL @"http://172.16.30.251" // 黎翔
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
