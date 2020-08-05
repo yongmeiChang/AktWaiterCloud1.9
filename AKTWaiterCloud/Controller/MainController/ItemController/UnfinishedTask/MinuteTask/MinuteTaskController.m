@@ -367,12 +367,25 @@
                         distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
                         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                /**实际服务时间 与最低服务时间的差值 **/
-                NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 实际服务的时间 to-from
-                        BOOL bollateSignOut = (mtime-[model.maxEarlyTime integerValue])<0; // 实际服务大于
+                /**实际服务时间 与 最低服务时间的差值 **/
+                NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
+                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
+                NSInteger Ltime = Stime-mtime;
+                if (mtime>Stime){ // 实际大于应该
+                    Ltime = 0;
+                }
+                
+                BOOL bollateSignOut = (Ltime-[model.maxEarlyTime integerValue])<0; //
                 /* 签入时间与当前时间的差值 是否 满足最低服务时长*/
-                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 服务开始时间与当前时间的差值 负数是正常
-                BOOL bollateSignOutLess = (mtimeless-[model.minServiceLength integerValue])<0; // 实际服务小于最低
+//                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 服务开始时间与当前时间的差值 负数是正常
+                BOOL bollateSignOutLess = (mtime-[model.minServiceLength integerValue])<0; // 实际服务小于最低
+                
+                /**判断当前工单是否在服务有效期内**/
+                formatter.dateFormat = @"yyyy-MM-dd";
+                if ([AktUtil compareDate:[formatter dateFromString:self.orderinfo.serviceDate] End:[formatter dateFromString:[AktUtil getNowDate]]] == -1) { // 超出
+                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在当前有效期内！" canelBlock:^{}];
+                    return;
+                }
                         
                 if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
                             
@@ -440,10 +453,11 @@
                    distanceSingin = [model.maxLocationDistanceSignIn doubleValue]-[self.distancePost doubleValue]; // 相差距离
                    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                   NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 签入时间与当前时间的差值 负数是正常
-//                   BOOL bolMinuteSignin = mtime>0;
-                   BOOL bollateSignin = (mtime-[model.maxLateTime integerValue])>0; // 超出最大迟到时间
-                   
+                   NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值
+                   BOOL bollateSignin = NO;
+                   if (mtime<0) {// mtime<0 迟到
+                       bollateSignin = (labs(mtime) - [model.maxLateTime integerValue])>0; // 超出最大迟到时间
+                   }
                    
                    if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin>=0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
                        NSLog(@"弹框");

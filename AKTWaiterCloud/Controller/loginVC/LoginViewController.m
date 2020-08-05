@@ -218,12 +218,12 @@
                 LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
                 model.uuid = model.id;
                 [model save];
-                [self reauestUserInfoTenantsid:kString(model.tenantId) UserId:kString(model.uuid)]; // 获取个人信息
                 // 登录成功
                 [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:Token];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 
+                [self reauestUserInfoTenantsid:kString(model.tenantId) UserId:kString(model.uuid)]; // 获取个人信息
                 //获取各类工单数量
                 NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
                 [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];

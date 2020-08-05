@@ -32,13 +32,13 @@ static AFNetWorkingTool * a_instance = nil;
 
 
 #pragma mark 封装的请求方法
-- (void)doOptionResponse:(id)responseObj success:(void (^)(id))success failure:(void (^)(NSError *error))failure{
+- (void)doOptionResponse:(id)responseObj Url:(NSString *)url parameters:(NSString *)p success:(void (^)(id))success failure:(void (^)(NSError *error))failure{
     //code msg permission data
     NSError *err = nil;
     NSData *retData = responseObj;
     NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
     NSDictionary *retDict = [result toDictionaryWithError:&err];
-    NSLog(@"response:%@",result);
+    NSLog(@" requst:%@ \n 参数:%@\nresponse:%@",url,p,result);
     
     if (err) {
         failure(err);
@@ -79,13 +79,13 @@ static AFNetWorkingTool * a_instance = nil;
     [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];
     // 登录、获取验证码、找回密码、注册、租户列表  中间连接修改
     NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree
-    if ([URLString isEqualToString:@"appToken"] || [URLString isEqualToString:@"getCheckCode"] || [URLString isEqualToString:@"getPassword"] || [URLString isEqualToString:@"getTenantsTree"]) {
+    if ([URLString isEqualToString:@"appToken"] || [URLString isEqualToString:@"getCheckCode"] || [URLString isEqualToString:@"getPassword"] || [URLString isEqualToString:@"getTenantsTree"] || [URLString isEqualToString:@"getAppVersion"]) {
         url = [NSString stringWithFormat:@"%@/api/auth/jwt/%@",SERVICEURL,URLString];
     }else{
         url = [NSString stringWithFormat:@"%@/api/app/appService/%@",SERVICEURL,URLString];
     }
 
-    NSLog(@"requst:%@\n参数:%@",url,parameters);
+//    NSLog(@"requst:%@\n参数:%@",url,parameters);
     switch (type) {
             
         case HttpRequestTypeGet:
@@ -93,7 +93,7 @@ static AFNetWorkingTool * a_instance = nil;
             [manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                [self doOptionResponse:responseObject success:success failure:failure];
+                [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if (failure) {
                     failure(error);
@@ -107,7 +107,7 @@ static AFNetWorkingTool * a_instance = nil;
             [manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                [self doOptionResponse:responseObject success:success failure:failure];
+                [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
@@ -121,7 +121,7 @@ static AFNetWorkingTool * a_instance = nil;
         case HttpRequestTypePut:
         {
             [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                [self doOptionResponse:responseObject success:success failure:failure];
+                [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                if (failure) {

@@ -227,6 +227,23 @@
     
     return [NSString stringWithFormat:@"%ld小时%ld分%ld秒",(long)Hours,(long)Miute,(long)Second];
 }
+// 两个时间段的差值  分钟单位
++(NSInteger)getTimeDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to{
+    NSArray * aryfromTime = [from componentsSeparatedByString:@":"];
+    NSArray * arytoTime = [to componentsSeparatedByString:@":"];
+    
+    NSInteger fromH= [[NSString stringWithFormat:@"%@",aryfromTime[0]] integerValue];
+    NSInteger fromM= [[NSString stringWithFormat:@"%@",aryfromTime[1]] integerValue];
+//    NSInteger fromS= [[NSString stringWithFormat:@"%@",aryfromTime[2]] integerValue];
+    
+    NSInteger toH= [[NSString stringWithFormat:@"%@",arytoTime[0]] integerValue];
+    NSInteger toM= [[NSString stringWithFormat:@"%@",arytoTime[1]] integerValue];
+//    NSInteger toS= [[NSString stringWithFormat:@"%@",arytoTime[2]] integerValue];
+    
+    NSInteger timeAll = ((fromH-toH)*60)+(fromM-toM);
+    
+    return timeAll;
+}
 #pragma mark - 签出 出勤状态
 +(NSUInteger)isstatus:(NSString *)serviceEnd{
     // 截止时间data格式
@@ -420,7 +437,7 @@
     else if (result == NSOrderedAscending){
         return -1;
     }
-    return 0;
+        return 0;
 }
 
 + (BOOL)dx_isNullOrNilWithObject:(id)object;
