@@ -428,8 +428,9 @@
                             }else{
                                 strReason = @"服务时长异常终止工单";
                             }
-                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
-                                [self.navigationController popViewControllerAnimated:YES];
+                            [[AppDelegate sharedDelegate] showTextOnly:strReason];
+                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
+//                                [self.navigationController popViewControllerAnimated:YES];
                             } failure:^(NSError *error) {
                                 [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                             }];

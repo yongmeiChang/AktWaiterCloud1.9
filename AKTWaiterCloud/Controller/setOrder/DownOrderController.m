@@ -435,6 +435,11 @@
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
+        }else if(indexPath.row==2){ // 结束日期
+            _type = 2;
+            [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.eDate,self.eTime]];
+            self.timePickerView.hidden = NO;
+             [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
         }else if(indexPath.row==3){ // 开始时间
             _type = 3;
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
@@ -489,8 +494,9 @@
                 _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             }
         }else{ // 结束日期
+             _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             if (self.servicepojInfo) {
-                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
+                [self serviceEndDate:_eDate Validity:kString(self.servicepojInfo.serviceValidity)];
             }else{
                 _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
             }
