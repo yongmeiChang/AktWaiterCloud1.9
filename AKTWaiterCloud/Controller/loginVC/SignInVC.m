@@ -189,7 +189,7 @@
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.tenantId,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text,@"orgId":self.selectZuhuDetailsInfo.orgId};
     [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
         
-        if ([[responseObject objectForKey:ResponseCode] isEqualToString:@"1"]) {
+        if ([[responseObject objectForKey:ResponseCode] integerValue] == 1) {
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
             [self.navigationController popViewControllerAnimated:YES];
         }else{

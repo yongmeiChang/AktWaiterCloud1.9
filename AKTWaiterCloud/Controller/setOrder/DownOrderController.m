@@ -482,8 +482,9 @@
                _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
             }
         }else if(_type == 4){ // 结束时间
+            _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
             if (self.servicepojInfo) {
-                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
+                [self serviceEndTime:_eTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
             }else{
                _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
             }
