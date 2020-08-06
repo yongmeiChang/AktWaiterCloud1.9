@@ -319,8 +319,8 @@
     
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
-        NSLog(@"%@",dic[@"message"]);
-        NSNumber * code = dic[@"code"];
+//        NSLog(@"%@",dic[@"message"]);
+//        NSNumber * code = dic[@"code"];
 //        if([code longValue] == 1){
 //            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

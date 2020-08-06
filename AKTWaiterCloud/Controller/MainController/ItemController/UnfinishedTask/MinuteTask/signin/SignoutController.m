@@ -872,16 +872,37 @@
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) { // take photo / 去拍照
-        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+    NSLog(@"%ld",(long)actionSheet.cancelButtonIndex);
+    
+//    if (buttonIndex == 0) { // take photo / 去拍照
+//        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+//            [self pushTZImagePickerController];
+//        }else{
+//            [self takePhoto];
+//        }
+//    } else if (buttonIndex == 1) {
+//        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+//            [self pushTZImagePickerController];
+//        }
+//    }
+    
+    NSInteger cancelInt = actionSheet.cancelButtonIndex;
+    if (cancelInt == 2) {
+        if (buttonIndex == 0){
+            [self takePhoto];
+        }else if (buttonIndex == 1) {
             [self pushTZImagePickerController];
         }else{
-            [self takePhoto];
+            
         }
-    } else if (buttonIndex == 1) {
-//        if (_type == 1) {
-            [self pushTZImagePickerController];
-//        }
+    }else{
+        if (buttonIndex == 0){
+            if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+                [self pushTZImagePickerController];
+            }else{
+                [self takePhoto];
+            }
+        }
     }
 }
 
