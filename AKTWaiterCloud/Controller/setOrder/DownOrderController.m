@@ -321,21 +321,22 @@
         NSDictionary * dic = responseObject;
         NSLog(@"%@",dic[@"message"]);
         NSNumber * code = dic[@"code"];
-        if([code longValue] == 1){
-            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                for(UIView * view in self.view.subviews){
-                    [view removeFromSuperview];
-                }
-                
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                 [[AppDelegate sharedDelegate] hidHUD];
-                
-            });
-        }else{
-             [[AppDelegate sharedDelegate] hidHUD];
-            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
-            }
+//        if([code longValue] == 1){
+//            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                for(UIView * view in self.view.subviews){
+//                    [view removeFromSuperview];
+//                }
+//
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//                 [[AppDelegate sharedDelegate] hidHUD];
+//
+//            });
+//        }
+        [[AppDelegate sharedDelegate] showAlertView:@"" des:dic[@"message"] cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+              [[AppDelegate sharedDelegate] hidHUD];
+        }];
     } failure:^(NSError *error) {
              [[AppDelegate sharedDelegate] hidHUD];
             [[AppDelegate sharedDelegate] showTextOnly:error.domain];
