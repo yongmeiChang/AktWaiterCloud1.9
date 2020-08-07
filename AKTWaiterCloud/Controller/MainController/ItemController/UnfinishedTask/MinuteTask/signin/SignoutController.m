@@ -92,9 +92,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *serviceTimeTitleLab; // 服务时长标题
 @property (weak, nonatomic) IBOutlet UIButton *btnServiceLength; //服务时长icon
 @property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;//服务时长
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnServiceH;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *serviceTop;
 /**最低服务时长 相关控件**/
 @property (weak, nonatomic) IBOutlet UIView *viewTimeless;
 @property (weak, nonatomic) IBOutlet UILabel *labTimeless;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTimeLessH; // 最低服务时长 视图的高度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTop;
 
 /****/
 @property (weak,nonatomic) IBOutlet UILabel * timerLabel;//显示读秒
@@ -280,6 +284,11 @@
         self.serviceTimeTitleLab.hidden = NO;
         self.ShowSingOutServiceTimelabel.hidden = NO;
         self.viewTimeless.hidden = NO;
+        self.btnServiceH.constant = 20;
+        self.serviceTop.constant = 10;
+        self.viewTimeLessH.constant = 20;
+        self.viewTop.constant = 10;
+        
         self.viewAddressHeightConstraint.constant = 167;
          
         
@@ -311,8 +320,12 @@
             self.btnPostWidth.constant = SCREEN_WIDTH;
             [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
         }
-         self.viewAddressHeightConstraint.constant = 167;
-        self.scrollH.constant = 140+100+44+arytitle.count *150;
+        self.btnServiceH.constant = 0;
+        self.serviceTop.constant = 0;
+        self.viewTimeLessH.constant = 0;
+        self.viewTop.constant = 0;
+        self.viewAddressHeightConstraint.constant = 115;
+        self.scrollH.constant = 140+44+arytitle.count *150;
     }
     self.reasonViewH.constant = arytitle.count *150; // 输入框的总高度
     // 签入 签出 原因框
@@ -391,11 +404,11 @@
         self.labStatus.hidden = YES;
         self.btnTimeH.constant = 0;
     }
-    if ([self.findAdmodel.recordServiceLength isEqualToString:@"0"]) {
-        self.btnServiceLength.hidden = YES;
-        self.serviceTimeTitleLab.hidden = YES;
-        self.ShowSingOutServiceTimelabel.hidden = YES;
-    }
+//    if ([self.findAdmodel.recordServiceLength isEqualToString:@"0"]) {
+//        self.btnServiceLength.hidden = YES;
+//        self.serviceTimeTitleLab.hidden = YES;
+//        self.ShowSingOutServiceTimelabel.hidden = YES;
+//    }
 //    if ([self.findAdmodel.recordMinServiceLength isEqualToString:@"0"]) {
 //        self.viewTimeless.hidden = YES;
 //        self.viewAddressHeightConstraint.constant = 137;

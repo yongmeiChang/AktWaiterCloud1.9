@@ -18,6 +18,7 @@
                 <outlet property="btnDistanceH" destination="2Kv-xo-wNx" id="H5e-3k-L6z"/>
                 <outlet property="btnPostHeight" destination="XTb-wc-h0v" id="Yab-jB-BHV"/>
                 <outlet property="btnPostWidth" destination="T7L-MK-rQF" id="DjX-UE-6m2"/>
+                <outlet property="btnServiceH" destination="sNY-Op-ktF" id="fFS-BE-Eq3"/>
                 <outlet property="btnServiceLength" destination="Ijs-64-Oh8" id="HmC-XC-PUa"/>
                 <outlet property="btnTime" destination="Kfg-1m-u6y" id="BVO-gB-kJv"/>
                 <outlet property="btnTimeH" destination="wBf-1v-5P7" id="IXT-1b-SaK"/>
@@ -40,12 +41,15 @@
                 <outlet property="scrollviewBg" destination="w99-MC-0gA" id="hHZ-IO-IrB"/>
                 <outlet property="serviceInfoView" destination="xkn-Yq-TFb" id="2kQ-M7-j7b"/>
                 <outlet property="serviceTimeTitleLab" destination="haW-BE-s5c" id="K7J-h9-8MR"/>
+                <outlet property="serviceTop" destination="w2x-Od-pIJ" id="IDY-j0-j9j"/>
                 <outlet property="submitBtn" destination="V1L-Hg-31l" id="vfy-ag-7jH"/>
                 <outlet property="timerLabel" destination="dAt-d3-f9T" id="IbN-UZ-Tpi"/>
                 <outlet property="trapBtn" destination="Lcn-Cn-SGs" id="jQU-sH-Kfo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="ZFh-Rt-DUp"/>
                 <outlet property="viewAddressHeightConstraint" destination="pBn-4b-YLo" id="r2n-Yh-TEA"/>
+                <outlet property="viewTimeLessH" destination="VhX-FI-a1e" id="VkJ-4r-lix"/>
                 <outlet property="viewTimeless" destination="2BJ-yF-hyO" id="25s-Me-xOI"/>
+                <outlet property="viewTop" destination="5YX-vm-5dx" id="Cfq-Ka-Qgm"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -88,13 +92,13 @@
                                     <rect key="frame" x="0.0" y="277.5" width="375" height="167"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签入情况" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7h-6C-YhP">
-                                            <rect key="frame" x="16.5" y="13" width="61.5" height="18"/>
+                                            <rect key="frame" x="16.5" y="13" width="61.5" height="17.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kfg-1m-u6y">
-                                            <rect key="frame" x="3" y="44.5" width="44" height="20"/>
+                                            <rect key="frame" x="3" y="44" width="44" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="44" id="0vs-XI-AFl"/>
                                                 <constraint firstAttribute="height" constant="20" id="wBf-1v-5P7"/>
@@ -102,13 +106,13 @@
                                             <state key="normal" image="lateG"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lq-dZ-0ej">
-                                            <rect key="frame" x="113.5" y="44.5" width="0.0" height="20"/>
+                                            <rect key="frame" x="113.5" y="44" width="0.0" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.14117647059999999" green="0.75294117650000003" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mxx-G4-Rwu">
-                                            <rect key="frame" x="3" y="74.5" width="44" height="20"/>
+                                            <rect key="frame" x="3" y="74" width="44" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="2Kv-xo-wNx"/>
                                                 <constraint firstAttribute="width" constant="44" id="942-Lm-mnh"/>
@@ -116,32 +120,34 @@
                                             <state key="normal" image="rangeG"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="距       离：" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zu-4Z-M8n">
-                                            <rect key="frame" x="47" y="74.5" width="66.5" height="20"/>
+                                            <rect key="frame" x="47" y="74" width="66.5" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB3-Hd-jXI">
-                                            <rect key="frame" x="113.5" y="74.5" width="0.0" height="20"/>
+                                            <rect key="frame" x="113.5" y="74" width="0.0" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijs-64-Oh8">
-                                            <rect key="frame" x="3" y="104.5" width="44" height="19.5"/>
+                                            <rect key="frame" x="3" y="104" width="44" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="44" id="mo0-Ua-UCA"/>
+                                                <constraint firstAttribute="height" constant="20" id="sNY-Op-ktF"/>
                                             </constraints>
                                             <state key="normal" image="timeG"/>
                                         </button>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务时长：" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haW-BE-s5c">
-                                            <rect key="frame" x="47" y="104.5" width="66.5" height="19.5"/>
+                                            <rect key="frame" x="47" y="104" width="66.5" height="20"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtP-zh-VSZ">
-                                            <rect key="frame" x="113.5" y="104.5" width="0.0" height="19.5"/>
+                                            <rect key="frame" x="113.5" y="104" width="0.0" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.14117647059999999" green="0.75294117650000003" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -157,7 +163,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出勤状态：" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49L-l7-ILK">
-                                            <rect key="frame" x="47" y="44.5" width="66.5" height="20"/>
+                                            <rect key="frame" x="47" y="44" width="66.5" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="66.5" id="cky-J5-mj7"/>
                                             </constraints>
