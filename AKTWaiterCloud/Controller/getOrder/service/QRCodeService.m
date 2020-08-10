@@ -64,7 +64,7 @@
                         //self.orderfmdb = [[OrderTaskFmdb alloc]init];
                         OrderInfo * orderinfo;
                         //判断工单是否本地有缓存,有缓存则更新，没缓存则添加至缓存
-                        orderinfo = [qv.unfinishController.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+//                        orderinfo = [qv.unfinishController.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                         if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
@@ -73,7 +73,7 @@
 //                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
 //                            }
-                            [qv.unfinishController.orderfmdb saveOrderTask:orderinfo];
+//                            [qv.unfinishController.orderfmdb saveOrderTask:orderinfo];
                         }else{
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
@@ -82,7 +82,7 @@
 //                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
 //                            }
-                            [qv.unfinishController.orderfmdb updateObject:orderinfo];
+//                            [qv.unfinishController.orderfmdb updateObject:orderinfo];
                         }
                     }
                     if(editArray.count>0){
@@ -124,7 +124,7 @@
                 return;
             }
             NSDictionary * object = [dic objectForKey:ResponseData];
-            DownOrderUserInfo *font = [[DownOrderUserInfo alloc]initWithDictionary:object error:nil];
+            DowOrderData *font = [[DowOrderData alloc]initWithDictionary:object error:nil];
             DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
             [controller.navigationController pushViewController:doController animated:YES];
             doController.hidesBottomBarWhenPushed = YES;

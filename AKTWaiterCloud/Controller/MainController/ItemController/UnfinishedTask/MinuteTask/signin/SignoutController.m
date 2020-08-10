@@ -249,11 +249,33 @@
 
 #pragma mark - reson view
 -(void)reasonViewLoadAll{
-    
     // 建议反馈// 定位异常反馈：//早退反馈：//未达到最低服务时长反馈栏：//未达到最低服务时长反馈栏：
     NSMutableArray *arytitle = [[NSMutableArray alloc] init];
     [arytitle addObject:@"建议反馈内容："];
     if (_type == 1) { // 签出
+        [self setTitle:@"任务签出"];
+        self.checklabel.text = @"签出情况";
+        /**照片 相册 相关配置权限**/
+        if ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"]) {// 签入 签出 隐藏该功能
+            self.pictrueH.constant = 0;
+        }else{
+            [self configCollectionView]; // 选择图片
+        }
+       /** 位置 出勤状态 服务时长 最低服务时长**/
+        if ([self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
+            self.btnDistance.hidden = YES;
+            self.labdistance.hidden = YES;
+            self.distanceLabel.hidden = YES;
+            self.btnDistanceH.constant = 0;
+            self.addressInfoView.hidden = YES;
+        }
+        if ([self.findAdmodel.recordEarly isEqualToString:@"0"]) {
+            self.latelabel.hidden = YES;
+            self.btnTime.hidden = YES;
+            self.labStatus.hidden = YES;
+            self.btnTimeH.constant = 0;
+        }
+        
         if (self.isnewLation) {
             [arytitle addObject:@"定位异常反馈："];
         }
@@ -268,8 +290,6 @@
         }
         
         /**录音 相关配置**/
-        [self setTitle:@"任务签出"];
-        self.checklabel.text = @"签出情况";
         if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
             self.trapBtn.hidden = NO;
             self.btnPostWidth.constant = SCREEN_WIDTH/2;
@@ -303,6 +323,27 @@
         
     }else{ // 签入
         [self setTitle:@"任务签入"];
+        /**照片 相册 相关配置权限**/
+        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"])) {// 签入 签出 隐藏该功能
+            self.pictrueH.constant = 0;
+        }else{
+            [self configCollectionView]; // 选择图片
+        }
+        /** 位置 出勤状态 服务时长 最低服务时长**/
+        if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"]) {
+            self.btnDistance.hidden = YES;
+            self.labdistance.hidden = YES;
+            self.distanceLabel.hidden = YES;
+            self.btnDistanceH.constant = 0;
+            self.addressInfoView.hidden = YES;
+        }
+        if ([self.findAdmodel.recordLate isEqualToString:@"0"]) {
+            self.latelabel.hidden = YES;
+            self.btnTime.hidden = YES;
+            self.labStatus.hidden = YES;
+            self.btnTimeH.constant = 0;
+        }
+        
         if (self.isnewLation) {
             [arytitle addObject:@"定位异常反馈："];
         }
@@ -364,12 +405,7 @@
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     _isSelectOriginalPhoto = NO;
-    /**照片 相册 相关配置权限**/
-    if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"])) {// 签入 签出 隐藏该功能
-        self.pictrueH.constant = 0;
-    }else{
-        [self configCollectionView]; // 选择图片
-    }
+   
     [self initOtherView]; // UI视图编辑
     [self isLate];
     /*定位 正地理编码*/
@@ -389,21 +425,6 @@
         [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
 
-    /*签入情况的配置权限*/
-    /** 位置 出勤状态 服务时长 最低服务时长**/
-    if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"] || [self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
-        self.btnDistance.hidden = YES;
-        self.labdistance.hidden = YES;
-        self.distanceLabel.hidden = YES;
-        self.btnDistanceH.constant = 0;
-        self.addressInfoView.hidden = YES;
-    }
-    if ([self.findAdmodel.recordLate isEqualToString:@"0"] || [self.findAdmodel.recordEarly isEqualToString:@"0"]) {
-        self.latelabel.hidden = YES;
-        self.btnTime.hidden = YES;
-        self.labStatus.hidden = YES;
-        self.btnTimeH.constant = 0;
-    }
 //    if ([self.findAdmodel.recordServiceLength isEqualToString:@"0"]) {
 //        self.btnServiceLength.hidden = YES;
 //        self.serviceTimeTitleLab.hidden = YES;

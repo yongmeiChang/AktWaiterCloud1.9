@@ -121,17 +121,17 @@
                   NSDictionary * objdic = (NSDictionary*)dicc;
                   self.orderfmdb = [[OrderTaskFmdb alloc]init];
                   OrderInfo * orderinfo;
-                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+//                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                       [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-                      [self.orderfmdb saveOrderTask:orderinfo];
+//                      [self.orderfmdb saveOrderTask:orderinfo];
                   }else{
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                      [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-                      [self.orderfmdb updateObject:orderinfo];
+//                      [self.orderfmdb updateObject:orderinfo];
                   }
               }
               [self.taskTableview reloadData];

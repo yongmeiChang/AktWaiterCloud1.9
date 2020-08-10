@@ -116,7 +116,9 @@
     if ([unit isEqualToString:@"1"]) { // 小时
         _eTime= [NSString stringWithFormat:@"%d:%@:%@",[h intValue]+[length intValue],m,s];
     }else{ // 分钟
-        _eTime= [NSString stringWithFormat:@"%@:%d:%@",h,[m intValue]+[length intValue],s];
+        NSInteger Im = ([m intValue]+[length intValue])%60;
+        NSInteger Ih = ([m intValue]+[length intValue])/60;
+        _eTime= [NSString stringWithFormat:@"%ld:%ld:%@",([h integerValue]+Ih),(long)Im,s];
     }
 }
 
@@ -420,37 +422,32 @@
     if (tag == 1001) {
         if (_type == 3) { // 开始时间
             _bTime = [NSString stringWithFormat:@"%@:%@:00",hour,minute];
-//            if ([minute integerValue]+5>59) { // 当分数大于60的时候 小时加一
-//                _eTime = [NSString stringWithFormat:@"%ld:%ld:59",[hour integerValue]+1,[minute integerValue]+5-60];
+//            if (self.servicepojInfo) {
+//                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
 //            }else{
-//               _eTime = [NSString stringWithFormat:@"%@:%ld:59",hour,[minute integerValue]+5];
+//               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
 //            }
-            if (self.servicepojInfo) {
-                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
-            }else{
-               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
-            }
         }else if(_type == 4){ // 结束时间
             _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
-            if (self.servicepojInfo) {
-                [self serviceEndTime:_eTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
-            }else{
-               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
-            }
+//            if (self.servicepojInfo) {
+//                [self serviceEndTime:_eTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
+//            }else{
+//               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
+//            }
         }else if (_type == 1){ // 开始日期
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-            if (self.servicepojInfo) {
-                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
-            }else{
-                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-            }
+//            if (self.servicepojInfo) {
+//                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
+//            }else{
+//                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+//            }
         }else{ // 结束日期
              _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-            if (self.servicepojInfo) {
-                [self serviceEndDate:_eDate Validity:kString(self.servicepojInfo.serviceValidity)];
-            }else{
-                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-            }
+//            if (self.servicepojInfo) {
+//                [self serviceEndDate:_eDate Validity:kString(self.servicepojInfo.serviceValidity)];
+//            }else{
+//                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+//            }
             
         }
          [self.tableview reloadData];

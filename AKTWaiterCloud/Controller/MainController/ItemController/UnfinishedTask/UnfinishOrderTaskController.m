@@ -120,13 +120,13 @@
     //判断网络状态
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         self.orderfmdb = [[OrderTaskFmdb alloc] init];
-        _dataArray = [self.orderfmdb findAllOrderInfo];
-        if(_dataArray.count==0){
+//        _dataArray = [self.orderfmdb findAllOrderInfo];
+//        if(_dataArray.count==0){
             self.netWorkErrorView.hidden = NO;
-        }else{
-            self.netWorkErrorView.hidden = YES;
-            [self.taskTableview reloadData];
-        }
+//        }else{
+//            self.netWorkErrorView.hidden = YES;
+//            [self.taskTableview reloadData];
+//        }
     }else{
         [self requestUnFinishedTask];
     }
@@ -167,17 +167,17 @@
                 OrderInfo * orderinfo;
                                    
                 //判断工单是否本地有缓存,有缓存则更新，没缓存则添加至缓存
-              orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+//              orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                 if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                     orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                     orderinfo.tid = orderinfo.id;
                     [_dataArray addObject:orderinfo];
-                    [self.orderfmdb saveOrderTask:orderinfo];
+//                    [self.orderfmdb saveOrderTask:orderinfo];
                 }else{
                     orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                     orderinfo.tid = orderinfo.id;
                     [_dataArray addObject:orderinfo];
-                    [self.orderfmdb updateObject:orderinfo];
+//                    [self.orderfmdb updateObject:orderinfo];
                 }
             }
             

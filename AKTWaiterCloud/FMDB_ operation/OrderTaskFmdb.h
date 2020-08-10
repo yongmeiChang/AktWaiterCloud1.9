@@ -11,11 +11,11 @@
 
 //本地缓存工单数据
 @interface OrderTaskFmdb : NSObject
--(void)saveOrderTask:(OrderInfo *)orderinfo;
--(void)deleteAllOrderTask;
--(NSMutableArray *)findAllOrderInfo;
--(void)updateObject:(OrderInfo *)orderinfo;
--(void)deleteOrderTaskByWorkNo:(NSString *)WorkNo;
--(OrderInfo *)findByWorkNo:(NSString *)WorkNo;
--(int)size;
+//-(void)saveOrderTask:(OrderInfo *)orderinfo;
+//-(void)deleteAllOrderTask;
+//-(NSMutableArray *)findAllOrderInfo;
+//-(void)updateObject:(OrderInfo *)orderinfo;
+//-(void)deleteOrderTaskByWorkNo:(NSString *)WorkNo;
+//-(OrderInfo *)findByWorkNo:(NSString *)WorkNo;
+//-(int)size;
 @end
