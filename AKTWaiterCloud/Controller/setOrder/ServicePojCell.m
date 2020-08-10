@@ -41,6 +41,11 @@
         self.btnSelect.selected = YES;
     }
 }
-
+-(void)setStationCellInfo:(ServiceStationInfo *)cellInfo selectCellInf:(ServiceStationInfo *)select IndexPath:(NSIndexPath *)indexpath{
+    self.leftlabel.text = cellInfo.name;
+    if ([cellInfo.id isEqualToString:select.id]) {
+        self.btnSelect.selected = YES;
+    }
+}
 
 @end

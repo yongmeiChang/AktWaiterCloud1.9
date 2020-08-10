@@ -18,5 +18,6 @@
 
 -(void)setSigninDetailsCellInfo:(SigninDetailsInfo *)cellInfo selectCellInfo:(SigninDetailsInfo *)select; // 选择租户
 
+-(void)setStationCellInfo:(ServiceStationInfo *)cellInfo selectCellInf:(ServiceStationInfo *)select IndexPath:(NSIndexPath *)indexpath; // 选择服务站点
 
 @end

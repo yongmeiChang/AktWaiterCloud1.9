@@ -1,52 +1,54 @@
 //
-//  ServicePojController.m
-//  AnKangTong
+//  AktServiceStationListVC.m
+//  AKTWaiterCloud
 //
-//  Created by 孙嘉斌 on 2017/11/7.
-//  Copyright © 2017年 www.3ti.us. All rights reserved.
+//  Created by 常永梅 on 2020/8/7.
+//  Copyright © 2020 常永梅. All rights reserved.
 //
 
-#import "ServicePojController.h"
+#import "AktServiceStationListVC.h"
 #import "ServicePojCell.h"
 #import "DownOrderController.h"
 
-@interface ServicePojController ()<UITableViewDelegate,UITableViewDataSource>
-
+@interface AktServiceStationListVC ()<UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong) IBOutlet UITableView * tableview;
 @property (weak, nonatomic) IBOutlet UIImageView *imgNodata;
 @property (weak, nonatomic) IBOutlet UILabel *labNodata;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toptableview;
-
 @end
 
-@implementation ServicePojController
+@implementation AktServiceStationListVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = kColor(@"B2");
-    [self setNavTitle:@"服务项目"];
+    [self setNavTitle:@"服务站"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     
     _tableview.delegate = self;
     _tableview.dataSource = self;
-    if (self.aryService.count>0) {
+    
+    if (self.aryStation.count>0) {
         self.labNodata.hidden = YES;
     }else{
         self.labNodata.hidden = NO;
     }
 }
+
+#pragma mark -
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark - table delegate
 
-#pragma mark - tableview设置
 /**段数*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 /**行数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.aryService.count;
+    return self.aryStation.count;
 }
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
@@ -55,13 +57,13 @@
 }
 /**Cell生成*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentify = @"serviceListCell";
+    static NSString *cellidentify = @"stationListCell";
     ServicePojCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] lastObject];
     }
-    ServicePojInfo * spInfo = [self.aryService objectAtIndex:indexPath.row];
-    [cell setCellInfo:spInfo selectCellInf:self.selectInfo IndexPath:indexPath];
+    ServiceStationInfo * spInfo = [self.aryStation objectAtIndex:indexPath.row];
+    [cell setStationCellInfo:spInfo selectCellInf:self.stationInfo IndexPath:indexPath];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -81,12 +83,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ServicePojInfo * spInfo = [self.aryService objectAtIndex:indexPath.row];
+    ServiceStationInfo * stationInfo = [self.aryStation objectAtIndex:indexPath.row];
     if(_DoContoller){
-        _DoContoller.servicepojInfo = spInfo;
+        _DoContoller.stationInfo = stationInfo;
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 //让section的头部跟着一起滑动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == self.tableview)
@@ -100,5 +103,14 @@
     }
 }
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

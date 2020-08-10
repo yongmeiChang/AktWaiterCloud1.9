@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <JSONModel.h>
+#import "AktOrderDetailsModel.h"
+
 @interface DataModel : NSObject
 //输出对象属性
 +(void)printObjectInfoWithOb:(id)classObject;
@@ -152,59 +154,20 @@
 -(void)getOrderTaskByWorkNo:(NSString *)workNo tid:(NSString *)tid total:(NSString *)total isTrue:(NSString *)isTrue  createDate:(NSString *)createDate  begin:(NSString *)begin  updateDate:(NSString *)updateDate  delFlag:(NSString *)delFlag  affixFlag:(NSString *)affixFlag  serviceAreaName:(NSString *)serviceAreaName  serviceAreaFullPath:(NSString *)serviceAreaFullPath  workStatus:(NSString *)workStatus  workStatusName:(NSString *)workStatusName  customerId:(NSString *)customerId  customerNo:(NSString *)customerNo  machineNo:(NSString *)machineNo  customerName:(NSString *)customerName  customerPhone:(NSString *)customerPhone  serviceAddress:(NSString *)serviceAddress  serviceLocationX:(NSString *)serviceLocationX  serviceLocationY:(NSString *)serviceLocationY  serviceAreaId:(NSString *)serviceAreaId  serviceContent:(NSString *)serviceContent  serviceMoney:(NSString *)serviceMoney  serviceDate:(NSString *)serviceDate  serviceBegin:(NSString *)serviceBegin  serviceEnd:(NSString *)serviceEnd  serviceLength:(NSString *)serviceLength  serviceItemId:(NSString *)serviceItemId  serviceItemName:(NSString *)serviceItemName  stationId:(NSString *)stationId  stationName:(NSString *)stationName  stationPhone:(NSString *)stationPhone  stationAddress:(NSString *)stationAddress  waiterId:(NSString *)waiterId  waiterName:(NSString *)waiterName  waiterPhone:(NSString *)waiterPhone  waiterLocation:(NSString *)waiterLocation  processInstanceId:(NSString *)processInstanceId  processKey:(NSString *)processKey  processKeyName:(NSString *)processKeyName  orderUserId:(NSString *)orderUserId  orderUserName:(NSString *)orderUserName  orderDate:(NSString *)orderDate  sendUserId:(NSString *)sendUserId  sendUserName:(NSString *)sendUserName  sendDate:(NSString *)sendDate  stationUserId:(NSString *)stationUserId  stationUserName:(NSString *)stationUserName  stationDate:(NSString *)stationDate serviceTimeLength:(NSString *)serviceTimeLength unitType:(NSString *)unitType  unitTypeName:(NSString *)unitTypeName  abnormalFlag:(NSString *)abnormalFlag  abnormalFlagName:(NSString *)abnormalFlagName  lessFlagName:(NSString *)lessFlagName  lessFlag:(NSString *)lessFlag  businessType:(NSString *)businessType    field11:(NSString *)field11  field12:(NSString *)field12  field13:(NSString *)field13  createBy:(NSString *)createBy  updateBy:(NSString *)updateBy  serviceFullPath:(NSString *)serviceFullPath  signInLocation:(NSString *)signInLocation  signInStatus:(NSString *)signInStatus  signOutLocation:(NSString *)signOutLocation  signOutStatus:(NSString *)signOutStatus visitUserName:(NSString *)visitUserName signInDistance:(NSString *)signInDistance serviceResult:(NSString *)serviceResult  serviceVisit:(NSString *)serviceVisit CustomerSatisfactionName:(NSString *)CustomerSatisfactionName VisitDate:(NSString *)VisitDate actualCharge:(NSString *)actualCharge actrueBegin:(NSString *)actrueBegin isLate:(NSString *)isLate isAbnormal:(NSString *)isAbnormal actrueEnd:(NSString *)actrueEnd isEarly:(NSString *)isEarly;
 @end
 
-#pragma mark --- 服务用户
-@interface DownOrderFirstInfo : JSONModel
-@property (strong, nonatomic) NSString<Optional>* delFlag;
-@property (strong, nonatomic) NSString<Optional>* affixFlag;
-@property (strong, nonatomic) NSString<Optional>* serviceAreaId;
-@property (strong, nonatomic) NSString<Optional>* serviceAreaName;
-@property (strong, nonatomic) NSString<Optional>* serviceAreaFullPath;
-@property (strong, nonatomic) NSString<Optional>* customerId;
-@property (strong, nonatomic) NSString<Optional>* customerName;
-@property (strong, nonatomic) NSString<Optional>* customerPhone;
-@property (strong, nonatomic) NSString<Optional>* serviceAddress;
-@property (strong, nonatomic) NSString<Optional>* serviceDate;
-@property (strong, nonatomic) NSString<Optional>* serviceBegin;
-@property (strong, nonatomic) NSString<Optional>* serviceEnd;
-@property (strong, nonatomic) NSString<Optional>* begin;
-@property (strong, nonatomic) NSString<Optional>* total;
+#pragma mark - 下单
+@protocol ServicePojInfo
+@end
+@protocol ServiceStationInfo
 @end
 
-#pragma mark --- 服务项目
+@interface DowOrderData : JSONModel
+@property (strong, nonatomic) NSArray<ServiceStationInfo>*station;   //:{“principalPhone”:”服务站电话”}          (服务站点列表)
+@property (strong, nonatomic) NSArray<ServicePojInfo>*serviceItem;   //（服务项目列表，之前的工单项目列表不再使用了）
+@property (strong, nonatomic) DownOrderUserInfo<Optional> *customer; //      (服务用户)
+@end
+
+//服务项目
 @interface ServicePojInfo : JSONModel
-//@property (strong, nonatomic) NSString<Optional>* abnormalFlag;
-//@property (strong, nonatomic) NSString<Optional>* affixFlag;
-//@property (strong, nonatomic) NSString<Optional>* aktType;
-//@property (strong, nonatomic) NSString<Optional>* businessType;
-//@property (strong, nonatomic) NSString<Optional>* careType;
-//@property (strong, nonatomic) NSString<Optional>* createBy;
-//@property (strong, nonatomic) NSString<Optional>* createDate;
-//@property (strong, nonatomic) NSString<Optional>* delFlag;
-//@property (strong, nonatomic) NSString<Optional>* govType;
-////@property (strong, nonatomic) NSString<Optional>* id;
-//@property (strong, nonatomic) NSString<Optional>* isShow;
-//@property (strong, nonatomic) NSString<Optional>* lessFlag;
-//@property (strong, nonatomic) NSString<Optional>* messageType;
-//@property (strong, nonatomic) NSString<Optional>* messageTypeName;
-////@property (strong, nonatomic) NSString<Optional>* name;
-//@property (strong, nonatomic) NSString<Optional>* parentId;
-//@property (strong, nonatomic) NSString<Optional>* parentIds;
-//@property (strong, nonatomic) NSString<Optional>* parentName;
-//@property (strong, nonatomic) NSString<Optional>* processKey;
-//@property (strong, nonatomic) NSString<Optional>* processKeyName;
-//@property (strong, nonatomic) NSString<Optional>* remarks;
-//@property (strong, nonatomic) NSString<Optional>* roleKey;
-//@property (strong, nonatomic) NSString<Optional>* serviceMoney;
-//@property (strong, nonatomic) NSString<Optional>* sort;
-//@property (strong, nonatomic) NSString<Optional>* spread;
-//@property (strong, nonatomic) NSString<Optional>* startPermission;
-//@property (strong, nonatomic) NSString<Optional>* startPermissionName;
-//@property (strong, nonatomic) NSString<Optional>* state;
-//@property (strong, nonatomic) NSString<Optional>* typeKey;
-//@property (strong, nonatomic) NSString<Optional>* unitQuantity;
-//@property (strong, nonatomic) NSString<Optional>* unitType;//1是按时收费 2是按次收费
-//@property (strong, nonatomic) NSString<Optional>* serviceBegin; // 服务开始时间
-//@property (strong, nonatomic) NSString<Optional>* serviceEnd; // 服务结束时间
 /**4.0 新增接口**/
 @property (strong, nonatomic) NSString<Optional>* processId;
 @property (strong, nonatomic) NSString<Optional>* id;
@@ -215,8 +178,18 @@
 @property (strong, nonatomic) NSString<Optional>* serviceTime;//根据开始时间往后推迟的时间
 @property (strong, nonatomic) NSString<Optional>* timeUnit;//根据开始时间往后推迟的时间的单位  1：小时  2:分钟
 
+@end
 
-
+//服务站点
+@interface ServiceStationInfo : JSONModel
+@property (strong, nonatomic) NSString<Optional>* id; // 服务站ID
+@property (strong, nonatomic) NSString<Optional>* organizationId;
+@property (strong, nonatomic) NSString<Optional>* name; // 服务站名称
+@property (strong, nonatomic) NSString<Optional>* uniqueKey;
+@property (strong, nonatomic) NSString<Optional>* areaId; //
+@property (strong, nonatomic) NSString<Optional>* address; //
+@property (strong, nonatomic) NSString<Optional>* principalName;//
+@property (strong, nonatomic) NSString<Optional>* principalPhone; //服务站电话
 
 @end
 

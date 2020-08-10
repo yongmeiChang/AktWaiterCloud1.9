@@ -11,6 +11,7 @@
 #import "UnfinifshController.h"
 #import "QRCodeViewController.h"
 #import "MinuteTaskController.h"
+
 @implementation QRCodeService
 
 -(void)QRorderRequest:(BaseControllerViewController *)controller Code:(NSString *)str{
@@ -123,7 +124,7 @@
                 return;
             }
             NSDictionary * object = [dic objectForKey:ResponseData];
-            DownOrderFirstInfo *font = [[DownOrderFirstInfo alloc]initWithDictionary:object error:nil];
+            DownOrderUserInfo *font = [[DownOrderUserInfo alloc]initWithDictionary:object error:nil];
             DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
             [controller.navigationController pushViewController:doController animated:YES];
             doController.hidesBottomBarWhenPushed = YES;
@@ -139,20 +140,20 @@
     }else if(self.type==2){//手动添加工单
         NSDictionary * param = @{@"customerUkey":str,@"tenantsId":kString(model.tenantId)};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
+            [[AppDelegate sharedDelegate] hidHUD];
             NSDictionary *dic = responseObject;
             NSNumber * code = dic[@"code"];
-            if([code intValue] == 2){
+            NSDictionary * object = [dic objectForKey:ResponseData];
+            if([code intValue] == 1){
+                DowOrderData *font = [[DowOrderData alloc]initWithDictionary:object error:nil];
+                DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
+                [controller.navigationController pushViewController:doController animated:YES];
+                doController.hidesBottomBarWhenPushed = YES;
+            }else{
                 [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
-                 [[AppDelegate sharedDelegate] hidHUD];
                 return;
             }
-            NSDictionary * object = [dic objectForKey:ResponseData];
-            DownOrderFirstInfo *font = [[DownOrderFirstInfo alloc]initWithDictionary:object error:nil];
-            DownOrderController * doController = [[DownOrderController alloc] initDownOrderControllerWithCustomerUkey:font customerUkey:str];
-            [controller.navigationController pushViewController:doController animated:YES];
-            doController.hidesBottomBarWhenPushed = YES;
-         
-            [[AppDelegate sharedDelegate] hidHUD];
+           
         } failure:^(NSError *error) {
             [[AppDelegate sharedDelegate] hidHUD];
             [controller showMessageAlertWithController:controller Message:@"操作失败，请稍后再试"];

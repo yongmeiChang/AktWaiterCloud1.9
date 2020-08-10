@@ -16,6 +16,12 @@
 		4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F099241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
 		4C31F09A241F58FF0084AC82 /* AktVipCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31F097241F58FF0084AC82 /* AktVipCmd.m */; };
+		4C3744A524DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3744A324DD2C9B00CBE56D /* AktServiceStationListVC.m */; };
+		4C3744A624DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3744A324DD2C9B00CBE56D /* AktServiceStationListVC.m */; };
+		4C3744A724DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3744A324DD2C9B00CBE56D /* AktServiceStationListVC.m */; };
+		4C3744A824DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3744A424DD2C9B00CBE56D /* AktServiceStationListVC.xib */; };
+		4C3744A924DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3744A424DD2C9B00CBE56D /* AktServiceStationListVC.xib */; };
+		4C3744AA24DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3744A424DD2C9B00CBE56D /* AktServiceStationListVC.xib */; };
 		4C379743242205EE00DC9EFB /* VisitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37973A242205EE00DC9EFB /* VisitCell.m */; };
 		4C379744242205EE00DC9EFB /* VisitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37973A242205EE00DC9EFB /* VisitCell.m */; };
 		4C379745242205EE00DC9EFB /* VisitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37973A242205EE00DC9EFB /* VisitCell.m */; };
@@ -457,6 +463,9 @@
 		4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSPlaceholderTextView.m; sourceTree = "<group>"; };
 		4C31F096241F58FF0084AC82 /* AktVipCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktVipCmd.h; sourceTree = "<group>"; };
 		4C31F097241F58FF0084AC82 /* AktVipCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktVipCmd.m; sourceTree = "<group>"; };
+		4C3744A224DD2C9B00CBE56D /* AktServiceStationListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServiceStationListVC.h; sourceTree = "<group>"; };
+		4C3744A324DD2C9B00CBE56D /* AktServiceStationListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServiceStationListVC.m; sourceTree = "<group>"; };
+		4C3744A424DD2C9B00CBE56D /* AktServiceStationListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServiceStationListVC.xib; sourceTree = "<group>"; };
 		4C37973A242205EE00DC9EFB /* VisitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitCell.m; sourceTree = "<group>"; };
 		4C37973B242205EE00DC9EFB /* VisitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisitCell.xib; sourceTree = "<group>"; };
 		4C37973C242205EE00DC9EFB /* SignInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInCell.m; sourceTree = "<group>"; };
@@ -993,6 +1002,9 @@
 				4C3DAB8424A9820F009126D5 /* AktAddOrderUserInfoCell.xib */,
 				4C3DAB8824A9820F009126D5 /* DownOrderController.h */,
 				4C3DAB7D24A9820F009126D5 /* DownOrderController.m */,
+				4C3744A224DD2C9B00CBE56D /* AktServiceStationListVC.h */,
+				4C3744A324DD2C9B00CBE56D /* AktServiceStationListVC.m */,
+				4C3744A424DD2C9B00CBE56D /* AktServiceStationListVC.xib */,
 				4C3DAB8D24A9820F009126D5 /* DownOrderCell.h */,
 				4C3DAB8224A9820F009126D5 /* DownOrderCell.m */,
 				4C3DAB8A24A9820F009126D5 /* DownOrderCell.xib */,
@@ -1649,6 +1661,7 @@
 				AD93664420AA87D500EEB02C /* china_city_data.json in Resources */,
 				4C3D754324A87CBC00D0F79A /* FindPswController.xib in Resources */,
 				ADD09B541F998A1E00CFEC52 /* Images.xcassets in Resources */,
+				4C3744A824DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */,
 				4CC0AB7D24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				AD37AB3D1FF4E78A001D304C /* ZYInputAlertView.xib in Resources */,
 				4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */,
@@ -1710,6 +1723,7 @@
 				4C3D759724A88ABF00D0F79A /* MineController.xib in Resources */,
 				4C3DABAF24A9820F009126D5 /* DownOrderCell.xib in Resources */,
 				4C3D75C724A88ABF00D0F79A /* NotifyController.xib in Resources */,
+				4C3744A924DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */,
 				4C3D754A24A87CBC00D0F79A /* LoginViewController.xib in Resources */,
 				4C3D75A324A88ABF00D0F79A /* AboutUsController.xib in Resources */,
 				4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
@@ -1751,6 +1765,7 @@
 				4C3D759824A88ABF00D0F79A /* MineController.xib in Resources */,
 				4C3DABB024A9820F009126D5 /* DownOrderCell.xib in Resources */,
 				4C3D75C824A88ABF00D0F79A /* NotifyController.xib in Resources */,
+				4C3744AA24DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */,
 				4C3D754B24A87CBC00D0F79A /* LoginViewController.xib in Resources */,
 				4C3D75A424A88ABF00D0F79A /* AboutUsController.xib in Resources */,
 				4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
@@ -1863,6 +1878,7 @@
 				ADADBB3F1FDFE96600B54117 /* FileManagerUtil.m in Sources */,
 				4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */,
 				4CDAD745240F7E0E00CF9129 /* NSDictionary+Extension.m in Sources */,
+				4C3744A524DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */,
 				4C3D754624A87CBC00D0F79A /* FindPswController.m in Sources */,
 				4CD674F222E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4C3D75C324A88ABF00D0F79A /* MineCell.m in Sources */,
@@ -2013,6 +2029,7 @@
 				4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C869A92240940700018B943 /* AddWaterMark.m in Sources */,
+				4C3744A624DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */,
 				4C3D759A24A88ABF00D0F79A /* SettingsTableViewCell.m in Sources */,
 				4C3DABB824A9820F009126D5 /* ServicePojController.m in Sources */,
 				4C3DAB9A24A9820F009126D5 /* DownOrderController.m in Sources */,
@@ -2108,6 +2125,7 @@
 				4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C869A93240940700018B943 /* AddWaterMark.m in Sources */,
+				4C3744A724DD2C9B00CBE56D /* AktServiceStationListVC.m in Sources */,
 				4C3D759B24A88ABF00D0F79A /* SettingsTableViewCell.m in Sources */,
 				4C3DABB924A9820F009126D5 /* ServicePojController.m in Sources */,
 				4C3DAB9B24A9820F009126D5 /* DownOrderController.m in Sources */,

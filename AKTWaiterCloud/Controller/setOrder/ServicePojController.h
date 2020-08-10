@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 @class DownOrderController;
 @interface ServicePojController : BaseControllerViewController
+
 @property(nonatomic,strong) DownOrderController * DoContoller;
 @property(nonatomic,strong) ServicePojInfo*selectInfo;
+@property(nonatomic,strong) NSArray *aryService; // 服务项目列表
+
 @end

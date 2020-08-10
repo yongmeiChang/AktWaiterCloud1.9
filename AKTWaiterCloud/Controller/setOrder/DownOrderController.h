@@ -10,9 +10,11 @@
 #import "WorkBaseViewController.h"
 
 @interface DownOrderController : WorkBaseViewController
-@property(nonatomic,strong) DownOrderFirstInfo * dofInfo;
-@property(nonatomic,strong) ServicePojInfo * servicepojInfo;
+//@property(nonatomic,strong) DownOrderUserInfo * dofInfo; // 添加工单信息
+@property(nonatomic,strong) ServicePojInfo * servicepojInfo;// 选中的服务项目信息
+@property(nonatomic,strong) ServiceStationInfo * stationInfo;// 选中的服务站点信息
+
 @property(nonatomic,strong) NSString * customerUkey;
 
--(id)initDownOrderControllerWithCustomerUkey:(DownOrderFirstInfo *)oldman customerUkey:(NSString *)customerUkey;
+-(id)initDownOrderControllerWithCustomerUkey:(DowOrderData *)oldman customerUkey:(NSString *)customerUkey;
 @end

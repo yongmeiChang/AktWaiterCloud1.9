@@ -219,13 +219,12 @@
 @end
 
 
-#pragma mark --- 服务用户
-@implementation DownOrderFirstInfo
+#pragma mark - 下单
+@implementation DowOrderData
 @end
-
-
-#pragma mark --- 服务项目
 @implementation ServicePojInfo
+@end
+@implementation ServiceStationInfo
 @end
 
 #pragma mark - 注册列表租户信息

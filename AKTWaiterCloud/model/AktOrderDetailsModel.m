@@ -37,3 +37,8 @@
 }
 
 @end
+
+
+@implementation DownOrderUserInfo
+
+@end

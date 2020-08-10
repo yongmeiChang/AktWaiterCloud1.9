@@ -71,5 +71,22 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
+// 服务用户
+@interface DownOrderUserInfo : JSONModel
+@property (strong, nonatomic) NSString<Optional>* delFlag;
+@property (strong, nonatomic) NSString<Optional>* affixFlag;
+@property (strong, nonatomic) NSString<Optional>* serviceAreaId;
+@property (strong, nonatomic) NSString<Optional>* serviceAreaName;
+@property (strong, nonatomic) NSString<Optional>* serviceAreaFullPath;
+@property (strong, nonatomic) NSString<Optional>* customerId;
+@property (strong, nonatomic) NSString<Optional>* customerName;
+@property (strong, nonatomic) NSString<Optional>* customerPhone;
+@property (strong, nonatomic) NSString<Optional>* serviceAddress;
+@property (strong, nonatomic) NSString<Optional>* serviceDate;
+@property (strong, nonatomic) NSString<Optional>* serviceBegin;
+@property (strong, nonatomic) NSString<Optional>* serviceEnd;
+@property (strong, nonatomic) NSString<Optional>* begin;
+@property (strong, nonatomic) NSString<Optional>* total;
+@end
 
 NS_ASSUME_NONNULL_END

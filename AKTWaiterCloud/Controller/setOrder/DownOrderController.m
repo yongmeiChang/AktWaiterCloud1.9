@@ -12,12 +12,15 @@
 #import "AktAddOrderUserInfoCell.h" // 用户信息
 #import "AktServiceRemarkCell.h" // 服务内容
 #import "DateAndTimePickerView.h"
+#import "AktServiceStationListVC.h" // 服务站列表
 
 @interface DownOrderController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AktServiceRemarkCellDelegate,DateAndTimePickerViewDelegate>
 {
     NSString *strAddress; // 详细地址
     NSString *strArea; //  市区
     NSString *strRemark; // 服务内容
+    DowOrderData *datamodel;
+    DownOrderUserInfo * userInfoModel; // 服务用户信息
 }
 @property(nonatomic,strong) UITableView * tableview;
 @property(nonatomic,strong) NSString * money; // 金额
@@ -132,57 +135,18 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    /*
-    if(_servicepojInfo){
-        //按时计算
-        if([_servicepojInfo.unitType intValue]==1){
-            _money = _servicepojInfo.serviceMoney;
-            if([_money isEqualToString:@""]){
-                _money = @"";
-            }
-            int isbig = [self compareDate];
-            if(isbig==-1){
-                float m =[_servicepojInfo.serviceMoney floatValue];
-                long jg = [self computehour];
-                float mon = m*jg;
-                _money =  [NSString stringWithFormat:@"%f",mon];
-            }
-        }else if([_servicepojInfo.unitType intValue]== 2 || [_servicepojInfo.unitType isEqualToString:@""]){ //按次计算
-            _money = _servicepojInfo.serviceMoney;
-            if([_money isEqualToString:@""]){
-                _money = @"免费";
-            }
-        }
-        // 项目时间
-        NSLog(@"%@--%@",_servicepojInfo.serviceBegin,_servicepojInfo.serviceEnd);
-        if (_servicepojInfo.serviceBegin.length>16) {
-            _Date = [[NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin] substringToIndex:10];
-            _eDate = [[NSString stringWithFormat:@"%@",_servicepojInfo.serviceEnd] substringToIndex:10];
-            
-            _bTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceBegin];
-            _eTime = [NSString stringWithFormat:@"%@",_servicepojInfo.serviceEnd];
-        }
-        [_tableview reloadData];
-    }else{
-        _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
-        _eDate = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceEnd)];
-        _bTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceBegin)];
-        _eTime = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceEnd)];
-    }
-    */
-    
     _money = @"0";
     if (_servicepojInfo) { // 选择服务项目
-        _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
+        _Date = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
         [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)]; // 结束日期
-        _bTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
+        _bTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
         [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
         [_tableview reloadData]; // 结束 时间
     }else{
-        _Date = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
-        _eDate = [NSString stringWithFormat:@"%@",kString(self.dofInfo.serviceDate)];
-        _bTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
-        _eTime = [NSString stringWithFormat:@"%@",[kString(self.dofInfo.serviceEnd) substringWithRange:NSMakeRange(11, 8)]];
+        _Date = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
+        _eDate = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
+        _bTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
+        _eTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceEnd) substringWithRange:NSMakeRange(11, 8)]];
     }
     
 }
@@ -198,29 +162,17 @@
     self.timePickerView.tag = 104;
 }
 #pragma mark - init time
--(id)initDownOrderControllerWithCustomerUkey:(DownOrderFirstInfo *)oldman customerUkey:(NSString *)customerUkey{
+-(id)initDownOrderControllerWithCustomerUkey:(DowOrderData *)oldman customerUkey:(NSString *)customerUkey{
     if(self = [super init]){
-        self.dofInfo = oldman;
+//        self.dofInfo = oldman;
+        datamodel = oldman;
+        userInfoModel = datamodel.customer;
         self.customerUkey = customerUkey;
         return self;
     }else{
         return nil;
     }
 }
-
-//-(long)computehour{
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-//    NSDate *bdate = [formatter dateFromString:_bTime];
-//    NSDate *edate = [formatter dateFromString:_eTime];
-//
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitWeekOfMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-//
-//    NSDateComponents *cmps = [calendar components:unit fromDate:edate toDate:bdate options:0];
-//    long jg = cmps.day*24+cmps.hour;
-//    return jg;
-//}
 
 -(int)compareDate{
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -304,7 +256,7 @@
     [paremeter addUnEmptyString:_customerUkey forKey:@"customerUkey"];
     [paremeter addUnEmptyString:_servicepojInfo.id forKey:@"serviceItemId"];
     [paremeter addUnEmptyString:_servicepojInfo.showName forKey:@"serviceItemName"];
-    [paremeter addUnEmptyString:_dofInfo.serviceAddress forKey:@"serviceAddress"];
+    [paremeter addUnEmptyString:userInfoModel.serviceAddress forKey:@"serviceAddress"];
     [paremeter addUnEmptyString:_Date forKey:@"serviceDate"];
     [paremeter addUnEmptyString:_bTime forKey:@"serviceBegin"];
     [paremeter addUnEmptyString:_eTime forKey:@"serviceEnd"];
@@ -316,23 +268,13 @@
     /**4.0新增字段**/
     [paremeter addUnEmptyString:_eDate forKey:@"serviceDateEnd"]; // 服务日期结束
     [paremeter addUnEmptyString:_servicepojInfo.processId forKey:@"processId"];
+    [paremeter addUnEmptyString:userInfoModel.customerPhone forKey:@"waiterPhone"];// 用户手机号
+    [paremeter addUnEmptyString:_stationInfo.id forKey:@"stationId"];// 服务站ID
+    [paremeter addUnEmptyString:_stationInfo.name forKey:@"stationName"];//  服务站名称
+    [paremeter addUnEmptyString:kString(_stationInfo.principalPhone) forKey:@"stationPhone"];//  服务站电话
     
     [[AFNetWorkingRequest sharedTool] requestsubmitOrder:paremeter type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
-//        NSLog(@"%@",dic[@"message"]);
-//        NSNumber * code = dic[@"code"];
-//        if([code longValue] == 1){
-//            [[AppDelegate sharedDelegate] showTextOnly:dic[@"message"]];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                for(UIView * view in self.view.subviews){
-//                    [view removeFromSuperview];
-//                }
-//
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//                 [[AppDelegate sharedDelegate] hidHUD];
-//
-//            });
-//        }
         [[AppDelegate sharedDelegate] showAlertView:@"" des:dic[@"message"] cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
             [self.navigationController popToRootViewControllerAnimated:YES];
               [[AppDelegate sharedDelegate] hidHUD];
@@ -346,14 +288,14 @@
 
 #pragma mark - tableview delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if(_dofInfo){
+    if(userInfoModel){
         return 3;
     }else{
         return 0;
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section==1?5:1;
+    return section==1?6:1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -368,12 +310,12 @@
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"AktAddOrderUserInfoCell" owner:self options:nil] objectAtIndex:0];
         }
-        cell.labName.text = _dofInfo.customerName;
-        cell.labPhone.text = _dofInfo.customerPhone;
-        cell.labArea.text = _dofInfo.serviceAreaName;
-        strArea = _dofInfo.serviceAreaName;
-        cell.labAddress.text = _dofInfo.serviceAddress;
-        strAddress = _dofInfo.serviceAddress;
+        cell.labName.text = userInfoModel.customerName;
+        cell.labPhone.text = userInfoModel.customerPhone;
+        cell.labArea.text = userInfoModel.serviceAreaName;
+        strArea = userInfoModel.serviceAreaName;
+        cell.labAddress.text = userInfoModel.serviceAddress;
+        strAddress = userInfoModel.serviceAddress;
         return cell;
     }else if(indexPath.section == 1){
         static NSString *cellidentify = @"DownOrderCell";
@@ -385,10 +327,12 @@
         if (indexPath.row == 0) {
             cell.labValue.text = _servicepojInfo.fullName;
         }else if (indexPath.row == 1){
+            cell.labValue.text = _stationInfo.name;
+        }else if (indexPath.row == 2){
             cell.labValue.text = _Date;
-        }else if (indexPath.row == 2){ // 结束日期
+        }else if (indexPath.row == 3){ // 结束日期
             cell.labValue.text = _eDate;
-        }else if (indexPath.row == 3){
+        }else if (indexPath.row == 4){
 //            NSArray *array = [_bTime componentsSeparatedByString:@":"];
             cell.labValue.text = [NSString stringWithFormat:@"%@",_bTime]; // 开始时间
         }else{
@@ -430,29 +374,34 @@
             ServicePojController * spController = [[ServicePojController alloc] init];
             spController.DoContoller = self;
             spController.selectInfo = self.servicepojInfo;
+            spController.aryService = datamodel.serviceItem;
             [self.navigationController pushViewController:spController animated:YES];
-        }else if(indexPath.row==1){ // 开始日期
+        }else if(indexPath.row==2){ // 开始日期
             _type = 1;
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else if(indexPath.row==2){ // 结束日期
+        }else if(indexPath.row==3){ // 结束日期
             _type = 2;
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.eDate,self.eTime]];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else if(indexPath.row==3){ // 开始时间
+        }else if(indexPath.row==4){ // 开始时间
             _type = 3;
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.Date,self.bTime]];
             self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else if(indexPath.row==4){ // 结束时间
+        }else if(indexPath.row==5){ // 结束时间
             _type = 4;
             [self initDatePick:[NSString stringWithFormat:@"%@ %@",self.eDate,self.eTime]];
              self.timePickerView.hidden = NO;
              [[UIApplication sharedApplication].keyWindow addSubview:self.timePickerView];
-        }else { // 结束日期
-            
+        }else { // 服务站 AktServiceStationListVC
+            AktServiceStationListVC *stationListVC = [[AktServiceStationListVC alloc] init];
+            stationListVC.DoContoller = self;
+            stationListVC.stationInfo = self.stationInfo;
+            stationListVC.aryStation = datamodel.station;
+            [self.navigationController pushViewController:stationListVC animated:YES];
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];

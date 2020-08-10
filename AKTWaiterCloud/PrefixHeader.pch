@@ -109,7 +109,8 @@ static const int ddLogLevel = DDLogLevelError;
 
 // 测试环境
 //#define SERVICEURL @"http://172.16.31.133" // 新测试环境 王智慧
-//#define SERVICEURL @"http://172.16.40.49" // 黎翔
+//#define SERVICEURL @"http://192.168.1.117" // 黎翔192.168.1.177     或者117
+
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 
