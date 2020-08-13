@@ -295,16 +295,19 @@
         //得到二维码上的所有数据
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0 ];
         NSString *str = metadataObject.stringValue;
-        
-        // 扫码完成之后 进入到签入 签出页面
-        _sgController.isnewLation = self.isnewLation;
-        _sgController.isnewlate = self.isnewlate;
-        _sgController.isnewearly = self.isnewearly;
-        _sgController.isnewserviceTime = self.isnewserviceTime;
-        _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
-        _sgController.orderinfo = self.orderinfo;
-        _sgController.findAdmodel = self.detailsModel;
-        [self.navigationController pushViewController:_sgController animated:YES];
+        if ([str isEqualToString:kString(self.orderinfo.customerId)]) {
+            // 扫码完成之后 进入到签入 签出页面
+            _sgController.isnewLation = self.isnewLation;
+            _sgController.isnewlate = self.isnewlate;
+            _sgController.isnewearly = self.isnewearly;
+            _sgController.isnewserviceTime = self.isnewserviceTime;
+            _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
+            _sgController.orderinfo = self.orderinfo;
+            _sgController.findAdmodel = self.detailsModel;
+            [self.navigationController pushViewController:_sgController animated:YES];
+        }else{
+            [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+        }
     }
 }
 

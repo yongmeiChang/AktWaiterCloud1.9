@@ -63,6 +63,37 @@ static AktLoginCmd * aq_instance = nil;
                                        success:(void (^)(id responseObject))success
                       failure:(void (^)(NSError *error))failure{
     [[AFNetWorkingTool sharedTool] requestWithURLString:AKTLoginMethod parameters:param type:type success:^(id responseObject) {
+         NSDictionary * result = responseObject;
+        // 目前后台没有存储开启离线模式字段 手动添加默认关闭
+                    NSNumber * code = [result objectForKey:ResponseCode];
+                    if([code intValue] == 1){
+                        NSDictionary * userdic = [result objectForKey:ResponseData];
+                        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
+                        LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
+                        model.uuid = model.id;
+                        [model save];
+                        // 登录成功@"waiterUkey":name,@"password":pwd
+                        [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:Token];
+                        [[NSUserDefaults standardUserDefaults] setObject:[param objectForKey:@"waiterUkey"] forKey:AKTName];
+                        [[NSUserDefaults standardUserDefaults] setObject:[param objectForKey:@"password"] forKey:AKTPwd];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        
+                        // 个人信息
+                        NSDictionary *parma = @{@"tenantsId":kString(model.tenantId),@"id":kString(model.uuid)};
+                        [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypeGet success:^(id  _Nonnull responseObject) {
+                            NSDictionary *dic = [responseObject objectForKey:ResponseData];
+                            
+                            UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
+                            user.uuid = user.id;
+                            [user saveUser];
+                        } failure:^(NSError * _Nonnull error) {
+                            [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+                        }];
+                        
+                        //获取各类工单数量
+                        NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
+                        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
+                    }
            success(responseObject);
        } failure:^(NSError *error) {
            failure(error);

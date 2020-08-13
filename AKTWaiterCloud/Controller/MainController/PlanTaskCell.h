@@ -28,6 +28,7 @@ typedef void(^ContinuityLocation)(UIButton*);
 @property(weak,nonatomic) IBOutlet UIButton * grabSingleBtn;//抢单按钮(默认隐藏)
 @property(nonatomic,copy)ContinuityLocation continuityLocation;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UILabel *dateLab; // 有效期
 @property (weak, nonatomic)id<PlanTaskPhoneDelegate>delegate;
 
 -(void)setOrderList:(OrderInfo *)orderinfo; // 任务列表

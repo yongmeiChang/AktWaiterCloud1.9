@@ -163,19 +163,7 @@
     SignInVC *signvc = [[SignInVC alloc] init];
     [self.navigationController pushViewController:signvc animated:YES];
 }
-#pragma mark - user Info
--(void)reauestUserInfoTenantsid:(NSString *)tenantsId UserId:(NSString *)userid{
-    NSDictionary *parma = @{@"tenantsId":kString(tenantsId),@"id":kString(userid)};
-    [[[AktVipCmd alloc] init] requestUserInfo:parma type:HttpRequestTypeGet success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = [responseObject objectForKey:ResponseData];
-        
-        UserInfo * user = [[UserInfo alloc] initWithDictionary:dic error:nil];
-        user.uuid = user.id;
-        [user saveUser];
-    } failure:^(NSError * _Nonnull error) {
-        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-    }];
-}
+
 #pragma mark - login
 -(void)Userlogin{
     [self.view endEditing:YES];
@@ -213,21 +201,9 @@
             NSNumber * code = [result objectForKey:ResponseCode];
             NSString * messageDic = [responseObject objectForKey:ResponseMsg];
             if([code intValue] == 1){
-                NSDictionary * userdic = [result objectForKey:ResponseData];
-                NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:userdic];
-                LoginModel *model = [[LoginModel alloc] initWithDictionary:dic error:nil];
-                model.uuid = model.id;
-                [model save];
-                // 登录成功
-                [[NSUserDefaults standardUserDefaults] setObject:kString(model.token) forKey:Token];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                // 发送通知
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
                 
-                [self reauestUserInfoTenantsid:kString(model.tenantId) UserId:kString(model.uuid)]; // 获取个人信息
-                //获取各类工单数量
-                NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
-                [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
-            }else{
                 [self showMessageAlertWithController:self Message:messageDic];
             }
              [[AppDelegate sharedDelegate] hidHUD];

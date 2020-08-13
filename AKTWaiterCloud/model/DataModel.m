@@ -87,7 +87,7 @@
 
 + (LoginModel *)gets{
     if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
-        NSString *path = [AktUtil getCachePath:@"loginModel"];
+        NSString *path = [AktUtil getCachePath:@"loginNewModel"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
             return [[LoginModel alloc] initWithDictionary:dict error:nil];
@@ -98,7 +98,7 @@
 
 - (void)save{
     NSDictionary *local;
-    NSString *path = [AktUtil getCachePath:@"loginModel"];
+    NSString *path = [AktUtil getCachePath:@"loginNewModel"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path])
          local= [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self toDictionary]];
@@ -111,7 +111,7 @@
 @implementation UserInfo
 + (UserInfo *)getsUser{
     if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
-           NSString *path = [AktUtil getCachePath:@"userModel"];
+           NSString *path = [AktUtil getCachePath:@"userNewModel"];
            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
                NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
                return [[UserInfo alloc] initWithDictionary:dict error:nil];
@@ -121,7 +121,7 @@
 }
 - (void)saveUser{
     NSDictionary *local;
-    NSString *path = [AktUtil getCachePath:@"userModel"];
+    NSString *path = [AktUtil getCachePath:@"userNewModel"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path])
          local= [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self toDictionary]];

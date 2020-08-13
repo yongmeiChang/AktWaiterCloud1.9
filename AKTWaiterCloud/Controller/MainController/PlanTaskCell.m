@@ -33,18 +33,24 @@
     aryPhone = [orderinfo.customerPhone componentsSeparatedByString:@","];
     
     for (int i =0; i<aryPhone.count; i++) {// 手机号
-        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake(100*i, 0, 99, 20)];
+        NSInteger btnw = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",[aryPhone objectAtIndex:i]] font:15 limitWidth:0].width;
+        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
         [btnPhone addTarget:self action:@selector(btnPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
-        [btnPhone setTitle:[aryPhone objectAtIndex:i] forState:UIControlStateNormal];
-        [btnPhone setTitleColor:kColor(@"C7") forState:UIControlStateNormal];
-        btnPhone.titleLabel.font = [UIFont systemFontOfSize:14];
         btnPhone.tag = i;
         [self.viewPhone addSubview:btnPhone];
+        
+        UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
+        labPhone.textColor = kColor(@"C7");
+        labPhone.font = [UIFont systemFontOfSize:14];
+        labPhone.textAlignment = NSTextAlignmentLeft;
+        labPhone.text = [NSString stringWithFormat:@"%@",kString([aryPhone objectAtIndex:i])];
+        [self.viewPhone addSubview:labPhone];
+
     }
     
 //    NSString * serviceBeg = [kString(orderinfo.serviceBegin) substringToIndex:16];
 //    NSString * serviceEn = [kString(orderinfo.serviceEnd) substringToIndex:16];
-    self.datelabel.text = [NSString stringWithFormat:@"%@ %@—— %@ %@",kString(orderinfo.serviceDate),kString(orderinfo.serviceBegin),kString(orderinfo.serviceDate),kString(orderinfo.serviceEnd)]; // 开始 结束时间
+    self.datelabel.text = [NSString stringWithFormat:@"%@——%@",kString(orderinfo.serviceBegin),kString(orderinfo.serviceEnd)]; // 开始 结束时间
     self.workNolabel.text = [NSString stringWithFormat:@"%@",orderinfo.workNo];// 工单号
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
@@ -68,7 +74,8 @@
     }
     
     self.addresslabel.text = orderinfo.serviceAddress; // 服务地址
-           
+    
+    self.dateLab.text = [NSString stringWithFormat:@"(有效期:%@——%@)",orderinfo.serviceDate,orderinfo.serviceDate];
 }
 
 #pragma mark - click

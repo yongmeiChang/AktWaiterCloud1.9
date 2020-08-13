@@ -82,15 +82,13 @@
 #pragma mark - show login
 - (void)showLoginPage{
     NSLog(@"token：%@",[[NSUserDefaults standardUserDefaults] objectForKey:Token]);
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:Token]) {
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:Token] && ![[NSUserDefaults standardUserDefaults] objectForKey:AKTName] && ![[NSUserDefaults standardUserDefaults] objectForKey:AKTPwd]) {
         BaseControllerViewController *login = [BaseControllerViewController createViewControllerWithName:@"LoginViewController" createArgs:nil];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
         self.window.rootViewController = nav;
     }else{
-        //获取各类工单数量
-        LoginModel *model = [LoginModel gets];
-        NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
-        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
+        //获取登录信息
+        [self RequestLoginName:kString([[NSUserDefaults standardUserDefaults] objectForKey:AKTName]) Pwd:kString([[NSUserDefaults standardUserDefaults] objectForKey:AKTPwd])];
         // 重新设置根视图
         self.rootViewController = [self getRootTabVBarAction];
         self.window.rootViewController = self.rootViewController;
@@ -288,6 +286,23 @@
     dispatch_semaphore_signal(appDelegate.sema);
     appDelegate.sema = nil;
     //dispatch_semaphore_wait(self.sema, DISPATCH_TIME_FOREVER);
+}
+#pragma mark - login
+-(void)RequestLoginName:(NSString *)name Pwd:(NSString *)pwd{
+    //返回极光的id
+    [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
+        NSLog(@"registrationID获取：%@",registrationID);
+        if(resCode == 0){
+            appDelegate.Registration_ID = registrationID;
+        }
+        NSDictionary * dic =@{@"waiterUkey":name,@"password":pwd,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
+        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+             [[AppDelegate sharedDelegate] hidHUD];
+        } failure:^(NSError *error) {
+             [[AppDelegate sharedDelegate] hidHUD];
+            [self showTextOnly:error.domain];
+        }];
+    }];
 }
 
 #pragma mark - 检查更新

@@ -104,7 +104,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section==0){
-        return 200;
+        return 235;
     }else if(indexPath.section==1){
         if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
             return 105.5;

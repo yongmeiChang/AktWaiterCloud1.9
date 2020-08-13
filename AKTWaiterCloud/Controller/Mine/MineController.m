@@ -77,7 +77,7 @@
         [user saveUser];
         //刷新当前页面头像
         if ([user.icon containsString:@"http"]) {
-            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",modelUser.icon]]]];
+            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(modelUser.icon)]]]];
         }else{
             self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
         }
@@ -97,7 +97,7 @@
 }
 #pragma mark - 工单数量
 -(void)resetWorkNumber{
-    NSDictionary * params = @{@"waiterId":modelUser.uuid};
+    NSDictionary * params = @{@"waiterId":kString(modelUser.uuid)};
        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
        //显示登陆时请求的各状态工单数
        self.unfinishBtn.shouldHideBadgeAtZero = YES;
