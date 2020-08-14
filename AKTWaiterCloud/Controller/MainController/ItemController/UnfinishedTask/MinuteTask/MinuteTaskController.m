@@ -382,7 +382,7 @@
                 
                 /**判断当前工单是否在服务有效期内**/
                 formatter.dateFormat = @"yyyy-MM-dd";
-                if ([AktUtil compareDate:[formatter dateFromString:self.orderinfo.serviceDate] End:[formatter dateFromString:[AktUtil getNowDate]]] == -1) { // 超出
+                if ([AktUtil compareDate:[formatter dateFromString:self.orderinfo.serviceDateEnd] End:[formatter dateFromString:[AktUtil getNowDate]]] == -1) { // 超出
                     [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
                     return;
                 }
