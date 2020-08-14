@@ -84,6 +84,7 @@
 @property(nonatomic,strong) NSString  <Optional>* machineNo;//机器编号
 @property(nonatomic,strong) NSString  <Optional>* customerName;//用户姓名
 @property(nonatomic,strong) NSString  <Optional>* customerPhone;//用户电话
+@property(nonatomic,strong) NSString  <Optional>* customerUkey;// 扫码对比
 @property(nonatomic,strong) NSString  <Optional>* serviceAddress;//服务地址
 @property(nonatomic,strong) NSString  <Optional>* serviceLocationX;//20170915添加  经线 longitude
 @property(nonatomic,strong) NSString  <Optional>* serviceLocationY;//20170915添加  纬线 latitude
@@ -91,7 +92,8 @@
 @property(nonatomic,strong) NSString  <Optional>* serviceResult;//完成情况
 @property(nonatomic,strong) NSString  <Optional>* serviceContent;//服务内容
 @property(nonatomic,strong) NSString  <Optional>* serviceMoney;//服务金额
-@property(nonatomic,strong) NSString  <Optional>* serviceDate;//服务日期
+@property(nonatomic,strong) NSString  <Optional>* serviceDate;//服务开始日期
+@property(nonatomic,strong) NSString  <Optional>* serviceDateEnd; // 服务结束日期
 @property(nonatomic,strong) NSString  <Optional>* serviceBegin;//服务开始时间
 @property(nonatomic,strong) NSString  <Optional>* serviceEnd;//服务结束时间
 @property(nonatomic,strong) NSString  <Optional>* serviceLength; // 服务总时间
