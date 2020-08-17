@@ -748,7 +748,7 @@
 		ADD2E16D1F99E77D004DFE76 /* ButtonUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonUtil.m; sourceTree = "<group>"; };
 		ADD2E16E1F99E77D004DFE76 /* ButtonUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonUtil.h; sourceTree = "<group>"; };
 		ADD562C31FDFCF5B00898AC3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		ADD789131F7DF730008DEC55 /* 服务云(官方).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "服务云(官方).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADD789131F7DF730008DEC55 /* 服务云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "服务云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADD789161F7DF730008DEC55 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ADD789171F7DF730008DEC55 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		ADD789221F7DF730008DEC55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1458,7 +1458,7 @@
 		ADD789141F7DF730008DEC55 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ADD789131F7DF730008DEC55 /* 服务云(官方).app */,
+				ADD789131F7DF730008DEC55 /* 服务云.app */,
 				ADD7892B1F7DF731008DEC55 /* AKTWaiterCloudTests.xctest */,
 				ADD789361F7DF731008DEC55 /* AKTWaiterCloudUITests.xctest */,
 			);
@@ -1542,7 +1542,7 @@
 			);
 			name = AKTWaiterCloud;
 			productName = AKTWaiterCloud;
-			productReference = ADD789131F7DF730008DEC55 /* 服务云(官方).app */;
+			productReference = ADD789131F7DF730008DEC55 /* 服务云.app */;
 			productType = "com.apple.product-type.application";
 		};
 		ADD7892A1F7DF731008DEC55 /* AKTWaiterCloudTests */ = {
@@ -2381,7 +2381,7 @@
 					"\"UserNotifications\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ankangtong.service;
-				PRODUCT_NAME = "服务云(官方)";
+				PRODUCT_NAME = "服务云";
 				PROVISIONING_PROFILE = "81fbe5a8-7583-44c4-b0ac-68af4300c683";
 				PROVISIONING_PROFILE_SPECIFIER = der_newServiceCloud;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2479,7 +2479,7 @@
 					"\"UserNotifications\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ankangtong.service;
-				PRODUCT_NAME = "服务云(官方)";
+				PRODUCT_NAME = "服务云";
 				PROVISIONING_PROFILE = "8b5ce4f5-9466-499f-b68e-69db5693471e";
 				PROVISIONING_PROFILE_SPECIFIER = dis_newServiceCloud;
 				TARGETED_DEVICE_FAMILY = 1;

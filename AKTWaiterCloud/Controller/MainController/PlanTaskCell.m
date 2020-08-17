@@ -75,7 +75,7 @@
     
     self.addresslabel.text = orderinfo.serviceAddress; // 服务地址
     
-    self.dateLab.text = [NSString stringWithFormat:@"(有效期:%@——%@)",orderinfo.serviceDate,orderinfo.serviceDateEnd];
+    self.dateLab.text = [NSString stringWithFormat:@"(有效期:%@——%@)",kString(orderinfo.serviceDate),kString(orderinfo.serviceDateEnd)];
 }
 
 #pragma mark - click
