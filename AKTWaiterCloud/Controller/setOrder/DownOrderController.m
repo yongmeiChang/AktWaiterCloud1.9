@@ -420,15 +420,16 @@
 #pragma mark - time pickerview
 -(void)DateAndTimePickerView:(NSString *)year withMonth:(NSString *)month withDay:(NSString *)day withHour:(NSString *)hour withMinute:(NSString *)minute withDate:(NSString *)date withTag:(NSInteger)tag{
     if (tag == 1001) {
+        NSString *strS = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(17, 2)]];
         if (_type == 3) { // 开始时间
-            _bTime = [NSString stringWithFormat:@"%@:%@:00",hour,minute];
+            _bTime = [NSString stringWithFormat:@"%@:%@:%@",hour,minute,strS];
 //            if (self.servicepojInfo) {
 //                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
 //            }else{
 //               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
 //            }
         }else if(_type == 4){ // 结束时间
-            _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
+            _eTime = [NSString stringWithFormat:@"%@:%@:%@",hour,minute,strS];
 //            if (self.servicepojInfo) {
 //                [self serviceEndTime:_eTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
 //            }else{
