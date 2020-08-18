@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '9.0' 
 target 'AKTWaiterCloud' do
-    pod 'AFNetworking', '~> 3.0'
+    pod 'AFNetworking', '~> 4.0'
     pod 'AMap3DMap' #3D地图sdk
     pod 'AMapLocation' #定位SDK
     pod 'AMapSearch' #地图sdk搜索功能

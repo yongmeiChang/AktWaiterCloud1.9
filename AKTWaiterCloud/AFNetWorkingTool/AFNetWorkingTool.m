@@ -78,8 +78,8 @@ static AFNetWorkingTool * a_instance = nil;
     }
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
-    [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];// token
-    [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"Client-Type"];// 区分平台
+//    [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];// token
+//    [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"Client-Type"];// 区分平台
     
     // 登录、获取验证码、找回密码、注册、租户列表  中间连接修改
     NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree
@@ -94,7 +94,7 @@ static AFNetWorkingTool * a_instance = nil;
             
         case HttpRequestTypeGet:
         {
-            [manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            [manager GET:url parameters:parameters headers:@{@"Authorization":kString(token),@"Client-Type":@"2"} progress:^(NSProgress * _Nonnull downloadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
@@ -108,7 +108,7 @@ static AFNetWorkingTool * a_instance = nil;
             break;
         case HttpRequestTypePost:
         {
-            [manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+            [manager POST:url parameters:parameters headers:@{@"Authorization":kString(token),@"Client-Type":@"2"} progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
@@ -124,7 +124,7 @@ static AFNetWorkingTool * a_instance = nil;
             break;
         case HttpRequestTypePut:
         {
-            [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [manager PUT:url parameters:parameters headers:@{@"Authorization":kString(token),@"Client-Type":@"2"} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

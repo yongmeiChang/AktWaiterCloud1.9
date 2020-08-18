@@ -243,7 +243,7 @@
  *  输出参数：N/A
  *  返回值：  N/A
  */
--(void)CallPhoneWithNum:(NSString *)phoneNum bgView:(UIView *)bgView;
+//-(void)CallPhoneWithNum:(NSString *)phoneNum bgView:(UIView *)bgView;
 //当前网络
 -(BOOL)currentNetwork;
 //图片居中截取
