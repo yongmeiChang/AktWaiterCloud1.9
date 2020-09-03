@@ -423,33 +423,12 @@
         NSString *strS = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(17, 2)]];
         if (_type == 3) { // 开始时间
             _bTime = [NSString stringWithFormat:@"%@:%@:%@",hour,minute,strS];
-//            if (self.servicepojInfo) {
-//                [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
-//            }else{
-//               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
-//            }
         }else if(_type == 4){ // 结束时间
             _eTime = [NSString stringWithFormat:@"%@:%@:%@",hour,minute,strS];
-//            if (self.servicepojInfo) {
-//                [self serviceEndTime:_eTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
-//            }else{
-//               _eTime = [NSString stringWithFormat:@"%@:%@:59",hour,minute];
-//            }
         }else if (_type == 1){ // 开始日期
             _Date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-//            if (self.servicepojInfo) {
-//                [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)];
-//            }else{
-//                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-//            }
         }else{ // 结束日期
              _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-//            if (self.servicepojInfo) {
-//                [self serviceEndDate:_eDate Validity:kString(self.servicepojInfo.serviceValidity)];
-//            }else{
-//                _eDate = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-//            }
-            
         }
          [self.tableview reloadData];
     }else{//1002：取消

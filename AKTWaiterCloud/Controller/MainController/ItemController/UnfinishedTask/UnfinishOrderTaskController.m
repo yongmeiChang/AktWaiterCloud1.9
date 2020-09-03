@@ -119,7 +119,7 @@
 -(void)checkNetWork{
     //判断网络状态
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-        self.orderfmdb = [[OrderTaskFmdb alloc] init];
+//        self.orderfmdb = [[OrderTaskFmdb alloc] init];
 //        _dataArray = [self.orderfmdb findAllOrderInfo];
 //        if(_dataArray.count==0){
             self.netWorkErrorView.hidden = NO;

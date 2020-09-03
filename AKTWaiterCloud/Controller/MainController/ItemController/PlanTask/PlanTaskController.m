@@ -8,7 +8,7 @@
 
 
 #import "PlanTaskController.h"
-#import "OrderTaskFmdb.h"
+//#import "OrderTaskFmdb.h"
 #import "PlanTaskCell.h"
 #import <MJRefresh.h>
 #import "FSCalendar.h"
@@ -22,7 +22,7 @@
 }
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
-@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
+//@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 
 
@@ -118,7 +118,7 @@
 //                  [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                   [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                   NSDictionary * objdic = (NSDictionary*)dicc;
-                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
+//                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
                   OrderInfo * orderinfo;
 //                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){

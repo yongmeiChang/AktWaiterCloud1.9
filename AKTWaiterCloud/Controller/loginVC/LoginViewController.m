@@ -203,9 +203,8 @@
             if([code intValue] == 1){
                 // 发送通知
                 [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
-                
-                [self showMessageAlertWithController:self Message:messageDic];
             }
+            [self showMessageAlertWithController:self Message:messageDic];
              [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
              [[AppDelegate sharedDelegate] hidHUD];
