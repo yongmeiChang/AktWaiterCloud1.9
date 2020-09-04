@@ -141,7 +141,7 @@
     [self.unfinishManager setPausesLocationUpdatesAutomatically:NO];
     
     //设置允许在后台定位
-    [self.unfinishManager setAllowsBackgroundLocationUpdates:YES];
+    [self.unfinishManager setAllowsBackgroundLocationUpdates:NO];
     
     //设置定位超时时间
     [self.unfinishManager setLocationTimeout:DefaultLocationTimeout];

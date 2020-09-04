@@ -54,7 +54,6 @@
 	<string>请点击“好”以允许访问。如果不允许，您将无法发送系统相册里的照片。</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
