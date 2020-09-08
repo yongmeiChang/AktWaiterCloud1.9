@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyGaodeMap.h"
-#import "OrderTaskFmdb.h"
+//#import "MyGaodeMap.h"
+//#import "OrderTaskFmdb.h"
+#import "WorkBaseViewController.h"
 
-@interface UnfinishOrderTaskController : MyGaodeMap
+@interface UnfinishOrderTaskController : WorkBaseViewController
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
 @property(nonatomic,strong) NSString * pushType;//1为扫码有数据时跳转来
-@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
+//@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @end
 
 

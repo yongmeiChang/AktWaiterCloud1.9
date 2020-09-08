@@ -64,7 +64,7 @@
     //设置开启虚拟定位风险监测，可以根据需要开启
     [self.locationManager setDetectRiskOfFakeLocation:NO];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9) {
-        _locationManager.allowsBackgroundLocationUpdates = YES;
+        _locationManager.allowsBackgroundLocationUpdates = NO;
     }
 }
 

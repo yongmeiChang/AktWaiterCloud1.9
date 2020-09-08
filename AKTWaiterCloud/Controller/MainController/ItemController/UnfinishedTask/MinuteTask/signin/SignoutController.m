@@ -23,20 +23,24 @@
 #import <LxGridViewCell.h>
 #import "SaveDocumentArray.h"
 #import <math.h>
-#import "CheckInJudge.h"
+//#import "CheckInJudge.h"
 #import "AppInfoDefult.h"
 #import "SinoutReasonView.h" // 提交失败的原因
 #import "AktWCMp3.h" // 录音
 #import "AddWaterMark.h" // 水印
+#import "WSPlaceholderTextView.h" // 自定义textview
 
 #define PI 3.1415926
-@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,SinoutreasonDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
+#define DefaultLocationTimeout 10
+#define DefaultReGeocodeTimeout 5
+
+@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
     
-    long unservicetime;//记录服务时长不足的时间
+    long unservicetime;//记录服务时长不足的时间 秒
     
-    long SSunservicetime;//记录服务时长不足毫秒
-    long leaveIntime;//早退时间毫秒
-    long leaveOuttime;//迟到时间毫秒
+    long SSunservicetime;//记录服务时长不足毫秒gr
+    long leaveIntime;//迟到时间毫秒
+    long leaveOuttime;//早退时间毫秒
     
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
@@ -46,9 +50,14 @@
     int longtime;
 
     NSString * isLess; // 时长是否正常 0正常  1不正常
-    SinoutReasonView *reasonView; // 提交失败的原因 弹框
-    
     LoginModel *model;
+    BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
+    
+    NSString *strNotice; // 建议反馈原因
+    NSString *strlocation; // 定位原因
+    NSString *strEarly; // 迟到 、早退原因
+    NSString *lessService; // 最低服务时长原因
+    NSString *strService; // 服务时长原因
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
@@ -58,38 +67,62 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollviewBg;
 @property (weak, nonatomic) IBOutlet UIView *postPictrueView;  // 上传图片背景图
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pictrueH; // 上传图片背景图 高度
 @property (weak,nonatomic) IBOutlet UIView * lcView;//流程视图
 @property (weak, nonatomic) IBOutlet UIView *serviceInfoView;//服务内容视图
 @property (weak, nonatomic) IBOutlet UIView *locationInfoView; // 签入 签出情况视图
-@property (weak, nonatomic) IBOutlet UIView *addressInfoView;// 地址 视图
 
-
-@property (weak, nonatomic) IBOutlet UILabel *serviceTimeTitleLab; // 服务时长标题
-@property (weak, nonatomic) IBOutlet UIButton *btnServiceLength; //服务时长icon
-@property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;//服务时长
 @property (weak,nonatomic) IBOutlet UILabel * checklabel;
+/**出勤状态 相关控件**/
+@property (weak, nonatomic) IBOutlet UIButton *btnTime;
 @property (weak,nonatomic) IBOutlet UILabel * latelabel;  // 出勤状态
+@property (weak, nonatomic) IBOutlet UILabel *labStatus;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTimeH;
+/**距离 相关控件**/
+@property (weak, nonatomic) IBOutlet UIButton *btnDistance;
 @property (weak,nonatomic) IBOutlet UILabel * distanceLabel;// 距离
-@property (weak,nonatomic) IBOutlet UILabel * timerLabel;//显示读秒
+@property (weak, nonatomic) IBOutlet UILabel *labdistance;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnDistanceH;
+/**地址 相关控件**/
+@property (weak, nonatomic) IBOutlet UIView *addressInfoView;// 地址 视图
+@property (weak, nonatomic) IBOutlet UIButton *btnAddress;
 @property (weak,nonatomic) IBOutlet UILabel * addressLabel;//显示地址
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressH;
+/** 服务时长 相关控件**/
+@property (weak, nonatomic) IBOutlet UILabel *serviceTimeTitleLab; // 服务时长标题
+@property (weak, nonatomic) IBOutlet UIButton *btnServiceLength;   //服务时长icon
+@property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;  //服务时长
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnServiceH;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *serviceTop;
+/**最低服务时长 相关控件**/
+@property (weak, nonatomic) IBOutlet UIView *viewTimeless;
+@property (weak, nonatomic) IBOutlet UILabel *labTimeless;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTimeLessH; // 最低服务时长 视图的高度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTop;
+
+/****/
+@property (weak,nonatomic) IBOutlet UILabel * timerLabel;//显示读秒
+
 @property (weak,nonatomic) IBOutlet UIButton * trapBtn;//录音按钮
 @property (weak,nonatomic) IBOutlet UIButton * submitBtn;//提交按钮
-@property (weak,nonatomic) IBOutlet UITextView * textview;//备注
+//@property (weak,nonatomic) IBOutlet UITextView * textview;//备注
 @property (weak,nonatomic) IBOutlet UITextField * lctitleTextField;//流程视图
 @property (weak,nonatomic) IBOutlet UITextView * lccontentTextView;//流程视图
 @property (weak,nonatomic) IBOutlet UIButton * lcBtn;//流程视图
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pictrueTop; // 去除导航栏高度
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddressHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddressHeightConstraint; // 签入情况总高度
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnPostHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnPostWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollH;
 
+@property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic,strong) AMapLocationManager * unfinishManager; // 地址管理
 @property (nonatomic,strong) AMapSearchAPI * searchAPI;  // 逆地理编码
 @property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标
 @property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标
 @property (nonatomic,strong) NSString * statusPost;   // 状态  2020、2、27 更改提交数据
 @property (nonatomic,strong) NSString * distancePost; // 距离 单位米
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *reasonViewH; // 原因展示背景图的高度
 
 
 @end
@@ -131,6 +164,228 @@
     }
     return _imagePickerVc;
 }
+#pragma mark - init
+-(void)refurbishBtnClick{
+    //1.将两个经纬度点转成投影点
+    MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
+    MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.locaitonLatitude doubleValue],[self.locaitonLongitude doubleValue])); //用户当前位置
+    //2.计算距离
+    CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
+    [self distanceBetween:distance];
+}
+
+- (void)configLocationManager
+{
+    self.unfinishManager = [[AMapLocationManager alloc] init];
+    
+    [self.unfinishManager setDelegate:self];
+    
+    //设置期望定位精度
+    [self.unfinishManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    
+    //设置不允许系统暂停定位
+    [self.unfinishManager setPausesLocationUpdatesAutomatically:NO];
+    
+    //设置允许在后台定位
+    [self.unfinishManager setAllowsBackgroundLocationUpdates:NO];
+    
+    //设置定位超时时间
+    [self.unfinishManager setLocationTimeout:DefaultLocationTimeout];
+    
+    //设置逆地理超时时间
+    [self.unfinishManager setReGeocodeTimeout:DefaultReGeocodeTimeout];
+}
+- (void)initCompleteBlock
+{
+    __weak SignoutController *weakSelf = self;
+    self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
+    {
+        if (error != nil && error.code == AMapLocationErrorLocateFailed)
+        {
+            //定位错误：此时location和regeocode没有返回值，不进行annotation的添加
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            NSLog(@"定位错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else if (error != nil
+                 && (error.code == AMapLocationErrorReGeocodeFailed
+                     || error.code == AMapLocationErrorTimeOut
+                     || error.code == AMapLocationErrorCannotFindHost
+                     || error.code == AMapLocationErrorBadURL
+                     || error.code == AMapLocationErrorNotConnectedToInternet
+                     || error.code == AMapLocationErrorCannotConnectToHost))
+        {
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            //逆地理错误：在带逆地理的单次定位中，逆地理过程可能发生错误，此时location有返回值，regeocode无返回值，进行annotation的添加
+            NSLog(@"逆地理错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+        }
+        else if (error != nil && error.code == AMapLocationErrorRiskOfFakeLocation)
+        {
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
+            //存在虚拟定位的风险：此时location和regeocode没有返回值，不进行annotation的添加
+            NSLog(@"存在虚拟定位的风险:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else
+        {
+            //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
+            weakSelf.locaitonLatitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude]; // 当前位置 经度
+            weakSelf.locaitonLongitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude]; // 当前位置 纬度
+        }
+        //修改label显示内容
+        if (regeocode)
+        {
+            weakSelf.orderinfo.isAbnormal = @"0";
+            [weakSelf.addressLabel setText:[NSString stringWithFormat:@"%@", regeocode.formattedAddress]];
+            //返回用户经纬度，计算两点间的距离
+            [weakSelf refurbishBtnClick];
+        }
+
+    };
+}
+
+#pragma mark - reson view
+-(void)reasonViewLoadAll{
+    // 建议反馈// 定位异常反馈：//早退反馈：//未达到最低服务时长反馈栏：//未达到最低服务时长反馈栏：
+    NSMutableArray *arytitle = [[NSMutableArray alloc] init];
+    [arytitle addObject:@"建议反馈内容："];
+    if (_type == 1) { // 签出
+        [self setTitle:@"任务签出"];
+        self.checklabel.text = @"签出情况";
+        /**照片 相册 相关配置权限**/
+        if ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"]) {// 签入 签出 隐藏该功能
+            self.pictrueH.constant = 0;
+        }else{
+            [self configCollectionView]; // 选择图片
+        }
+       /** 位置 出勤状态 服务时长 最低服务时长**/
+        if ([self.findAdmodel.recordLocationSignOut isEqualToString:@"0"]) {
+            self.btnDistance.hidden = YES;
+            self.labdistance.hidden = YES;
+            self.distanceLabel.hidden = YES;
+            self.btnDistanceH.constant = 0;
+            self.addressInfoView.hidden = YES;
+        }
+        if ([self.findAdmodel.recordEarly isEqualToString:@"0"]) {
+            self.latelabel.hidden = YES;
+            self.btnTime.hidden = YES;
+            self.labStatus.hidden = YES;
+            self.btnTimeH.constant = 0;
+        }
+        
+        if (self.isnewLation) {
+            [arytitle addObject:@"定位异常反馈："];
+        }
+        if (self.isnewserviceTimeLess) {
+            [arytitle addObject:@"未达到最低服务时长反馈栏："];
+        }
+        if (self.isnewearly) {
+            [arytitle addObject:@"早退反馈："];
+        }
+        if (self.isnewserviceTime) {
+            [arytitle addObject:@"未达到服务时长反馈栏："];
+        }
+        
+        /**录音 相关配置**/
+        if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+             [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
+        }
+        
+        self.btnServiceLength.hidden = NO;
+        self.serviceTimeTitleLab.hidden = NO;
+        self.ShowSingOutServiceTimelabel.hidden = NO;
+        self.viewTimeless.hidden = NO;
+        self.btnServiceH.constant = 20;
+        self.serviceTop.constant = 10;
+        self.viewTimeLessH.constant = 20;
+        self.viewTop.constant = 10;
+        
+        self.viewAddressHeightConstraint.constant = 167;
+         
+        
+        //计算服务时间
+        [self ComputeServiceTime];
+        
+        if([self.orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound ||[self.orderinfo.serviceItemName rangeOfString:@"陪诊"].location != NSNotFound){
+            self.scrollH.constant = 140+167+44+arytitle.count *150;
+        }else{
+            self.scrollH.constant = 140+167+44+140+arytitle.count *150;
+        }
+        
+    }else{ // 签入
+        [self setTitle:@"任务签入"];
+        /**照片 相册 相关配置权限**/
+        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"])) {// 签入 签出 隐藏该功能
+            self.pictrueH.constant = 0;
+        }else{
+            [self configCollectionView]; // 选择图片
+        }
+        /** 位置 出勤状态 服务时长 最低服务时长**/
+        if ([self.findAdmodel.recordLocationSignIn isEqualToString:@"0"]) {
+            self.btnDistance.hidden = YES;
+            self.labdistance.hidden = YES;
+            self.distanceLabel.hidden = YES;
+            self.btnDistanceH.constant = 0;
+            self.addressInfoView.hidden = YES;
+        }
+        if ([self.findAdmodel.recordLate isEqualToString:@"0"]) {
+            self.latelabel.hidden = YES;
+            self.btnTime.hidden = YES;
+            self.labStatus.hidden = YES;
+            self.btnTimeH.constant = 0;
+        }
+        
+        if (self.isnewLation) {
+            [arytitle addObject:@"定位异常反馈："];
+        }
+        if (self.isnewlate) {
+            [arytitle addObject:@"迟到反馈："];
+        }
+        
+        /*录音 相关配置*/
+        if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
+            self.trapBtn.hidden = NO;
+            self.btnPostWidth.constant = SCREEN_WIDTH/2;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
+        }else{
+            self.trapBtn.hidden = YES;
+            self.btnPostWidth.constant = SCREEN_WIDTH;
+            [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
+        }
+        self.btnServiceH.constant = 0;
+        self.serviceTop.constant = 0;
+        self.viewTimeLessH.constant = 0;
+        self.viewTop.constant = 0;
+        self.viewAddressHeightConstraint.constant = 115;
+        self.scrollH.constant = 140+44+arytitle.count *150;
+    }
+    self.reasonViewH.constant = arytitle.count *150; // 输入框的总高度
+    // 签入 签出 原因框
+    for (int i =0; i<arytitle.count; i++) {
+        UILabel *labTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, i*140, SCREEN_WIDTH-40, 20)];
+        labTitle.textColor = kColor(@"C1");
+        labTitle.font = [UIFont systemFontOfSize:15];
+        labTitle.text = [NSString stringWithFormat:@"%@",[arytitle objectAtIndex:i]];
+        [self.serviceInfoView addSubview:labTitle];
+        
+        WSPlaceholderTextView *noticeView = [[WSPlaceholderTextView alloc] initWithFrame:CGRectMake(16, i*140+22, SCREEN_WIDTH-32, 100)];
+        noticeView.placeholder = @"请输入任务内容及完成情况";
+        noticeView.backgroundColor = kColor(@"C19");
+        noticeView.tag = i;
+        noticeView.delegate = self;
+        [self.serviceInfoView addSubview:noticeView];
+    }
+}
+
 #pragma mark - viewDidLoad
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -139,53 +394,26 @@
     self.lccontentTextView.delegate = self;
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    self.textview.delegate = self;
-    if (@available(iOS 11.0, *)) {
-           self.scrollviewBg.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-           NSLog(@"11.0f");
-           } else {
-               self.automaticallyAdjustsScrollViewInsets = NO;
-               NSLog(@"10f");
-           }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];//键盘的消失
-    model = [LoginModel gets];
-    
-    if(self.type==0){
-        [self setTitle:@"任务签入"];
-        self.trapBtn.hidden = YES;
-        self.btnPostWidth.constant = SCREEN_WIDTH;
-        [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        self.scrollH.constant = 50;
-    }else{
-        [self setTitle:@"任务签出"];
-        self.checklabel.text = @"签出情况";
-        self.trapBtn.hidden = NO;
-        self.btnServiceLength.hidden = NO;
-        self.serviceTimeTitleLab.hidden = NO;
-        self.ShowSingOutServiceTimelabel.hidden = NO;
-        self.viewAddressHeightConstraint.constant = 137;
-        self.btnPostWidth.constant = SCREEN_WIDTH/2;
-         [self.submitBtn setBackgroundImage:[UIImage imageNamed:@"singOut"] forState:UIControlStateNormal];
-        self.scrollH.constant = 100;
 
-        //计算服务时间
-        [self ComputeServiceTime];
-    }
+    model = [LoginModel gets];
+    /****/
+    [self reasonViewLoadAll];
+    /****/
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""]; // 导航栏
     self.timerLabel.hidden = YES;
     longtime = -1;
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     _isSelectOriginalPhoto = NO;
-
-    [self configCollectionView]; // 选择图片
+   
     [self initOtherView]; // UI视图编辑
     [self isLate];
-    if(!self.orderinfo.serviceLocationX||!self.orderinfo.serviceLocationY){// 判断接口是否直接返回经纬度
+    /*定位 正地理编码*/
+    isPostLocation = NO;
+    [self initCompleteBlock]; //地理回调
+    [self configLocationManager]; // 位置管理
+    if(!self.orderinfo.serviceLocationX||!self.orderinfo.serviceLocationY){// 无返回经纬度
         self.searchAPI = [[AMapSearchAPI alloc] init];
-        //地理编码查询
         self.searchAPI.delegate = self;
         //构造AMapGeocodeSearchRequest对象，address为必选项，city为可选项
         AMapGeocodeSearchRequest *searchRequest = [[AMapGeocodeSearchRequest alloc] init];
@@ -193,15 +421,19 @@
         //发起正向地理编码
         [self.searchAPI AMapGeocodeSearch: searchRequest];
     }else{
-        //定位当前位置
-        [self refurbishBtnClick];
+        //进行单次带逆地理定位请求
+        [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
     }
-    
-    // 填写失败的原因
-    reasonView = [[SinoutReasonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    reasonView.delegate = self;
-    reasonView.hidden = YES;
-    [self.view addSubview:reasonView];
+
+//    if ([self.findAdmodel.recordServiceLength isEqualToString:@"0"]) {
+//        self.btnServiceLength.hidden = YES;
+//        self.serviceTimeTitleLab.hidden = YES;
+//        self.ShowSingOutServiceTimelabel.hidden = YES;
+//    }
+//    if ([self.findAdmodel.recordMinServiceLength isEqualToString:@"0"]) {
+//        self.viewTimeless.hidden = YES;
+//        self.viewAddressHeightConstraint.constant = 137;
+//       }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -213,220 +445,80 @@
 }
 #pragma mark - service time
 -(void)ComputeServiceTime{
+    self.ShowSingOutServiceTimelabel.hidden = NO;
     //截止时间
-    NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    //计算工单签入时间与当前时间  去比较 工单开始时间与结束时间
-    NSDate * enddate = [formatter dateFromString:self.orderinfo.actrueBegin];
-    // 当前日历
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    // 需要对比的时间数据
-    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    // 对比时间差
-    NSDateComponents *dateCom = [calendar components:unit fromDate:enddate toDate:date options:0];
-    //服务时长
-    long servicetime = 0;
-    if(dateCom.year>0){
-        servicetime = dateCom.year*365*24*3600;
-    }
-    if(dateCom.month>0){
-        servicetime+= dateCom.month*30*24*3600;
-    }
-    if(dateCom.day>0){
-        servicetime+= dateCom.day*24*3600;
-    }
-    if(dateCom.hour>0){
-        servicetime+= dateCom.hour*3600;
-    }
-    if(dateCom.minute>0){
-        servicetime+= dateCom.minute*60;
-    }
-    if(dateCom.second>0){
-        servicetime+= dateCom.second;
-    }
-    
-    
-//    NSDate * orderbdate = [formatter dateFromString:self.orderinfo.serviceBegin];
-    // 当前日历
-//    NSCalendar *ordercalendar = [NSCalendar currentCalendar];
-    // 需要对比的时间数据
-//    NSCalendarUnit orderunit = NSCalendarUnitYear | NSCalendarUnitMonth
-//    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    // 对比时间差
-//    NSDateComponents *orderCom = [ordercalendar components:orderunit fromDate:enddate toDate:date options:0];
-    //工单要求时长
-    long ordertime = 0;
-    if(dateCom.year>0){
-        ordertime = dateCom.year*365*24*3600;
-    }
-    if(dateCom.month>0){
-        ordertime+= dateCom.month*30*24*3600;
-    }
-    if(dateCom.day>0){
-        ordertime+= dateCom.day*24*3600;
-    }
-    if(dateCom.hour>0){
-        ordertime+= dateCom.hour*3600;
-    }
-    if(dateCom.minute>0){
-        ordertime+= dateCom.minute*60;
-    }
-    if(dateCom.second>0){
-        ordertime+= dateCom.second;
-    }
-    
-    if(servicetime>=ordertime){
-        self.ShowSingOutServiceTimelabel.text = @"正常";
-        isLess = @"0";
-    }else{
-        SSunservicetime = ordertime - servicetime * 1000;
-        self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *nowDate = [AktUtil getNowDateAndTime];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
+    long strServiceSt = [AktUtil getTimeSDifferenceValueFrome:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceBegin)] ToTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceEnd)]];
+    if(strServiceSt>strActrueSt){ //servicetime>=ordertime
+        SSunservicetime = (strServiceSt - strActrueSt)*1000;
         isLess = @"1";
         self.ShowSingOutServiceTimelabel.textColor = [UIColor redColor];
-        self.ShowSingOutServiceTimelabel.hidden = NO;
-        unservicetime = ordertime - servicetime;
-        leaveOuttime = unservicetime * 1000;
+        
+        unservicetime = strServiceSt - strActrueSt; // 单位 秒
+        leaveOuttime = unservicetime * 1000; // 单位 毫秒
         NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(showInOutTimer) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
         [timer invalidate];
+    }else{
+        isLess = @"0";
+    }
+    if ([self.findAdmodel.recordServiceLength integerValue] == 0) { // 不记录服务时长
+       if(strServiceSt>strActrueSt){
+           self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
+       }else{
+           self.ShowSingOutServiceTimelabel.text = @"服务时长正常";
+       }
+    }else{
+        NSLog(@"服务时长:%@",[AktUtil actualBeginTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.actualBegin)] actualServiceEndTime:nowDate]);
+        self.ShowSingOutServiceTimelabel.text = [AktUtil actualBeginTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.actualBegin)] actualServiceEndTime:nowDate];
+    }
+    
+    /**最低服务时长**/
+    if (strActrueSt<([self.findAdmodel.minServiceLength integerValue] *60)) {
+//        self.viewAddressHeightConstraint.constant = 167;
+        self.labTimeless.text = [NSString stringWithFormat:@"%@分钟",self.findAdmodel.minServiceLength];
+    }else{
+        self.labTimeless.hidden = YES;
+//        self.viewAddressHeightConstraint.constant = 137;
     }
 }
 
-//比较日期大小
--(int)compareDate:(NSDate *)bdate End:(NSDate *)edate{
-    NSComparisonResult result = [bdate compare:edate];
-    NSLog(@"date1 : %@, date2 : %@", bdate, edate);
-    //1 a>b  0 a=b  -1 a<b
-    if (result == NSOrderedDescending) {
-        return 1;
-    }
-    else if (result == NSOrderedAscending){
-        return -1;
-    }
-    return 0;
-}
-
-//是否迟到
+//是否迟到 早退
 -(void)isLate{
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *nowDate = [AktUtil getNowDateAndTime];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
+    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
+    
     if(self.type==0){
-        NSDate * bdate = [formatter dateFromString:self.orderinfo.serviceBegin];
-        if([self compareDate:date End:bdate]==1){
-            // 截止时间data格式
-            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
-            // 当前日历
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            // 需要对比的时间数据
-            NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-            | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            // 对比时间差
-            NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-            if(dateCom.second<0){
-                self.orderinfo.isLate = @"0";
-                self.latelabel.text = @"正常";
-            }else{
-                self.orderinfo.isLate = @"1";
-                self.latelabel.textColor = [UIColor redColor];
-                NSInteger year = 0;
-                NSInteger month = 0;
-                if(dateCom.year>0){
-                    year = dateCom.year*12;
-                }
-                month = dateCom.month;
-                month += year;
-                if(month==0){
-                    long h = dateCom.day * 24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveIntime = s * 1000;
-                    if (dateCom.day>0) {
-                        self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                    }else{
-                        if (dateCom.hour>0){
-                            self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
-                        }else{
-                            if (dateCom.minute>0) {
-                                self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld分",(long)dateCom.minute];
-                            }
-                        }
-                    }
-                }else{
-                    long d = dateCom.month * 30;
-                    long h = (dateCom.day + d)*24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveIntime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"已迟到%ld天%ld小时%ld分钟",(long)d+dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                }
-
-            }
-        }else{
+        if ([AktUtil isNewTimestatus:self.orderinfo.serviceBegin] == 0) {
             self.orderinfo.isLate = @"0";
             self.latelabel.text = @"正常";
+        }else{
+            self.orderinfo.isLate = @"1";
+            self.latelabel.textColor = [UIColor redColor];
+            self.latelabel.text = [NSString stringWithFormat:@"迟到%@",[AktUtil getTimeFrom:self.orderinfo.serviceBegin To:[nowDate substringFromIndex:11]]];
+            
+            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
+            NSLog(@"秒数：%ld",(long)[AktUtil getSecondFrom:date To:expireDate]*1000);
+            leaveIntime = [AktUtil getSecondFrom:date To:expireDate]*1000;
         }
+        
     }else{
-        NSDate * edate = [formatter dateFromString:self.orderinfo.serviceEnd];
-        if([self compareDate:date End:edate]==-1){
-            // 截止时间data格式
-            NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceEnd];
-            // 当前日历
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            // 需要对比的时间数据
-            NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-            | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            // 对比时间差
-            NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-            if(dateCom.second<0){
-                self.orderinfo.isEarly = @"0";
-                self.latelabel.text = @"正常";
-            }else{
+            if(strServiceSt>strActrueSt){// 判断早退的逻辑是：设定服务时长差 与 实际服务时长差相对比
                 self.orderinfo.isEarly = @"1";
                 self.latelabel.textColor = [UIColor redColor];
-                NSInteger year = 0;
-                NSInteger month = 0;
-                if(dateCom.year>0){
-                    year = dateCom.year*12;
-                }
-                month = dateCom.month;
-                month += year;
-                if(month==0){
-                    long h = dateCom.day * 24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveOuttime = s * 1000;
-                   if (dateCom.day>0) {
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld日%ld小时%ld分",(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                                      }else{
-                                      if (dateCom.hour>0){
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld小时%ld分",(long)dateCom.hour,(long)dateCom.minute];
-                                      }else{
-                                      if (dateCom.minute>0) {
-                                          self.latelabel.text =[NSString stringWithFormat:@"早退%ld分",(long)dateCom.minute];
-                                      }
-                        }
-                    }
-                }else{
-                    long d = dateCom.month * 30;
-                    long h = (dateCom.day + d)*24;
-                    h += dateCom.hour;
-                    long m = h * 60;
-                    long s = m + dateCom.second;
-                    leaveOuttime = s * 1000;
-                    self.latelabel.text =[NSString stringWithFormat:@"早退%ld个月%ld日%ld小时%ld分",(long)month,(long)dateCom.day,(long)dateCom.hour,(long)dateCom.minute];
-                }
-
+                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil getTimeFrom:[nowDate substringFromIndex:11] To:self.orderinfo.serviceEnd]];
+                leaveOuttime = (strServiceSt-strActrueSt)*1000;
+            }else{
+                self.orderinfo.isEarly = @"0";
+                self.latelabel.text = @"正常";
             }
-        }else{
-            self.orderinfo.isEarly = @"0";
-            self.latelabel.text = @"正常";
-        }
     }
 }
 
@@ -451,7 +543,7 @@
     _layout.minimumLineSpacing = 10;
     _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    if([self.orderinfo.workStatus isEqualToString:@"4"]){
+    if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
         if([self.orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound ||[self.orderinfo.serviceItemName rangeOfString:@"陪诊"].location != NSNotFound){
             self.lcView.hidden = NO;
         }
@@ -495,26 +587,39 @@
 }
 
 #pragma mark - UITextViewDelegate
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if(textView.tag == 100){
-        if(textView.text.length < 1){
-            textView.text = @"请输入任务内容及完成情况";
-            textView.textColor = [UIColor grayColor];
-        }
-    }
+-(void)textViewDidChange:(UITextView *)textView{
+     if (textView.tag == 0) {
+           strNotice=textView.text;
+       }else if (textView.tag == 1){
+           strlocation=textView.text;
+       }else if (textView.tag == 2){
+           strEarly=textView.text;
+       }else if (textView.tag == 3){
+           lessService=textView.text;
+       }else{
+           strService=textView.text;
+       }
 }
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if(textView.tag == 100){
-        if([textView.text isEqualToString:@"请输入任务内容及完成情况"]){
-            textView.text=@"";
-            textView.textColor=[UIColor blackColor];
-        }
-    }
-    
-}
+//- (void)textViewDidEndEditing:(UITextView *)textView
+//{
+//    if(textView.tag == 100){
+//        if(textView.text.length < 1){
+//            textView.text = @"请输入任务内容及完成情况";
+//            textView.textColor = [UIColor grayColor];
+//        }
+//    }
+//}
+//
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    if(textView.tag == 100){
+//        if([textView.text isEqualToString:@"请输入任务内容及完成情况"]){
+//            textView.text=@"";
+//            textView.textColor=[UIColor blackColor];
+//        }
+//    }
+//
+//}
 
 #pragma mark UICollectionView
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -542,18 +647,43 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == _selectedPhotos.count) {
-        if (_selectedPhotos.count <2) {
-            if (_type ==0) {
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
-                [sheet showInView:self.view];
-            }else{
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
-                [sheet showInView:self.view];
-            }
+        if (_type == 0) {
+            if (_selectedPhotos.count <[self.findAdmodel.photosNumberSignIn integerValue]) { // 最大 照片数
+                      if ([self.findAdmodel.photographSignIn isEqualToString:@"1"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) {
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else if ([self.findAdmodel.photographSignIn isEqualToString:@"1"]  && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"0"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
+                          [sheet showInView:self.view];
+                      }else if([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else{
+                          
+                      }
+                      
+                  }else{
+                      [self showMessageAlertWithController:self title:@"温馨提示" Message:[NSString stringWithFormat:@"图片最多可以上传%@张哦~",kString(self.findAdmodel.photosNumberSignIn)] canelBlock:^{}];
+                  }
         }else{
-            [self showMessageAlertWithController:self title:@"温馨提示" Message:@"图片最多可以上传两张哦~" canelBlock:^{}];
+            if (_selectedPhotos.count <[self.findAdmodel.photosNumberSignOut integerValue]) { // 最大 照片数
+                      if ([self.findAdmodel.photographSignOut isEqualToString:@"1"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"]) {
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else if ([self.findAdmodel.photographSignOut isEqualToString:@"1"]  && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"0"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", nil];
+                          [sheet showInView:self.view];
+                      }else if([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"]){
+                          UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册", nil];
+                          [sheet showInView:self.view];
+                      }else{
+                          
+                      }
+                      
+                  }else{
+                      [self showMessageAlertWithController:self title:@"温馨提示" Message:[NSString stringWithFormat:@"图片最多可以上传%@张哦~",kString(self.findAdmodel.photosNumberSignOut)] canelBlock:^{}];
+                  }
         }
-        
     } else {
         id asset = _selectedAssets[indexPath.row];
         BOOL isVideo = NO;
@@ -784,11 +914,36 @@
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) { // take photo / 去拍照
-        [self takePhoto];
-    } else if (buttonIndex == 1) {
-        if (_type == 1) {
+    NSLog(@"%ld",(long)actionSheet.cancelButtonIndex);
+    
+//    if (buttonIndex == 0) { // take photo / 去拍照
+//        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+//            [self pushTZImagePickerController];
+//        }else{
+//            [self takePhoto];
+//        }
+//    } else if (buttonIndex == 1) {
+//        if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+//            [self pushTZImagePickerController];
+//        }
+//    }
+    
+    NSInteger cancelInt = actionSheet.cancelButtonIndex;
+    if (cancelInt == 2) {
+        if (buttonIndex == 0){
+            [self takePhoto];
+        }else if (buttonIndex == 1) {
             [self pushTZImagePickerController];
+        }else{
+            
+        }
+    }else{
+        if (buttonIndex == 0){
+            if (([self.findAdmodel.photographSignIn isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignIn isEqualToString:@"1"]) || ([self.findAdmodel.photographSignOut isEqualToString:@"0"] && [self.findAdmodel.photoAlbumSignOut isEqualToString:@"1"])) {
+                [self pushTZImagePickerController];
+            }else{
+                [self takePhoto];
+            }
         }
     }
 }
@@ -939,6 +1094,12 @@
 
 //计时器
 -(void)handleTimer{
+    NSInteger intTimeAll; // 配置录音时长
+    if (_type ==0) {
+        intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
+    }else{
+        intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
+    }
     longtime++;
     NSString * timeStr;
     if(longtime<10){
@@ -946,9 +1107,9 @@
     }else{
         timeStr = [NSString stringWithFormat:@"00:00:%d",longtime];
     }
-    if(longtime==60){
-        timeStr = [NSString stringWithFormat:@"00:01:00"];
-        [self showMessageAlertWithController:self Message:@"录音时长不能超过60秒"];
+    if(longtime>=intTimeAll){
+        timeStr = [NSString stringWithFormat:@"00:00:%ld",(long)intTimeAll];
+//        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
         self.timerLabel.text = timeStr;
         [timer invalidate];
 
@@ -957,8 +1118,8 @@
         [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
         isclick = NO;
         _timerLabel.hidden = YES;
-        [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
-        [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+        [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
+           [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
         }];
         
     }else{
@@ -968,19 +1129,8 @@
 }
 #pragma mark - 距离
 -(void)distanceBetween:(CLLocationDistance)distance{
-    /*if (distance>1000) {
-                 if (self.type ==0) {
-                     self.distanceLabel.textColor = [UIColor redColor];
-                     self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
-                     self.statusPost = @"签入定位异常";
-                 }else{
-                     self.distanceLabel.textColor = [UIColor redColor];
-                     self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f公里",distance/1000];
-                     self.statusPost = @"签出定位异常";
-                 }
-        
-    }else*/
-        if (distance>500){
+
+        if (distance>400){
             if (self.type ==0) {
                 self.statusPost = @"签入定位异常";
             }else{
@@ -990,50 +1140,19 @@
         self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
     }else{
             if (self.type ==0) {
-                self.distanceLabel.text = @"正常";
                 self.statusPost = @"签入定位正常";
             }else{
-                self.distanceLabel.text = @"正常";
                 self.statusPost = @"签出定位正常";
             }
+         self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f米",distance];
     }
     self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
+    if (isPostLocation) {
+        NSLog(@"---可以提交");
+        [self postDataAllInfo:@""];
+    }
 }
-#pragma mark - 高德定位
--(void)reloadLocation:(void(^)(id))Rloction Error:(void(^)(id))error{
-       
-       self.unfinishManager = [[AMapLocationManager alloc] init];
-       self.unfinishManager.delegate = self;
-       
-      [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"定位中"];
-       // 带逆地理信息的一次定位（返回坐标和地址信息）
-       [self.unfinishManager setDesiredAccuracy:kCLLocationAccuracyBest];
-       //   定位超时时间，最低2s，此处设置为10s
-       self.unfinishManager.locationTimeout =10;
-       //   逆地理请求超时时间，最低2s，此处设置为10s
-       self.unfinishManager.reGeocodeTimeout = 10;
-       // 带逆地理（返回坐标和地址信息）。将下面代码中的 YES 改成 NO ，则不会返回地址信息。
-       [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-               
-               if (error)
-               {
-                   self.orderinfo.isAbnormal = @"1";
-                   [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
-                   if (error.code == AMapLocationErrorLocateFailed)
-                   {return;}
-               }
-               if (regeocode)
-               {
-                   self.orderinfo.isAbnormal = @"0";
-                   self.addressLabel.text = [NSString stringWithFormat:@"%@",regeocode.formattedAddress];
-               }
-               Rloction(location);
-               [[AppDelegate sharedDelegate] hidHUD];
-           }];
-}
--(void)amapLocationManager:(AMapLocationManager *)manager doRequireLocationAuth:(CLLocationManager *)locationManager{
-    [locationManager requestWhenInUseAuthorization];
-}
+#pragma mark - AMapSearchAPI delegate
 - (void)onGeocodeSearchDone:(AMapGeocodeSearchRequest *)request response:(AMapGeocodeSearchResponse *)response{ // 逆地理编码
     if (response.geocodes.count == 0)
     {
@@ -1042,24 +1161,13 @@
     //解析response获取地理信息
     self.orderinfo.serviceLocationX = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.longitude];
     self.orderinfo.serviceLocationY = [NSString stringWithFormat:@"%f",response.geocodes.lastObject.location.latitude];
-    [self refurbishBtnClick];
+    //进行单次带逆地理定位请求
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];;
 }
 #pragma mark -  刷新重新定位
 - (IBAction)btnReloadAddressClick:(UIButton *)sender {
-    [self refurbishBtnClick];
-}
--(void)refurbishBtnClick{
-    [self reloadLocation:^(CLLocation *strLoaction) {
-     NSLog(@"nowLocation:%f   %f \n user:%@  %@",strLoaction.coordinate.latitude,strLoaction.coordinate.longitude,self.orderinfo.serviceLocationY,self.orderinfo.serviceLocationX);
-     self.locaitonLatitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.latitude];
-     self.locaitonLongitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.longitude];
-     //1.将两个经纬度点转成投影点
-     MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
-     MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake(strLoaction.coordinate.latitude,strLoaction.coordinate.longitude)); //用户当前位置
-     //2.计算距离
-     CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
-     [self distanceBetween:distance];
-    } Error:nil];
+    isPostLocation = NO;
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
 }
 #pragma mark - 服务流程
 -(IBAction)submitWorkNode:(id)sender{
@@ -1072,9 +1180,9 @@
     if([contentStr isEqualToString:@""]){
         contentStr = @"暂无备注";
     }
-    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantsId};
+    NSDictionary * dic = @{@"workId":self.orderinfo.id,@"title":self.lctitleTextField.text,@"content":contentStr,@"tenantsId":model.tenantId};
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypeGet success:^(id responseObject) {
+    [[AFNetWorkingRequest sharedTool]uploadWorkNode:dic type:HttpRequestTypePost success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         if([dic[@"code"] intValue]==1){
             [self showMessageAlertWithController:self Message:@"提交成功"];
@@ -1090,112 +1198,86 @@
 }
 #pragma mark - 提交信息
 -(IBAction)submitClick:(id)sender{
-    [self reloadLocation:^(CLLocation *strLoaction) {
-        self.locaitonLatitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.latitude];
-        self.locaitonLongitude = [NSString stringWithFormat:@"%f",strLoaction.coordinate.longitude];
-        //1.将两个经纬度点转成投影点
-        MAMapPoint pointStart = MAMapPointForCoordinate(CLLocationCoordinate2DMake([self.orderinfo.serviceLocationY doubleValue],[self.orderinfo.serviceLocationX doubleValue])); // 地址位置
-        MAMapPoint pointEnd = MAMapPointForCoordinate(CLLocationCoordinate2DMake(strLoaction.coordinate.latitude,strLoaction.coordinate.longitude)); //用户当前位置
-        //2.计算距离
-        CLLocationDistance distance = MAMetersBetweenMapPoints(pointStart,pointEnd);
-        [self distanceBetween:distance];
-        // 判断是否可以提交工单
-                       [[AFNetWorkingRequest sharedTool] requesttimeAndLocationStatement:@{@"workId":self.orderinfo.id,@"tenantsId":model.tenantsId} type:HttpRequestTypePost success:^(id responseObject) {
-                           
-                           NSDictionary *dicObje = [responseObject objectForKey:@"object"];
-                           NSString *strlocation = [dicObje objectForKey:@"isLocationStatement"];// 1或null 可以提交  0不可以提交
-                           NSString *strtime = [dicObje objectForKey:@"isTimeStatement"];// 1或null 可以提交  0不可以提交
-                           BOOL bolLocation = ([strlocation isKindOfClass:[NSNull class]] || [strlocation isEqualToString:@"1"] || ([strlocation integerValue] ==1));
-                           BOOL bolTime = ([strtime isKindOfClass:[NSNull class]] || [strtime isEqualToString:@"1"] || ([strtime integerValue] == 1));
-                           
-                           if (bolLocation || bolTime) {
-                               NSLog(@"=====可以提交=");
-                               [self postDataAllInfo:@""];
-                           }else{
-                               NSLog(@"=====不可以提交==");
-                               if ([isLess isEqualToString:@"1"] || [self.distanceLabel.text containsString:@"超出"]) {
-                                   reasonView.hidden = NO;
-                               }else{
-                                    [self postDataAllInfo:@""];
-                               }
-                           }
-
-                       } failure:^(NSError *error) {
-                           [[AppDelegate sharedDelegate] hidHUD];
-                           [self showMessageAlertWithController:self title:@"签出失败" Message:@"请稍后再试！" canelBlock:^{
-                               [self.navigationController popToRootViewControllerAnimated:YES];
-                           }];
-                       }];
-    } Error:nil];
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
+    
+     isPostLocation = YES;
+    [self.unfinishManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
 }
 -(void)postDataAllInfo:(NSString *)reason{
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    if(self.type==1){
-        NSDate * date = [NSDate date];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-        // 截止时间data格式
-        NSDate *expireDate = [formatter dateFromString:self.orderinfo.serviceBegin];
-        // 当前日历
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        // 需要对比的时间数据
-        NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-        | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-        // 对比时间差
-        NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:date options:0];
-        [[AppDelegate sharedDelegate] showTextOnly:@"任务签出提交中"];
-    }else{
-        [[AppDelegate sharedDelegate] showTextOnly:@"任务签入提交中"];
-    }
+     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSMutableArray * basearr = [NSMutableArray array];
+     NSMutableArray * imgTypearr = [NSMutableArray array];
     NSString * baseStr = @"";
     NSString * wavStr = @"";
+    NSString * imgtypeStr = @""; // 图片类型
+    
     if(_selectedPhotos.count>=1){
         for(int i = 0; i < _selectedPhotos.count;i++){
             UIImage * image = _selectedPhotos[i];
             NSString * baseCode = [self imageToBaseString:image];
             [basearr addObject:baseCode];
+            [imgTypearr addObject:@"png"];
         }
     }
     
     baseStr = [basearr componentsJoinedByString:@","];
+    imgtypeStr = [imgTypearr componentsJoinedByString:@","];
     if(self.type==1){
         wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
     }
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     self.nowdate = [formatter stringFromDate:date];
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
     [param addUnEmptyString:self.orderinfo.id forKey:@"id"];
     [param addUnEmptyString:self.orderinfo.workNo forKey:@"workNo"];
     [param addUnEmptyString:baseStr forKey:@"imageData"];
-    if([self.textview.text isEqualToString:@"请输入任务内容及完成情况"]){
+    [param addUnEmptyString:imgtypeStr forKey:@"imageType"]; // 图片类型
+    if([kString(strNotice) isEqualToString:@"请输入任务内容及完成情况"]){
         [param addUnEmptyString:@"" forKey:@"serviceResult"];
     }else{
-        [param addUnEmptyString:self.textview.text forKey:@"serviceResult"];
+        [param addUnEmptyString:kString(strNotice) forKey:@"serviceResult"];
     }
-    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
-    [param addUnEmptyString:model.tenantsId forKey:@"tenantsId"];
+//    [param addUnEmptyString:self.orderinfo.processInstanceId forKey:@"processInstanceId"];
     [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
-    [param addUnEmptyString:@"test" forKey:@"test"];
-    [param addUnEmptyString:reason forKey:@"timeStatementMsg"]; // 签入or签出 失败的理由
-    //签出
-    if(self.type==1){
-        
+    [param addUnEmptyString:model.uuid forKey:@"waiterId"];
+    [param addUnEmptyString:self.orderinfo.waiterName forKey:@"waiterName"];
+    /**2020 7 22 新增字段**/
+    [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
+    [param addUnEmptyString:@"mp3" forKey:@"recordType"]; // 录音格式
+    
+    if(self.type==1){//签出
+        [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
+        // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signOutLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signOutDistance"];// 签出距离
         [param addUnEmptyString:self.statusPost forKey:@"signOutStatus"]; // 签出状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signOutLocation"]; // 签出 当前地址
-        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
-        [param addUnEmptyString:self.nowdate forKey:@"actrueEnd"];
-        [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
-        [param addUnEmptyString:wavStr forKey:@"tapeName"];
-        [param addUnEmptyString:isLess forKey:@"isLess"];
+        [param addUnEmptyString:self.nowdate forKey:@"actualEnd"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
+        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actualBegin actualServiceEndTime:self.orderinfo.actualEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
+        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:self.orderinfo.actualEnd]]*1000;
+        [param addUnEmptyString:[NSString stringWithFormat:@"%ld",actualserviceLength] forKey:@"actualTimeLength"]; // 实际的服务时长 毫秒
+        /**2020-7-22 新增加**/
+        [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
+        [param addUnEmptyString:kString(strEarly) forKey:@"earlyReason"];//早退的原因
+        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignOut"]; //是否签出定位异常 1:是 0：否
+        [param addUnEmptyString:kString(strlocation) forKey:@"abnormalSignOutReason"]; // 签出定位异常的原因
+        [param addUnEmptyString:isLess forKey:@"isLess"];//是否服务时间不足  1:是 0：否
+        [param addUnEmptyString:kString(strService) forKey:@"lessReason"]; // 服务时间不足原因
+        if (self.isnewserviceTimeLess) {
+            [param addUnEmptyString:@"1" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
+            long actrueservicelength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:self.orderinfo.actualEnd]] * 1000; // 实际服务时长 毫秒
+           long lesslength = ([self.findAdmodel.minServiceLength longLongValue] * 60 * 1000) - actrueservicelength; // 最低服务时长-实际 毫秒
+            [param addUnEmptyString:[NSString stringWithFormat:@"%ld",lesslength] forKey:@"minLessTimeLength"];// 最低服务时间不足的时长 毫秒
+        }else{
+            [param addUnEmptyString:@"0" forKey:@"isMinLess"];  //是否最低服务时间不足  1:是 0：否
+            [param addUnEmptyString:@"0" forKey:@"minLessTimeLength"];// 最低服务时间不足的时长
+        }
+        [param addUnEmptyString:kString(lessService) forKey:@"minLessReason"];// 最低服务时间不足原因
         
         [[AFNetWorkingRequest sharedTool] requestsignOut:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
@@ -1212,26 +1294,30 @@
         }];
         
     }else{
-        [param addUnEmptyString:model.uuid forKey:@"waiterId"];
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
         [param addUnEmptyString:self.statusPost forKey:@"signInStatus"]; // 状态
         [param addUnEmptyString:self.addressLabel.text forKey:@"signInLocation"];
-        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormal"];
-        [param addUnEmptyString:self.nowdate forKey:@"actrueBegin"];
+        [param addUnEmptyString:self.addressLabel.text forKey:@"waiterLocation"];
+        [param addUnEmptyString:self.nowdate forKey:@"actualBegin"];
         [param addUnEmptyString:self.orderinfo.isLate forKey:@"isLate"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveIntime] forKey:@"lateTimeLength"];//0正常 1迟到
+        /**2020 7 22 新增**/
+        [param addUnEmptyString:kString(strEarly) forKey:@"lateReason"]; // 迟到原因
+        [param addUnEmptyString:self.orderinfo.isAbnormal forKey:@"isAbnormalSignIn"]; // 是否 定位异常
+        [param addUnEmptyString:kString(strlocation) forKey:@"abnormalSignInReason"];//签入定位异常原因
         
+
         [[AFNetWorkingRequest sharedTool] requestsignIn:param type:HttpRequestTypePost success:^(id responseObject) {
             NSDictionary * dic = responseObject;
             NSNumber * code = dic[@"code"];
-            [[AppDelegate sharedDelegate] hidHUD];
             if([code longValue]==1){
                 [self.unfinishManager stopUpdatingLocation];
-                [AppInfoDefult sharedClict].orderinfoId = @"";
-                [AppInfoDefult sharedClict].islongLocation=0;
+//                [AppInfoDefult sharedClict].orderinfoId = @"";
+//                [AppInfoDefult sharedClict].islongLocation=0;
             }
+            [[AppDelegate sharedDelegate] hidHUD];
             [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
                [self.navigationController popToRootViewControllerAnimated:YES];
             }];
@@ -1243,21 +1329,7 @@
         }];
     }
 }
-#pragma mark - reason delegate
--(void)didselectAction:(UIButton *)sender textviewInfo:(NSString *)info{
-    switch (sender.tag) {
-        case 1:
-            {
-                [self postDataAllInfo:info];
-            }
-            break;
-        case 2:
-            reasonView.hidden = YES;
-            break;
-        default:
-            break;
-    }
-}
+
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
     // 水印内容
@@ -1280,7 +1352,7 @@
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         if (textView.tag==100){
             //在这里做你响应return键的代码
-            [self.textview resignFirstResponder];
+//            [self.textview resignFirstResponder];
         }else{
             [self.lccontentTextView resignFirstResponder];
         }
@@ -1290,31 +1362,6 @@
     return YES;
 }
 
-
-#pragma mark - 键盘收缩
--(void)keyboardWillChangeFrame:(NSNotification *)note{
-//    NSDictionary* info = [note userInfo];
-//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationCurve:7];
-    if(SCREEN_WIDTH<375){
-        self.view.frame = CGRectMake(0,-30 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-    }else{
-        self.view.frame = CGRectMake(0,-50 ,SCREEN_WIDTH , SCREEN_HEIGHT);
-    }
-    [UIView commitAnimations];
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationCurve:7];
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [UIView commitAnimations];
-}
 #pragma mark - textfield delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -1327,15 +1374,8 @@
     return YES;
 }
 
-
 -(void)dealloc{
-    //第一种方法.这里可以移除该控制器下的所有通知
     // 移除当前所有通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    //第二种方法.这里可以移除该控制器下名称为tongzhi的通知
-    //移除名称为tongzhi的那个通知
-//    NSLog(@"移除了名称为tongzhi的通知");
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"tongzhi" object:nil];
 }
 @end

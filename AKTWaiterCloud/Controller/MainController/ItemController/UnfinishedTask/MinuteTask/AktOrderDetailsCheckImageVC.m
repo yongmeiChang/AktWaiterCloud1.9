@@ -32,12 +32,12 @@
 #pragma mark - 查看签入图片
 -(void)showImageIn{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantsId,@"signType":@"101"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
+    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"101"};
+    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
+            NSArray * obj = [dic objectForKey:ResponseData];
             if(obj.count>0){
                 
                 UIView * popview = [[UIView alloc] init];
@@ -53,10 +53,11 @@
                 for (int i = 0; i<obj.count; i++) {
                     NSDictionary * object = obj[i];
                     NSString * affixName = object[@"affixUrl"];
-                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+//                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
                     UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                    photoImageView.image = [UIImage imageWithData:imageData];
+//                    photoImageView.image = [UIImage imageWithData:imageData];
+                     photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                     [scollBg addSubview:photoImageView];
                     
                 }
@@ -80,12 +81,12 @@
 #pragma mark - 查看签出图片
 -(void)showImageOut{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
-    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantsId,@"signType":@"102"};
-    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypePost success:^(id responseObject) {
+    NSDictionary * param = @{@"workOrderId":self.orderId,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"102"};
+    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = dic[@"code"];
         if([code intValue]==1){
-            NSArray * obj = dic[@"object"];
+            NSArray * obj = [dic objectForKey:ResponseData];
             
             UIView * popview = [[UIView alloc] init];
             popview.backgroundColor = [UIColor grayColor];
@@ -99,10 +100,11 @@
             for (int i = 0; i<obj.count; i++) {
                 NSDictionary * object = obj[i];
                 NSString * affixName = object[@"affixUrl"];
-                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
+//                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
                 UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                photoImageView.image = [UIImage imageWithData:imageData];
+//                photoImageView.image = [UIImage imageWithData:imageData];
+                photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                 [scollBg addSubview:photoImageView];
                 
             }
@@ -117,7 +119,8 @@
             }];
             
         }else{
-            [self showMessageAlertWithController:self Message:@"没有图片"];
+            [[AppDelegate sharedDelegate] showTextOnly:@"没有图片"];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];

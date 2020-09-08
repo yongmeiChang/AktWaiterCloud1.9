@@ -7,7 +7,6 @@
 //
 
 #import "AKTSearchInfoVC.h"
-#import "AktSearchFmdb.h"
 #import "SearchDateController.h"
 
 @interface AKTSearchInfoVC ()<UITextFieldDelegate>

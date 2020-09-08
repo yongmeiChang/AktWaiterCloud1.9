@@ -86,8 +86,8 @@
 @implementation LoginModel
 
 + (LoginModel *)gets{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]){
-        NSString *path = [AktUtil getCachePath:@"loginModel"];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
+        NSString *path = [AktUtil getCachePath:@"loginNewModel"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
             return [[LoginModel alloc] initWithDictionary:dict error:nil];
@@ -98,7 +98,7 @@
 
 - (void)save{
     NSDictionary *local;
-    NSString *path = [AktUtil getCachePath:@"loginModel"];
+    NSString *path = [AktUtil getCachePath:@"loginNewModel"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path])
          local= [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self toDictionary]];
@@ -110,8 +110,8 @@
 #pragma mark --- 用户信息
 @implementation UserInfo
 + (UserInfo *)getsUser{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AKTserviceToken"]){
-           NSString *path = [AktUtil getCachePath:@"userModel"];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Token]){
+           NSString *path = [AktUtil getCachePath:@"userNewModel"];
            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
                NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
                return [[UserInfo alloc] initWithDictionary:dict error:nil];
@@ -121,47 +121,14 @@
 }
 - (void)saveUser{
     NSDictionary *local;
-    NSString *path = [AktUtil getCachePath:@"userModel"];
+    NSString *path = [AktUtil getCachePath:@"userNewModel"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path])
          local= [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self toDictionary]];
     [dict writeToFile:path atomically:YES];
 }
--(void)getUserInfoById:(NSString *)userid Byicon:(NSString *)icon Bymobile:(NSString *)mobile Bypassword:(NSString *)password  BytenantsId:(NSString *)tenantsId  Bylocation:(NSString *)location  BycooperationState:(NSString *)cooperationState  BycooperationStateName:(NSString *)cooperationStateName  Bysex:(NSString *)sex  BysexName:(NSString *)sexName  BystationNo:(NSString *)stationNo  BysaleId:(NSString *)saleId  Bysynopsis:(NSString *)synopsis  BywaiterName:(NSString *)waiterName  BywaiterNo:(NSString *)waiterNo  BylocationX:(NSString *)locationX  BylocationY:(NSString *)locationY  BymissionTrans:(NSString *)missionTrans  BymaxOrders:(NSString *)maxOrders  Bylevel:(NSString *)level  BystartPermission:(NSString *)startPermission  BywaiterUkey:(NSString *)waiterUkey  BylocationFlag:(NSString *)locationFlag  ByisPosition:(NSString *)isPosition BytenantsName:(NSString *)tenantsName{
-    self.uuid = userid;
-    self.icon = icon;
-    self.mobile = mobile;
-    self.password = password;
-    self.tenantsId = tenantsId;
-    self.location = location;
-    self.cooperationState = cooperationState;
-    self.cooperationStateName = cooperationStateName;
-    self.sex = sex;
-    self.sexName = sexName;
-    self.stationNo = stationNo;
-    self.saleId = saleId;
-    self.synopsis = synopsis;
-    self.waiterName = waiterName;
-    self.waiterNo = waiterNo;
-    self.locationX = locationX;
-    self.locationY = locationY;
-    self.missionTrans = missionTrans;
-    self.maxOrders = maxOrders;
-    self.level = level;
-    self.startPermission = startPermission;
-    self.waiterUkey = waiterUkey;
-    self.locationFlag = locationFlag;
-    self.isPosition = isPosition;
-    self.tenantsName = tenantsName;
-}
-@end
-
-
-#pragma mark --- 我的钱包
-@implementation WorkMoneyInfo
 
 @end
-
 
 #pragma mark --- 我的工单
 @implementation OrderInfo
@@ -178,7 +145,7 @@
     self.affixFlag = affixFlag;
     self.serviceAreaName = serviceAreaName;
     self.serviceAreaFullPath = serviceAreaFullPath;
-    self.workStatus = workStatus;
+    self.nodeName = workStatus;
     self.workStatusName = workStatusName;
     self.customerId = customerId;
     self.customerNo = customerNo;
@@ -242,23 +209,22 @@
     self.customerSatisfactionName = customerSatisfactionName;
     self.visitDate = visitDate;
     self.actualCharge = actualCharge;
-    self.actrueBegin = actrueBegin;
+    self.actualBegin = actrueBegin;
     self.isLate = isLate;
     self.isAbnormal = isAbnormal;
-    self.actrueEnd = actrueEnd;
+    self.actualEnd = actrueEnd;
     self.isEarly = isEarly;
 }
 
 @end
 
 
-#pragma mark --- 服务用户
-@implementation DownOrderFirstInfo
+#pragma mark - 下单
+@implementation DowOrderData
 @end
-
-
-#pragma mark --- 服务项目
 @implementation ServicePojInfo
+@end
+@implementation ServiceStationInfo
 @end
 
 #pragma mark - 注册列表租户信息

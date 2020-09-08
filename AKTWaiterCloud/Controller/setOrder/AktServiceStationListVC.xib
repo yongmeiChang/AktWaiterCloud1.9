@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AktServiceStationListVC">
+            <connections>
+                <outlet property="labNodata" destination="bOb-Qx-qr6" id="PLs-Ef-ODk"/>
+                <outlet property="tableview" destination="PYV-uf-SpU" id="va6-Fv-dgO"/>
+                <outlet property="toptableview" destination="QPJ-u9-Q07" id="aBk-6j-Dh4"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOb-Qx-qr6">
+                    <rect key="frame" x="15" y="373.5" width="384" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.45882352939999999" green="0.45882352939999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PYV-uf-SpU">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.98431372549019602" green="0.98431372549019602" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="PYV-uf-SpU" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="6IA-HR-yWH"/>
+                <constraint firstItem="bOb-Qx-qr6" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-64" id="9da-t5-4E6"/>
+                <constraint firstItem="bOb-Qx-qr6" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="Laf-NQ-d77"/>
+                <constraint firstItem="PYV-uf-SpU" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="NBP-UJ-Ce2"/>
+                <constraint firstItem="PYV-uf-SpU" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="QPJ-u9-Q07"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="bOb-Qx-qr6" secondAttribute="trailing" constant="15" id="Qds-zR-fBE"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="PYV-uf-SpU" secondAttribute="bottom" id="Zc8-2U-Dok"/>
+                <constraint firstItem="bOb-Qx-qr6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="nDq-UV-Y2K"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
+        </view>
+    </objects>
+</document>

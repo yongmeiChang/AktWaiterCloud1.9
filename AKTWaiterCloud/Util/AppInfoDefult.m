@@ -101,7 +101,7 @@ static AppInfoDefult *app_instance = nil;
 }
 
 -(Boolean)isNaTali{
-    NSString * userid = [[UserInfo getsUser].waiterUkey substringWithRange:NSMakeRange(0,3)];
+    NSString * userid = [[UserInfo getsUser].uniqueKey substringWithRange:NSMakeRange(0,3)];
     if([userid isEqualToString:@"888"]){
         return YES;
     }else{

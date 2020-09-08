@@ -28,8 +28,8 @@
 
 @property (nonatomic,assign)BOOL networkingStatus;
 
-@property (nonatomic,assign)int islongLocation;//0没有定位 1有连续定位
-@property (nonatomic,strong)NSString* orderinfoId;//正在持续定位的id
+//@property (nonatomic,assign)int islongLocation;//0没有定位 1有连续定位
+//@property (nonatomic,strong)NSString* orderinfoId;//正在持续定位的id
 + (AppInfoDefult *)sharedClict;
 - (void)getnetwork;
 -(void)setValueInDefault:(id)value withKey:(NSString *)key;

@@ -1202,16 +1202,7 @@ static DataManager *instance = nil;
     phoneStr = [phoneStr stringByReplacingOccurrencesOfString:@"+" withString:@""];
     return phoneStr;
 }
--(void)CallPhoneWithNum:(NSString *)phoneNum bgView:(UIView *)bgView{
-    UIWebView *phoneCallWebView;
-    NSURL *phoneURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",phoneNum]];
-    if ( !phoneCallWebView ) {
-        // 这个webView只是一个后台的容易 不需要add到页面上来  效果跟方法二一样 但是这个方法是合法的
-        phoneCallWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    }
-    [phoneCallWebView loadRequest:[NSURLRequest requestWithURL:phoneURL]];
-    [bgView addSubview:phoneCallWebView];
-}
+
 -(BOOL)currentNetwork{
     BOOL isExistenceNetwork = YES;
     Reachability *r = [Reachability reachabilityWithHostName:@"www.apple.com"];

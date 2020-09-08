@@ -8,27 +8,21 @@
 
 #import <CocoaLumberjack.h>
 #import "ReachbilityTool.h"
-#import "DicToString.h"
 
-#import "CheckObject.h"
 #import "AppDelegate.h"
-#import <MapKit/MapKit.h>
-#import "PhoneSize.h"
 #import "BaseControllerViewController.h"
-#import "Vaildate.h"
 #import "NSMutableDictionary+Utils.h"
-#import "DataManager.h"
+//#import "DataManager.h"
 #import "DataModel.h"
-#import "UserFmdb.h"
-
+#import "RSAEncryptor.h"  // RSA加密 解密
 #import "UIColor+Hex.h"
 #import "AppInfoDefult.h"
 #import "AktUtil.h"
-//#import "AFNetWorkingTool.h"
 #import "AFNetWorkingRequest.h" // 工单cmd
 #import "AktVipCmd.h" // 个人cmd
 #import "AktLoginCmd.h" // 登录cmd
 // 第三方SDK
+#import <MapKit/MapKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -82,8 +76,8 @@
  W图片 H图片？ W已知 H已知
  W图片/H图片？ w已知 h已知
  */
-#define IS_IOS7    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)/*判断系统版本*/
-#define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
+//#define IS_IOS7    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)/*判断系统版本*/
+//#define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)/*iphoneX判断*/
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
@@ -96,10 +90,11 @@ static const int ddLogLevel = DDLogLevelVerbose;
 static const int ddLogLevel = DDLogLevelError;
 #endif
 
-#define appid @"1294211974"
-#define GAODEAPPKEY @"d7fac2d3810fa204fa0246c7fead9806"
+//#define appid @"1294211974"
+#define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号
 #define JgPushAppKey @"17da47cfb58c004d9905e3ae"
 #define Bugly_AppId @"d5a027a07b"  // 个人账号
+#define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -109,9 +104,13 @@ static const int ddLogLevel = DDLogLevelError;
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
+//#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
+#define SERVICEURL @"http://180.168.24.187:20080"
+
 // 测试环境
-//#define SERVICEURL @"http://172.16.30.90:8089/ankangtong-outwork/appService" // 新测试环境
+//#define SERVICEURL @"http://172.16.31.133" // 新测试环境 王智慧
+//#define SERVICEURL @"http://192.168.1.117" // 黎翔192.168.1.177     或者117
+
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 
@@ -122,3 +121,11 @@ static const int ddLogLevel = DDLogLevelError;
 
 
 #define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
+
+#define ResponseCode @"code"
+#define ResponseMsg @"message"
+#define ResponseData @"object"
+#define Token @"AKTserviceNewToken"
+#define AKTName @"AktUserName"
+#define AKTPwd @"AktUserPwd"
+

@@ -8,7 +8,7 @@
 
 
 #import "PlanTaskController.h"
-#import "OrderTaskFmdb.h"
+//#import "OrderTaskFmdb.h"
 #import "PlanTaskCell.h"
 #import <MJRefresh.h>
 #import "FSCalendar.h"
@@ -22,7 +22,7 @@
 }
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
-@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
+//@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 
 
@@ -95,9 +95,8 @@
 }
 
 -(void)requestUnFinishedTask{
-     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
-    NSDictionary * parameters =@{@"waiterId":[LoginModel gets].uuid,@"tenantsId":[LoginModel gets].tenantsId,@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime};
-    [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypePost success:^(id responseObject) {
+    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"tenantsId":kString([LoginModel gets].tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
+    [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];
         if (pageSize == 1) {
@@ -105,33 +104,33 @@
             }
         if([code intValue]==1){
             NSArray * arr = [NSArray array];
-            NSDictionary * obj = [dic objectForKey:@"object"];
-            arr = obj[@"result"];
+            NSDictionary * obj = [dic objectForKey:ResponseData];
+            arr = obj[@"list"];
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {
-                  NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
+//                  NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                   NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                  NSString * createBy = [createBydic objectForKey:@"id"];
+//                  NSString * createBy = [createBydic objectForKey:@"id"];
                   NSString * updateBy = [updateBydic objectForKey:@"id"];
-                  [dicc removeObjectForKey:@"createBy"];
+//                  [dicc removeObjectForKey:@"createBy"];
                   [dicc removeObjectForKey:@"updateBy"];
-                  [dicc setObject:createBy forKeyedSubscript:@"createBy"];
+//                  [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                   [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                   NSDictionary * objdic = (NSDictionary*)dicc;
-                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
+//                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
                   OrderInfo * orderinfo;
-                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
+//                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                       [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-                      [self.orderfmdb saveOrderTask:orderinfo];
+//                      [self.orderfmdb saveOrderTask:orderinfo];
                   }else{
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                      [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-                      [self.orderfmdb updateObject:orderinfo];
+//                      [self.orderfmdb updateObject:orderinfo];
                   }
               }
               [self.taskTableview reloadData];
@@ -166,7 +165,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 200.0f;
+    return 235.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

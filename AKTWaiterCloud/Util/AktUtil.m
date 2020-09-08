@@ -91,7 +91,15 @@
     }
 }
 #pragma mark - 获取时间
-// 获取当前时间
+// 获取 当前毫秒
++(NSString *)getNowTimes{
+    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
+    NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+    return timeString;
+}
+
+// 获取当前时间 - 截止到秒
 +(NSString *)getNowDateAndTime{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
@@ -179,7 +187,7 @@
 #pragma mark - 日期
 +(NSDate *)StringtoDate:(NSString *)dateStr{
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];//创建一个日期格式化器
-    dateFormatter.dateFormat=@"yyyy-mm-dd hh:mm:ss";
+    dateFormatter.dateFormat=@"yyyy-MM-dd HH:mm:ss";
     NSDate * date = [dateFormatter dateFromString:dateStr];
     return date;
 }
@@ -192,6 +200,339 @@
         font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:22];
     NSDictionary *attribute = @{NSFontAttributeName:font, NSParagraphStyleAttributeName: paragraph};
     return [_text boundingRectWithSize:CGSizeMake(_width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil].size;
+}
+
+#pragma mark - 4.0APP时间相关判断
++(NSUInteger)isNewTimestatus:(NSString *)serviceEnd{ // 对比时间 是否正常 0：正常  1异常
+    NSArray *aryService = [serviceEnd componentsSeparatedByString:@":"];
+    NSArray *aryNowDate = [[self getNowDateAndTime] componentsSeparatedByString:@" "];
+    NSArray *aryNowTime = [[aryNowDate objectAtIndex:1] componentsSeparatedByString:@":"];
+    if ([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) {
+        return 0;
+    }else if (([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) && ([[aryService objectAtIndex:1] integerValue]>=[[aryNowTime objectAtIndex:1] integerValue])){
+        return 0;
+    }else if (([[aryService objectAtIndex:0] integerValue]>=[[aryNowTime objectAtIndex:0] integerValue]) && ([[aryService objectAtIndex:1] integerValue]>=[[aryNowTime objectAtIndex:1] integerValue]) &&([[aryService objectAtIndex:2] integerValue]>=[[aryNowTime objectAtIndex:2] integerValue])){
+        return 0;
+    }else{
+        return 1;
+    }
+}
++(NSString *)getTimeFrom:(NSString *)bTime To:(NSString *)endDate{ // 计算差异的时间
+    NSArray *aryBtime = [bTime componentsSeparatedByString:@":"];
+    NSArray *aryEtime = [endDate componentsSeparatedByString:@":"];
+
+    NSInteger Hours = labs([[aryBtime objectAtIndex:0] integerValue] - [[aryEtime objectAtIndex:0] integerValue]);
+    NSInteger Miute = labs([[aryBtime objectAtIndex:1] integerValue] - [[aryEtime objectAtIndex:1] integerValue]);
+    NSInteger Second = labs([[aryBtime objectAtIndex:2] integerValue] - [[aryEtime objectAtIndex:2] integerValue]);
+    
+    return [NSString stringWithFormat:@"%ld小时%ld分%ld秒",(long)Hours,(long)Miute,(long)Second];
+}
+// 两个时间段的差值  分钟单位
++(NSInteger)getTimeDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to{
+    NSArray * aryfromTime = [from componentsSeparatedByString:@":"];
+    NSArray * arytoTime = [to componentsSeparatedByString:@":"];
+    
+    NSInteger fromH= [[NSString stringWithFormat:@"%@",aryfromTime[0]] integerValue];
+    NSInteger fromM= [[NSString stringWithFormat:@"%@",aryfromTime[1]] integerValue];
+//    NSInteger fromS= [[NSString stringWithFormat:@"%@",aryfromTime[2]] integerValue];
+    
+    NSInteger toH= [[NSString stringWithFormat:@"%@",arytoTime[0]] integerValue];
+    NSInteger toM= [[NSString stringWithFormat:@"%@",arytoTime[1]] integerValue];
+//    NSInteger toS= [[NSString stringWithFormat:@"%@",arytoTime[2]] integerValue];
+    
+    NSInteger timeAll = ((fromH-toH)*60)+(fromM-toM);
+    
+    return timeAll;
+}
+// 两个时间段的差值  秒单位
++(NSInteger)getTimeSDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to{
+    NSArray * aryfromTime = [from componentsSeparatedByString:@":"];
+    NSArray * arytoTime = [to componentsSeparatedByString:@":"];
+    
+    NSInteger fromH= [[NSString stringWithFormat:@"%@",aryfromTime[0]] integerValue];
+    NSInteger fromM= [[NSString stringWithFormat:@"%@",aryfromTime[1]] integerValue];
+    NSInteger fromS= [[NSString stringWithFormat:@"%@",aryfromTime[2]] integerValue];
+    
+    NSInteger toH= [[NSString stringWithFormat:@"%@",arytoTime[0]] integerValue];
+    NSInteger toM= [[NSString stringWithFormat:@"%@",arytoTime[1]] integerValue];
+    NSInteger toS= [[NSString stringWithFormat:@"%@",arytoTime[2]] integerValue];
+    
+    NSInteger timeSAll = ((fromH-toH)*60)+((fromM-toM)*60)+(fromS-toS);
+    
+    return timeSAll;
+}
+
+#pragma mark - 签出 出勤状态
++(NSUInteger)isstatus:(NSString *)serviceEnd{
+    // 截止时间data格式
+       NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+       [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+       NSDate *expireDate = [formatter dateFromString:serviceEnd];
+       // 当前日历
+       NSCalendar *calendar = [NSCalendar currentCalendar];
+       // 需要对比的时间数据
+       NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+       | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+       // 对比时间差
+       NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+       if(dateCom.year==0&&dateCom.month==0&&dateCom.day==0&&dateCom.hour==0&&dateCom.minute==0&&dateCom.second==0){// @"正常";
+           return 0;
+       }else{
+           return 1;
+       }
+}
+
+// 计算天数
++(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents    * comp = [calendar components:NSCalendarUnitDay
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+//    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.day;
+}
+// 计算分钟
++(NSInteger)getMinuteFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents * comp = [calendar components:NSCalendarUnitMinute
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+//    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.minute;
+}
+
+// 计算秒
++(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+
+    NSDateComponents * comp = [calendar components:NSCalendarUnitSecond
+                                             fromDate:fromDate
+                                                toDate:endDate
+                                              options:NSCalendarWrapComponents];
+//    NSLog(@" -- >>  comp : %@  << --",comp);
+    return comp.second;
+}
+// 任务签入、签出 出勤状态
++ (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend{
+    // 截止时间data格式
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *expireDate = [formatter dateFromString:serviceend];
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+    
+    if ([self isstatus:serviceend] == 0) { // 正常
+        return @"正常";
+    }else{
+        NSString *strDay = [NSString stringWithFormat:@"%ld",[self getDaysFrom:nowdate To:expireDate]];
+        NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
+        NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
+        NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];
+             
+        if ([strDay containsString:@"-"]) {
+            strDay = [strDay substringFromIndex:1];
+        }
+        if ([strHours containsString:@"-"]) {
+            strHours = [strHours substringFromIndex:1];
+        }
+        if ([strMiute containsString:@"-"]) {
+            strMiute = [strMiute substringFromIndex:1];
+        }
+        if ([strSecond containsString:@"-"]) {
+            strSecond = [strSecond substringFromIndex:1];
+        }
+        
+        NSString *strnewDay;
+        NSString *strnewHours;
+        NSString *strnewMiute;
+        NSString *strNewSecond;
+        
+        if ([self getDaysFrom:nowdate To:expireDate] == 0) {
+            strnewDay = @"";
+        }else{
+            strnewDay = [NSString stringWithFormat:@"%@天",strDay];
+        }
+        if ([strHours integerValue] == 0) {
+            strnewHours = @"";
+        }else{
+            strnewHours = [NSString stringWithFormat:@"%@时",strHours];
+        }
+        if ([strMiute integerValue] == 0) {
+            strnewMiute = @"";
+        }else{
+            strnewMiute = [NSString stringWithFormat:@"%@分",strMiute];
+        }
+        if ([strSecond integerValue] == 0) {
+            strNewSecond = @"";
+        }else{
+            strNewSecond = [NSString stringWithFormat:@"%@秒",strSecond];
+        }
+        return [NSString stringWithFormat:@"%@%@%@%@",strnewDay,strnewHours,strnewMiute,strNewSecond];
+    }
+}
+// 实际服务时长 格式：3天2小时23分22秒
++ (NSString *)actualBeginTime:(NSString *)begindate actualServiceEndTime:(NSString *)serviceend{
+    // 截止时间data格式
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *expireDate = [formatter dateFromString:serviceend];
+    
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:begindate] options:0];
+    
+    
+    NSString *strDay = [NSString stringWithFormat:@"%ld",(long)[self getDaysFrom:[formatter dateFromString:begindate] To:expireDate]];
+        NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
+        NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
+        NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];
+             
+        if ([strDay containsString:@"-"]) {
+            strDay = [strDay substringFromIndex:1];
+        }
+        if ([strHours containsString:@"-"]) {
+            strHours = [strHours substringFromIndex:1];
+        }
+        if ([strMiute containsString:@"-"]) {
+            strMiute = [strMiute substringFromIndex:1];
+        }
+        if ([strSecond containsString:@"-"]) {
+            strSecond = [strSecond substringFromIndex:1];
+        }
+        
+        NSString *strnewDay;
+        NSString *strnewHours;
+        NSString *strnewMiute;
+        NSString *strNewSecond;
+        
+        if ([self getDaysFrom:[formatter dateFromString:begindate] To:expireDate] == 0) {
+            strnewDay = @"";
+        }else{
+            strnewDay = [NSString stringWithFormat:@"%@天",strDay];
+        }
+        if ([strHours integerValue] == 0) {
+            strnewHours = @"";
+        }else{
+            strnewHours = [NSString stringWithFormat:@"%@时",strHours];
+        }
+        if ([strMiute integerValue] == 0) {
+            strnewMiute = @"";
+        }else{
+            strnewMiute = [NSString stringWithFormat:@"%@分",strMiute];
+        }
+        if ([strSecond integerValue] == 0) {
+            strNewSecond = @"";
+        }else{
+            strNewSecond = [NSString stringWithFormat:@"%@秒",strSecond];
+        }
+        return [NSString stringWithFormat:@"%@%@%@%@",strnewDay,strnewHours,strnewMiute,strNewSecond];
+    
+}
+
+//比较日期大小
++(int)compareDate:(NSDate *)bdate End:(NSDate *)edate{
+    NSComparisonResult result = [bdate compare:edate];
+    NSLog(@"date1 : %@, date2 : %@", bdate, edate);
+    //1 a>b  0 a=b  -1 a<b
+    if (result == NSOrderedDescending) {
+        return 1;
+    }
+    else if (result == NSOrderedAscending){
+        return -1;
+    }
+        return 0;
+}
+
++ (BOOL)dx_isNullOrNilWithObject:(id)object;
+{
+    if (object == nil || [object isEqual:[NSNull null]]) {
+        return YES;
+    } else if ([object isKindOfClass:[NSString class]]) {
+        if ([object isEqualToString:@""]) {
+            return YES;
+        } else {
+            return NO;
+        }
+    } else if ([object isKindOfClass:[NSNumber class]]) {
+        if ([object isEqualToNumber:@0]) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+    
+    return NO;
+}
+
+
+#pragma mark - 正则相关
++(BOOL)isValidateByRegex:(NSString *)regex Param:(NSString *)param{
+     NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [pre evaluateWithObject:param];
+}
+//手机号分服务商
++(BOOL)isMobileNumberClassification:(NSString *)param{
+    /**
+     * 手机号码
+     * 移动：134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188,1705
+     * 联通：130,131,132,152,155,156,185,186,1709
+     * 电信：133,1349,153,180,189,1700
+    */
+//    NSString * MOBILE = @"^1((3//d|5[0-35-9]|8[025-9])//d|70[059])\\d{7}$";//总况
+    /**
+     * 中国移动：China Mobile
+     * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188，1705
+     */
+    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d|705)\\d{7}$";
+    /**
+     * 中国联通：China Unicom
+     * 130,131,132,152,155,156,185,186,1709
+     */
+    NSString * CU = @"^1((3[0-2]|5[256]|8[56])\\d|709)\\d{7}$";
+    /**
+     * 中国电信：China Telecom
+     * 133,1349,153,180,189,1700
+     */
+    NSString * CT = @"^1((33|53|8[09])\\d|349|700)\\d{7}$";
+    /**
+     * 大陆地区固话及小灵通
+     * 区号：010,020,021,022,023,024,025,027,028,029
+     * 号码：七位或八位
+     */
+    NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    //NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    if (([self isValidateByRegex:CM Param:param])
+        || ([self isValidateByRegex:CU Param:param])
+        || ([self isValidateByRegex:CT Param:param])
+        || ([self isValidateByRegex:PHS Param:param])){
+           return YES;
+        }
+    else{
+        return NO;
+    }
+}
+
+//手机号有效性
++(BOOL)isMobileNumber:(NSString *)mobile{
+    NSString *regex = @"^((1[0-9][0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+    BOOL isMatch = [self isValidateByRegex:regex Param:mobile];
+    return isMatch;
 }
 
 @end

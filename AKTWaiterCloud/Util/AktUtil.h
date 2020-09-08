@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getTemPath:(NSString *)_fileName;
 
 + (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName;  // 转换录音格式 mp3
-
+// 获取 当前毫秒
++(NSString *)getNowTimes;
 // 获取当前时间
 +(NSString *)getNowDateAndTime;
 // 获取当前日期
@@ -39,6 +40,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 计算字符串的size
 + (CGSize)getNewTextSize:(NSString *)_text font:(int)_font limitWidth:(int)_width;
+
+// 任务签入、签出 出勤状态
++(NSInteger)getDaysFrom:(NSDate *)fromDate To:(NSDate *)endDate;
+// 计算分钟
++(NSInteger)getMinuteFrom:(NSDate *)fromDate To:(NSDate *)endDate;
++(NSInteger)getSecondFrom:(NSDate *)fromDate To:(NSDate *)endDate;// 计算秒
++(NSUInteger)isstatus:(NSString *)serviceEnd;
++ (NSString *)NowDate:(NSDate *)nowdate ServiceEndTime:(NSString *)serviceend;
+// 实际服务时长 格式：3天2小时23分22秒
++ (NSString *)actualBeginTime:(NSString *)begindate actualServiceEndTime:(NSString *)serviceend;
+//比较日期大小
++(int)compareDate:(NSDate *)bdate End:(NSDate *)edate;
+/**4.0 时间计算**/
++(NSUInteger)isNewTimestatus:(NSString *)serviceEnd; // 对比时间是否异常 1异常
++(NSString *)getTimeFrom:(NSString *)bTime To:(NSString *)endDate; // 计算差异的时间
++(NSInteger)getTimeDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to; // 两个时间段相差分钟
+// 两个时间段的差值  秒单位
++(NSInteger)getTimeSDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to;
+
+/**判断对象是否为空
+ *  PS：nil、NSNil、@""、@0 以上4种返回YES
+ *  @return YES 为空  NO 为实例对象
+ */
++ (BOOL)dx_isNullOrNilWithObject:(id)object;
+
+
+#pragma mark - 正则相关
++(BOOL)isValidateByRegex:(NSString *)regex Param:(NSString *)param;
+//手机号分服务商
++(BOOL)isMobileNumberClassification:(NSString *)param;
+//手机号有效性
++(BOOL)isMobileNumber:(NSString *)mobile;
 
 @end
 
