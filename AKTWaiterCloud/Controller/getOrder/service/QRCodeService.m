@@ -43,9 +43,9 @@
                     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
                     minuteTaskContoller.type = @"0";
                     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
-                    if([AppInfoDefult sharedClict].islongLocation == 1){
-                        minuteTaskContoller.lm = qv.unfinishController.locationManager;
-                    }
+//                    if([AppInfoDefult sharedClict].islongLocation == 1){
+//                        minuteTaskContoller.lm = qv.unfinishController.locationManager;
+//                    }
                     [qv.unfinishController.navigationController pushViewController:minuteTaskContoller animated:YES];
                 }else{
                     qv.unfinishController.taskTableview.hidden = NO;

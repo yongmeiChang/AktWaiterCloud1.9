@@ -245,9 +245,9 @@
         }
     }else if(indexPath.section==3){
         if([self.orderinfo.nodeName isEqualToString:@"已结单"] || [self.orderinfo.nodeName isEqualToString:@"待处理"]){
-            return 105.5;
-        }else{
             return 177;
+        }else{
+            return 105.5;
         }
     }
     return 0;
@@ -672,7 +672,7 @@
            CLLocationDegrees latitude=location.coordinate.latitude;
            CLLocationDegrees longitude=location.coordinate.longitude;
            NSLog(@"纬度-->%lf,经度-->%lf",latitude,longitude);
-           
+
            //传给接口的纬度和经度
            _latitude=[NSString stringWithFormat:@"%lf",latitude];
 

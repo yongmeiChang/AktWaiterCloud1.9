@@ -243,17 +243,17 @@
     }
     if(_dataArray.count>0){
         OrderInfo * orderinfo = _dataArray[indexPath.section];
-        DataManager * dm = [[DataManager alloc] init];
+//        DataManager * dm = [[DataManager alloc] init];
         
-        if([orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound){
+        /*if([orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound){
             if(![orderinfo.nodeName isEqualToString:@"待签入"] ){
                 
             }else{
                 if([self compareDate:[dm changeTime:orderinfo.serviceEnd] End:[dm getNowDate]]==-1){
                     if([[AppInfoDefult sharedClict].orderinfoId isEqualToString:orderinfo.id]){
                         [AppInfoDefult sharedClict].orderinfoId = @"";
-                        [AppInfoDefult sharedClict].islongLocation = 0;
-                        [self.locationManager stopUpdatingLocation];
+//                        [AppInfoDefult sharedClict].islongLocation = 0;
+//                        [self.locationManager stopUpdatingLocation];
                     }
                     cell.grabSingleBtn.hidden=YES;
                 }else{
@@ -271,11 +271,11 @@
                 }
             }
             
-        }
-        cell.continuityLocation = ^(UIButton *btn) {
-            NSString * str = [NSString stringWithFormat:@"%ld",(long)indexPath.section];
-            [self continuityLocationById:orderinfo.id section:str button:btn];
-        };
+        }*/
+//        cell.continuityLocation = ^(UIButton *btn) {
+//            NSString * str = [NSString stringWithFormat:@"%ld",(long)indexPath.section];
+//            [self continuityLocationById:orderinfo.id section:str button:btn];
+//        };
         [cell setOrderList:orderinfo];
     }
 
@@ -283,19 +283,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    UserInfo *modelUser = [UserInfo getsUser];
+{
+//    UserInfo *modelUser = [UserInfo getsUser];
 //    if([modelUser.missionTrans isEqualToString:@"1"]){
 //        [self showMessageAlertWithController:self Message:@"您尚未拥有此权限"];
 //        return;
 //    }
-    OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
+//    OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
     minuteTaskContoller.type = @"0";
     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if([AppInfoDefult sharedClict].islongLocation == 1){
-        minuteTaskContoller.lm = self.locationManager;
-    }
+//    if([AppInfoDefult sharedClict].islongLocation == 1){
+//        minuteTaskContoller.lm = self.locationManager;
+//    }
     [self.navigationController pushViewController:minuteTaskContoller animated:YES];
 }
 
@@ -314,31 +315,31 @@
 }
 
 //连续定位
--(void)continuityLocationById:(NSString *)Orderid section:(NSString *)section button:(UIButton *)btn{
-    if([AppInfoDefult sharedClict].islongLocation == 1){
-        return;
-    }
-    UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"出发确认" message:@"点击确定将开启持续定位，工单签入成功后将自动关闭定位" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        btn.enabled = NO;
-        [self configLocationManagerForContinuity];
-        [self.locationManager setLocatingWithReGeocode:YES];
-        [self.locationManager startUpdatingLocation];
-        OrderInfo * or = self.dataArray[[section integerValue]];
-        self.LocationwaiterId = or.waiterId;
-        [AppInfoDefult sharedClict].orderinfoId = Orderid;
-        [AppInfoDefult sharedClict].islongLocation = 1;
-        [self.taskTableview reloadData];
-    }];
-    UIAlertAction * canel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [ac addAction:ok];
-    [ac addAction:canel];
-    ac.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:ac animated:YES completion:nil];
-
-}
+//-(void)continuityLocationById:(NSString *)Orderid section:(NSString *)section button:(UIButton *)btn{
+//    if([AppInfoDefult sharedClict].islongLocation == 1){
+//        return;
+//    }
+//    UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"出发确认" message:@"点击确定将开启持续定位，工单签入成功后将自动关闭定位" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction * ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        btn.enabled = NO;
+//        [self configLocationManagerForContinuity];
+//        [self.locationManager setLocatingWithReGeocode:YES];
+//        [self.locationManager startUpdatingLocation];
+//        OrderInfo * or = self.dataArray[[section integerValue]];
+//        self.LocationwaiterId = or.waiterId;
+//        [AppInfoDefult sharedClict].orderinfoId = Orderid;
+//        [AppInfoDefult sharedClict].islongLocation = 1;
+//        [self.taskTableview reloadData];
+//    }];
+//    UIAlertAction * canel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//    }];
+//    [ac addAction:ok];
+//    [ac addAction:canel];
+//    ac.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:ac animated:YES completion:nil];
+//
+//}
 #pragma mark - 定位
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode{
     if (reGeocode)

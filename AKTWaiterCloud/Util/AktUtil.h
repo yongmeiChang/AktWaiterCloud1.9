@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSUInteger)isNewTimestatus:(NSString *)serviceEnd; // 对比时间是否异常 1异常
 +(NSString *)getTimeFrom:(NSString *)bTime To:(NSString *)endDate; // 计算差异的时间
 +(NSInteger)getTimeDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to; // 两个时间段相差分钟
+// 两个时间段的差值  秒单位
++(NSInteger)getTimeSDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to;
 
 /**判断对象是否为空
  *  PS：nil、NSNil、@""、@0 以上4种返回YES

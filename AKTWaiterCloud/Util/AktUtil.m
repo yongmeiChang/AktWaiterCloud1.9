@@ -244,6 +244,24 @@
     
     return timeAll;
 }
+// 两个时间段的差值  秒单位
++(NSInteger)getTimeSDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to{
+    NSArray * aryfromTime = [from componentsSeparatedByString:@":"];
+    NSArray * arytoTime = [to componentsSeparatedByString:@":"];
+    
+    NSInteger fromH= [[NSString stringWithFormat:@"%@",aryfromTime[0]] integerValue];
+    NSInteger fromM= [[NSString stringWithFormat:@"%@",aryfromTime[1]] integerValue];
+    NSInteger fromS= [[NSString stringWithFormat:@"%@",aryfromTime[2]] integerValue];
+    
+    NSInteger toH= [[NSString stringWithFormat:@"%@",arytoTime[0]] integerValue];
+    NSInteger toM= [[NSString stringWithFormat:@"%@",arytoTime[1]] integerValue];
+    NSInteger toS= [[NSString stringWithFormat:@"%@",arytoTime[2]] integerValue];
+    
+    NSInteger timeSAll = ((fromH-toH)*60)+((fromM-toM)*60)+(fromS-toS);
+    
+    return timeSAll;
+}
+
 #pragma mark - 签出 出勤状态
 +(NSUInteger)isstatus:(NSString *)serviceEnd{
     // 截止时间data格式
@@ -370,16 +388,17 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *expireDate = [formatter dateFromString:serviceend];
+    
     // 当前日历
     NSCalendar *calendar = [NSCalendar currentCalendar];
     // 需要对比的时间数据
     NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
     | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     // 对比时间差
-    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:[self getNowDateAndTime]] options:0];
+    NSDateComponents *dateCom = [calendar components:unit fromDate:expireDate toDate:[formatter dateFromString:begindate] options:0];
     
     
-    NSString *strDay = [NSString stringWithFormat:@"%ld",[self getDaysFrom:[formatter dateFromString:begindate] To:expireDate]];
+    NSString *strDay = [NSString stringWithFormat:@"%ld",(long)[self getDaysFrom:[formatter dateFromString:begindate] To:expireDate]];
         NSString *strHours = [NSString stringWithFormat:@"%ld",(long)dateCom.hour];
         NSString *strMiute = [NSString stringWithFormat:@"%ld",(long)dateCom.minute];
         NSString *strSecond = [NSString stringWithFormat:@"%ld",(long)dateCom.second];

@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "BaseControllerViewController.h"
 #import "NSMutableDictionary+Utils.h"
-#import "DataManager.h"
+//#import "DataManager.h"
 #import "DataModel.h"
 #import "RSAEncryptor.h"  // RSA加密 解密
 #import "UIColor+Hex.h"

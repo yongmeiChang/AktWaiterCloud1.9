@@ -90,8 +90,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressH;
 /** 服务时长 相关控件**/
 @property (weak, nonatomic) IBOutlet UILabel *serviceTimeTitleLab; // 服务时长标题
-@property (weak, nonatomic) IBOutlet UIButton *btnServiceLength; //服务时长icon
-@property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;//服务时长
+@property (weak, nonatomic) IBOutlet UIButton *btnServiceLength;   //服务时长icon
+@property (weak,nonatomic) IBOutlet UILabel * ShowSingOutServiceTimelabel;  //服务时长
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnServiceH;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *serviceTop;
 /**最低服务时长 相关控件**/
@@ -445,27 +445,35 @@
 }
 #pragma mark - service time
 -(void)ComputeServiceTime{
+    self.ShowSingOutServiceTimelabel.hidden = NO;
     //截止时间
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
     long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
-    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
-    
+    long strServiceSt = [AktUtil getTimeSDifferenceValueFrome:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceBegin)] ToTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceEnd)]];
     if(strServiceSt>strActrueSt){ //servicetime>=ordertime
-      SSunservicetime = (strServiceSt - strActrueSt)*1000;
-      self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
-      isLess = @"1";
-      self.ShowSingOutServiceTimelabel.textColor = [UIColor redColor];
-      self.ShowSingOutServiceTimelabel.hidden = NO;
-      unservicetime = strServiceSt - strActrueSt; // 单位 秒
-      leaveOuttime = unservicetime * 1000; // 单位 毫秒
-      NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(showInOutTimer) userInfo:nil repeats:YES];
-      [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-      [timer invalidate];
+        SSunservicetime = (strServiceSt - strActrueSt)*1000;
+        isLess = @"1";
+        self.ShowSingOutServiceTimelabel.textColor = [UIColor redColor];
+        
+        unservicetime = strServiceSt - strActrueSt; // 单位 秒
+        leaveOuttime = unservicetime * 1000; // 单位 毫秒
+        NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(showInOutTimer) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        [timer invalidate];
     }else{
-        self.ShowSingOutServiceTimelabel.text = @"服务时长正常";
         isLess = @"0";
+    }
+    if ([self.findAdmodel.recordServiceLength integerValue] == 0) { // 不记录服务时长
+       if(strServiceSt>strActrueSt){
+           self.ShowSingOutServiceTimelabel.text = @"服务时长不足";
+       }else{
+           self.ShowSingOutServiceTimelabel.text = @"服务时长正常";
+       }
+    }else{
+        NSLog(@"服务时长:%@",[AktUtil actualBeginTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.actualBegin)] actualServiceEndTime:nowDate]);
+        self.ShowSingOutServiceTimelabel.text = [AktUtil actualBeginTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.actualBegin)] actualServiceEndTime:nowDate];
     }
     
     /**最低服务时长**/
@@ -1306,8 +1314,8 @@
             NSNumber * code = dic[@"code"];
             if([code longValue]==1){
                 [self.unfinishManager stopUpdatingLocation];
-                [AppInfoDefult sharedClict].orderinfoId = @"";
-                [AppInfoDefult sharedClict].islongLocation=0;
+//                [AppInfoDefult sharedClict].orderinfoId = @"";
+//                [AppInfoDefult sharedClict].islongLocation=0;
             }
             [[AppDelegate sharedDelegate] hidHUD];
             [self showMessageAlertWithController:self title:@"" Message:dic[@"message"] canelBlock:^{
