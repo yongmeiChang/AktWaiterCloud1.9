@@ -38,7 +38,7 @@ static AFNetWorkingTool * a_instance = nil;
     NSData *retData = responseObj;
     NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
     NSDictionary *retDict = [result toDictionaryWithError:&err];
-    NSLog(@" requst:%@ \n 参数:%@\nresponse:%@",url,p,result);
+    NSLog(@" requst:%@ \n 参数:%@ \n response:%@",url,p,result);
     
     if (err) {
         failure(err);
@@ -78,9 +78,6 @@ static AFNetWorkingTool * a_instance = nil;
     }
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
-//    [manager.requestSerializer setValue:kString(token) forHTTPHeaderField:@"Authorization"];// token
-//    [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"Client-Type"];// 区分平台
-    
     // 登录、获取验证码、找回密码、注册、租户列表  中间连接修改
     NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree
     if ([URLString isEqualToString:@"appToken"] || [URLString isEqualToString:@"getCheckCode"] || [URLString isEqualToString:@"getPassword"] || [URLString isEqualToString:@"getTenantsTree"] || [URLString isEqualToString:@"getAppVersion"]) {

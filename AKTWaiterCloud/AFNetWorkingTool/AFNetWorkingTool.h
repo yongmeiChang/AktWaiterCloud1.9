@@ -20,7 +20,9 @@ typedef NS_ENUM(NSUInteger,HttpRequestType) {
      */
     HttpRequestTypePost = 2,
     /*PUT*/
-    HttpRequestTypePut = 3
+    HttpRequestTypePut = 3,
+    /*delegate*/
+    HttpRequestTypeDelegate = 4
 };
 
 @interface AFNetWorkingTool : AFHTTPSessionManager
