@@ -119,14 +119,7 @@
 -(void)checkNetWork{
     //判断网络状态
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-//        self.orderfmdb = [[OrderTaskFmdb alloc] init];
-//        _dataArray = [self.orderfmdb findAllOrderInfo];
-//        if(_dataArray.count==0){
-            self.netWorkErrorView.hidden = NO;
-//        }else{
-//            self.netWorkErrorView.hidden = YES;
-//            [self.taskTableview reloadData];
-//        }
+        self.netWorkErrorView.hidden = NO;
     }else{
         [self requestUnFinishedTask];
     }
@@ -155,29 +148,23 @@
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
             for (NSMutableDictionary * dicc in arr) {
-//                NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                 NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-//                NSString * createBy = [createBydic objectForKey:@"id"];
                 NSString * updateBy = [updateBydic objectForKey:@"id"];
-//                [dicc removeObjectForKey:@"createBy"];
                 [dicc removeObjectForKey:@"updateBy"];
-//                [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                 [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                 NSDictionary * objdic = (NSDictionary*)dicc;
                 OrderInfo * orderinfo;
-                                   
+                        
                 //判断工单是否本地有缓存,有缓存则更新，没缓存则添加至缓存
-//              orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                 if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                     orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                     orderinfo.tid = orderinfo.id;
                     [_dataArray addObject:orderinfo];
-//                    [self.orderfmdb saveOrderTask:orderinfo];
+
                 }else{
                     orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                     orderinfo.tid = orderinfo.id;
                     [_dataArray addObject:orderinfo];
-//                    [self.orderfmdb updateObject:orderinfo];
                 }
             }
             
@@ -284,19 +271,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UserInfo *modelUser = [UserInfo getsUser];
-//    if([modelUser.missionTrans isEqualToString:@"1"]){
-//        [self showMessageAlertWithController:self Message:@"您尚未拥有此权限"];
-//        return;
-//    }
-//    OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
     minuteTaskContoller.type = @"0";
     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-//    if([AppInfoDefult sharedClict].islongLocation == 1){
-//        minuteTaskContoller.lm = self.locationManager;
-//    }
     [self.navigationController pushViewController:minuteTaskContoller animated:YES];
 }
 

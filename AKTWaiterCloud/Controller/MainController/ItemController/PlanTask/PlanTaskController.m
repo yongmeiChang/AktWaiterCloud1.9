@@ -8,7 +8,6 @@
 
 
 #import "PlanTaskController.h"
-//#import "OrderTaskFmdb.h"
 #import "PlanTaskCell.h"
 #import <MJRefresh.h>
 #import "FSCalendar.h"
@@ -22,7 +21,6 @@
 }
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
-//@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 
 
@@ -109,28 +107,20 @@
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {
-//                  NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                   NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-//                  NSString * createBy = [createBydic objectForKey:@"id"];
                   NSString * updateBy = [updateBydic objectForKey:@"id"];
-//                  [dicc removeObjectForKey:@"createBy"];
                   [dicc removeObjectForKey:@"updateBy"];
-//                  [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                   [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                   NSDictionary * objdic = (NSDictionary*)dicc;
-//                  self.orderfmdb = [[OrderTaskFmdb alloc]init];
                   OrderInfo * orderinfo;
-//                  orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                       [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-//                      [self.orderfmdb saveOrderTask:orderinfo];
                   }else{
                       orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                      [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
-//                      [self.orderfmdb updateObject:orderinfo];
                   }
               }
               [self.taskTableview reloadData];
@@ -201,10 +191,10 @@
 #pragma mark - notice
 -(void)searchNoticeDate:(NSNotification *)searchDate{
     if (searchDate) {
-     NSDictionary *dicDate = [searchDate object];
-        searchBTime = kString([dicDate objectForKey:@"beginDate"]);
-        searchETime = kString([dicDate objectForKey:@"endDate"]);
-        [self.taskTableview.mj_header beginRefreshing];
+       NSDictionary *dicDate = [searchDate object];
+       searchBTime = kString([dicDate objectForKey:@"beginDate"]);
+       searchETime = kString([dicDate objectForKey:@"endDate"]);
+       [self.taskTableview.mj_header beginRefreshing];
     }
 }
 

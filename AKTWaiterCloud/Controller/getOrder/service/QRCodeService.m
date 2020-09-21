@@ -36,7 +36,6 @@
                 }else if(arr.count==1){//getOrderTaskByWorkNo
                     OrderInfo * orderinfo;
                     NSMutableDictionary * object = [arr objectAtIndex:0];
-//                    [object setObject:[[object objectForKey:@"createBy"] objectForKey:@"id"] forKey:@"createBy"];// 数据解析-替换
                     [object setObject:[[object objectForKey:@"updateBy"] objectForKey:@"id"] forKey:@"updateBy"];
                  
                     orderinfo = [[OrderInfo alloc] initWithDictionary:object error:nil];
@@ -52,19 +51,14 @@
                     qv.unfinishController.netWorkErrorView.hidden = YES;
                     NSMutableArray * editArray =[NSMutableArray array];
                     for (NSMutableDictionary * dicc in arr) {
-//                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                         NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-//                        NSString * createBy = [createBydic objectForKey:@"id"];
                         NSString * updateBy = [updateBydic objectForKey:@"id"];
-//                        [dicc removeObjectForKey:@"createBy"];
                         [dicc removeObjectForKey:@"updateBy"];
-//                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                         [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                         NSDictionary * objdic = (NSDictionary*)dicc;
-                        //self.orderfmdb = [[OrderTaskFmdb alloc]init];
+
                         OrderInfo * orderinfo;
                         //判断工单是否本地有缓存,有缓存则更新，没缓存则添加至缓存
-//                        orderinfo = [qv.unfinishController.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                         if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
@@ -73,7 +67,6 @@
 //                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
 //                            }
-//                            [qv.unfinishController.orderfmdb saveOrderTask:orderinfo];
                         }else{
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
@@ -82,7 +75,6 @@
 //                            }else{
                                 [qv.unfinishController.dataArray addObject:orderinfo];
 //                            }
-//                            [qv.unfinishController.orderfmdb updateObject:orderinfo];
                         }
                     }
                     if(editArray.count>0){

@@ -388,7 +388,6 @@
 		4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0861D41FD014C80003F692 /* MyGaodeMap.m */; };
-		AD0BC44B1FA6F2D30083661C /* OrderTaskFmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */; };
 		AD1739C71FD0ED6300DAC4A5 /* AFNetWorkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */; };
 		AD19D8C51FA9A62C006EE8A7 /* MinuteTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */; };
 		AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */; };
@@ -688,8 +687,6 @@
 		920492DD240A35FAC7AD3743 /* libPods-AKTWaiterCloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AKTWaiterCloud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0861D31FD014C80003F692 /* MyGaodeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyGaodeMap.h; sourceTree = "<group>"; };
 		AD0861D41FD014C80003F692 /* MyGaodeMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyGaodeMap.m; sourceTree = "<group>"; };
-		AD0BC4491FA6F2D30083661C /* OrderTaskFmdb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderTaskFmdb.h; sourceTree = "<group>"; };
-		AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderTaskFmdb.m; sourceTree = "<group>"; };
 		AD1739C51FD0ED6300DAC4A5 /* AFNetWorkingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFNetWorkingRequest.h; sourceTree = "<group>"; };
 		AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AFNetWorkingRequest.m; sourceTree = "<group>"; };
 		AD1739C81FD1028600DAC4A5 /* AppMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMacro.h; sourceTree = "<group>"; };
@@ -1256,15 +1253,6 @@
 			path = UITextView;
 			sourceTree = "<group>";
 		};
-		AD475FAF1F8B2648003DC2F0 /* FMDB_ operation */ = {
-			isa = PBXGroup;
-			children = (
-				AD0BC4491FA6F2D30083661C /* OrderTaskFmdb.h */,
-				AD0BC44A1FA6F2D30083661C /* OrderTaskFmdb.m */,
-			);
-			path = "FMDB_ operation";
-			sourceTree = "<group>";
-		};
 		AD475FCC1F8B651C003DC2F0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1474,7 +1462,6 @@
 				AD4DAAE61F8F0CA200610281 /* AFNetWorkingTool */,
 				AD4A446B1F8C6FB700D6E5C0 /* Util */,
 				AD475FCC1F8B651C003DC2F0 /* Controller */,
-				AD475FAF1F8B2648003DC2F0 /* FMDB_ operation */,
 				4CA9C2D0239F49D30029FEF5 /* view */,
 				ADD789161F7DF730008DEC55 /* AppDelegate.h */,
 				ADD789171F7DF730008DEC55 /* AppDelegate.m */,
@@ -1838,7 +1825,6 @@
 				4C3D75A824A88ABF00D0F79A /* EditPassWordController.m in Sources */,
 				4C9B975D240CCF1D00576F7C /* FSCalendarCollectionViewLayout.m in Sources */,
 				4C3D759924A88ABF00D0F79A /* SettingsTableViewCell.m in Sources */,
-				AD0BC44B1FA6F2D30083661C /* OrderTaskFmdb.m in Sources */,
 				ADD835F720577F4D0003A1C5 /* DataManager.m in Sources */,
 				4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				AD5F488B1FA06BEB00A0C201 /* SaveDocumentArray.m in Sources */,
