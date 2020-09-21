@@ -387,7 +387,6 @@
 		4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
-		AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0861D41FD014C80003F692 /* MyGaodeMap.m */; };
 		AD1739C71FD0ED6300DAC4A5 /* AFNetWorkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */; };
 		AD19D8C51FA9A62C006EE8A7 /* MinuteTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD19D8C31FA9A62C006EE8A7 /* MinuteTaskController.m */; };
 		AD19D8C61FA9A62C006EE8A7 /* MinuteTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD19D8C41FA9A62C006EE8A7 /* MinuteTaskController.xib */; };
@@ -685,8 +684,6 @@
 		4CFE1F6424B31BDE003B058D /* NSString+JSONToDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSONToDictionary.h"; sourceTree = "<group>"; };
 		85608984DD85E9CE41839972 /* Pods-AKTWaiterCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.release.xcconfig"; sourceTree = "<group>"; };
 		920492DD240A35FAC7AD3743 /* libPods-AKTWaiterCloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AKTWaiterCloud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD0861D31FD014C80003F692 /* MyGaodeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyGaodeMap.h; sourceTree = "<group>"; };
-		AD0861D41FD014C80003F692 /* MyGaodeMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyGaodeMap.m; sourceTree = "<group>"; };
 		AD1739C51FD0ED6300DAC4A5 /* AFNetWorkingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFNetWorkingRequest.h; sourceTree = "<group>"; };
 		AD1739C61FD0ED6300DAC4A5 /* AFNetWorkingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AFNetWorkingRequest.m; sourceTree = "<group>"; };
 		AD1739C81FD1028600DAC4A5 /* AppMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMacro.h; sourceTree = "<group>"; };
@@ -1270,7 +1267,6 @@
 		AD475FCD1F8B651C003DC2F0 /* MainController */ = {
 			isa = PBXGroup;
 			children = (
-				AD93664520AABAD400EEB02C /* 高德地图 */,
 				AD7B00801FA2E9A400DCCB5F /* WorkBaseViewController.h */,
 				AD7B00811FA2E9A400DCCB5F /* WorkBaseViewController.m */,
 				AD7B007B1FA2E3C400DCCB5F /* PlanTaskCell.h */,
@@ -1418,15 +1414,6 @@
 				4CD6754722F1462700AB76AF /* SinoutReasonView.m */,
 			);
 			path = signin;
-			sourceTree = "<group>";
-		};
-		AD93664520AABAD400EEB02C /* 高德地图 */ = {
-			isa = PBXGroup;
-			children = (
-				AD0861D31FD014C80003F692 /* MyGaodeMap.h */,
-				AD0861D41FD014C80003F692 /* MyGaodeMap.m */,
-			);
-			path = "高德地图";
 			sourceTree = "<group>";
 		};
 		ADD7890A1F7DF730008DEC55 = {
@@ -1898,7 +1885,6 @@
 				4C9B9754240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				4C3DABA524A9820F009126D5 /* QRCodeViewController.m in Sources */,
-				AD0861D51FD014C80003F692 /* MyGaodeMap.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,

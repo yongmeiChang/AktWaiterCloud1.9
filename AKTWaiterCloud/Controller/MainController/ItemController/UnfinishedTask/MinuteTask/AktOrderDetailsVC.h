@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyGaodeMap.h"
+#import "WorkBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AktOrderDetailsVC : MyGaodeMap
+@interface AktOrderDetailsVC : WorkBaseViewController
 
 @property(nonatomic,strong) NSString * type; //0为待办任务跳转  1为我的页面中跳转（不能操作 2为计划任务跳转）所有工单列表点击详情统一跳入此页面
 -(id)initMinuteTaskControllerwithOrderInfo:(OrderInfo *)orderinfo;
