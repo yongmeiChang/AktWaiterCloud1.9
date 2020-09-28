@@ -151,12 +151,6 @@
 		4C3D75DB24A88ABF00D0F79A /* UnfinifshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */; };
 		4C3D75DC24A88ABF00D0F79A /* UnfinifshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */; };
 		4C3D75DD24A88ABF00D0F79A /* UnfinifshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */; };
-		4C3D75DE24A88ABF00D0F79A /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D758024A88ABF00D0F79A /* SearchDateController.m */; };
-		4C3D75DF24A88ABF00D0F79A /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D758024A88ABF00D0F79A /* SearchDateController.m */; };
-		4C3D75E024A88ABF00D0F79A /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D758024A88ABF00D0F79A /* SearchDateController.m */; };
-		4C3D75E724A88ABF00D0F79A /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758524A88ABF00D0F79A /* SearchDateController.xib */; };
-		4C3D75E824A88ABF00D0F79A /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758524A88ABF00D0F79A /* SearchDateController.xib */; };
-		4C3D75E924A88ABF00D0F79A /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758524A88ABF00D0F79A /* SearchDateController.xib */; };
 		4C3D75F624A88ABF00D0F79A /* EditUserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758E24A88ABF00D0F79A /* EditUserInfoController.xib */; };
 		4C3D75F724A88ABF00D0F79A /* EditUserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758E24A88ABF00D0F79A /* EditUserInfoController.xib */; };
 		4C3D75F824A88ABF00D0F79A /* EditUserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D758E24A88ABF00D0F79A /* EditUserInfoController.xib */; };
@@ -237,12 +231,6 @@
 		4C869A96240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
 		4C869A97240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
 		4C869A98240943FE0018B943 /* AktAgreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C869A95240943FE0018B943 /* AktAgreement.html */; };
-		4C89D65523A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
-		4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
-		4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89D65223A74E560024456F /* AKTSearchInfoVC.m */; };
-		4C89D65823A74E560024456F /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */; };
-		4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */; };
-		4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */; };
 		4C9B974B240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B972B240CCF1D00576F7C /* FSCalendarCollectionView.m */; };
 		4C9B974C240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B972B240CCF1D00576F7C /* FSCalendarCollectionView.m */; };
 		4C9B974D240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B972B240CCF1D00576F7C /* FSCalendarCollectionView.m */; };
@@ -310,6 +298,18 @@
 		4CC520FB24C1441C00BF425C /* AktOrderScanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */; };
 		4CC520FC24C1441C00BF425C /* AktOrderScanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */; };
 		4CC9EA2B239DEE0000B69C2D /* AKTColorString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */; };
+		4CD228BE2521902E0089F433 /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B82521902E0089F433 /* SearchDateController.m */; };
+		4CD228BF2521902E0089F433 /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B82521902E0089F433 /* SearchDateController.m */; };
+		4CD228C02521902E0089F433 /* SearchDateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B82521902E0089F433 /* SearchDateController.m */; };
+		4CD228C12521902E0089F433 /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B92521902E0089F433 /* AKTSearchInfoVC.m */; };
+		4CD228C22521902E0089F433 /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B92521902E0089F433 /* AKTSearchInfoVC.m */; };
+		4CD228C32521902F0089F433 /* AKTSearchInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD228B92521902E0089F433 /* AKTSearchInfoVC.m */; };
+		4CD228C42521902F0089F433 /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BA2521902E0089F433 /* AKTSearchInfoVC.xib */; };
+		4CD228C52521902F0089F433 /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BA2521902E0089F433 /* AKTSearchInfoVC.xib */; };
+		4CD228C62521902F0089F433 /* AKTSearchInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BA2521902E0089F433 /* AKTSearchInfoVC.xib */; };
+		4CD228C72521902F0089F433 /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BB2521902E0089F433 /* SearchDateController.xib */; };
+		4CD228C82521902F0089F433 /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BB2521902E0089F433 /* SearchDateController.xib */; };
+		4CD228C92521902F0089F433 /* SearchDateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD228BB2521902E0089F433 /* SearchDateController.xib */; };
 		4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
 		4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
 		4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */; };
@@ -526,9 +526,6 @@
 		4C3D757A24A88ABF00D0F79A /* MineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineCell.xib; sourceTree = "<group>"; };
 		4C3D757C24A88ABF00D0F79A /* UnfinifshController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnfinifshController.xib; sourceTree = "<group>"; };
 		4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnfinifshController.m; sourceTree = "<group>"; };
-		4C3D758024A88ABF00D0F79A /* SearchDateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDateController.m; sourceTree = "<group>"; };
-		4C3D758524A88ABF00D0F79A /* SearchDateController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchDateController.xib; sourceTree = "<group>"; };
-		4C3D758724A88ABF00D0F79A /* SearchDateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDateController.h; sourceTree = "<group>"; };
 		4C3D758B24A88ABF00D0F79A /* UnfinifshController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnfinifshController.h; sourceTree = "<group>"; };
 		4C3D758C24A88ABF00D0F79A /* MineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCell.h; sourceTree = "<group>"; };
 		4C3D758E24A88ABF00D0F79A /* EditUserInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditUserInfoController.xib; sourceTree = "<group>"; };
@@ -579,9 +576,6 @@
 		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
 		4C869A90240940700018B943 /* AddWaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWaterMark.m; sourceTree = "<group>"; };
 		4C869A95240943FE0018B943 /* AktAgreement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = AktAgreement.html; sourceTree = "<group>"; };
-		4C89D65223A74E560024456F /* AKTSearchInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTSearchInfoVC.m; sourceTree = "<group>"; };
-		4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKTSearchInfoVC.xib; sourceTree = "<group>"; };
-		4C89D65423A74E560024456F /* AKTSearchInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTSearchInfoVC.h; sourceTree = "<group>"; };
 		4C9B972B240CCF1D00576F7C /* FSCalendarCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarCollectionView.m; sourceTree = "<group>"; };
 		4C9B972C240CCF1D00576F7C /* FSCalendarWeekdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarWeekdayView.h; sourceTree = "<group>"; };
 		4C9B972D240CCF1D00576F7C /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -628,6 +622,12 @@
 		4CC520F524C1441C00BF425C /* AktOrderScanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOrderScanVC.m; sourceTree = "<group>"; };
 		4CC520F624C1441C00BF425C /* AktOrderScanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOrderScanVC.xib; sourceTree = "<group>"; };
 		4CC9EA2A239DEE0000B69C2D /* AKTColorString.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AKTColorString.strings; sourceTree = "<group>"; };
+		4CD228B82521902E0089F433 /* SearchDateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDateController.m; sourceTree = "<group>"; };
+		4CD228B92521902E0089F433 /* AKTSearchInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTSearchInfoVC.m; sourceTree = "<group>"; };
+		4CD228BA2521902E0089F433 /* AKTSearchInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AKTSearchInfoVC.xib; sourceTree = "<group>"; };
+		4CD228BB2521902E0089F433 /* SearchDateController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchDateController.xib; sourceTree = "<group>"; };
+		4CD228BC2521902E0089F433 /* SearchDateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDateController.h; sourceTree = "<group>"; };
+		4CD228BD2521902E0089F433 /* AKTSearchInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTSearchInfoVC.h; sourceTree = "<group>"; };
 		4CD674C322E94CDF00AB76AF /* HMAddImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAddImagesView.m; sourceTree = "<group>"; };
 		4CD674C422E94CDF00AB76AF /* UIView+KIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KIAdditions.h"; sourceTree = "<group>"; };
 		4CD674C622E94CDF00AB76AF /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
@@ -959,19 +959,8 @@
 				4C3D758B24A88ABF00D0F79A /* UnfinifshController.h */,
 				4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */,
 				4C3D757C24A88ABF00D0F79A /* UnfinifshController.xib */,
-				4C3D757E24A88ABF00D0F79A /* SearchDate */,
 			);
 			path = OrderController;
-			sourceTree = "<group>";
-		};
-		4C3D757E24A88ABF00D0F79A /* SearchDate */ = {
-			isa = PBXGroup;
-			children = (
-				4C3D758724A88ABF00D0F79A /* SearchDateController.h */,
-				4C3D758024A88ABF00D0F79A /* SearchDateController.m */,
-				4C3D758524A88ABF00D0F79A /* SearchDateController.xib */,
-			);
-			path = SearchDate;
 			sourceTree = "<group>";
 		};
 		4C3D758D24A88ABF00D0F79A /* EditUserInfo */ = {
@@ -1077,16 +1066,6 @@
 			path = html;
 			sourceTree = "<group>";
 		};
-		4C89D65123A74E560024456F /* AktSearch */ = {
-			isa = PBXGroup;
-			children = (
-				4C89D65423A74E560024456F /* AKTSearchInfoVC.h */,
-				4C89D65223A74E560024456F /* AKTSearchInfoVC.m */,
-				4C89D65323A74E560024456F /* AKTSearchInfoVC.xib */,
-			);
-			path = AktSearch;
-			sourceTree = "<group>";
-		};
 		4C9B972A240CCF1D00576F7C /* FSCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1153,6 +1132,19 @@
 				4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		4CD228B72521902E0089F433 /* AktSearch */ = {
+			isa = PBXGroup;
+			children = (
+				4CD228BD2521902E0089F433 /* AKTSearchInfoVC.h */,
+				4CD228B92521902E0089F433 /* AKTSearchInfoVC.m */,
+				4CD228BA2521902E0089F433 /* AKTSearchInfoVC.xib */,
+				4CD228BC2521902E0089F433 /* SearchDateController.h */,
+				4CD228B82521902E0089F433 /* SearchDateController.m */,
+				4CD228BB2521902E0089F433 /* SearchDateController.xib */,
+			);
+			path = AktSearch;
 			sourceTree = "<group>";
 		};
 		4CD674C222E94CDF00AB76AF /* UpImage */ = {
@@ -1253,6 +1245,7 @@
 		AD475FCC1F8B651C003DC2F0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4CD228B72521902E0089F433 /* AktSearch */,
 				4C3DAB9224A9820F009126D5 /* getOrder */,
 				4C3DAB7B24A9820F009126D5 /* setOrder */,
 				4C3D755524A88ABF00D0F79A /* Mine */,
@@ -1324,7 +1317,6 @@
 		AD4DAA8E1F8F093800610281 /* ItemController */ = {
 			isa = PBXGroup;
 			children = (
-				4C89D65123A74E560024456F /* AktSearch */,
 				AD4DAA8F1F8F093800610281 /* DownOrders */,
 				AD4DAAC01F8F093800610281 /* UnfinishedTask */,
 				AD4DAA931F8F093800610281 /* PlanTask */,
@@ -1616,9 +1608,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C3DABAE24A9820F009126D5 /* DownOrderCell.xib in Resources */,
+				4CD228C72521902F0089F433 /* SearchDateController.xib in Resources */,
 				4C3D75F624A88ABF00D0F79A /* EditUserInfoController.xib in Resources */,
 				4C3D75C924A88ABF00D0F79A /* NotifyCell.xib in Resources */,
-				4C3D75E724A88ABF00D0F79A /* SearchDateController.xib in Resources */,
 				4C3D75AE24A88ABF00D0F79A /* AktFeedBackVC.xib in Resources */,
 				4C869A96240943FE0018B943 /* AktAgreement.html in Resources */,
 				AD4DAAC41F8F093800610281 /* DownOrdersController.xib in Resources */,
@@ -1628,6 +1620,7 @@
 				4C3D75BA24A88ABF00D0F79A /* SettingsController.xib in Resources */,
 				4C3D754C24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				AD6575A11FAAEA5600495D1E /* SignoutController.xib in Resources */,
+				4CD228C42521902F0089F433 /* AKTSearchInfoVC.xib in Resources */,
 				4C379746242205EE00DC9EFB /* VisitCell.xib in Resources */,
 				4C3D759C24A88ABF00D0F79A /* SettingsTableViewCell.xib in Resources */,
 				4CA9C2D5239F4A0D0029FEF5 /* AktTitleCell.xib in Resources */,
@@ -1645,7 +1638,6 @@
 				4C3DABB424A9820F009126D5 /* AktServiceRemarkCell.xib in Resources */,
 				4C3DABA224A9820F009126D5 /* AktAddOrderUserInfoCell.xib in Resources */,
 				4CD674EF22E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
-				4C89D65823A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
 				4C3DABBA24A9820F009126D5 /* ServicePojCell.xib in Resources */,
 				4C3D75B424A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
 				4C3DABA824A9820F009126D5 /* ServicePojController.xib in Resources */,
@@ -1672,7 +1664,6 @@
 			files = (
 				4C3DABB524A9820F009126D5 /* AktServiceRemarkCell.xib in Resources */,
 				4C3D75CA24A88ABF00D0F79A /* NotifyCell.xib in Resources */,
-				4C3D75E824A88ABF00D0F79A /* SearchDateController.xib in Resources */,
 				4C3DABA324A9820F009126D5 /* AktAddOrderUserInfoCell.xib in Resources */,
 				4C3D75AF24A88ABF00D0F79A /* AktFeedBackVC.xib in Resources */,
 				4C3D75BE24A88ABF00D0F79A /* CheckUpdateViewController.xib in Resources */,
@@ -1680,12 +1671,14 @@
 				4C3DABA924A9820F009126D5 /* ServicePojController.xib in Resources */,
 				4C3D754D24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				4C3D754424A87CBC00D0F79A /* FindPswController.xib in Resources */,
+				4CD228C52521902F0089F433 /* AKTSearchInfoVC.xib in Resources */,
 				4C3D759D24A88ABF00D0F79A /* SettingsTableViewCell.xib in Resources */,
 				4CC0AB7E24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				4C3D753E24A87CBB00D0F79A /* SignInVC.xib in Resources */,
 				4C3D75B524A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
 				4C3D75BB24A88ABF00D0F79A /* SettingsController.xib in Resources */,
 				4C37975C2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
+				4CD228C82521902F0089F433 /* SearchDateController.xib in Resources */,
 				4C869A97240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379750242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4CD674F022E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
@@ -1700,7 +1693,6 @@
 				4C3744A924DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */,
 				4C3D754A24A87CBC00D0F79A /* LoginViewController.xib in Resources */,
 				4C3D75A324A88ABF00D0F79A /* AboutUsController.xib in Resources */,
-				4C89D65923A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
 				4C3DAB9D24A9820F009126D5 /* HandCodeController.xib in Resources */,
 				4C37974D242205EE00DC9EFB /* NoDateCell.xib in Resources */,
 				4C3D75D624A88ABF00D0F79A /* MineCell.xib in Resources */,
@@ -1714,7 +1706,6 @@
 			files = (
 				4C3DABB624A9820F009126D5 /* AktServiceRemarkCell.xib in Resources */,
 				4C3D75CB24A88ABF00D0F79A /* NotifyCell.xib in Resources */,
-				4C3D75E924A88ABF00D0F79A /* SearchDateController.xib in Resources */,
 				4C3DABA424A9820F009126D5 /* AktAddOrderUserInfoCell.xib in Resources */,
 				4C3D75B024A88ABF00D0F79A /* AktFeedBackVC.xib in Resources */,
 				4C3D75BF24A88ABF00D0F79A /* CheckUpdateViewController.xib in Resources */,
@@ -1722,12 +1713,14 @@
 				4C3DABAA24A9820F009126D5 /* ServicePojController.xib in Resources */,
 				4C3D754E24A87CBC00D0F79A /* AktWSigninListVC.xib in Resources */,
 				4C3D754524A87CBC00D0F79A /* FindPswController.xib in Resources */,
+				4CD228C62521902F0089F433 /* AKTSearchInfoVC.xib in Resources */,
 				4C3D759E24A88ABF00D0F79A /* SettingsTableViewCell.xib in Resources */,
 				4CC0AB7F24C03D0200C57A0D /* AktOrderDetailsVC.xib in Resources */,
 				4C3D753F24A87CBC00D0F79A /* SignInVC.xib in Resources */,
 				4C3D75B624A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
 				4C3D75BC24A88ABF00D0F79A /* SettingsController.xib in Resources */,
 				4C37975D2422088E00DC9EFB /* AktOrderDetailsCheckImageVC.xib in Resources */,
+				4CD228C92521902F0089F433 /* SearchDateController.xib in Resources */,
 				4C869A98240943FE0018B943 /* AktAgreement.html in Resources */,
 				4C379751242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4CD674F122E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
@@ -1742,7 +1735,6 @@
 				4C3744AA24DD2C9B00CBE56D /* AktServiceStationListVC.xib in Resources */,
 				4C3D754B24A87CBC00D0F79A /* LoginViewController.xib in Resources */,
 				4C3D75A424A88ABF00D0F79A /* AboutUsController.xib in Resources */,
-				4C89D65A23A74E560024456F /* AKTSearchInfoVC.xib in Resources */,
 				4C3DAB9E24A9820F009126D5 /* HandCodeController.xib in Resources */,
 				4C37974E242205EE00DC9EFB /* NoDateCell.xib in Resources */,
 				4C3D75D724A88ABF00D0F79A /* MineCell.xib in Resources */,
@@ -1813,6 +1805,7 @@
 				4C9B975D240CCF1D00576F7C /* FSCalendarCollectionViewLayout.m in Sources */,
 				4C3D759924A88ABF00D0F79A /* SettingsTableViewCell.m in Sources */,
 				ADD835F720577F4D0003A1C5 /* DataManager.m in Sources */,
+				4CD228BE2521902E0089F433 /* SearchDateController.m in Sources */,
 				4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				AD5F488B1FA06BEB00A0C201 /* SaveDocumentArray.m in Sources */,
 				4C3DABB124A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
@@ -1831,7 +1824,6 @@
 				4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 				AD63865E1FD0EB4F00265AAB /* NSMutableDictionary+Utils.m in Sources */,
 				4C9B974B240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
-				4C3D75DE24A88ABF00D0F79A /* SearchDateController.m in Sources */,
 				4C3D75F924A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4CAED3F923B9FBEC00BAF2E3 /* DataModel.m in Sources */,
 				4C379749242205EE00DC9EFB /* SignInCell.m in Sources */,
@@ -1898,7 +1890,6 @@
 				4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */,
 				4CD6754822F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C9B9760240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
-				4C89D65523A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C3DAB9624A9820F009126D5 /* AktAddOrderUserInfoCell.m in Sources */,
 				4C379752242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C3D75CC24A88ABF00D0F79A /* NotifyCell.m in Sources */,
@@ -1916,6 +1907,7 @@
 				4CDAD74B240F7E0E00CF9129 /* UILabel+Plus.m in Sources */,
 				ADD789181F7DF730008DEC55 /* AppDelegate.m in Sources */,
 				AD7B00821FA2E9A400DCCB5F /* WorkBaseViewController.m in Sources */,
+				4CD228C12521902E0089F433 /* AKTSearchInfoVC.m in Sources */,
 				4C9B975A240CCF1D00576F7C /* FSCalendar.m in Sources */,
 				AD4DAAEC1F8F546700610281 /* ReachbilityTool.m in Sources */,
 				ADD2E16F1F99E77D004DFE76 /* ButtonUtil.m in Sources */,
@@ -1985,8 +1977,8 @@
 				4CD6754922F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C3D753824A87CBB00D0F79A /* AktWSigninListVC.m in Sources */,
 				4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
+				4CD228BF2521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B974F240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
-				4C89D65623A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C3D75D024A88ABF00D0F79A /* NotifyController.m in Sources */,
 				4CDAD74F240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FA24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
@@ -1996,6 +1988,7 @@
 				4C3DABB224A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
 				4CD674E122E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4C3DABA024A9820F009126D5 /* DownOrderCell.m in Sources */,
+				4CD228C22521902E0089F433 /* AKTSearchInfoVC.m in Sources */,
 				4C17AD3124207CFD0006C45F /* AktLoginCmd.m in Sources */,
 				4CDAD743240F7E0E00CF9129 /* NSArray+Extension.m in Sources */,
 				4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */,
@@ -2015,7 +2008,6 @@
 				4C9B9773240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C379753242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C3D75D324A88ABF00D0F79A /* MineController.m in Sources */,
-				4C3D75DF24A88ABF00D0F79A /* SearchDateController.m in Sources */,
 				4C4AD8FD23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2081,8 +2073,8 @@
 				4CD6754A22F1462700AB76AF /* SinoutReasonView.m in Sources */,
 				4C3D753924A87CBB00D0F79A /* AktWSigninListVC.m in Sources */,
 				4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
+				4CD228C02521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B9750240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
-				4C89D65723A74E560024456F /* AKTSearchInfoVC.m in Sources */,
 				4C3D75D124A88ABF00D0F79A /* NotifyController.m in Sources */,
 				4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FB24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
@@ -2092,6 +2084,7 @@
 				4C3DABB324A9820F009126D5 /* AktServiceRemarkCell.m in Sources */,
 				4CD674E222E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				4C3DABA124A9820F009126D5 /* DownOrderCell.m in Sources */,
+				4CD228C32521902F0089F433 /* AKTSearchInfoVC.m in Sources */,
 				4C17AD3224207CFD0006C45F /* AktLoginCmd.m in Sources */,
 				4CDAD744240F7E0E00CF9129 /* NSArray+Extension.m in Sources */,
 				4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */,
@@ -2111,7 +2104,6 @@
 				4C9B9774240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C379754242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4C3D75D424A88ABF00D0F79A /* MineController.m in Sources */,
-				4C3D75E024A88ABF00D0F79A /* SearchDateController.m in Sources */,
 				4C4AD8FE23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
