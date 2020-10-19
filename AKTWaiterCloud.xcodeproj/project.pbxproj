@@ -1128,8 +1128,8 @@
 			isa = PBXGroup;
 			children = (
 				4CD2294F2521B3570089F433 /* PlanTaskController.h */,
-				4CD229502521B3570089F433 /* PlanTaskController.xib */,
 				4CD229512521B3570089F433 /* PlanTaskController.m */,
+				4CD229502521B3570089F433 /* PlanTaskController.xib */,
 			);
 			path = AktPlanOrder;
 			sourceTree = "<group>";
@@ -1160,8 +1160,8 @@
 			isa = PBXGroup;
 			children = (
 				4CD22A4A2521D7760089F433 /* DownOrdersController.h */,
-				4CD22A4B2521D7760089F433 /* DownOrdersController.xib */,
 				4CD22A4C2521D7760089F433 /* DownOrdersController.m */,
+				4CD22A4B2521D7760089F433 /* DownOrdersController.xib */,
 				4CD22A4D2521D7760089F433 /* setOrder */,
 			);
 			path = DownOrders;
@@ -1170,19 +1170,19 @@
 		4CD22A4D2521D7760089F433 /* setOrder */ = {
 			isa = PBXGroup;
 			children = (
-				4CD22A4E2521D7760089F433 /* DownOrderController.m */,
 				4CD22A4F2521D7760089F433 /* HandCodeController.h */,
-				4CD22A502521D7760089F433 /* HandCodeController.xib */,
-				4CD22A512521D7760089F433 /* AktServiceStationListVC.m */,
-				4CD22A522521D7760089F433 /* ServicePojController.h */,
-				4CD22A532521D7760089F433 /* QRCodeViewController.m */,
-				4CD22A542521D7760089F433 /* ServicePojController.xib */,
 				4CD22A552521D7760089F433 /* HandCodeController.m */,
-				4CD22A562521D7760089F433 /* DownOrderController.h */,
+				4CD22A502521D7760089F433 /* HandCodeController.xib */,
 				4CD22A572521D7760089F433 /* AktServiceStationListVC.h */,
-				4CD22A582521D7760089F433 /* ServicePojController.m */,
-				4CD22A592521D7760089F433 /* QRCodeViewController.h */,
+				4CD22A512521D7760089F433 /* AktServiceStationListVC.m */,
 				4CD22A5A2521D7760089F433 /* AktServiceStationListVC.xib */,
+				4CD22A522521D7760089F433 /* ServicePojController.h */,
+				4CD22A582521D7760089F433 /* ServicePojController.m */,
+				4CD22A542521D7760089F433 /* ServicePojController.xib */,
+				4CD22A592521D7760089F433 /* QRCodeViewController.h */,
+				4CD22A532521D7760089F433 /* QRCodeViewController.m */,
+				4CD22A562521D7760089F433 /* DownOrderController.h */,
+				4CD22A4E2521D7760089F433 /* DownOrderController.m */,
 			);
 			path = setOrder;
 			sourceTree = "<group>";
@@ -1190,11 +1190,11 @@
 		4CD22A7F2521DA880089F433 /* UnfinishedTask */ = {
 			isa = PBXGroup;
 			children = (
-				4CD22A802521DA880089F433 /* UnfinishOrderTaskController.h */,
 				4CD22A812521DA880089F433 /* orderDetails */,
 				4CD22A8B2521DA880089F433 /* signin */,
-				4CD22A972521DA880089F433 /* UnfinishOrderTaskController.xib */,
+				4CD22A802521DA880089F433 /* UnfinishOrderTaskController.h */,
 				4CD22A982521DA880089F433 /* UnfinishOrderTaskController.m */,
+				4CD22A972521DA880089F433 /* UnfinishOrderTaskController.xib */,
 			);
 			path = UnfinishedTask;
 			sourceTree = "<group>";
@@ -1202,14 +1202,14 @@
 		4CD22A812521DA880089F433 /* orderDetails */ = {
 			isa = PBXGroup;
 			children = (
-				4CD22A822521DA880089F433 /* AktOrderDetailsCheckImageVC.h */,
-				4CD22A832521DA880089F433 /* AktOrderScanVC.xib */,
-				4CD22A842521DA880089F433 /* MinuteTaskController.h */,
 				4CD22A852521DA880089F433 /* AktOrderScanVC.h */,
+				4CD22A892521DA880089F433 /* AktOrderScanVC.m */,
+				4CD22A832521DA880089F433 /* AktOrderScanVC.xib */,
+				4CD22A822521DA880089F433 /* AktOrderDetailsCheckImageVC.h */,
 				4CD22A862521DA880089F433 /* AktOrderDetailsCheckImageVC.m */,
 				4CD22A872521DA880089F433 /* AktOrderDetailsCheckImageVC.xib */,
+				4CD22A842521DA880089F433 /* MinuteTaskController.h */,
 				4CD22A882521DA880089F433 /* MinuteTaskController.m */,
-				4CD22A892521DA880089F433 /* AktOrderScanVC.m */,
 				4CD22A8A2521DA880089F433 /* MinuteTaskController.xib */,
 			);
 			path = orderDetails;
@@ -1218,17 +1218,17 @@
 		4CD22A8B2521DA880089F433 /* signin */ = {
 			isa = PBXGroup;
 			children = (
-				4CD22A8C2521DA880089F433 /* SinoutReasonView.m */,
 				4CD22A8D2521DA880089F433 /* AktWCMp3.h */,
+				4CD22A922521DA880089F433 /* AktWCMp3.m */,
 				4CD22A8E2521DA880089F433 /* SignoutController.xib */,
 				4CD22A8F2521DA880089F433 /* SignoutController.h */,
-				4CD22A902521DA880089F433 /* PhotoCell.h */,
-				4CD22A912521DA880089F433 /* PhotoView.h */,
-				4CD22A922521DA880089F433 /* AktWCMp3.m */,
-				4CD22A932521DA880089F433 /* SinoutReasonView.h */,
-				4CD22A942521DA880089F433 /* PhotoCell.m */,
 				4CD22A952521DA880089F433 /* SignoutController.m */,
+				4CD22A902521DA880089F433 /* PhotoCell.h */,
+				4CD22A942521DA880089F433 /* PhotoCell.m */,
+				4CD22A912521DA880089F433 /* PhotoView.h */,
 				4CD22A962521DA880089F433 /* PhotoView.m */,
+				4CD22A932521DA880089F433 /* SinoutReasonView.h */,
+				4CD22A8C2521DA880089F433 /* SinoutReasonView.m */,
 			);
 			path = signin;
 			sourceTree = "<group>";
@@ -2287,7 +2287,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = AKTWaiterCloud/AKTWaiterCloud.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0;
@@ -2386,8 +2386,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = AKTWaiterCloud/AKTWaiterCloud.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jinqiu Antai Calling Service System Co., Ltd. (47QX444MCT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jinqiu Antai Calling Service System Co., Ltd. (47QX444MCT)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
@@ -2471,7 +2471,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ankangtong.service;
 				PRODUCT_NAME = "服务云";
 				PROVISIONING_PROFILE = "8b5ce4f5-9466-499f-b68e-69db5693471e";
-				PROVISIONING_PROFILE_SPECIFIER = der_newServiceCloud;
+				PROVISIONING_PROFILE_SPECIFIER = dis_newServiceCloud;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

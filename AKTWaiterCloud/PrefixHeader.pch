@@ -92,9 +92,9 @@ static const int ddLogLevel = DDLogLevelError;
 
 //#define appid @"1294211974"
 #define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号
-#define JgPushAppKey @"17da47cfb58c004d9905e3ae"
+#define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
 #define Bugly_AppId @"d5a027a07b"  // 个人账号
-#define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥
+#define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -104,13 +104,12 @@ static const int ddLogLevel = DDLogLevelError;
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-//#define SERVICEURL @"http://service.ankangtong.com/service-cloud/appService"
-#define SERVICEURL @"http://180.168.24.187:20080"
+#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
+//#define SERVICEURL @"http://180.168.24.187:20080"
 
 // 测试环境
 //#define SERVICEURL @"http://172.16.31.133" // 新测试环境 王智慧
 //#define SERVICEURL @"http://192.168.1.117" // 黎翔192.168.1.177     或者117
-
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 
@@ -118,13 +117,12 @@ static const int ddLogLevel = DDLogLevelError;
 #define kColor(a) [AktUtil getColorFormResouce:a]
 #define sendNotification(key)     [[NSNotificationCenter defaultCenter] postNotificationName:key object:self userInfo:nil];  //发送通知
 #define WeakObj(o) autoreleasepool{} __weak typeof(o) o##Weak = o; //引用self
-
-
 #define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
-
+/**返回数据相关状态**/
 #define ResponseCode @"code"
 #define ResponseMsg @"message"
 #define ResponseData @"object"
+/*缓存相关数据*/
 #define Token @"AKTserviceNewToken"
 #define AKTName @"AktUserName"
 #define AKTPwd @"AktUserPwd"

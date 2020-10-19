@@ -93,7 +93,7 @@
 }
 
 -(void)requestUnFinishedTask{
-    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"tenantsId":kString([LoginModel gets].tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceBegin":searchBTime,@"serviceEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
+    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"tenantsId":kString([LoginModel gets].tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceDate":searchBTime,@"serviceDateEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:@"code"];

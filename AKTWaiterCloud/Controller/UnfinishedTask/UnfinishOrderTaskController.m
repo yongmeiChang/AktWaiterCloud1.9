@@ -60,11 +60,8 @@
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
-    //去除没有数据时的分割线
-    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-    //去除右侧滚动条
-    self.taskTableview.showsVerticalScrollIndicator = NO;
-  
+//    //去除没有数据时的分割线
+//    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
     [self.taskTableview.mj_header beginRefreshing];
