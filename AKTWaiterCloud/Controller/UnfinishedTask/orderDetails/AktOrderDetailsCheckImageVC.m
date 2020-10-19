@@ -53,10 +53,9 @@
                 for (int i = 0; i<obj.count; i++) {
                     NSDictionary * object = obj[i];
                     NSString * affixName = object[@"affixUrl"];
-//                    NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-//                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                    UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//                    photoImageView.image = [UIImage imageWithData:imageData];
+                    UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, 0, 0)];
+                    photoImageView.clipsToBounds = YES;
+                    photoImageView.contentMode = UIViewContentModeScaleAspectFit;
                      photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                     [scollBg addSubview:photoImageView];
                     
@@ -93,20 +92,18 @@
             [self.view addSubview:popview];
             
             UIScrollView *scollBg = [[UIScrollView alloc] init];
-            scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_WIDTH);
+            scollBg.contentSize = CGSizeMake(SCREEN_WIDTH*obj.count, SCREEN_HEIGHT-AktNavAndStatusHight);
             scollBg.pagingEnabled = YES;
             [popview addSubview:scollBg];
             
             for (int i = 0; i<obj.count; i++) {
                 NSDictionary * object = obj[i];
                 NSString * affixName = object[@"affixUrl"];
-//                NSString * imagebaseStr = [NSString stringWithFormat:@"%@",affixName];
-//                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imagebaseStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//                photoImageView.image = [UIImage imageWithData:imageData];
+                UIImageView * photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_HEIGHT-AktNavAndStatusHight)];
+                photoImageView.clipsToBounds = YES;
+                photoImageView.contentMode = UIViewContentModeScaleAspectFit;
                 photoImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(affixName)]]]];
                 [scollBg addSubview:photoImageView];
-                
             }
             [popview mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(0);
