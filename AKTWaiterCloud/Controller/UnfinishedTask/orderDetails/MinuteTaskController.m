@@ -464,7 +464,7 @@
                        NSLog(@"弹框");
                          
                        BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]);
-                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && [model.lateAbnormal isEqualToString:@"2"]);
+                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && (bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]);
                        
                        if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
                             AktOrderScanVC *scanOrder = [AktOrderScanVC new];

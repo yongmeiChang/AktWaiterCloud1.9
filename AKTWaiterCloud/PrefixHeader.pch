@@ -67,7 +67,7 @@
 #define ChangeRootViewController @"changeRootViewController"
 #define SCREEN_HEIGHT       CGRectGetHeight([UIScreen mainScreen].bounds)/*获取屏幕高度*/
 #define SCREEN_WIDTH        CGRectGetWidth([UIScreen mainScreen].bounds)/*获取屏幕宽度*/
-#define AktNavAndStatusHight  self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height    // 导航栏+状态栏高度
+#define AktNavAndStatusHight  (self.navigationController.navigationBar.frame.size.height)+([[UIApplication sharedApplication] statusBarFrame].size.height)    // 导航栏+状态栏高度
 #define AktNavHight self.navigationController.navigationBar.frame.size.height  // 导航栏高度
 #define AktStatusHight [[UIApplication sharedApplication] statusBarFrame].size.height // 状态栏高度
 #define AktTabbarHight self.tabBarController.tabBar.frame.size.height  // 底部tabbar高度
