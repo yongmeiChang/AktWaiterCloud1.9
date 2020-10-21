@@ -23,6 +23,7 @@
 @end
 
 @implementation AppDelegate
+
 + (AppDelegate *)sharedDelegate{
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
@@ -32,7 +33,7 @@
     //UIApplicationLaunchOptionsLocalNotificationKey表示用户点击本地通知导致app被启动运行；如果不含有对应键值则表示 App 不是因点击本地通知而被启动，可能为直接点击icon被启动或其他。
     // 本地通知内容获取：NSDictionary *localNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey]
 
-    [application setApplicationIconBadgeNumber:0];
+    [application setApplicationIconBadgeNumber:0]; // APP 角标
     [application cancelAllLocalNotifications];
     /**极光推送初始化*/
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
@@ -53,7 +54,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judegeRange:) name:@"localaction" object:nil];
     // 注册bugly
     [Bugly startWithAppId:Bugly_AppId];
-    self.Registration_ID=@"";
+    self.Registration_ID=@"123456789";
 
     //注册高德地图
     [AMapServices sharedServices].apiKey = GAODEAPPKEY;

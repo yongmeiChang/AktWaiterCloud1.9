@@ -7,7 +7,6 @@
 //
 
 #import "UnfinifshController.h"
-#import "OrderTaskFmdb.h"
 #import "PlanTaskCell.h"
 #import "MinuteTaskController.h"
 #import "SearchDateController.h"
@@ -27,9 +26,6 @@
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
 @property(nonatomic,strong) NSMutableArray * dateArray;//日历选中某天的数据源
-
-@property(nonatomic,strong) OrderTaskFmdb * orderfmdb;
-
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 
 @end
@@ -155,8 +151,6 @@
 -(void)requestTask{
     //网络状态判断
 //    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-//        self.orderfmdb = [[OrderTaskFmdb alloc] init];
-//        _dataArray = [self.orderfmdb findAllOrderInfo];
 //        if(_dataArray.count==0){
 //            self.netWorkErrorView.hidden = NO;
 //        }else{
@@ -194,29 +188,21 @@
                     self.netWorkErrorView.hidden = YES;
 
                     for (NSMutableDictionary * dicc in arr) {
-//                        NSDictionary * createBydic = [dicc objectForKey:@"createBy"];
                         NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-//                        NSString * createBy = [createBydic objectForKey:@"id"];
                         NSString * updateBy = [updateBydic objectForKey:@"id"];
-//                        [dicc removeObjectForKey:@"createBy"];
                         [dicc removeObjectForKey:@"updateBy"];
-//                        [dicc setObject:createBy forKeyedSubscript:@"createBy"];
                         [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                         NSDictionary * objdic = (NSDictionary*)dicc;
-                        self.orderfmdb = [[OrderTaskFmdb alloc]init];
                         OrderInfo * orderinfo;
-//                        orderinfo = [self.orderfmdb findByWorkNo:[objdic objectForKey:@"workNo"]];
                         if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil||!orderinfo.tid){
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
                             [_dataArray addObject:orderinfo];
-//                            [self.orderfmdb saveOrderTask:orderinfo];
                             
                         }else{
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
                             [_dataArray addObject:orderinfo];
-//                            [self.orderfmdb updateObject:orderinfo];
                         }
                     }
                     

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dng-Jl-AqG">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="783"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htd-eJ-fuQ">
                     <rect key="frame" x="30" y="793" width="354" height="64"/>
                     <constraints>
@@ -27,9 +30,6 @@
                         <action selector="updateAllInfo:" destination="-1" eventType="touchUpInside" id="1wD-is-aqY"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dng-Jl-AqG">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="793"/>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -38,7 +38,7 @@
                 <constraint firstItem="Dng-Jl-AqG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Gbx-K2-UJx"/>
                 <constraint firstAttribute="bottom" secondItem="htd-eJ-fuQ" secondAttribute="bottom" constant="39" id="I36-m8-TL6"/>
                 <constraint firstAttribute="trailing" secondItem="Dng-Jl-AqG" secondAttribute="trailing" id="KY6-Mm-D3A"/>
-                <constraint firstItem="htd-eJ-fuQ" firstAttribute="top" secondItem="Dng-Jl-AqG" secondAttribute="bottom" id="OVm-RJ-y3x"/>
+                <constraint firstItem="htd-eJ-fuQ" firstAttribute="top" secondItem="Dng-Jl-AqG" secondAttribute="bottom" constant="10" id="OVm-RJ-y3x"/>
                 <constraint firstItem="htd-eJ-fuQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="igl-Vo-gxI"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
