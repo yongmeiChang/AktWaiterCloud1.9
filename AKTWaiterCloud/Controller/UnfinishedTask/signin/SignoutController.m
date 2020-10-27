@@ -1198,6 +1198,26 @@
 }
 #pragma mark - 提交信息
 -(IBAction)submitClick:(id)sender{
+    if (_type == 0) { // 签入
+        if ([self.findAdmodel.photographSignIn isEqualToString:@"1"]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
+            return;
+        }
+        if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
+            return;
+        }
+    }else{ // 签出
+        if ([self.findAdmodel.photographSignOut isEqualToString:@"1"]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
+            return;
+        }
+        if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
+            return;
+        }
+    }
+    
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     
      isPostLocation = YES;

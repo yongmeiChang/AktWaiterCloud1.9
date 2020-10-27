@@ -302,7 +302,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return indexPath.section==1?53:(indexPath.section == 2?150.0f:163.f);
+    return indexPath.section==1?53:(indexPath.section == 2?180.0f:163.f);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

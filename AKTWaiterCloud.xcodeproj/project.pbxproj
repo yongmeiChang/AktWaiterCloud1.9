@@ -1220,9 +1220,9 @@
 			children = (
 				4CD22A8D2521DA880089F433 /* AktWCMp3.h */,
 				4CD22A922521DA880089F433 /* AktWCMp3.m */,
-				4CD22A8E2521DA880089F433 /* SignoutController.xib */,
 				4CD22A8F2521DA880089F433 /* SignoutController.h */,
 				4CD22A952521DA880089F433 /* SignoutController.m */,
+				4CD22A8E2521DA880089F433 /* SignoutController.xib */,
 				4CD22A902521DA880089F433 /* PhotoCell.h */,
 				4CD22A942521DA880089F433 /* PhotoCell.m */,
 				4CD22A912521DA880089F433 /* PhotoView.h */,
@@ -2290,7 +2290,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_INPUT_FILETYPE = automatic;
@@ -2307,7 +2307,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 2.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
@@ -2389,7 +2389,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2405,7 +2405,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 2.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
