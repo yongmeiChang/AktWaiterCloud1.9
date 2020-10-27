@@ -30,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* maxLocationDistanceSignIn; // 签入最大定位误差 米  前端对比：误差之内是正常
 @property(nonatomic,strong) NSString <Optional>* locationAbnormalSignIn; //签入定位异常时操作    1，2，3，0  同迟到操作类型一致(lateAbnormal)
 
-@property(nonatomic,strong) NSString <Optional>* photographSignIn;//是否签入拍照   1是 0 否 （一下关于是否统一定义：1是 0否,否的话隐藏相关界面）
+@property(nonatomic,strong) NSString <Optional>* photographSignIn;//是否签入拍照、是否必须上传图片   1是 0 否 （一下关于是否统一定义：1是 0否,否的话隐藏相关界面）
 @property(nonatomic,strong) NSString <Optional>* photosNumberSignIn; // 签入照片数量  最大值是3
 @property(nonatomic,strong) NSString <Optional>* photoAlbumSignIn; // 是否允许签入打开相册 1是 0否
-@property(nonatomic,strong) NSString <Optional>* soundRecordingSignIn; // 是否签入录音
+@property(nonatomic,strong) NSString <Optional>* soundRecordingSignIn; // 是否签入录音、是否必须上传录音
 @property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignIn; // 签入录音时长 秒
 
 @property(nonatomic,strong) NSString <Optional>* codeScanSignOut; // 是否扫码签出
@@ -48,10 +48,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* maxLocationDistanceSignOut; // 签出最大定位误差
 @property(nonatomic,strong) NSString <Optional>* locationAbnormalSignOut; // 签出定位异常时操作 1 2 3  0
 
-@property(nonatomic,strong) NSString <Optional>* photographSignOut; // 是否签出拍照
+@property(nonatomic,strong) NSString <Optional>* photographSignOut; // 是否签出拍照、是否必须上传图片
 @property(nonatomic,strong) NSString <Optional>* photosNumberSignOut; // 签出照片数量
 @property(nonatomic,strong) NSString <Optional>*photoAlbumSignOut; // 是否允许签出打开相册 1是 0否
-@property(nonatomic,strong) NSString <Optional>* soundRecordingSignOut; // 是否签出录音
+@property(nonatomic,strong) NSString <Optional>* soundRecordingSignOut; // 是否签出录音、是否必须上传录音
 @property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignOut; // 签出录音时长
 
 @property(nonatomic,strong) NSString <Optional>* recordServiceLength; // 是否记录服务时长

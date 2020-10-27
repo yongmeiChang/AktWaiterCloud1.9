@@ -56,7 +56,7 @@
         [self showMessageAlertWithController:self Message:[dic objectForKey:ResponseMsg]];
         
     } failure:^(NSError *error) {
-        [self showMessageAlertWithController:self Message:@"发送失败，请重新发送"];
+        [self showMessageAlertWithController:self Message:error.domain];
     }];
     [[AppDelegate sharedDelegate] hidHUD];
 }

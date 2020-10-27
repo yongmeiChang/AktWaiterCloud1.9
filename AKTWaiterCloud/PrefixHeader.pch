@@ -91,9 +91,9 @@ static const int ddLogLevel = DDLogLevelError;
 #endif
 
 //#define appid @"1294211974"
-#define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号
+#define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号,每一个APP对应唯一的AppKey
 #define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
-#define Bugly_AppId @"d5a027a07b"  // 个人账号
+#define Bugly_AppId @"d5a027a07b"  // 个人账号，每一个APP对应唯一的AppKey
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
 /**网络状态*/
 #define Logining @"登录中..."
