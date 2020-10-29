@@ -63,9 +63,9 @@
     [self initCocoaLumberjack];
     //查找本地缓存用户数据
     modeluser = [UserInfo getsUser];
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
+//    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
          [self getTheCurrentVersion];//版本提示
-    }
+//    }
     // 模式 强制白色
     if (@available(iOS 13.0, *)) {
         self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
@@ -310,30 +310,31 @@
 -(void)getTheCurrentVersion{
     //获取版本号
     NSString *versionValueStringForSystemNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-    [[AktLoginCmd sharedTool] requestAppVersionParameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypeGet success:^(id responseObject) {
-        NSDictionary * dic = [responseObject objectForKey:ResponseData];
-        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
-            // 最新版本号
-            NSString *iTunesVersion = dic[@"versions"];
-            // 应用程序介绍网址(用户升级跳转URL)
-            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
-            
-            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
-                NSLog(@"不是最新版本,需要更新");
+//    [[AktLoginCmd sharedTool] requestAppVersionParameters:@{@"appKind":@"1",@"appType":@"2"} type:HttpRequestTypeGet success:^(id responseObject) {
+//        NSDictionary * dic = [responseObject objectForKey:ResponseData];
+//        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+//            // 最新版本号
+//            NSString *iTunesVersion = dic[@"versions"];
+//            // 应用程序介绍网址(用户升级跳转URL)
+//            trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
+//
+//            if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
+//                NSLog(@"不是最新版本,需要更新");
                 // 第一次更新
                [[NSUserDefaults standardUserDefaults] setObject:@"isUpadateVersion" forKey:@"isUpadateVersion"];
                [[NSUserDefaults standardUserDefaults] synchronize];
                 AktResetAppView *resetView=[[AktResetAppView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH ,SCREEN_HEIGHT)];
                  resetView.tag = 102;
                  resetView.delegate = self;
-                resetView.strContent = dic[@"updateContent"];
+//                resetView.strContent = dic[@"updateContent"];
+                 resetView.strContent = @"测试";
                 [[UIApplication sharedApplication].keyWindow addSubview:resetView];
-            } else {
-                NSLog(@"已是最新版本,不需要更新!");
-            }
-        }
-    } failure:^(NSError *error) {
-    }];
+//            } else {
+//                NSLog(@"已是最新版本,不需要更新!");
+//            }
+//        }
+//    } failure:^(NSError *error) {
+//    }];
 }
 
 -(void)didNoResetAppClose:(NSInteger)type{

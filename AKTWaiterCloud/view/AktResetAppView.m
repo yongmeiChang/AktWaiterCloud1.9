@@ -94,14 +94,7 @@
     [btnLoginReset addTarget:self action:@selector(btnCloseViewClick:) forControlEvents:UIControlEventTouchUpInside];
     btnLoginReset.tag = 0;
     [Wbg addSubview:btnLoginReset];
-    [btnLoginReset mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(labLine.mas_top);
-        make.left.mas_equalTo(Wbg.mas_left);
-        make.width.mas_equalTo(Wbg.mas_width).multipliedBy(0.5);
-        make.bottom.mas_equalTo(Wbg.mas_bottom);
-        make.height.mas_equalTo(47.5);
-    }];
-
+    
     UIButton *btnClose = [[UIButton alloc] init];
     [btnClose addTarget:self action:@selector(btnCloseViewClick:) forControlEvents:UIControlEventTouchUpInside];
     [btnClose setTitle:@"立即更新" forState:UIControlStateNormal];
@@ -109,12 +102,33 @@
     [btnClose setTitleColor:kColor(@"C10") forState:UIControlStateNormal];
     btnClose.tag = 1;
     [Wbg addSubview:btnClose];
-    [btnClose mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(labLine.mas_top);
-        make.right.mas_equalTo(Wbg.mas_right);
-        make.width.mas_equalTo(Wbg.mas_width).multipliedBy(0.5);
-        make.bottom.mas_equalTo(Wbg.mas_bottom);
-    }];
+  
+    if (_isUpdate) {
+        /**立即更新**/
+        [btnClose mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(labLine.mas_top);
+            make.right.mas_equalTo(Wbg.mas_right);
+            make.width.mas_equalTo(Wbg.mas_width).multipliedBy(1);
+            make.bottom.mas_equalTo(Wbg.mas_bottom);
+        }];
+        
+    }else{
+        /**非立即更新**/
+        [btnLoginReset mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(labLine.mas_top);
+            make.left.mas_equalTo(Wbg.mas_left);
+            make.width.mas_equalTo(Wbg.mas_width).multipliedBy(0.5);
+            make.bottom.mas_equalTo(Wbg.mas_bottom);
+            make.height.mas_equalTo(47.5);
+        }];
+        
+        [btnClose mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(labLine.mas_top);
+            make.right.mas_equalTo(Wbg.mas_right);
+            make.width.mas_equalTo(Wbg.mas_width).multipliedBy(0.5);
+            make.bottom.mas_equalTo(Wbg.mas_bottom);
+        }];
+    }
     
     UILabel *labLinev = [[UILabel alloc] init];
     labLinev.backgroundColor = kColor(@"C12");
