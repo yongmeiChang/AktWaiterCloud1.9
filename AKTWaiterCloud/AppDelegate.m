@@ -327,6 +327,8 @@
                  resetView.tag = 102;
                  resetView.delegate = self;
                 resetView.strContent = dic[@"updateContent"];
+                 resetView.isUpdate = NO;
+    
                 [[UIApplication sharedApplication].keyWindow addSubview:resetView];
             } else {
                 NSLog(@"已是最新版本,不需要更新!");
