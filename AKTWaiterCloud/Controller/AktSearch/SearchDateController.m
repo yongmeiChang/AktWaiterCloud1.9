@@ -223,7 +223,7 @@
         [self showMessageAlertWithController:self Message:@"请输入开始时间"];
         return;
     }
-    if([_bTime isEqualToString:@""]){
+    if([self.labStartData.text isEqualToString:@"请选择时间"]){
         [self showMessageAlertWithController:self Message:@"请输入开始时间"];
         return;
     }
@@ -231,7 +231,7 @@
         [self showMessageAlertWithController:self Message:@"请输入结束时间"];
         return;
     }
-    if([_eTime isEqualToString:@""]){
+    if([self.labEndData.text isEqualToString:@"请选择时间"]){
         [self showMessageAlertWithController:self Message:@"请输入结束时间"];
         return;
     }

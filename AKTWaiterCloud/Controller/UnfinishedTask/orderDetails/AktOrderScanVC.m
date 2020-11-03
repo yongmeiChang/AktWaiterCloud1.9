@@ -307,6 +307,9 @@
             [self.navigationController pushViewController:_sgController animated:YES];
         }else{
             [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [_session startRunning];
+            });
         }
     }
 }
