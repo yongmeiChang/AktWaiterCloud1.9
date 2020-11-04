@@ -409,8 +409,8 @@
     rowLabel.font = [UIFont systemFontOfSize:17];
     rowLabel.textColor = [UIColor grayColor];
  
-    [pickerView.subviews[1] setBackgroundColor:[UIColor whiteColor]];
-    [pickerView.subviews[2] setBackgroundColor:[UIColor whiteColor]];
+//    [pickerView.subviews[1] setBackgroundColor:[UIColor whiteColor]];
+//    [pickerView.subviews[2] setBackgroundColor:[UIColor whiteColor]];
 
     [rowLabel sizeToFit];
     if (pickerView == yearPicker) {
