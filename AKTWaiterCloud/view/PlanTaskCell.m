@@ -65,9 +65,9 @@
     }else if([orderinfo.workStatus isEqualToString:@"11"]){
         self.bgimageview.image = [UIImage imageNamed:@"editorder"];
     }*/
-    if([orderinfo.nodeName isEqualToString:@"待签入"]){
+    if([orderinfo.workStatus isEqualToString:@"1"]){
         self.bgimageview.image = [UIImage imageNamed:@"undo"];
-    }else if([orderinfo.nodeName isEqualToString:@"待签出"]){
+    }else if([orderinfo.workStatus isEqualToString:@"2"]){
         self.bgimageview.image = [UIImage imageNamed:@"doing"];
     }else {
         self.bgimageview.image = [UIImage imageNamed:@"finish"];

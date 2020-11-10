@@ -230,7 +230,7 @@
 //        DataManager * dm = [[DataManager alloc] init];
         
         /*if([orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound){
-            if(![orderinfo.nodeName isEqualToString:@"待签入"] ){
+            if(![orderinfo.workStatus isEqualToString:@"1"] ){
                 
             }else{
                 if([self compareDate:[dm changeTime:orderinfo.serviceEnd] End:[dm getNowDate]]==-1){
