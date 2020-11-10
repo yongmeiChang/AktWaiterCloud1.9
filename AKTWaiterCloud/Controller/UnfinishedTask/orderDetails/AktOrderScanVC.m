@@ -58,9 +58,9 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     /*签入 签出页面*/
     _sgController = [[SignoutController alloc] init];
-       if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+       if([self.orderinfo.workStatus isEqualToString:@"2"]){
            _sgController.type = 1;
-       }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+       }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
            _sgController.type = 0;
        }
     
@@ -307,6 +307,9 @@
             [self.navigationController pushViewController:_sgController animated:YES];
         }else{
             [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [_session startRunning];
+            });
         }
     }
 }

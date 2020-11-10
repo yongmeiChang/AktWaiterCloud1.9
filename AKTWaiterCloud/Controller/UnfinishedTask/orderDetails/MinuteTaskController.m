@@ -95,10 +95,10 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
     _sgController = [[SignoutController alloc] init];
-    if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+    if([self.orderinfo.workStatus isEqualToString:@"2"]){
         _sgController.type = 1;
          [self.btnSingInOrSingOut setTitle:@"任务签出" forState:UIControlStateNormal];
-    }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+    }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
         _sgController.type = 0;
          [self.btnSingInOrSingOut setTitle:@"任务签入" forState:UIControlStateNormal];
     }
@@ -232,22 +232,22 @@
     if(indexPath.section==0){
         return 235;
     }else if(indexPath.section==1){
-        if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+        if([self.orderinfo.workStatus isEqualToString:@"1"]){
             return 105.5;
         }else{
             return 180;
         }
     }else if(indexPath.section==2){
-        if([self.orderinfo.nodeName isEqualToString:@"待签入"] || [self.orderinfo.nodeName isEqualToString:@"待签出"]){
+        if([self.orderinfo.workStatus isEqualToString:@"1"] || [self.orderinfo.workStatus isEqualToString:@"2"]){
             return 105.5;
         }else{
             return 240;
         }
     }else if(indexPath.section==3){
-        if([self.orderinfo.nodeName isEqualToString:@"已结单"] || [self.orderinfo.nodeName isEqualToString:@"待处理"]){
-            return 177;
-        }else{
+        if([self.orderinfo.workStatus isEqualToString:@"3"]){
             return 105.5;
+        }else{
+            return 177;
         }
     }
     return 0;
@@ -279,7 +279,7 @@
         return cell;
     }else if(indexPath.section==1){
 
-        if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+        if([self.orderinfo.workStatus isEqualToString:@"1"]){
 
             NoDateCell * sCell;
             sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
@@ -302,7 +302,7 @@
             return sCell;
         }
     }else if(indexPath.section==2){
-        if([self.orderinfo.nodeName isEqualToString:@"待签入"] || [self.orderinfo.nodeName isEqualToString:@"待签出"]){
+        if([self.orderinfo.workStatus isEqualToString:@"1"] || [self.orderinfo.workStatus isEqualToString:@"2"]){
         
             NoDateCell * sCell;
             sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
@@ -327,15 +327,7 @@
         }
     }else if(indexPath.section==3){
             
-            if([self.orderinfo.nodeName isEqualToString:@"已结单"] || [self.orderinfo.nodeName isEqualToString:@"待处理"]){
-              VisitCell * visitCell;
-              visitCell = (VisitCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify3];
-              if (visitCell == nil) {
-                  visitCell = [[[NSBundle mainBundle] loadNibNamed:cellidentify3 owner:self options:nil] objectAtIndex:0];
-              }
-                [visitCell setVisitInfo:self.orderinfo];
-                return visitCell;
-            }else{
+            if([self.orderinfo.workStatus isEqualToString:@"3"]){
                 NoDateCell * sCell;
                 sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
                 if (sCell == nil) {
@@ -343,6 +335,15 @@
                 }
                 sCell.leftLabel.text = @"回访情况";
                 return sCell;
+              
+            }else{
+                VisitCell * visitCell;
+                visitCell = (VisitCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify3];
+                if (visitCell == nil) {
+                    visitCell = [[[NSBundle mainBundle] loadNibNamed:cellidentify3 owner:self options:nil] objectAtIndex:0];
+                }
+                  [visitCell setVisitInfo:self.orderinfo];
+                  return visitCell;
             }
         }
     return nil;
@@ -362,7 +363,7 @@
         NSString *strcode = [dic objectForKey:ResponseCode];
         if ([strcode integerValue] == 1) {
             AktFindAdvanceModel *model = [[AktFindAdvanceModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
-            if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+            if([self.orderinfo.workStatus isEqualToString:@"2"]){
                     // 签出逻辑判断
                         distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
                         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -382,7 +383,7 @@
                 
                 /**判断当前工单是否在服务有效期内**/
                 formatter.dateFormat = @"yyyy-MM-dd";
-                if ([AktUtil compareDate:[formatter dateFromString:self.orderinfo.serviceDateEnd] End:[formatter dateFromString:[AktUtil getNowDate]]] == -1) { // 超出
+                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
                     [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
                     return;
                 }
@@ -450,7 +451,7 @@
                                 }
                         }
 //                    }
-               }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+               }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
                    distanceSingin = [model.maxLocationDistanceSignIn doubleValue]-[self.distancePost doubleValue]; // 相差距离
                    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

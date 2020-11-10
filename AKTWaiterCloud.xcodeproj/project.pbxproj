@@ -115,8 +115,6 @@
 		4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
-		4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59615A23A8D60700969CB5 /* AktDateView.m */; };
-		4C59615D23A8D60700969CB5 /* AktDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C59615B23A8D60700969CB5 /* AktDateView.xib */; };
 		4C869A8B24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
@@ -534,9 +532,6 @@
 		4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangePickerCell.m; sourceTree = "<group>"; };
 		4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktRangePickerView.m; sourceTree = "<group>"; };
 		4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangePickerCell.h; sourceTree = "<group>"; };
-		4C59615923A8D60700969CB5 /* AktDateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktDateView.h; sourceTree = "<group>"; };
-		4C59615A23A8D60700969CB5 /* AktDateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktDateView.m; sourceTree = "<group>"; };
-		4C59615B23A8D60700969CB5 /* AktDateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktDateView.xib; sourceTree = "<group>"; };
 		4C869A8924092B390018B943 /* ZHAttributeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHAttributeTextView.m; sourceTree = "<group>"; };
 		4C869A8A24092B390018B943 /* ZHAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHAttributeTextView.h; sourceTree = "<group>"; };
 		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
@@ -845,15 +840,15 @@
 		4C379739242205EE00DC9EFB /* workOrderDetails */ = {
 			isa = PBXGroup;
 			children = (
+				4C379741242205EE00DC9EFB /* VisitCell.h */,
 				4C37973A242205EE00DC9EFB /* VisitCell.m */,
 				4C37973B242205EE00DC9EFB /* VisitCell.xib */,
+				4C379740242205EE00DC9EFB /* SignInCell.h */,
 				4C37973C242205EE00DC9EFB /* SignInCell.m */,
-				4C37973D242205EE00DC9EFB /* NoDateCell.xib */,
 				4C37973E242205EE00DC9EFB /* SignInCell.xib */,
 				4C37973F242205EE00DC9EFB /* NoDateCell.h */,
-				4C379740242205EE00DC9EFB /* SignInCell.h */,
-				4C379741242205EE00DC9EFB /* VisitCell.h */,
 				4C379742242205EE00DC9EFB /* NoDateCell.m */,
+				4C37973D242205EE00DC9EFB /* NoDateCell.xib */,
 			);
 			path = workOrderDetails;
 			sourceTree = "<group>";
@@ -1054,9 +1049,6 @@
 				4CA9C2D1239F4A0D0029FEF5 /* AktTitleCell.h */,
 				4CA9C2D2239F4A0D0029FEF5 /* AktTitleCell.m */,
 				4CA9C2D3239F4A0D0029FEF5 /* AktTitleCell.xib */,
-				4C59615923A8D60700969CB5 /* AktDateView.h */,
-				4C59615A23A8D60700969CB5 /* AktDateView.m */,
-				4C59615B23A8D60700969CB5 /* AktDateView.xib */,
 				4CE6A04823AB0B1600C41114 /* AktSuccseView.h */,
 				4CE6A04923AB0B1600C41114 /* AktSuccseView.m */,
 				4CE6A04B23AB268300C41114 /* AktResetAppView.h */,
@@ -1658,7 +1650,6 @@
 				4C37974C242205EE00DC9EFB /* NoDateCell.xib in Resources */,
 				4CD229802521B3820089F433 /* AktWSigninListVC.xib in Resources */,
 				4CD22A762521D7760089F433 /* AktServiceStationListVC.xib in Resources */,
-				4C59615D23A8D60700969CB5 /* AktDateView.xib in Resources */,
 				4CD228E6252192220089F433 /* MineCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1883,7 +1874,6 @@
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C9B9766240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4CC0AB7424C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */,
-				4C59615C23A8D60700969CB5 /* AktDateView.m in Sources */,
 				4C3B0C5A24BC01F800588D63 /* RSAEncryptor.m in Sources */,
 				4CD2296B2521B3820089F433 /* AktWSigninListVC.m in Sources */,
 				4C869A91240940700018B943 /* AddWaterMark.m in Sources */,

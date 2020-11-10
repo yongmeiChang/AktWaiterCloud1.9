@@ -534,5 +534,10 @@
     BOOL isMatch = [self isValidateByRegex:regex Param:mobile];
     return isMatch;
 }
+// 获取当前版本号
++(NSString *)GetAppVersion{
+    NSString *versionNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
+    return versionNow;
+}
 
 @end

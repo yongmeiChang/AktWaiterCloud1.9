@@ -72,6 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(BOOL)isMobileNumberClassification:(NSString *)param;
 //手机号有效性
 +(BOOL)isMobileNumber:(NSString *)mobile;
+// 获取APP版本号
++(NSString *)GetAppVersion;
 
 @end
 

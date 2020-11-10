@@ -63,9 +63,6 @@
     [self initCocoaLumberjack];
     //查找本地缓存用户数据
     modeluser = [UserInfo getsUser];
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
-         [self getTheCurrentVersion];//版本提示
-    }
     // 模式 强制白色
     if (@available(iOS 13.0, *)) {
         self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
@@ -76,6 +73,9 @@
     /*新版APP基础架构*/
     [self showLoginPage];
     [self setTabBarAndNavigationBarStyle];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isUpadateVersion"]) {// 第一次版本更新提示框
+         [self getTheCurrentVersion];//版本提示
+    }
     
 
     return YES;
@@ -317,7 +317,7 @@
             NSString *iTunesVersion = dic[@"versions"];
             // 应用程序介绍网址(用户升级跳转URL)
             trackViewUrl = [NSString stringWithFormat:@"%@",dic[@"downloadUrl"]];
-            
+
             if ([AktUtil serviceOldCode:iTunesVersion serviceNewCode:versionValueStringForSystemNow]) {
                 NSLog(@"不是最新版本,需要更新");
                 // 第一次更新
@@ -327,6 +327,8 @@
                  resetView.tag = 102;
                  resetView.delegate = self;
                 resetView.strContent = dic[@"updateContent"];
+                 resetView.isUpdate = NO;
+    
                 [[UIApplication sharedApplication].keyWindow addSubview:resetView];
             } else {
                 NSLog(@"已是最新版本,不需要更新!");

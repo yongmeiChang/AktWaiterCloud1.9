@@ -47,8 +47,7 @@
             self.headImageView.image = [UIImage imageNamed:@"seiviceCode"];
             self.accessoryType = UITableViewCellAccessoryNone;
             self.labserviceCode.hidden = NO;
-            NSString *versionNow=[[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleShortVersionString"];
-            self.labserviceCode.text = [NSString stringWithFormat:@"V%@",versionNow];
+            self.labserviceCode.text = [NSString stringWithFormat:@"V%@",[AktUtil GetAppVersion]];
         }
             break;
             case 3:

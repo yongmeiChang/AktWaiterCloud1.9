@@ -65,6 +65,7 @@
         self.upswText.text = [UserInfo getsUser].password;
     }
     self.cqCodeUserName = @"";
+    self.labSubname.text = [NSString stringWithFormat:@"服务平台V%@",[AktUtil GetAppVersion]];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

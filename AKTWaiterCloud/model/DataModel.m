@@ -145,7 +145,7 @@
     self.affixFlag = affixFlag;
     self.serviceAreaName = serviceAreaName;
     self.serviceAreaFullPath = serviceAreaFullPath;
-    self.nodeName = workStatus;
+    self.workStatus = workStatus;
     self.workStatusName = workStatusName;
     self.customerId = customerId;
     self.customerNo = customerNo;

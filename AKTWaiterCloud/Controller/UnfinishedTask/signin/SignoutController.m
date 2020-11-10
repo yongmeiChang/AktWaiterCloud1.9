@@ -543,7 +543,7 @@
     _layout.minimumLineSpacing = 10;
     _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+    if([self.orderinfo.workStatus isEqualToString:@"2"]){
         if([self.orderinfo.serviceItemName rangeOfString:@"体检"].location != NSNotFound ||[self.orderinfo.serviceItemName rangeOfString:@"陪诊"].location != NSNotFound){
             self.lcView.hidden = NO;
         }
@@ -1085,10 +1085,12 @@
           isclick = NO;
           [timer invalidate];
           _timerLabel.hidden = YES;
+          [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
+          [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
           [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
-              [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+              longtime = 0;
+              self.timerLabel.text = @"00:00:00";
           }];
-          self.trapBtn.imageView.image = [UIImage imageNamed:@"luyin"];
     }
 }
 
@@ -1108,9 +1110,9 @@
         timeStr = [NSString stringWithFormat:@"00:00:%d",longtime];
     }
     if(longtime>=intTimeAll){
-        timeStr = [NSString stringWithFormat:@"00:00:%ld",(long)intTimeAll];
+//        timeStr = [NSString stringWithFormat:@"00:00:%ld",(long)intTimeAll];
 //        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
-        self.timerLabel.text = timeStr;
+//        self.timerLabel.text = timeStr;
         [timer invalidate];
 
         // 停止录音
@@ -1118,8 +1120,10 @@
         [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
         isclick = NO;
         _timerLabel.hidden = YES;
+        [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
         [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
-           [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+            self.timerLabel.text = @"00:00:00";
+            longtime = 0;
         }];
         
     }else{

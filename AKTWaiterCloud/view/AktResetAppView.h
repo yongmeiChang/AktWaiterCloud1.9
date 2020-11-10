@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AktResetAppView : UIView
 @property(weak,nonatomic)id <AktResetAppDelegate> delegate;
 @property(nonatomic,strong) NSString *strContent; // 更新内容
+@property(nonatomic, assign) BOOL isUpdate; // **默认非强制更新，可以进行更改。yes强更 No不强更 **
+
 @end
 
 NS_ASSUME_NONNULL_END
