@@ -58,9 +58,9 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     /*签入 签出页面*/
     _sgController = [[SignoutController alloc] init];
-       if([self.orderinfo.nodeName isEqualToString:@"待签出"]){
+       if([self.orderinfo.workStatus isEqualToString:@"2"]){
            _sgController.type = 1;
-       }else if([self.orderinfo.nodeName isEqualToString:@"待签入"]){
+       }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
            _sgController.type = 0;
        }
     

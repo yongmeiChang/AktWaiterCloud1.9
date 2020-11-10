@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameViewTop;
 @property (weak, nonatomic) IBOutlet UILabel *labTitle;
 @property (weak, nonatomic) IBOutlet UILabel *labSubname;
+@property (weak, nonatomic) IBOutlet UILabel *labVersion;
 
 @property (weak, nonatomic) IBOutlet UIView *viewBgAgreement;
 
@@ -56,6 +57,11 @@
     self.pwdViewbg.layer.borderColor = RGB(210, 210, 210).CGColor;
     self.pwdViewbg.layer.borderWidth = 1;
     self.pwdViewbg.layer.cornerRadius = self.pwdViewbg.frame.size.height/2;
+    
+    self.labVersion.layer.masksToBounds = YES;
+    self.labVersion.layer.borderWidth = 1;
+    self.labVersion.layer.borderColor = kColor(@"C20").CGColor;
+    self.labVersion.layer.cornerRadius = self.labVersion.frame.size.height/2;
     // 隐私
     isAgreement = YES;
       [self initAgreementView];
@@ -65,7 +71,7 @@
         self.upswText.text = [UserInfo getsUser].password;
     }
     self.cqCodeUserName = @"";
-    self.labSubname.text = [NSString stringWithFormat:@"服务平台V%@",[AktUtil GetAppVersion]];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
