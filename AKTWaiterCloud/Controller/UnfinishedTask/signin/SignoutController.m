@@ -58,6 +58,7 @@
     NSString *strEarly; // 迟到 、早退原因
     NSString *lessService; // 最低服务时长原因
     NSString *strService; // 服务时长原因
+    BOOL isSoundRecord; // 是否录音
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
@@ -394,7 +395,7 @@
     self.lccontentTextView.delegate = self;
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-
+    isSoundRecord = NO;
     model = [LoginModel gets];
     /****/
     [self reasonViewLoadAll];
@@ -695,8 +696,12 @@
             isVideo = [[alAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo];
         }
         TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_selectedAssets selectedPhotos:_selectedPhotos index:indexPath.row];
-        imagePickerVc.maxImagesCount = 2;
-
+        if (_type == 0) {//签入
+            imagePickerVc.maxImagesCount = [self.findAdmodel.photosNumberSignIn integerValue];
+        }else{
+            imagePickerVc.maxImagesCount = [self.findAdmodel.photosNumberSignOut integerValue];
+        }
+        
         imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
         [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
             _selectedPhotos = [NSMutableArray arrayWithArray:photos];
@@ -1090,6 +1095,7 @@
           [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
               longtime = 0;
               self.timerLabel.text = @"00:00:00";
+              isSoundRecord = YES;
           }];
     }
 }
@@ -1124,6 +1130,7 @@
         [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
             self.timerLabel.text = @"00:00:00";
             longtime = 0;
+            isSoundRecord = YES;
         }];
         
     }else{
@@ -1204,21 +1211,29 @@
 -(IBAction)submitClick:(id)sender{
     if (_type == 0) { // 签入
         if ([self.findAdmodel.photographSignIn isEqualToString:@"1"]) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
-            return;
+            if ((_selectedPhotos.count)==0) {
+                [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
+                return;
+            }
         }
         if ([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
-            return;
+            if (isSoundRecord == NO) {
+                [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
+                return;
+            }
         }
     }else{ // 签出
         if ([self.findAdmodel.photographSignOut isEqualToString:@"1"]) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
-            return;
+            if ((_selectedPhotos.count)==0) {
+                [[AppDelegate sharedDelegate] showTextOnly:@"必须上传图片"];
+                return;
+            }
         }
         if ([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]) {
+            if (isSoundRecord == NO) {
             [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
             return;
+            }
         }
     }
     
@@ -1246,9 +1261,7 @@
     
     baseStr = [basearr componentsJoinedByString:@","];
     imgtypeStr = [imgTypearr componentsJoinedByString:@","];
-    if(self.type==1){
-        wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
-    }
+    
     NSDate * date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1268,10 +1281,14 @@
     [param addUnEmptyString:model.uuid forKey:@"waiterId"];
     [param addUnEmptyString:self.orderinfo.waiterName forKey:@"waiterName"];
     /**2020 7 22 新增字段**/
-    [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
+    
     [param addUnEmptyString:@"mp3" forKey:@"recordType"]; // 录音格式
     
     if(self.type==1){//签出
+        if([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]){
+            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+        }
+        [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
         // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];
@@ -1318,6 +1335,10 @@
         }];
         
     }else{
+        if([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]){
+            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+        }
+        [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
         [param addUnEmptyString:self.locaitonLatitude forKey:@"signInLocationY"];
         [param addUnEmptyString:self.distancePost forKey:@"signInDistance"]; // 距离
