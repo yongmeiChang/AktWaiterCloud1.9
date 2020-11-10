@@ -732,7 +732,13 @@
 #pragma mark - TZImagePickerController
 
 - (void)pushTZImagePickerController {
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:2 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+    NSInteger intCountimage = 0;
+    if (_type == 0) {
+        intCountimage = [self.findAdmodel.photosNumberSignIn integerValue];
+    }else{
+        intCountimage = [self.findAdmodel.photosNumberSignOut integerValue];
+    }
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:intCountimage columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     // 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
@@ -833,8 +839,14 @@
 - (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion:nil];
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    NSInteger intCountimage = 0;
+    if (_type == 0) {
+        intCountimage = [self.findAdmodel.photosNumberSignIn integerValue];
+    }else{
+        intCountimage = [self.findAdmodel.photosNumberSignOut integerValue];
+    }
     if ([type isEqualToString:@"public.image"]) {
-        TZImagePickerController *tzImagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:2 delegate:self];
+        TZImagePickerController *tzImagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:intCountimage delegate:self];
         tzImagePickerVc.sortAscendingByModificationDate = YES;
         [tzImagePickerVc showProgressHUD];
         UIImage * rimage = [info objectForKey:UIImagePickerControllerOriginalImage];
