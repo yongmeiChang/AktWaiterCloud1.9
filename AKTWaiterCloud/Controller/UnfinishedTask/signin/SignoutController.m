@@ -1311,8 +1311,8 @@
         [param addUnEmptyString:self.nowdate forKey:@"actualEnd"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",SSunservicetime] forKey:@"lessTimeLength"];
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",leaveOuttime] forKey:@"earlyTimeLength"];
-        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actualBegin actualServiceEndTime:self.orderinfo.actualEnd]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
-        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:self.orderinfo.actualEnd]]*1000;
+        [param addUnEmptyString:[NSString stringWithFormat:@"%@",[AktUtil actualBeginTime:self.orderinfo.actualBegin actualServiceEndTime:[AktUtil getNowDateAndTime]]] forKey:@"serviceLength"];  // 实际的服务时间 1时2分3秒
+        long actualserviceLength = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]*1000;
         [param addUnEmptyString:[NSString stringWithFormat:@"%ld",actualserviceLength] forKey:@"actualTimeLength"]; // 实际的服务时长 毫秒
         /**2020-7-22 新增加**/
         [param addUnEmptyString:self.orderinfo.isEarly forKey:@"isEarly"];//是否早退
