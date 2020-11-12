@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -53,7 +54,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="inx-0M-Uy9" firstAttribute="leading" secondItem="gUn-9h-CGk" secondAttribute="trailing" constant="14" id="1Nb-f5-vIF"/>
                         <constraint firstAttribute="trailing" secondItem="inx-0M-Uy9" secondAttribute="trailing" constant="15" id="1ur-MV-ezd"/>
@@ -94,7 +95,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="G3u-2D-VuU" secondAttribute="bottom" id="9de-IE-eFl"/>
                         <constraint firstItem="tIa-De-GvL" firstAttribute="leading" secondItem="G3u-2D-VuU" secondAttribute="trailing" constant="14" id="FT1-95-6rF"/>
@@ -118,7 +119,7 @@
                             </constraints>
                             <state key="normal" image="sign_ID"/>
                         </button>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入身份证号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qHA-dD-kHa">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入身份证号(选填)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qHA-dD-kHa">
                             <rect key="frame" x="51" y="0.0" width="309" height="48"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -134,7 +135,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="oQh-fC-aJM" firstAttribute="top" secondItem="t0f-Ob-q7c" secondAttribute="top" id="0OO-z0-hBm"/>
                         <constraint firstItem="7eC-hv-be6" firstAttribute="leading" secondItem="t0f-Ob-q7c" secondAttribute="leading" constant="49" id="8x5-qS-JLM"/>
@@ -189,7 +190,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Tld-Bf-06R" firstAttribute="leading" secondItem="KKu-P7-5Fb" secondAttribute="trailing" constant="15" id="1Nz-nI-YBz"/>
                         <constraint firstAttribute="bottom" secondItem="hBP-IS-peo" secondAttribute="bottom" id="4jT-i5-V4Z"/>
@@ -242,7 +243,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="deI-fZ-KWX" secondAttribute="trailing" constant="10" id="4PP-VG-MZF"/>
                         <constraint firstAttribute="bottom" secondItem="deI-fZ-KWX" secondAttribute="bottom" constant="1" id="AZZ-TD-8za"/>
@@ -296,7 +297,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="3nb-ao-Tyy" firstAttribute="top" secondItem="gEs-s5-w8F" secondAttribute="bottom" id="6R5-5z-AdM"/>
                         <constraint firstItem="gEs-s5-w8F" firstAttribute="leading" secondItem="CY6-1l-qBQ" secondAttribute="trailing" constant="14" id="9IW-d5-q7H"/>
@@ -349,7 +350,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="bTE-T4-bK2" secondAttribute="trailing" constant="15" id="7hP-gK-gqG"/>
                         <constraint firstAttribute="bottom" secondItem="pAZ-WW-tmr" secondAttribute="bottom" constant="1" id="IEW-Ik-fu9"/>
@@ -380,7 +381,7 @@
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQD-BR-CtB">
                     <rect key="frame" x="60" y="617" width="255" height="20"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="8g0-hw-aCS"/>
                     </constraints>
@@ -436,5 +437,8 @@
         <image name="sign_phone" width="13.5" height="20"/>
         <image name="sign_user" width="16" height="17"/>
         <image name="zuhu" width="17.5" height="16"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -158,10 +158,10 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
       }
-    if (kString(self.tfID.text).length == 0) {
-          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];
-          return;
-      }
+//    if (kString(self.tfID.text).length == 0) {
+//          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];
+//          return;
+//      }
     if (kString(self.TFcode.text).length == 0) {
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写验证码！"];
           return;
