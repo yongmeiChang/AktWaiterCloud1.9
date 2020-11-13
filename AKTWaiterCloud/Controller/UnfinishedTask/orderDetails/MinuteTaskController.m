@@ -244,10 +244,10 @@
             return 240;
         }
     }else if(indexPath.section==3){
-        if([self.orderinfo.workStatus isEqualToString:@"3"]){
-            return 105.5;
-        }else{
+        if([self.orderinfo.workStatus isEqualToString:@"4"]){
             return 177;
+        }else{
+            return 105.5;
         }
     }
     return 0;
@@ -327,16 +327,7 @@
         }
     }else if(indexPath.section==3){
             
-            if([self.orderinfo.workStatus isEqualToString:@"3"]){
-                NoDateCell * sCell;
-                sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
-                if (sCell == nil) {
-                    sCell = [[[NSBundle mainBundle] loadNibNamed:cellidentify4 owner:self options:nil] objectAtIndex:0];
-                }
-                sCell.leftLabel.text = @"回访情况";
-                return sCell;
-              
-            }else{
+            if([self.orderinfo.workStatus isEqualToString:@"4"]){
                 VisitCell * visitCell;
                 visitCell = (VisitCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify3];
                 if (visitCell == nil) {
@@ -344,6 +335,14 @@
                 }
                   [visitCell setVisitInfo:self.orderinfo];
                   return visitCell;
+            }else{
+                NoDateCell * sCell;
+                sCell = (NoDateCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify4];
+                if (sCell == nil) {
+                    sCell = [[[NSBundle mainBundle] loadNibNamed:cellidentify4 owner:self options:nil] objectAtIndex:0];
+                }
+                sCell.leftLabel.text = @"回访情况";
+                return sCell;
             }
         }
     return nil;
