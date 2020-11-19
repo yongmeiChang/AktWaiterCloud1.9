@@ -90,6 +90,23 @@ static const int ddLogLevel = DDLogLevelVerbose;
 static const int ddLogLevel = DDLogLevelError;
 #endif
 
+//忽略一些警告
+#define SuppressPerformSelectorLeakWarning(Stuff) \
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+Stuff; \
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+//只在Debug模式下执行NSLog
+#ifndef __OPTIMIZE__
+#define NSLog(fmt, ...) NSLog((@"[文件名:%s]\n" "[函数名:%s]\n" "[行号:%d] \n" fmt"\n\n"), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#define NSLog(...) {}
+#endif
+
+
 //#define appid @"1294211974"
 #define GAODEAPPKEY @"e08dde4a1431668d6cc5575e001b236a" // 个人账号,每一个APP对应唯一的AppKey
 #define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
@@ -108,8 +125,9 @@ static const int ddLogLevel = DDLogLevelError;
 //#define SERVICEURL @"http://180.168.24.187:20080"
  
 // 测试环境
-//#define SERVICEURL @"http://172.16.31.133" // 王智慧
-//#define SERVICEURL @"http://192.168.1.117" // 黎翔
+//#define SERVICEURL @"http://192.168.1.115" // 王智慧
+//#define SERVICEURL @"http://192.168.1.127" // 黎翔
+
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

@@ -159,7 +159,7 @@
           return;
       }
 //    if (kString(self.tfID.text).length == 0) {
-//          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];
+//          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];// 苹果审核不能将此项目作为必填
 //          return;
 //      }
     if (kString(self.TFcode.text).length == 0) {
