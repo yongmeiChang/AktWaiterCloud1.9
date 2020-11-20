@@ -114,23 +114,23 @@
     s  = [NSString stringWithFormat:@"%@",arrTime[2]];
     
     if ([unit isEqualToString:@"1"]) { // 小时
-        NSString *strH = [NSString stringWithFormat:@"%d",[h intValue]+[length intValue]];
-        if (strH.length == 1) {
-            strH = [NSString stringWithFormat:@"0%@",strH];
-        }
-        _eTime= [NSString stringWithFormat:@"%@:%@:%@",strH,m,s];
+//        NSString *strH = [NSString stringWithFormat:@"%d",[h intValue]+[length intValue]];
+//        if (strH.length == 1) {
+//            strH = [NSString stringWithFormat:@"0%@",strH];
+//        }
+        _eTime= [NSString stringWithFormat:@"%@:%@:%@",[AktUtil HoursChange:[NSString stringWithFormat:@"%d",[h intValue]+[length intValue]]],m,s];
     }else{ // 分钟
         NSInteger Im = ([m intValue]+[length intValue])%60;
         NSInteger Ih = ([m intValue]+[length intValue])/60;
-        NSString *strH = [NSString stringWithFormat:@"%ld",([h integerValue]+Ih)];
-        NSString *strM = [NSString stringWithFormat:@"%ld",(long)Im];
-        if (strH.length == 1) {
-            strH = [NSString stringWithFormat:@"0%@",strH];
-        }
-        if (strM.length == 1) {
-            strM = [NSString stringWithFormat:@"0%@",strM];
-        }
-        _eTime= [NSString stringWithFormat:@"%@:%@:%@",strH,strM,s];
+//        NSString *strH = [NSString stringWithFormat:@"%ld",([h integerValue]+Ih)];
+//        NSString *strM = [NSString stringWithFormat:@"%ld",(long)Im];
+//        if (strH.length == 1) {
+//            strH = [NSString stringWithFormat:@"0%@",strH];
+//        }
+//        if (strM.length == 1) {
+//            strM = [NSString stringWithFormat:@"0%@",strM];
+//        }
+        _eTime= [NSString stringWithFormat:@"%@:%@:%@",[AktUtil HoursChange:[NSString stringWithFormat:@"%ld",([h integerValue]+Ih)]],[AktUtil HoursChange:[NSString stringWithFormat:@"%ld",(long)Im]],s];
     }
 }
 

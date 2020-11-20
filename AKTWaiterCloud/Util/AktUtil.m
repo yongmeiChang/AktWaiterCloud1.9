@@ -480,6 +480,16 @@
     return NO;
 }
 
+#pragma mark - 时间格式转换 2:2:2change 02:02:02
++(NSString *)HoursChange:(NSString *)hours{
+    NSString *strH = [NSString stringWithFormat:@"%@",hours];
+    if (strH.length == 1) {
+        strH = [NSString stringWithFormat:@"0%@",strH];
+    }else{
+        strH = [NSString stringWithFormat:@"%@",strH];
+    }
+    return strH;
+}
 
 #pragma mark - 正则相关
 +(BOOL)isValidateByRegex:(NSString *)regex Param:(NSString *)param{
