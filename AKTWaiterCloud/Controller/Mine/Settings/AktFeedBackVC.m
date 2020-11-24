@@ -297,8 +297,8 @@
 -(void)textViewDidChange:(UITextView *)textView{
     if (textView.text.length>200) {
         tvRemark.text = [textView.text substringToIndex:200];
-    }else{
-        tvRemark.text = textView.text;
+//    }else{
+//        tvRemark.text = textView.text;
     }
     labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
 }
