@@ -79,14 +79,13 @@ static AFNetWorkingTool * a_instance = nil;
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
     // 登录、获取验证码、找回密码、注册、租户列表  中间连接修改
-    NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree
+    NSString *url;//getCheckCode  getPassword waiterRegister getTenantsTree  appToken  getAppVersion
     if ([URLString isEqualToString:@"appToken"] || [URLString isEqualToString:@"getCheckCode"] || [URLString isEqualToString:@"getPassword"] || [URLString isEqualToString:@"getTenantsTree"] || [URLString isEqualToString:@"getAppVersion"] || [URLString isEqualToString:@"waiterRegister"]) {
         url = [NSString stringWithFormat:@"%@/api/auth/jwt/%@",SERVICEURL,URLString];
     }else{
         url = [NSString stringWithFormat:@"%@/api/app/appService/%@",SERVICEURL,URLString];
     }
 
-//    NSLog(@"requst:%@\n参数:%@",url,parameters);
     switch (type) {
             
         case HttpRequestTypeGet:

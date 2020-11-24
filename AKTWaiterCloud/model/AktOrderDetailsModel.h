@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* photosNumberSignIn; // 签入照片数量  最大值是3
 @property(nonatomic,strong) NSString <Optional>* photoAlbumSignIn; // 是否允许签入打开相册 1是 0否
 @property(nonatomic,strong) NSString <Optional>* soundRecordingSignIn; // 是否签入录音、是否必须上传录音
-@property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignIn; // 签入录音时长 秒
+@property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignIn; // 签入录音最低时长 秒
 
 @property(nonatomic,strong) NSString <Optional>* codeScanSignOut; // 是否扫码签出
 @property(nonatomic,strong) NSString <Optional>* recordEarly;  // 是否记录早退
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* photosNumberSignOut; // 签出照片数量
 @property(nonatomic,strong) NSString <Optional>*photoAlbumSignOut; // 是否允许签出打开相册 1是 0否
 @property(nonatomic,strong) NSString <Optional>* soundRecordingSignOut; // 是否签出录音、是否必须上传录音
-@property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignOut; // 签出录音时长
+@property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignOut; // 签出录音最低时长
 
 @property(nonatomic,strong) NSString <Optional>* recordServiceLength; // 是否记录服务时长
 @property(nonatomic,strong) NSString <Optional>* recordMinServiceLength; // 是否记录最低服务时长

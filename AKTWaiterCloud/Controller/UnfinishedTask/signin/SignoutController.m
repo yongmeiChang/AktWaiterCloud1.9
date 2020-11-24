@@ -1098,28 +1098,38 @@
         timer = [NSTimer scheduledTimerWithTimeInterval:(1.0) target:self selector:@selector(handleTimer) userInfo:nil repeats:YES];
         self.timerLabel.hidden = NO;
     }else{
-        [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
-          isclick = NO;
-          [timer invalidate];
-          _timerLabel.hidden = YES;
-          [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
-          [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
-          [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
-              longtime = 0;
-              self.timerLabel.text = @"00:00:00";
-              isSoundRecord = YES;
-          }];
+        NSInteger intTimeAll; // 配置录音时长
+        if (_type ==0) {
+            intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
+        }else{
+            intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
+        }
+        if (longtime<intTimeAll) {
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"录音时长最少不能少于%ld秒",(long)intTimeAll]];
+        }else{
+            [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
+              isclick = NO;
+              [timer invalidate];
+              _timerLabel.hidden = YES;
+              [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
+              [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+              [self showMessageAlertWithController:self title:@"" Message:@"保存完毕" canelBlock:^{
+                  longtime = 0;
+                  self.timerLabel.text = @"00:00:00";
+                  isSoundRecord = YES;
+              }];
+        }
     }
 }
 
 //计时器
 -(void)handleTimer{
-    NSInteger intTimeAll; // 配置录音时长
-    if (_type ==0) {
-        intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
-    }else{
-        intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
-    }
+//    NSInteger intTimeAll; // 配置录音时长
+//    if (_type ==0) {
+//        intTimeAll = [self.findAdmodel.soundRecordTimeSignIn integerValue];
+//    }else{
+//        intTimeAll = [self.findAdmodel.soundRecordTimeSignOut integerValue];
+//    }
     longtime++;
     NSString * timeStr;
     if(longtime<10){
@@ -1127,28 +1137,24 @@
     }else{
         timeStr = [NSString stringWithFormat:@"00:00:%d",longtime];
     }
-    if(longtime>=intTimeAll){
-//        timeStr = [NSString stringWithFormat:@"00:00:%ld",(long)intTimeAll];
-//        [self showMessageAlertWithController:self Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll]];
-//        self.timerLabel.text = timeStr;
-        [timer invalidate];
-
-        // 停止录音
-        [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
-        [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
-        isclick = NO;
-        _timerLabel.hidden = YES;
-        [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
-        [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
-            self.timerLabel.text = @"00:00:00";
-            longtime = 0;
-            isSoundRecord = YES;
-        }];
-        
-    }else{
+//    if(longtime>=intTimeAll){
+//        [timer invalidate];
+//        // 停止录音
+//        [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
+//        [self.trapBtn setImage:[UIImage imageNamed:@"luyin"] forState:UIControlStateNormal];
+//        isclick = NO;
+//        _timerLabel.hidden = YES;
+//        [self.trapBtn setTitle:@"重新录音" forState:UIControlStateNormal];
+//        [self showMessageAlertWithController:self title:@"提示" Message:[NSString stringWithFormat:@"录音时长不能超过%ld秒",(long)intTimeAll] canelBlock:^{
+//            self.timerLabel.text = @"00:00:00";
+//            longtime = 0;
+//            isSoundRecord = YES;
+//        }];
+//
+//    }else{
         NSString * str = [NSString stringWithFormat:timeStr,longtime];
         self.timerLabel.text = str;
-    }
+//    }
 }
 #pragma mark - 距离
 -(void)distanceBetween:(CLLocationDistance)distance{
