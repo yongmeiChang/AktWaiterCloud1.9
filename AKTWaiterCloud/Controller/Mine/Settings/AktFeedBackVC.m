@@ -295,12 +295,39 @@
 
 #pragma mark - textView delegate
 -(void)textViewDidChange:(UITextView *)textView{
-    if (textView.text.length>200) {
+    /*if (textView.text.length>200) {
         tvRemark.text = [textView.text substringToIndex:200];
 //    }else{
 //        tvRemark.text = textView.text;
     }
     labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+    */
+    NSString *lang = textView.textInputMode.primaryLanguage;//键盘输入模式
+
+        if ([lang isEqualToString:@"zh-Hans"]){
+
+            UITextRange *selectedRange = [textView markedTextRange];
+
+            if (!selectedRange) {//没有有高亮
+
+                if (textView.text.length>200) {
+                    tvRemark.text = [textView.text substringToIndex:200];
+                }else{
+                    tvRemark.text = textView.text;
+                }
+                labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+
+            }else{
+            }
+        }else{
+
+            if (textView.text.length>200) {
+                tvRemark.text = [textView.text substringToIndex:200];
+            }else{
+                tvRemark.text = textView.text;
+            }
+            labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }
 }
 
 #pragma mark - UICollectionView
