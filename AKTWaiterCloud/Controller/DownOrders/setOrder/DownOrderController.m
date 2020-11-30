@@ -114,11 +114,23 @@
     s  = [NSString stringWithFormat:@"%@",arrTime[2]];
     
     if ([unit isEqualToString:@"1"]) { // 小时
-        _eTime= [NSString stringWithFormat:@"%d:%@:%@",[h intValue]+[length intValue],m,s];
+//        NSString *strH = [NSString stringWithFormat:@"%d",[h intValue]+[length intValue]];
+//        if (strH.length == 1) {
+//            strH = [NSString stringWithFormat:@"0%@",strH];
+//        }
+        _eTime= [NSString stringWithFormat:@"%@:%@:%@",[AktUtil HoursChange:[NSString stringWithFormat:@"%d",[h intValue]+[length intValue]]],m,s];
     }else{ // 分钟
         NSInteger Im = ([m intValue]+[length intValue])%60;
         NSInteger Ih = ([m intValue]+[length intValue])/60;
-        _eTime= [NSString stringWithFormat:@"%ld:%ld:%@",([h integerValue]+Ih),(long)Im,s];
+//        NSString *strH = [NSString stringWithFormat:@"%ld",([h integerValue]+Ih)];
+//        NSString *strM = [NSString stringWithFormat:@"%ld",(long)Im];
+//        if (strH.length == 1) {
+//            strH = [NSString stringWithFormat:@"0%@",strH];
+//        }
+//        if (strM.length == 1) {
+//            strM = [NSString stringWithFormat:@"0%@",strM];
+//        }
+        _eTime= [NSString stringWithFormat:@"%@:%@:%@",[AktUtil HoursChange:[NSString stringWithFormat:@"%ld",([h integerValue]+Ih)]],[AktUtil HoursChange:[NSString stringWithFormat:@"%ld",(long)Im]],s];
     }
 }
 
@@ -142,8 +154,8 @@
         _Date = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
         [self serviceEndDate:_Date Validity:kString(self.servicepojInfo.serviceValidity)]; // 结束日期
         _bTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
-        [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];
-        [_tableview reloadData]; // 结束 时间
+        [self serviceEndTime:_bTime serviceTime:self.servicepojInfo.serviceTime timeUnit:self.servicepojInfo.timeUnit];// 结束 时间
+        [_tableview reloadData];
     }else{
         _Date = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
         _eDate = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];

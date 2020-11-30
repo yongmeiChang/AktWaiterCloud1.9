@@ -65,6 +65,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (BOOL)dx_isNullOrNilWithObject:(id)object;
 
+#pragma mark - 时间格式转换 2:2:2change 02:02:02
++(NSString *)HoursChange:(NSString *)hours;
 
 #pragma mark - 正则相关
 +(BOOL)isValidateByRegex:(NSString *)regex Param:(NSString *)param;

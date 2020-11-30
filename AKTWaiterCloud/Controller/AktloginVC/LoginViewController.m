@@ -66,10 +66,10 @@
     isAgreement = YES;
       [self initAgreementView];
     // 获取缓存
-    if([UserInfo getsUser]){
-        self.unameText.text = [UserInfo getsUser].uniqueKey;
-        self.upswText.text = [UserInfo getsUser].password;
-    }
+//    if([UserInfo getsUser]){
+//        self.unameText.text = [UserInfo getsUser].uniqueKey;
+//        self.upswText.text = [UserInfo getsUser].password;
+//    }
     self.cqCodeUserName = @"";
     
 }
@@ -77,6 +77,8 @@
     [super viewWillAppear:animated];
     if(![self.cqCodeUserName isEqualToString:@""]){
         self.unameText.text = self.cqCodeUserName;
+    }else{
+        self.unameText.text = [NSString stringWithFormat:@"%@",kString([[NSUserDefaults standardUserDefaults] objectForKey:AKTName])];
     }
 }
 #pragma mark - 隐私

@@ -1129,21 +1129,21 @@
 		4CD2295B2521B3820089F433 /* AktloginVC */ = {
 			isa = PBXGroup;
 			children = (
-				4CD2295C2521B3820089F433 /* AktWSigninListVC.m */,
-				4CD2295D2521B3820089F433 /* AktAgreementVC.m */,
-				4CD2295E2521B3820089F433 /* SignInVC.xib */,
 				4CD2295F2521B3820089F433 /* SignInVC.h */,
-				4CD229602521B3820089F433 /* LoginViewController.m */,
-				4CD229612521B3820089F433 /* FindPswController.xib */,
-				4CD229622521B3820089F433 /* FindPswController.m */,
-				4CD229632521B3820089F433 /* AktWSigninListVC.h */,
-				4CD229642521B3820089F433 /* LoginViewController.xib */,
-				4CD229652521B3820089F433 /* AktWSigninListVC.xib */,
-				4CD229662521B3820089F433 /* AktAgreementVC.h */,
-				4CD229672521B3820089F433 /* LoginViewController.h */,
 				4CD229682521B3820089F433 /* SignInVC.m */,
-				4CD229692521B3820089F433 /* AktAgreementVC.xib */,
+				4CD2295E2521B3820089F433 /* SignInVC.xib */,
 				4CD2296A2521B3820089F433 /* FindPswController.h */,
+				4CD229622521B3820089F433 /* FindPswController.m */,
+				4CD229612521B3820089F433 /* FindPswController.xib */,
+				4CD229632521B3820089F433 /* AktWSigninListVC.h */,
+				4CD2295C2521B3820089F433 /* AktWSigninListVC.m */,
+				4CD229652521B3820089F433 /* AktWSigninListVC.xib */,
+				4CD229672521B3820089F433 /* LoginViewController.h */,
+				4CD229602521B3820089F433 /* LoginViewController.m */,
+				4CD229642521B3820089F433 /* LoginViewController.xib */,
+				4CD229662521B3820089F433 /* AktAgreementVC.h */,
+				4CD2295D2521B3820089F433 /* AktAgreementVC.m */,
+				4CD229692521B3820089F433 /* AktAgreementVC.xib */,
 			);
 			path = AktloginVC;
 			sourceTree = "<group>";
@@ -2210,7 +2210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_CFLAGS[arch=*]" = "";
@@ -2262,7 +2262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2280,7 +2280,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.6;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_INPUT_FILETYPE = automatic;
@@ -2297,7 +2297,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
@@ -2379,7 +2379,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.6;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2395,7 +2395,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
