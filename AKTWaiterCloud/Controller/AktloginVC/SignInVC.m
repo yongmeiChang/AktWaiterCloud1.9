@@ -88,7 +88,12 @@
     if (kString(self.tfPhone.text).length == 0) {
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
-      }
+    }else{
+        if (![AktUtil checkTelNumberAndPhone:self.tfPhone.text]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号!"];
+            return;
+        }
+    }
     //原始数据  手机号前三位+手机号后四位+&毫秒
     NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
     //使用字符串格式的公钥加密

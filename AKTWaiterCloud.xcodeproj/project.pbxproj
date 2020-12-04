@@ -907,8 +907,8 @@
 		4C3D756524A88ABF00D0F79A /* ChangePhone */ = {
 			isa = PBXGroup;
 			children = (
-				4C3D756624A88ABF00D0F79A /* AKTChangePhoneVC.m */,
 				4C3D756724A88ABF00D0F79A /* AKTChangePhoneVC.h */,
+				4C3D756624A88ABF00D0F79A /* AKTChangePhoneVC.m */,
 				4C3D756824A88ABF00D0F79A /* AKTChangePhoneVC.xib */,
 			);
 			path = ChangePhone;

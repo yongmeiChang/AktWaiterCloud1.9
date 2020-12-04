@@ -84,8 +84,12 @@
     }];
 }
 - (IBAction)PostSureNewPhoneClick:(UIButton *)sender {
-    if (self.tfPhone.text.length<11) {
-        [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号！"];
+//    if (self.tfPhone.text.length<11) {
+//        [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号！"];
+//        return;
+//    }
+    if (![AktUtil checkTelNumberAndPhone:self.tfPhone.text]) {
+        [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号!"];
         return;
     }
     if (self.tfCode.text.length<3) {

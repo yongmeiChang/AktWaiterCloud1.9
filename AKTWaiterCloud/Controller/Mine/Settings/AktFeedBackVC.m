@@ -203,7 +203,7 @@
     }];
     
       // 输入联系方式
-    UIView *viewPhone = [[UIView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 78)];
+    UIView *viewPhone = [[UIView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 88)];
         [scrollBg addSubview:viewPhone];
      viewPhone.backgroundColor = kColor(@"C3");
     UILabel *labPhonetitle = [[UILabel alloc] init];
@@ -224,7 +224,7 @@
       // 约束
       [viewPhone mas_makeConstraints:^(MASConstraintMaker *make) {
           make.top.mas_equalTo(viewRemark.mas_bottom).offset(10);
-          make.height.mas_equalTo(78);
+          make.height.mas_equalTo(88);
           make.width.mas_equalTo(SCREEN_WIDTH);
       }];
     [labPhonetitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -260,6 +260,18 @@
     if (tfPhone.text.length == 0) {
         [[AppDelegate sharedDelegate] showTextOnly:@"请填写联系方式!"];
         return;
+    }else{
+        if ([tfPhone.text containsString:@"@"]) {
+            if (![AktUtil checkEmail:tfPhone.text]) {
+                [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的邮箱!"];
+                return;
+            }
+        }else{
+            if (![AktUtil checkTelNumberAndPhone:tfPhone.text]) {
+                [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号!"];
+                return;
+            }
+        }
     }
   
     // 图片加密
@@ -280,28 +292,28 @@
       dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantId),@"waiterUkey":[UserInfo getsUser].uniqueKey,@"content":tvRemark.text,@"imageData":@"",@"imageType":@""}; //
     }
    
-    [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = responseObject;
-        [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
-        if([[dic objectForKey:@"code"] integerValue] == 1){
-         [self.navigationController popViewControllerAnimated:YES];
-        }
-    } failure:^(NSError * _Nonnull error) {
-        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
-    }];
+//    [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+//        NSDictionary *dic = responseObject;
+//        [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
+//        if([[dic objectForKey:@"code"] integerValue] == 1){
+//         [self.navigationController popViewControllerAnimated:YES];
+//        }
+//    } failure:^(NSError * _Nonnull error) {
+//        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
+//    }];
       
     NSLog(@"内容：%@ \n 联系方式:%@",tvRemark.text,tfPhone.text);
 }
 
 #pragma mark - textView delegate
 -(void)textViewDidChange:(UITextView *)textView{
-    /*if (textView.text.length>200) {
-        tvRemark.text = [textView.text substringToIndex:200];
+//    if (textView.text.length>200) {
+//        tvRemark.text = [textView.text substringToIndex:200];
 //    }else{
 //        tvRemark.text = textView.text;
-    }
-    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
-    */
+//    }
+    
+    
     NSString *lang = textView.textInputMode.primaryLanguage;//键盘输入模式
 
         if ([lang isEqualToString:@"zh-Hans"]){
@@ -312,10 +324,12 @@
 
                 if (textView.text.length>200) {
                     tvRemark.text = [textView.text substringToIndex:200];
+//                    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)[textView.text substringToIndex:200].length];
                 }else{
-                    tvRemark.text = textView.text;
+//                    tvRemark.text = textView.text;
+//                    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
                 }
-                labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+//                labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
 
             }else{
             }
@@ -323,11 +337,12 @@
 
             if (textView.text.length>200) {
                 tvRemark.text = [textView.text substringToIndex:200];
-            }else{
-                tvRemark.text = textView.text;
+//            }else{
+//                tvRemark.text = textView.text;
             }
-            labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+            
         }
+    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)tvRemark.text.length];
 }
 
 #pragma mark - UICollectionView

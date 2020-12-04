@@ -76,6 +76,11 @@ NS_ASSUME_NONNULL_BEGIN
 +(BOOL)isMobileNumber:(NSString *)mobile;
 // 获取APP版本号
 +(NSString *)GetAppVersion;
+//电话号码与手机号码同时验证
++(BOOL)checkTelNumberAndPhone:(NSString *)tel;
+//邮箱验证
++(BOOL)checkEmail:(NSString *)email;
+
 
 @end
 
