@@ -550,4 +550,21 @@
     return versionNow;
 }
 
+//电话号码与手机号码同时验证
++(BOOL)checkTelNumberAndPhone:(NSString *)tel
+{
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^((1[3|5|7|8|9]\\d{9})|(0\\d{2,3}-\\d{7,8}))$" options:0 error:nil];
+    NSTextCheckingResult *r = [regex firstMatchInString:tel options:0 range:NSMakeRange(0, tel.length)];
+    return r != nil;
+}
+//邮箱验证
++(BOOL)checkEmail:(NSString *)email
+{
+    // [A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}  //^\\w+@\\w+\\.[a-zA-Z]+(\\.[a-zA-Z]+)?$
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" options:0 error:nil];
+    NSTextCheckingResult *r = [regex firstMatchInString:email options:0 range:NSMakeRange(0, email.length)];
+    return r != nil;
+}
+
+
 @end

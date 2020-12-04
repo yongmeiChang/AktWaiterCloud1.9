@@ -1097,6 +1097,7 @@
         [self.trapBtn setTitle:@"录音中" forState:UIControlStateNormal];
         timer = [NSTimer scheduledTimerWithTimeInterval:(1.0) target:self selector:@selector(handleTimer) userInfo:nil repeats:YES];
         self.timerLabel.hidden = NO;
+        isSoundRecord = NO;
     }else{
         NSInteger intTimeAll; // 配置录音时长
         if (_type ==0) {
