@@ -26,7 +26,10 @@
 }
 #pragma mark - 任务列表
 -(void)setOrderList:(OrderInfo *)orderinfo{
+    NSString * itemName = orderinfo.serviceItemName;
+    itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     
+//    self.itemNameH.constant = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height+14; // 项目名称的高度
     [self.namelabel setText:orderinfo.customerName]; // 姓名
     
     aryPhone = [[NSArray alloc] init];
@@ -52,19 +55,8 @@
 //    NSString * serviceEn = [kString(orderinfo.serviceEnd) substringToIndex:16];
     self.datelabel.text = [NSString stringWithFormat:@"%@——%@",kString(orderinfo.serviceBegin),kString(orderinfo.serviceEnd)]; // 开始 结束时间
     self.workNolabel.text = [NSString stringWithFormat:@"%@",orderinfo.workNo];// 工单号
-    NSString * itemName = orderinfo.serviceItemName;
-    itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
+
     self.titlelabel.text = itemName; // 服务项目名称
-    /*
-    if([orderinfo.workStatus isEqualToString:@"3"]||[orderinfo.workStatus isEqualToString:@"7"]){
-        self.bgimageview.image = [UIImage imageNamed:@"undo"];
-    }else if([orderinfo.workStatus isEqualToString:@"4"]){
-        self.bgimageview.image = [UIImage imageNamed:@"doing"];
-    }else if([orderinfo.workStatus isEqualToString:@"6"]){
-        self.bgimageview.image = [UIImage imageNamed:@"finish"];
-    }else if([orderinfo.workStatus isEqualToString:@"11"]){
-        self.bgimageview.image = [UIImage imageNamed:@"editorder"];
-    }*/
     if([orderinfo.workStatus isEqualToString:@"1"]){
         self.bgimageview.image = [UIImage imageNamed:@"undo"];
     }else if([orderinfo.workStatus isEqualToString:@"2"]){

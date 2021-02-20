@@ -2,8 +2,8 @@
 //  UnfinifshController.m
 //  AKTWaiterCloud
 //
-//  Created by 孙嘉斌 on 2017/11/22.
-//  Copyright © 2017年 孙嘉斌. All rights reserved.
+//  Created by 常 on 2020/11/22.
+//  Copyright © 2020年 常. All rights reserved.
 //
 
 #import "UnfinifshController.h"
@@ -40,8 +40,6 @@
     
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
-    //去除没有数据时的分割线
-    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
     [self.taskTableview.mj_header beginRefreshing];
@@ -149,18 +147,6 @@
 
 #pragma mark - request
 -(void)requestTask{
-    //网络状态判断
-//    if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
-//        if(_dataArray.count==0){
-//            self.netWorkErrorView.hidden = NO;
-//        }else{
-//            self.netWorkErrorView.hidden = YES;
-//            [self.taskTableview reloadData];
-//        }
-//
-//    }else{
-//        [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
-//    }
     tableviewtype = 0;
     //status：状态(1：未完成 2：服务中 3：已完成)
     NSArray * typeArr = @[@"1",@"2",@"3",@""];
@@ -183,7 +169,6 @@
                 [self showOffLineAlertWithTime:1.0  message:@"当前没有工单任务!" DoSomethingBlock:^{
                 }];
             }else{
-//                if(arr&&arr.count>0){
                     self.taskTableview.hidden = NO;
                     self.netWorkErrorView.hidden = YES;
 
@@ -209,12 +194,6 @@
                     [self.taskTableview reloadData];
                     [[AppDelegate sharedDelegate] hidHUD];
                     self.netWorkErrorView.userInteractionEnabled = YES;
-//                }else{
-//                    self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-//                    self.netWorkErrorView.hidden = NO;
-//                    [[AppDelegate sharedDelegate] hidHUD];
-//                    self.netWorkErrorView.userInteractionEnabled = YES;
-//                }
             }
         }else if(pageSize == 1 && [code integerValue] == 1){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
@@ -261,7 +240,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 235;
+    OrderInfo * orderinfo = _dataArray[indexPath.section];
+    NSString * itemName = orderinfo.serviceItemName;
+    itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
+    
+    CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
+    return 235.0f+itemF;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
