@@ -292,28 +292,21 @@
       dicParam = @{@"mobile":tfPhone.text,@"tenantsId":kString([LoginModel gets].tenantId),@"waiterUkey":[UserInfo getsUser].uniqueKey,@"content":tvRemark.text,@"imageData":@"",@"imageType":@""}; //
     }
    
-//    [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
-//        NSDictionary *dic = responseObject;
-//        [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
-//        if([[dic objectForKey:@"code"] integerValue] == 1){
-//         [self.navigationController popViewControllerAnimated:YES];
-//        }
-//    } failure:^(NSError * _Nonnull error) {
-//        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
-//    }];
+    [[AktVipCmd sharedTool] requestPushFeedbackInfo:dicParam type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = responseObject;
+        [[AppDelegate sharedDelegate] showTextOnly:[dic objectForKey:@"message"]];
+        if([[dic objectForKey:@"code"] integerValue] == 1){
+         [self.navigationController popViewControllerAnimated:YES];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
+    }];
       
     NSLog(@"内容：%@ \n 联系方式:%@",tvRemark.text,tfPhone.text);
 }
 
 #pragma mark - textView delegate
 -(void)textViewDidChange:(UITextView *)textView{
-//    if (textView.text.length>200) {
-//        tvRemark.text = [textView.text substringToIndex:200];
-//    }else{
-//        tvRemark.text = textView.text;
-//    }
-    
-    
     NSString *lang = textView.textInputMode.primaryLanguage;//键盘输入模式
 
         if ([lang isEqualToString:@"zh-Hans"]){
@@ -324,21 +317,12 @@
 
                 if (textView.text.length>200) {
                     tvRemark.text = [textView.text substringToIndex:200];
-//                    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)[textView.text substringToIndex:200].length];
-                }else{
-//                    tvRemark.text = textView.text;
-//                    labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
                 }
-//                labNumber.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
-
-            }else{
             }
         }else{
 
             if (textView.text.length>200) {
                 tvRemark.text = [textView.text substringToIndex:200];
-//            }else{
-//                tvRemark.text = textView.text;
             }
             
         }

@@ -69,12 +69,12 @@
     }
     
     if(self.nPswAgainField.text == nil || self.nPswAgainField.text.length == 0){
-        [[AppDelegate sharedDelegate] showTextOnly:@"请输入新密码!"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"请再次输入新密码!"];
         return;
     }
     
     if(self.nPswAgainField.text.length < 6 || self.nPswAgainField.text.length > 12){
-        [[AppDelegate sharedDelegate] showTextOnly:@"新密码长度不符合要求!"];
+        [[AppDelegate sharedDelegate] showTextOnly:@"确认密码长度不符合要求!"];
         return;
     }
     NSString * oldPsw = self.oldPswField.text;

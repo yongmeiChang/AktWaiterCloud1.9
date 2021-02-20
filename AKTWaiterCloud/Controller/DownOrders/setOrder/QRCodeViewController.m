@@ -110,21 +110,18 @@
     //设置扫描区域外部左边的视图
     UIView *leftView = [[UIView alloc]init];
     leftView.frame = CGRectMake(0, topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
-//    leftView.frame = CGRectMake(0, topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
     leftView.backgroundColor = color;
     leftView.alpha = alpha;
     
     //设置扫描区域外部右边的视图
     UIView *rightView = [[UIView alloc]init];
     rightView.frame = CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0+_QRCodeWidth,topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
-    //rightView.frame = CGRectMake((SCREEN_WIDTH-_QRCodeWidth)/2.0+_QRCodeWidth,topView.frame.size.height, (SCREEN_WIDTH-_QRCodeWidth)/2.0,_QRCodeWidth);
     rightView.backgroundColor = color;
     rightView.alpha = alpha;
     
     //设置扫描区域外部底部的视图
     UIView *botView = [[UIView alloc]init];
     botView.frame = CGRectMake(0, _QRCodeWidth+topView.frame.size.height,SCREEN_WIDTH,SCREEN_HEIGHT-_QRCodeWidth-topView.frame.size.height);
-    //botView.frame = CGRectMake(0, _QRCodeWidth+topView.frame.size.height,SCREEN_WIDTH,SCREEN_HEIGHT-_QRCodeWidth-topView.frame.size.height);
     botView.backgroundColor = color;
     botView.alpha = alpha;
     

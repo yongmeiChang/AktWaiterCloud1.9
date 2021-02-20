@@ -30,6 +30,7 @@ typedef void(^ContinuityLocation)(UIButton*);
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLab; // 有效期
 @property (weak, nonatomic)id<PlanTaskPhoneDelegate>delegate;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemNameH; // 服务项目名称高度
 
 -(void)setOrderList:(OrderInfo *)orderinfo; // 任务列表
 @end

@@ -97,7 +97,7 @@
 }
 #pragma mark - 工单数量
 -(void)resetWorkNumber{
-    NSDictionary * params = @{@"waiterId":kString(modelUser.uuid)};
+    NSDictionary * params = @{@"waiterId":kString(modelUser.uuid),@"tenantsId":kString(modelUser.tenantId)};
        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
        //显示登陆时请求的各状态工单数
        self.unfinishBtn.shouldHideBadgeAtZero = YES;

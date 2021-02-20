@@ -230,7 +230,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section==0){
-        return 235;
+        NSString * itemName = self.orderinfo.serviceItemName;
+        itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
+        
+        CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
+        return 235.0f+itemF;
+        
     }else if(indexPath.section==1){
         if([self.orderinfo.workStatus isEqualToString:@"1"]){
             return 105.5;

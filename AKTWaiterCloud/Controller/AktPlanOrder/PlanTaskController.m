@@ -155,7 +155,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 235.0f;
+    OrderInfo * orderinfo = _dataArray[indexPath.section];
+    NSString * itemName = orderinfo.serviceItemName;
+    itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
+    
+    CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
+    return 235.0f+itemF;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

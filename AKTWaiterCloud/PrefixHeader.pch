@@ -122,12 +122,10 @@ _Pragma("clang diagnostic pop") \
 
 //正式环境
 #define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
-//#define SERVICEURL @"http://180.168.24.187:20080"
  
 // 测试环境
-//#define SERVICEURL @"http://192.168.1.115" // 王智慧
-//#define SERVICEURL @"http://192.168.1.127" // 黎翔
-
+//#define SERVICEURL @"http://192.168.1.126"
+//#define SERVICEURL @"http://182v06o030.imwork.net"
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 
