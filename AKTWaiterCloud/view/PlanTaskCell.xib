@@ -146,12 +146,12 @@
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-0L-6NC">
-                                                <rect key="frame" x="31.5" y="25" width="268.5" height="14.5"/>
+                                                <rect key="frame" x="31.5" y="25" width="268.5" height="13.5"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="上海市普陀区银杏路上">
                                                         <attributes>
                                                             <color key="NSColor" red="0.48627450980392156" green="0.48627450980392156" blue="0.48627450980392156" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="cellTitle"/>
+                                                            <font key="NSFont" size="12" name=".PingFangSC-Regular"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>

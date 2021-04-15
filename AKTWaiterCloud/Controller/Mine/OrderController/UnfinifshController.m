@@ -245,7 +245,8 @@
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     
     CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
-    return 235.0f+itemF;
+    CGFloat itemAddress = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",orderinfo.serviceAddress] font:14 limitWidth:(SCREEN_WIDTH-50)].height; // 项目名称的高度
+    return 215.0f+itemF+itemAddress;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

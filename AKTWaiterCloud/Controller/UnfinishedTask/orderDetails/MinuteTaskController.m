@@ -235,7 +235,8 @@
         
         CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
         CGFloat contentF = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@", self.orderinfo.serviceContent] font:14 limitWidth:(SCREEN_WIDTH-70)].height; // 服务内容的高度
-        return 235.0f+itemF+contentF;
+        CGFloat itemAddress = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",self.orderinfo.serviceAddress] font:14 limitWidth:(SCREEN_WIDTH-50)].height; // 项目名称的高度
+        return 220.0f+itemF+itemAddress+contentF;
         
     }else if(indexPath.section==1){
         if([self.orderinfo.workStatus isEqualToString:@"1"]){
