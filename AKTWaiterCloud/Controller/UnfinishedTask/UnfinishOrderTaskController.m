@@ -265,7 +265,7 @@
 //            NSString * str = [NSString stringWithFormat:@"%ld",(long)indexPath.section];
 //            [self continuityLocationById:orderinfo.id section:str button:btn];
 //        };
-        [cell setOrderList:orderinfo];
+        [cell setOrderList:orderinfo Type:1];
     }
 
     return cell;

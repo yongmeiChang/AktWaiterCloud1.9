@@ -234,7 +234,8 @@
         itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
         
         CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
-        return 235.0f+itemF;
+        CGFloat contentF = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@", self.orderinfo.serviceContent] font:14 limitWidth:(SCREEN_WIDTH-70)].height; // 服务内容的高度
+        return 235.0f+itemF+contentF;
         
     }else if(indexPath.section==1){
         if([self.orderinfo.workStatus isEqualToString:@"1"]){
@@ -280,7 +281,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:cellidentify owner:self options:nil] objectAtIndex:0];
         }
         cell.delegate = self;
-        [cell setOrderList:self.orderinfo];
+        [cell setOrderList:self.orderinfo Type:2];
         return cell;
     }else if(indexPath.section==1){
 

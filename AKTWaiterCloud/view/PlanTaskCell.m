@@ -25,7 +25,7 @@
     self.continuityLocation(sender);
 }
 #pragma mark - 任务列表
--(void)setOrderList:(OrderInfo *)orderinfo{
+-(void)setOrderList:(OrderInfo *)orderinfo  Type:(NSInteger)type{
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     
@@ -57,6 +57,18 @@
     self.workNolabel.text = [NSString stringWithFormat:@"%@",orderinfo.workNo];// 工单号
 
     self.titlelabel.text = itemName; // 服务项目名称
+    NSString *strContent = [NSString stringWithFormat:@"%@", orderinfo.serviceContent]; // 服务内容
+    if(type == 2){
+        self.contentBottom.constant = 8;
+        self.contentTitle.text = @"服务内容:";
+        if (strContent.length>0) {
+            self.contentLabel.text = strContent;
+        }else{
+            self.contentLabel.text = @"未填写";
+        }
+    }else{
+        self.contentBottom.constant = 0;
+    }
     if([orderinfo.workStatus isEqualToString:@"1"]){
         self.bgimageview.image = [UIImage imageNamed:@"undo"];
     }else if([orderinfo.workStatus isEqualToString:@"2"]){

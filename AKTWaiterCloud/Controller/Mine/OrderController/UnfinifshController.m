@@ -272,7 +272,7 @@
     }
     if(arr.count>0){
         OrderInfo * orderinfo = arr[indexPath.section];
-        [cell setOrderList:orderinfo];
+        [cell setOrderList:orderinfo Type:1];
     }
     cell.grabSingleBtn.hidden = YES;
     return cell;

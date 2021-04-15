@@ -179,7 +179,7 @@
     }
     if(_dataArray.count>0){
         OrderInfo * orderinfo = _dataArray[indexPath.section];
-        [cell setOrderList:orderinfo];
+        [cell setOrderList:orderinfo Type:1];
     }
     return cell;
 }
