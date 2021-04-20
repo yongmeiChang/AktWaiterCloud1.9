@@ -76,7 +76,7 @@
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaName;//服务区域
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaFullPath;//区域全路径
 @property(nonatomic,strong) NSString  <Optional>* workNo;//工单号
-@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  1  未开始   2 进行中  3 已结束（未回访）  4已回访
+@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  1  未开始   2 进行中  3 已结束
 //@property(nonatomic,strong) NSString  <Optional>* nodeName; // 工单状态 待签入=未开始   待签出=进行中，其他都是已完成
 @property(nonatomic,strong) NSString  <Optional>* workStatusName;//
 @property(nonatomic,strong) NSString  <Optional>* customerId;//服务用户ID
@@ -142,7 +142,7 @@
 @property(nonatomic,strong) NSString  <Optional>* signOutStatus;//签出状态
 @property(nonatomic,strong) NSString  <Optional>* visitUserName;//回访人
 @property(nonatomic,strong) NSString  <Optional>* serviceVisit;//回访情况
-@property(nonatomic,strong) NSString  <Optional>* customerSatisfactionName;//回访满意度
+@property(nonatomic,strong) NSString  <Optional>* customerSatisfactionName;//回访满意度 1非常满意、2满意、3一般、4不满意
 @property(nonatomic,strong) NSString  <Optional>* visitDate;//回访时间
 @property(nonatomic,strong) NSString  <Optional>* signInDistance;//签入距离
 @property(nonatomic,strong) NSString  <Optional>* signOutDistance;//签出距离

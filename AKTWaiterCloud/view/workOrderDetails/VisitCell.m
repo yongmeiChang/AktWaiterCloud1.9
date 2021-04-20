@@ -26,7 +26,17 @@
        [strName addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 3)];
        self.namelabel.attributedText = strName;
     // 满意度
-    NSMutableAttributedString *strSatis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"满意度：%@",kString(orderinfo.customerSatisfactionName).length == 0 ? @"无":orderinfo.customerSatisfactionName] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
+    NSString *strSatisfaction;
+    if ([orderinfo.customerSatisfactionName intValue] == 1) {
+        strSatisfaction = [NSString stringWithFormat:@"非常满意"];
+    }else if ([orderinfo.customerSatisfactionName intValue] == 2){
+        strSatisfaction = [NSString stringWithFormat:@"满意"];
+    }else if ([orderinfo.customerSatisfactionName intValue] == 3){
+        strSatisfaction = [NSString stringWithFormat:@"一般"];
+    }else{
+        strSatisfaction = [NSString stringWithFormat:@"不满意"];
+    }
+    NSMutableAttributedString *strSatis = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"满意度：%@",kString(orderinfo.customerSatisfactionName).length == 0 ? @"无":strSatisfaction] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
        [strSatis addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 3)];
        self.satisfactorylabel.attributedText = strSatis;
     // 回访时间

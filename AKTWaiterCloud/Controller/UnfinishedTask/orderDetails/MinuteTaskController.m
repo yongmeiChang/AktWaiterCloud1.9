@@ -251,8 +251,8 @@
             return 240;
         }
     }else if(indexPath.section==3){
-        if([self.orderinfo.workStatus isEqualToString:@"4"]){
-            return 177;
+        if([self.orderinfo.workStatus isEqualToString:@"3"]){
+            return 190;
         }else{
             return 105.5;
         }
@@ -334,7 +334,7 @@
         }
     }else if(indexPath.section==3){
             
-            if([self.orderinfo.workStatus isEqualToString:@"4"]){
+            if([self.orderinfo.workStatus isEqualToString:@"3"]){
                 VisitCell * visitCell;
                 visitCell = (VisitCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify3];
                 if (visitCell == nil) {
