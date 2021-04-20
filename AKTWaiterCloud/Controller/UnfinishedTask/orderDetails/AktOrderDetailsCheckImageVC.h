@@ -12,8 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AktOrderDetailsCheckImageVC : BaseControllerViewController
-@property(nonatomic,copy) NSString *orderId; // 工单ID
-@property(nonatomic,copy) NSString *imgtype; // 图片类型 1签入  2签出
+@property(nonatomic,copy) NSArray *aryImg; // 图片
 @end
 
 NS_ASSUME_NONNULL_END

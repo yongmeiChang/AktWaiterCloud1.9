@@ -121,11 +121,11 @@ _Pragma("clang diagnostic pop") \
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-//#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
+#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
  
 // 测试环境
-//#define SERVICEURL @"http://192.168.1.126"
-#define SERVICEURL @"http://172.16.100.110"
+//#define SERVICEURL @"http://test.ankangtong.com"
+//#define SERVICEURL @"http://172.16.100.110"
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

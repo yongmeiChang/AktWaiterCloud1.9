@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* recordServiceLengthLess; // 是否记录服务时长不足
 @property(nonatomic,strong) NSString <Optional>* serviceLengthLessAbnormal; // 服务时长不足时操作 1 2 3 0
 
-@property(nonatomic,strong) NSString <Optional>* timeConflict; // 等于3或者0 请求新的接口
+@property(nonatomic,strong) NSString <Optional>* timeConflict; // 等于3或者0、2 请求新的接口
 
 -(void)saveDetailsModel;
 -(AktFindAdvanceModel *)getDetailsModel;

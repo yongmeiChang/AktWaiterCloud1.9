@@ -470,8 +470,8 @@
                    if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
                        NSLog(@"弹框");
                          
-                       BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]);
-                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && (bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]);
+                       BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]); // 定位弹框
+                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && (bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]); // 迟到弹框
                        if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){
                            [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
                                NSDictionary *dic = responseObject;
@@ -620,11 +620,36 @@
 }
 
 #pragma mark - showImageIn
+-(void)showImageIn:(NSString *)type{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
+    NSDictionary * param;
+    if ([type isEqualToString:@"1"]) {
+        param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"101"};
+    }else{
+        param = @{@"workOrderId":self.orderinfo.id,@"tenantsId":[LoginModel gets].tenantId,@"signType":@"102"};
+    }
+    [[AFNetWorkingRequest sharedTool] requestgetWorkOrderImages:param type:HttpRequestTypeGet success:^(id responseObject) {
+        NSDictionary * dic = responseObject;
+        NSNumber * code = dic[@"code"];
+        if([code intValue]==1){
+            NSArray * obj = [dic objectForKey:ResponseData];
+            if(obj.count>0){
+                AktOrderDetailsCheckImageVC *detailsImgVC = [[AktOrderDetailsCheckImageVC alloc] init];
+                detailsImgVC.aryImg = obj;
+                [self.navigationController pushViewController:detailsImgVC animated:YES];
+            } else {
+                [[AppDelegate sharedDelegate] showTextOnly:@"没有图片"];
+            }
+        }else{
+            [self showMessageAlertWithController:self Message:@"没有图片"];
+        }
+    } failure:^(NSError *error) {
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
+    }];
+}
+
 -(void)showImageIn{
-    AktOrderDetailsCheckImageVC *detailsImgVC = [[AktOrderDetailsCheckImageVC alloc] init];
-    detailsImgVC.orderId =self.orderinfo.id;
-    detailsImgVC.imgtype = @"1";
-    [self.navigationController pushViewController:detailsImgVC animated:YES];
+    [self showImageIn:@"1"];
 }
 
 -(void)closedPopview{
@@ -636,10 +661,7 @@
 }
 
 -(void)showImageOut{
-    AktOrderDetailsCheckImageVC *detailsImgVC = [[AktOrderDetailsCheckImageVC alloc] init];
-    detailsImgVC.orderId =self.orderinfo.id;
-    detailsImgVC.imgtype = @"2";
-    [self.navigationController pushViewController:detailsImgVC animated:YES];
+    [self showImageIn:@"2"];
 }
 #pragma mark - cell phone
 -(void)didSelectPhonecomster:(NSString *)phone{
