@@ -369,248 +369,253 @@
         NSString *strcode = [dic objectForKey:ResponseCode];
         if ([strcode integerValue] == 1) {
             AktFindAdvanceModel *model = [[AktFindAdvanceModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
-            if([self.orderinfo.workStatus isEqualToString:@"2"]){
-                    // 签出逻辑判断
-                        distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
-                        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-                        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                /**实际服务时间 与 最低服务时间的差值 **/
-                NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
-                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
-                NSInteger Ltime = Stime-mtime;
-                if (mtime>Stime){ // 实际大于应该
-                    Ltime = 0;
-                }
-                
-                BOOL bollateSignOut = (Ltime-[model.maxEarlyTime integerValue])<0; //
-                /* 签入时间与当前时间的差值 是否 满足最低服务时长*/
-//                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 服务开始时间与当前时间的差值 负数是正常
-                BOOL bollateSignOutLess = (mtime-[model.minServiceLength integerValue])<0; // 实际服务小于最低
-                
-                /**判断当前工单是否在服务有效期内**/
-                formatter.dateFormat = @"yyyy-MM-dd";
-                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
-                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
-                    return;
-                }
-                        
-                if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
-                            
-                            BOOL bollation = ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"]));
-                            BOOL bolearly = ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"]));
-                           BOOL bolservice = ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"]));
-                           BOOL bolserviceLess = ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]));
-                    if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
-                        AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                        scanOrder.ordertype = @"2";
-                        scanOrder.detailsModel = model;
-                        scanOrder.orderinfo = self.orderinfo;
-                        scanOrder.isnewLation = bollation;
-                        scanOrder.isnewearly = bolearly;
-                        scanOrder.isnewserviceTime = bolservice;
-                        scanOrder.isnewserviceTimeLess = bolserviceLess;
-                        [self.navigationController pushViewController:scanOrder animated:YES];
-                        
-                    }else{
-                            _sgController.isnewLation = bollation;
-                            _sgController.isnewearly = bolearly;
-                            _sgController.isnewserviceTime = bolservice;
-                            _sgController.isnewserviceTimeLess = bolserviceLess;
-                            _sgController.orderinfo = self.orderinfo;
-                            _sgController.findAdmodel = model;
-                            [self.navigationController pushViewController:_sgController animated:YES];
-                    }
-                        }else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
-                            
-                            [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
-                        }else if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
-                            // 终止 orderId  工单id   stopReason  终止原因
-                            NSString *strReason;
-                            if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
-                                strReason = @"定位异常终止工单";
-                            }else if ([model.earlyAbnormal isEqualToString:@"0"]){
-                                strReason = @"早退异常终止工单";
-                            }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
-                                strReason = @"最低服务时长异常终止工单";
-                            }else{
-                                strReason = @"服务时长异常终止工单";
-                            }
-                            [[AppDelegate sharedDelegate] showTextOnly:strReason];
-                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
-//                                [self.navigationController popViewControllerAnimated:YES];
-                            } failure:^(NSError *error) {
-                                [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-                            }];
-                            
-                        }else{
-                            if ([model.codeScanSignOut isEqualToString:@"1"]) {// 扫码签出
-                                AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                scanOrder.ordertype = @"2";
-                                scanOrder.detailsModel = model;
-                                scanOrder.orderinfo = self.orderinfo;
-                                [self.navigationController pushViewController:scanOrder animated:YES];
-                                                   
-                            }else{
-                            _sgController.orderinfo = self.orderinfo;
-                            _sgController.findAdmodel = model;
-                            [self.navigationController pushViewController:_sgController animated:YES];
-                                }
-                        }
+//            if([self.orderinfo.workStatus isEqualToString:@"2"]){
+//                    // 签出逻辑判断
+//                        distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
+//                        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//                        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//                /**实际服务时间 与 最低服务时间的差值 **/
+//                NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
+//                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
+//                NSInteger Ltime = Stime-mtime;
+//                if (mtime>Stime){ // 实际大于应该
+//                    Ltime = 0;
+//                }
+//
+//                BOOL bollateSignOut = (Ltime-[model.maxEarlyTime integerValue])<0; //
+//                /* 签入时间与当前时间的差值 是否 满足最低服务时长*/
+////                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 服务开始时间与当前时间的差值 负数是正常
+//                BOOL bollateSignOutLess = (mtime-[model.minServiceLength integerValue])<0; // 实际服务小于最低
+//
+//                /**判断当前工单是否在服务有效期内**/
+//                formatter.dateFormat = @"yyyy-MM-dd";
+//                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
+//                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
+//                    return;
+//                }
+//
+//                if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
+//
+//                            BOOL bollation = ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"]));
+//                            BOOL bolearly = ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"]));
+//                           BOOL bolservice = ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"]));
+//                           BOOL bolserviceLess = ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]));
+//                    if ([model.codeScanSignOut isEqualToString:@"1"] || [model.faceSwipingSignOut isEqualToString:@"1"]) {// 扫码签出 或者 刷脸签出
+//                        AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                        scanOrder.ordertype = @"2";
+//                        scanOrder.detailsModel = model;
+//                        scanOrder.orderinfo = self.orderinfo;
+//                        scanOrder.isnewLation = bollation;
+//                        scanOrder.isnewearly = bolearly;
+//                        scanOrder.isnewserviceTime = bolservice;
+//                        scanOrder.isnewserviceTimeLess = bolserviceLess;
+//                        [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                    }else{
+//                            _sgController.isnewLation = bollation;
+//                            _sgController.isnewearly = bolearly;
+//                            _sgController.isnewserviceTime = bolservice;
+//                            _sgController.isnewserviceTimeLess = bolserviceLess;
+//                            _sgController.orderinfo = self.orderinfo;
+//                            _sgController.findAdmodel = model;
+//                            [self.navigationController pushViewController:_sgController animated:YES];
 //                    }
-               }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
-                   distanceSingin = [model.maxLocationDistanceSignIn doubleValue]-[self.distancePost doubleValue]; // 相差距离
-                   NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-                   [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                   NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值
-                   BOOL bollateSignin = NO;
-                   if (mtime<0) {// mtime<0 迟到
-                       bollateSignin = (labs(mtime) - [model.maxLateTime integerValue])>0; // 超出最大迟到时间
-                   }
-                   
-                   if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
-                       NSLog(@"弹框");
-                         
-                       BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]); // 定位弹框
-                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && (bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]); // 迟到弹框
-                       if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){
-                           [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
-                               NSDictionary *dic = responseObject;
-                               NSString *strcode = [dic objectForKey:ResponseCode];
-                               if ([strcode integerValue] == 2) { // 有签入工单，暂停 timeConflict=2弹框继续
-                                   if ([model.timeConflict isEqualToString:@"2"]){ // 弹框提示用户当前工单有进行中，让用户点击确定之后再继续
-                                       [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
-                                           if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                                               AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                               scanOrder.ordertype = @"2";
-                                               scanOrder.detailsModel = model;
-                                               scanOrder.orderinfo = self.orderinfo;
-                                               scanOrder.isnewLation = bollation;
-                                               scanOrder.isnewlate = bolLate;
-                                               [self.navigationController pushViewController:scanOrder animated:YES];
-                                                                                        
-                                            }else{
-                                                _sgController.isnewLation = bollation;
-                                                _sgController.isnewlate = bolLate;
-                                                _sgController.orderinfo = self.orderinfo;
-                                                _sgController.findAdmodel = model;
-                                                [self.navigationController pushViewController:_sgController animated:YES];
-                                                }
-                                       }];
-                                   }else{
-                                       [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
-                                       [self.navigationController popViewControllerAnimated:YES];
-                                   }
-                               }else{
-                                   if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                                       AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                       scanOrder.ordertype = @"2";
-                                       scanOrder.detailsModel = model;
-                                       scanOrder.orderinfo = self.orderinfo;
-                                       scanOrder.isnewLation = bollation;
-                                       scanOrder.isnewlate = bolLate;
-                                       [self.navigationController pushViewController:scanOrder animated:YES];
-                                                                                
-                                    }else{
-                                        _sgController.isnewLation = bollation;
-                                        _sgController.isnewlate = bolLate;
-                                        _sgController.orderinfo = self.orderinfo;
-                                        _sgController.findAdmodel = model;
-                                        [self.navigationController pushViewController:_sgController animated:YES];
-                                        }
-                               }
-                           } failure:^(NSError *error) {}];
-                       }else{
-                       if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                            scanOrder.ordertype = @"2";
-                            scanOrder.detailsModel = model;
-                            scanOrder.orderinfo = self.orderinfo;
-                            scanOrder.isnewLation = bollation;
-                            scanOrder.isnewlate = bolLate;
-                            [self.navigationController pushViewController:scanOrder animated:YES];
-                                              
-                        }else{
-                       _sgController.isnewLation = bollation;
-                       _sgController.isnewlate = bolLate;
-                       _sgController.orderinfo = self.orderinfo;
-                       _sgController.findAdmodel = model;
-                       [self.navigationController pushViewController:_sgController animated:YES];
-                            }
-                       }
-                       
-                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
-                       NSLog(@"暂停");
-                       [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
-                   }else if ((([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"0"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"0"])))){
-                       NSLog(@"返回首页");
-                       // 终止 orderId  工单id   stopReason  终止原因
-                       NSString *strReason;
-                       if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
-                           strReason = @"定位异常终止工单";
-                       }else{
-                           strReason = @"迟到异常终止工单";
-                       }
-                       [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
-                           [self.navigationController popViewControllerAnimated:YES];
-                       } failure:^(NSError *error) {
-                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-                       }];
-                   }else if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){ // 请求新的接口
-                       [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
-                           NSDictionary *dic = responseObject;
-                           NSString *strcode = [dic objectForKey:ResponseCode];
-                           if ([strcode integerValue] == 2) { // 有签入工单，暂停 timeConflict=2弹框继续
-                               if ([model.timeConflict isEqualToString:@"2"]){ // 弹框提示用户当前工单有进行中，让用户点击确定之后再继续
-                                   [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
-                                       if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                                           AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                           scanOrder.ordertype = @"2";
-                                           scanOrder.detailsModel = model;
-                                           scanOrder.orderinfo = self.orderinfo;
-                                           [self.navigationController pushViewController:scanOrder animated:YES];
-                                                                                    
-                                        }else{
-                                       _sgController.orderinfo = self.orderinfo;
-                                       _sgController.findAdmodel = model;
-                                       [self.navigationController pushViewController:_sgController animated:YES];
-                                            }
-                                   }];
-                               }else{
-                                   [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
-                                   [self.navigationController popViewControllerAnimated:YES];
-                               }
-                           }else{
-                               if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                                   AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                   scanOrder.ordertype = @"2";
-                                   scanOrder.detailsModel = model;
-                                   scanOrder.orderinfo = self.orderinfo;
-                                   [self.navigationController pushViewController:scanOrder animated:YES];
-                                                                            
-                                }else{
-                               _sgController.orderinfo = self.orderinfo;
-                               _sgController.findAdmodel = model;
-                               [self.navigationController pushViewController:_sgController animated:YES];
-                                    }
-                           }
-                       } failure:^(NSError *error) {}];
-                   }else{
-                       NSLog(@"继续");
-                       if ([model.codeScanSignIn isEqualToString:@"1"]) {// 扫码签入
-                           AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                           scanOrder.ordertype = @"2";
-                           scanOrder.detailsModel = model;
-                           scanOrder.orderinfo = self.orderinfo;
-                           [self.navigationController pushViewController:scanOrder animated:YES];
-                                                                    
-                        }else{
-                       _sgController.orderinfo = self.orderinfo;
-                       _sgController.findAdmodel = model;
-                       [self.navigationController pushViewController:_sgController animated:YES];
-                            }
-                   }
-                  
-               }
+//                        }else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
+//
+//                            [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
+//                        }else if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
+//                            // 终止 orderId  工单id   stopReason  终止原因
+//                            NSString *strReason;
+//                            if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
+//                                strReason = @"定位异常终止工单";
+//                            }else if ([model.earlyAbnormal isEqualToString:@"0"]){
+//                                strReason = @"早退异常终止工单";
+//                            }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
+//                                strReason = @"最低服务时长异常终止工单";
+//                            }else{
+//                                strReason = @"服务时长异常终止工单";
+//                            }
+//                            [[AppDelegate sharedDelegate] showTextOnly:strReason];
+//                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
+////                                [self.navigationController popViewControllerAnimated:YES];
+//                            } failure:^(NSError *error) {
+//                                [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+//                            }];
+//
+//                        }else{
+//                            if ([model.codeScanSignOut isEqualToString:@"1"] || [model.faceSwipingSignOut isEqualToString:@"1"]) {// 扫码签出 或者刷脸签出
+//                                AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                                scanOrder.ordertype = @"2";
+//                                scanOrder.detailsModel = model;
+//                                scanOrder.orderinfo = self.orderinfo;
+//                                [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                            }else{
+//                            _sgController.orderinfo = self.orderinfo;
+//                            _sgController.findAdmodel = model;
+//                            [self.navigationController pushViewController:_sgController animated:YES];
+//                                }
+//                        }
+////                    }
+//               }else if([self.orderinfo.workStatus isEqualToString:@"1"]){
+//                   distanceSingin = [model.maxLocationDistanceSignIn doubleValue]-[self.distancePost doubleValue]; // 相差距离
+//                   NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//                   [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//                   NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值
+//                   BOOL bollateSignin = NO;
+//                   if (mtime<0) {// mtime<0 迟到
+//                       bollateSignin = (labs(mtime) - [model.maxLateTime integerValue])>0; // 超出最大迟到时间
+//                   }
+//
+//                   if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
+//                       NSLog(@"弹框");
+//
+//                       BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]); // 定位弹框
+//                       BOOL bolLate = ([model.recordLate isEqualToString:@"1"] && (bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]); // 迟到弹框
+//                       if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){
+//                           [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
+//                               NSDictionary *dic = responseObject;
+//                               NSString *strcode = [dic objectForKey:ResponseCode];
+//                               if ([strcode integerValue] == 2) { // 有签入工单，暂停 timeConflict=2弹框继续
+//                                   if ([model.timeConflict isEqualToString:@"2"]){ // 弹框提示用户当前工单有进行中，让用户点击确定之后再继续
+//                                       [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
+//                                           if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                                               AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                                               scanOrder.ordertype = @"2";
+//                                               scanOrder.detailsModel = model;
+//                                               scanOrder.orderinfo = self.orderinfo;
+//                                               scanOrder.isnewLation = bollation;
+//                                               scanOrder.isnewlate = bolLate;
+//                                               [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                                            }else{
+//                                                _sgController.isnewLation = bollation;
+//                                                _sgController.isnewlate = bolLate;
+//                                                _sgController.orderinfo = self.orderinfo;
+//                                                _sgController.findAdmodel = model;
+//                                                [self.navigationController pushViewController:_sgController animated:YES];
+//                                                }
+//                                       }];
+//                                   }else{
+//                                       [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
+//                                       [self.navigationController popViewControllerAnimated:YES];
+//                                   }
+//                               }else{
+//                                   if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                                       AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                                       scanOrder.ordertype = @"2";
+//                                       scanOrder.detailsModel = model;
+//                                       scanOrder.orderinfo = self.orderinfo;
+//                                       scanOrder.isnewLation = bollation;
+//                                       scanOrder.isnewlate = bolLate;
+//                                       [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                                    }else{
+//                                        _sgController.isnewLation = bollation;
+//                                        _sgController.isnewlate = bolLate;
+//                                        _sgController.orderinfo = self.orderinfo;
+//                                        _sgController.findAdmodel = model;
+//                                        [self.navigationController pushViewController:_sgController animated:YES];
+//                                        }
+//                               }
+//                           } failure:^(NSError *error) {}];
+//                       }else{
+//                       if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                            scanOrder.ordertype = @"2";
+//                            scanOrder.detailsModel = model;
+//                            scanOrder.orderinfo = self.orderinfo;
+//                            scanOrder.isnewLation = bollation;
+//                            scanOrder.isnewlate = bolLate;
+//                            [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                        }else{
+//                       _sgController.isnewLation = bollation;
+//                       _sgController.isnewlate = bolLate;
+//                       _sgController.orderinfo = self.orderinfo;
+//                       _sgController.findAdmodel = model;
+//                       [self.navigationController pushViewController:_sgController animated:YES];
+//                            }
+//                       }
+//
+//                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
+//                       NSLog(@"暂停");
+//                       [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
+//                   }else if ((([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"0"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"0"])))){
+//                       NSLog(@"返回首页");
+//                       // 终止 orderId  工单id   stopReason  终止原因
+//                       NSString *strReason;
+//                       if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
+//                           strReason = @"定位异常终止工单";
+//                       }else{
+//                           strReason = @"迟到异常终止工单";
+//                       }
+//                       [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
+//                           [self.navigationController popViewControllerAnimated:YES];
+//                       } failure:^(NSError *error) {
+//                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+//                       }];
+//                   }else if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){ // 请求新的接口
+//                       [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
+//                           NSDictionary *dic = responseObject;
+//                           NSString *strcode = [dic objectForKey:ResponseCode];
+//                           if ([strcode integerValue] == 2) { // 有签入工单，暂停 timeConflict=2弹框继续
+//                               if ([model.timeConflict isEqualToString:@"2"]){ // 弹框提示用户当前工单有进行中，让用户点击确定之后再继续
+//                                   [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
+//                                       if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                                           AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                                           scanOrder.ordertype = @"2";
+//                                           scanOrder.detailsModel = model;
+//                                           scanOrder.orderinfo = self.orderinfo;
+//                                           [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                                        }else{
+//                                       _sgController.orderinfo = self.orderinfo;
+//                                       _sgController.findAdmodel = model;
+//                                       [self.navigationController pushViewController:_sgController animated:YES];
+//                                            }
+//                                   }];
+//                               }else{
+//                                   [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:ResponseMsg]]];
+//                                   [self.navigationController popViewControllerAnimated:YES];
+//                               }
+//                           }else{
+//                               if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                                   AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                                   scanOrder.ordertype = @"2";
+//                                   scanOrder.detailsModel = model;
+//                                   scanOrder.orderinfo = self.orderinfo;
+//                                   [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                                }else{
+//                               _sgController.orderinfo = self.orderinfo;
+//                               _sgController.findAdmodel = model;
+//                               [self.navigationController pushViewController:_sgController animated:YES];
+//                                    }
+//                           }
+//                       } failure:^(NSError *error) {}];
+//                   }else{
+//                       NSLog(@"继续");
+//                       if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
+//                           AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+//                           scanOrder.ordertype = @"2";
+//                           scanOrder.detailsModel = model;
+//                           scanOrder.orderinfo = self.orderinfo;
+//                           [self.navigationController pushViewController:scanOrder animated:YES];
+//
+//                        }else{
+//                       _sgController.orderinfo = self.orderinfo;
+//                       _sgController.findAdmodel = model;
+//                       [self.navigationController pushViewController:_sgController animated:YES];
+//                            }
+//                   }
+//
+//               }
+            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
+            scanOrder.ordertype = @"2";
+            scanOrder.detailsModel = model;
+            scanOrder.orderinfo = self.orderinfo;
+            [self.navigationController pushViewController:scanOrder animated:YES];
         }
         NSLog(@"%@ \n %@ \n %@",strcode,[dic objectForKey:ResponseMsg],[dic objectForKey:ResponseData]);
     } failure:^(NSError *error) {

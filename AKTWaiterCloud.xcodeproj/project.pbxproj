@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -109,6 +109,23 @@
 		4C4AD8FF23B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90023B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
 		4C4AD90123B34350005DEDE4 /* AktRangePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */; };
+		4C6144A1263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */; };
+		4C6144A2263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */; };
+		4C6144A3263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */; };
+		4C6144A4263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
+		4C6144A5263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
+		4C6144A6263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
+		4C6144AE2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; };
+		4C6144AF2632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; platformFilter = ios; };
+		4C6144B02632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; platformFilter = ios; };
+		4C6144B92632CACF00E58FF0 /* ArcSoftFaceEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */; };
+		4C61CEFE2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */; };
+		4C61CEFF2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */; };
+		4C61CF002635516000B2269C /* AktOldPersonDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */; };
+		4C61CF012635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
+		4C61CF022635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
+		4C61CF032635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
 		4C869A8B24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
@@ -465,6 +482,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4C6144B82632CA9900E58FF0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C6144B92632CACF00E58FF0 /* ArcSoftFaceEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		295155AC8DB18CEFF65CCC5D /* Pods-AKTWaiterCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.debug.xcconfig"; sourceTree = "<group>"; };
 		4C17AD2E24207CFD0006C45F /* AktLoginCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktLoginCmd.h; sourceTree = "<group>"; };
@@ -523,6 +554,13 @@
 		4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangePickerCell.m; sourceTree = "<group>"; };
 		4C4AD8FA23B34350005DEDE4 /* AktRangePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktRangePickerView.m; sourceTree = "<group>"; };
 		4C4AD8FB23B34350005DEDE4 /* RangePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangePickerCell.h; sourceTree = "<group>"; };
+		4C61449E263290D700E58FF0 /* AktServicOldPersonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServicOldPersonVC.h; sourceTree = "<group>"; };
+		4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServicOldPersonVC.m; sourceTree = "<group>"; };
+		4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServicOldPersonVC.xib; sourceTree = "<group>"; };
+		4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcSoftFaceEngine.framework; sourceTree = "<group>"; };
+		4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOldPersonDetailsVC.h; sourceTree = "<group>"; };
+		4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPersonDetailsVC.m; sourceTree = "<group>"; };
+		4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOldPersonDetailsVC.xib; sourceTree = "<group>"; };
 		4C869A8924092B390018B943 /* ZHAttributeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHAttributeTextView.m; sourceTree = "<group>"; };
 		4C869A8A24092B390018B943 /* ZHAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHAttributeTextView.h; sourceTree = "<group>"; };
 		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
@@ -777,6 +815,7 @@
 			files = (
 				ADD562C41FDFCF7B00898AC3 /* AVFoundation.framework in Frameworks */,
 				ADBB6A241F9841F000DDC01C /* Security.framework in Frameworks */,
+				4C6144AE2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				ADBB6A221F9841E700DDC01C /* UIKit.framework in Frameworks */,
 				ADBB6A201F9841E200DDC01C /* Foundation.framework in Frameworks */,
 				ADBB6A1E1F9841DA00DDC01C /* CoreGraphics.framework in Frameworks */,
@@ -794,6 +833,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6144AF2632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				4CD6753522EAF97400AB76AF /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -802,6 +842,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6144B02632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				4CD6753622EAF97400AB76AF /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -847,6 +888,7 @@
 		4C3D755524A88ABF00D0F79A /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				4C61449D263290A800E58FF0 /* serviceOldPerson */,
 				4C3D759524A88ABF00D0F79A /* MineController.h */,
 				4C3D757924A88ABF00D0F79A /* MineController.m */,
 				4C3D755624A88ABF00D0F79A /* MineController.xib */,
@@ -959,6 +1001,19 @@
 				4C4AD8F923B34350005DEDE4 /* RangePickerCell.m */,
 			);
 			path = rangePicker;
+			sourceTree = "<group>";
+		};
+		4C61449D263290A800E58FF0 /* serviceOldPerson */ = {
+			isa = PBXGroup;
+			children = (
+				4C61449E263290D700E58FF0 /* AktServicOldPersonVC.h */,
+				4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */,
+				4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */,
+				4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */,
+				4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */,
+				4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */,
+			);
+			path = serviceOldPerson;
 			sourceTree = "<group>";
 		};
 		4C869A8E240940700018B943 /* CzJWaterMark */ = {
@@ -1389,6 +1444,7 @@
 		ADD7890A1F7DF730008DEC55 = {
 			isa = PBXGroup;
 			children = (
+				4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */,
 				AD93664320AA87D500EEB02C /* china_city_data.json */,
 				ADD09B531F998A1D00CFEC52 /* Images.xcassets */,
 				ADD789151F7DF730008DEC55 /* AKTWaiterCloud */,
@@ -1469,16 +1525,29 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		4C6144B42632C8D100E58FF0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		ADD789121F7DF730008DEC55 /* AKTWaiterCloud */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADD7893F1F7DF731008DEC55 /* Build configuration list for PBXNativeTarget "AKTWaiterCloud" */;
 			buildPhases = (
 				54590513496778848C167BF6 /* [CP] Check Pods Manifest.lock */,
+				4C6144B42632C8D100E58FF0 /* Headers */,
 				ADD7890F1F7DF730008DEC55 /* Sources */,
 				ADD789101F7DF730008DEC55 /* Frameworks */,
 				ADD789111F7DF730008DEC55 /* Resources */,
 				8A37833A4C58F838DEF01ED8 /* [CP] Copy Pods Resources */,
+				4C6144B82632CA9900E58FF0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1616,6 +1685,7 @@
 				4CD674EF22E94CDF00AB76AF /* QBImagePickerController.strings in Resources */,
 				4CD22AAE2521DA880089F433 /* SignoutController.xib in Resources */,
 				4C3D75B424A88ABF00D0F79A /* AKTChangePhoneVC.xib in Resources */,
+				4C61CF012635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */,
 				4C3D75A224A88ABF00D0F79A /* AboutUsController.xib in Resources */,
 				4CD228E3252192220089F433 /* SettingsTableViewCell.xib in Resources */,
 				4CD229712521B3820089F433 /* SignInVC.xib in Resources */,
@@ -1623,6 +1693,7 @@
 				4C37974F242205EE00DC9EFB /* SignInCell.xib in Resources */,
 				4CD229862521B3820089F433 /* AktAgreementVC.xib in Resources */,
 				4CD229772521B3820089F433 /* FindPswController.xib in Resources */,
+				4C6144A4263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */,
 				4CD2297D2521B3820089F433 /* LoginViewController.xib in Resources */,
 				4C3D75AB24A88ABF00D0F79A /* EditPassWordController.xib in Resources */,
 				4C3D75C624A88ABF00D0F79A /* NotifyController.xib in Resources */,
@@ -1637,6 +1708,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C61CF022635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */,
 				4CD22AA92521DA880089F433 /* MinuteTaskController.xib in Resources */,
 				4C3D75AF24A88ABF00D0F79A /* AktFeedBackVC.xib in Resources */,
 				4CD229212521B0880089F433 /* AktAddOrderUserInfoCell.xib in Resources */,
@@ -1673,6 +1745,7 @@
 				4CD229872521B3820089F433 /* AktAgreementVC.xib in Resources */,
 				4CD22AA02521DA880089F433 /* AktOrderDetailsCheckImageVC.xib in Resources */,
 				4C37974D242205EE00DC9EFB /* NoDateCell.xib in Resources */,
+				4C6144A5263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */,
 				4CD229242521B0880089F433 /* DownOrderCell.xib in Resources */,
 				4C3D75AC24A88ABF00D0F79A /* EditPassWordController.xib in Resources */,
 				4CD22AAF2521DA880089F433 /* SignoutController.xib in Resources */,
@@ -1683,6 +1756,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C61CF032635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */,
 				4CD22AAA2521DA880089F433 /* MinuteTaskController.xib in Resources */,
 				4C3D75B024A88ABF00D0F79A /* AktFeedBackVC.xib in Resources */,
 				4CD229222521B0880089F433 /* AktAddOrderUserInfoCell.xib in Resources */,
@@ -1719,6 +1793,7 @@
 				4CD229882521B3820089F433 /* AktAgreementVC.xib in Resources */,
 				4CD22AA12521DA880089F433 /* AktOrderDetailsCheckImageVC.xib in Resources */,
 				4C37974E242205EE00DC9EFB /* NoDateCell.xib in Resources */,
+				4C6144A6263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */,
 				4CD229252521B0880089F433 /* DownOrderCell.xib in Resources */,
 				4C3D75AD24A88ABF00D0F79A /* EditPassWordController.xib in Resources */,
 				4CD22AB02521DA880089F433 /* SignoutController.xib in Resources */,
@@ -1827,6 +1902,7 @@
 				ADADBB3F1FDFE96600B54117 /* FileManagerUtil.m in Sources */,
 				4C31F098241F58FF0084AC82 /* AktVipCmd.m in Sources */,
 				4CDAD745240F7E0E00CF9129 /* NSDictionary+Extension.m in Sources */,
+				4C6144A1263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */,
 				4CD22AB12521DA880089F433 /* AktWCMp3.m in Sources */,
 				4CD674F222E94CDF00AB76AF /* QBAssetsCollectionViewController.m in Sources */,
 				4CE6A04D23AB268300C41114 /* AktResetAppView.m in Sources */,
@@ -1857,6 +1933,7 @@
 				4CD674F522E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
 				AD1E03451FC812520056808D /* UINavigationBar+UINavigationBar_CustomHeight.m in Sources */,
 				4CD22AB42521DA880089F433 /* PhotoCell.m in Sources */,
+				4C61CEFE2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
 				4CDAD74E240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4CD22A702521D7760089F433 /* HandCodeController.m in Sources */,
 				4C25C29F24C9644F007AF277 /* WSPlaceholderTextView.m in Sources */,
@@ -1907,6 +1984,7 @@
 				4CD2296F2521B3820089F433 /* AktAgreementVC.m in Sources */,
 				4C9B9761240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
 				4CD22A5F2521D7760089F433 /* DownOrdersController.m in Sources */,
+				4C61CEFF2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
 				4C9B975B240CCF1D00576F7C /* FSCalendar.m in Sources */,
 				4C3D75A024A88ABF00D0F79A /* AboutUsController.m in Sources */,
 				4CD6750222E94CDF00AB76AF /* QBAssetsCollectionViewLayout.m in Sources */,
@@ -1918,6 +1996,7 @@
 				4CD22AB82521DA880089F433 /* SignoutController.m in Sources */,
 				4CD674E722E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3B0C5B24BC01F800588D63 /* RSAEncryptor.m in Sources */,
+				4C6144A2263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */,
 				4CD22AB22521DA880089F433 /* AktWCMp3.m in Sources */,
 				4C9B9758240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C9B9776240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
@@ -2008,6 +2087,7 @@
 				4CD229702521B3820089F433 /* AktAgreementVC.m in Sources */,
 				4C9B9762240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
 				4CD22A602521D7760089F433 /* DownOrdersController.m in Sources */,
+				4C61CF002635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
 				4C9B975C240CCF1D00576F7C /* FSCalendar.m in Sources */,
 				4C3D75A124A88ABF00D0F79A /* AboutUsController.m in Sources */,
 				4CD6750322E94CDF00AB76AF /* QBAssetsCollectionViewLayout.m in Sources */,
@@ -2019,6 +2099,7 @@
 				4CD22AB92521DA880089F433 /* SignoutController.m in Sources */,
 				4CD674E822E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3B0C5C24BC01F800588D63 /* RSAEncryptor.m in Sources */,
+				4C6144A3263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */,
 				4CD22AB32521DA880089F433 /* AktWCMp3.m in Sources */,
 				4C9B9759240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C9B9777240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
@@ -2254,16 +2335,23 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 47QX444MCT;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/DeviceHelper-master/VoiceConvert/opencore-amrwb",
@@ -2353,15 +2441,22 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 47QX444MCT;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AKTWaiterCloud/PrefixHeader.pch";
 				INFOPLIST_FILE = AKTWaiterCloud/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/DeviceHelper-master/VoiceConvert/opencore-amrwb",
@@ -2446,8 +2541,16 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47QX444MCT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AKTWaiterCloudTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
@@ -2466,8 +2569,16 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47QX444MCT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AKTWaiterCloudTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
@@ -2485,8 +2596,16 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47QX444MCT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AKTWaiterCloudUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
@@ -2504,8 +2623,16 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47QX444MCT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AKTWaiterCloudUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",

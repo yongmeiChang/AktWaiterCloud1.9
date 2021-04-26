@@ -15,6 +15,8 @@
 #import "EditUserInfoController.h"
 #import "UIButton+Badge.h"
 #import "NotifyController.h"
+#import "AktServicOldPersonVC.h"
+
 @interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     UserInfo *modelUser;
 }
@@ -51,7 +53,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = @"个人资料";
-    self.dataSourceArray = @[@"通知",@"设置"];
+    self.dataSourceArray = @[@"老人",@"通知",@"设置"];
     [self collectionViewinit];
     
     //给整个编辑资料视图添加手势以便用户点击
@@ -152,6 +154,9 @@
             cell.imageview.image = [UIImage imageNamed:@"notice"];
             break;
         case 1:
+            cell.imageview.image = [UIImage imageNamed:@"notice"];
+            break;
+        case 2:
             cell.imageview.image = [UIImage imageNamed:@"system"];
             break;
         default:
@@ -164,14 +169,20 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
    switch (index) {
-       case 0:{/*
+       case 0:{
+           AktServicOldPersonVC *oldPerson = [[AktServicOldPersonVC alloc] init];
+           oldPerson.hidesBottomBarWhenPushed = YES;
+           [self.navigationController pushViewController:oldPerson animated:YES];
+       }
+           break;
+       case 1:{/*
            NotifyController * notifyController = [[NotifyController alloc]init];
            notifyController.hidesBottomBarWhenPushed = YES;
            [self.navigationController pushViewController:notifyController animated:YES];*/
            [[AppDelegate sharedDelegate] showTextOnly:@"该功能正在开发中！敬请期待"];
-           break;
        }
-       case 1:{
+           break;
+       case 2:{
            SettingsController * settingsController = [[SettingsController alloc]init];
            settingsController.hidesBottomBarWhenPushed = YES;
            [self.navigationController pushViewController:settingsController animated:YES];

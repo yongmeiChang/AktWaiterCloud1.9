@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* serviceItemId; // 服务项目id
 @property(nonatomic,strong) NSString <Optional>* orderGrabbing; // 是否抢单  1是 0否
 @property(nonatomic,strong) NSString <Optional>* codeScanSignIn;//是否扫码签入 1是 0否
+@property(nonatomic,strong) NSString <Optional>* faceSwipingSignIn; // 是否刷脸签入 1是 0否
 
 @property(nonatomic,strong) NSString <Optional>* recordLate; //是否记录迟到 1是 0否
 @property(nonatomic,strong) NSString <Optional>* maxLateTime; // 迟到最大时长 分钟    允许操作的最大时长（时长内只记录，时长外根据lateAbnormal判断）
@@ -37,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString <Optional>* soundRecordTimeSignIn; // 签入录音最低时长 秒
 
 @property(nonatomic,strong) NSString <Optional>* codeScanSignOut; // 是否扫码签出
+@property(nonatomic,strong) NSString <Optional>* faceSwipingSignOut; // 是否刷脸签出 1是 0否
 @property(nonatomic,strong) NSString <Optional>* recordEarly;  // 是否记录早退
 
 @property(nonatomic,strong) NSString <Optional>* maxEarlyTime; // 早退最大时长 分

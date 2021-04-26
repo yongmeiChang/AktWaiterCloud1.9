@@ -12,6 +12,7 @@
 @interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     BOOL isOpen;// 是否 打开手电筒
+    BOOL isFace; // 是否刷脸 1是 0否
 }
 @property(nonatomic,strong) SignoutController * sgController;
 
@@ -29,14 +30,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
      isOpen = false;
+     isFace = false;
         self.view.backgroundColor = [UIColor whiteColor];
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         
-    if ([self.ordertype isEqualToString:@"1"]) {
-        [self setNavTitle:@"二维码扫描签入"];
-    }else{
-        [self setNavTitle:@"二维码扫描签出"];
-    }
         self.netWorkErrorView.hidden = YES;
 }
 
@@ -54,8 +51,14 @@
     [self setupScanWindowView];//设置扫描二维码区域的视图
     
     [self beginScanning];//开始扫二维码
-    
-    [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+
+        if ([self.ordertype isEqualToString:@"1"]) {
+            [self setNavTitle:@"二维码扫描签入"];
+        }else{
+            [self setNavTitle:@"二维码扫描签出"];
+        }
+        [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
+
     /*签入 签出页面*/
     _sgController = [[SignoutController alloc] init];
        if([self.orderinfo.workStatus isEqualToString:@"2"]){
@@ -86,6 +89,25 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+-(void)SearchBarClick{
+    if (isFace) {
+        if ([self.ordertype isEqualToString:@"1"]) {
+            [self setNavTitle:@"扫码签入"];
+        }else{
+            [self setNavTitle:@"扫码签出"];
+        }
+        [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
+        isFace = false;
+    }else{
+        if ([self.ordertype isEqualToString:@"1"]) {
+            [self setNomalRightNavTilte:@"" RightTitleTwo:@"扫码签入"];
+        }else{
+            [self setNomalRightNavTilte:@"" RightTitleTwo:@"扫码签出"];
+        }
+        [self setNavTitle:@"人脸识别"];
+        isFace =true;
     }
 }
 
