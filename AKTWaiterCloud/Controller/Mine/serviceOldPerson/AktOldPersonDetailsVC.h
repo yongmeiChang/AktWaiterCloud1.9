@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseControllerViewController.h"
+#import "AktOldPersonModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AktOldPersonDetailsVC : BaseControllerViewController
-
+@property (nonatomic,strong) AktOldPersonDetailsModel * oldPresondetailsModel; // 老人详情数据
 @end
 
 NS_ASSUME_NONNULL_END

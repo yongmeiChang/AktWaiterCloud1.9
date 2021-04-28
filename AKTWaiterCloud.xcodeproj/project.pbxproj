@@ -126,6 +126,10 @@
 		4C61CF012635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
 		4C61CF022635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
 		4C61CF032635516000B2269C /* AktOldPersonDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */; };
+		4C81843F2639021E005F85E3 /* AktOldPersonModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C81843D2639021E005F85E3 /* AktOldPersonModel.h */; };
+		4C8184402639021E005F85E3 /* AktOldPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C81843E2639021E005F85E3 /* AktOldPersonModel.m */; };
+		4C8184412639021E005F85E3 /* AktOldPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C81843E2639021E005F85E3 /* AktOldPersonModel.m */; };
+		4C8184422639021E005F85E3 /* AktOldPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C81843E2639021E005F85E3 /* AktOldPersonModel.m */; };
 		4C869A8B24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
 		4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C869A8924092B390018B943 /* ZHAttributeTextView.m */; };
@@ -561,6 +565,8 @@
 		4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOldPersonDetailsVC.h; sourceTree = "<group>"; };
 		4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPersonDetailsVC.m; sourceTree = "<group>"; };
 		4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOldPersonDetailsVC.xib; sourceTree = "<group>"; };
+		4C81843D2639021E005F85E3 /* AktOldPersonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOldPersonModel.h; sourceTree = "<group>"; };
+		4C81843E2639021E005F85E3 /* AktOldPersonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPersonModel.m; sourceTree = "<group>"; };
 		4C869A8924092B390018B943 /* ZHAttributeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHAttributeTextView.m; sourceTree = "<group>"; };
 		4C869A8A24092B390018B943 /* ZHAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHAttributeTextView.h; sourceTree = "<group>"; };
 		4C869A8F240940700018B943 /* AddWaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWaterMark.h; sourceTree = "<group>"; };
@@ -1099,6 +1105,8 @@
 				4CAED3F823B9FBEC00BAF2E3 /* DataModel.m */,
 				4CC0AB7224C02DC200C57A0D /* AktOrderDetailsModel.h */,
 				4CC0AB7324C02DC200C57A0D /* AktOrderDetailsModel.m */,
+				4C81843D2639021E005F85E3 /* AktOldPersonModel.h */,
+				4C81843E2639021E005F85E3 /* AktOldPersonModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1530,6 +1538,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C81843F2639021E005F85E3 /* AktOldPersonModel.h in Headers */,
 				4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1944,6 +1953,7 @@
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
+				4C8184402639021E005F85E3 /* AktOldPersonModel.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,
 				ADD835F3205779AF0003A1C5 /* AppInfoDefult.m in Sources */,
 				4CD228DD252192220089F433 /* SettingsTableViewCell.m in Sources */,
@@ -2055,6 +2065,7 @@
 				4C869A8C24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FC22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C869A92240940700018B943 /* AddWaterMark.m in Sources */,
+				4C8184412639021E005F85E3 /* AktOldPersonModel.m in Sources */,
 				4CD228F92521A7340089F433 /* PlanTaskCell.m in Sources */,
 				4CD229272521B0880089F433 /* AktServiceRemarkCell.m in Sources */,
 				4CD22AA32521DA880089F433 /* MinuteTaskController.m in Sources */,
@@ -2158,6 +2169,7 @@
 				4C869A8D24092B390018B943 /* ZHAttributeTextView.m in Sources */,
 				4CD674FD22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C869A93240940700018B943 /* AddWaterMark.m in Sources */,
+				4C8184422639021E005F85E3 /* AktOldPersonModel.m in Sources */,
 				4CD228FA2521A7340089F433 /* PlanTaskCell.m in Sources */,
 				4CD229282521B0880089F433 /* AktServiceRemarkCell.m in Sources */,
 				4CD22AA42521DA880089F433 /* MinuteTaskController.m in Sources */,

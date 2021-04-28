@@ -53,7 +53,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = @"个人资料";
-    self.dataSourceArray = @[@"老人",@"通知",@"设置"];
+    self.dataSourceArray = @[@"信息采集",@"消息通知",@"系统设置"];
     [self collectionViewinit];
     
     //给整个编辑资料视图添加手势以便用户点击

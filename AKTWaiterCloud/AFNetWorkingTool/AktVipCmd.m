@@ -122,4 +122,34 @@ static AktVipCmd * aq_instance = nil;
     }];
 }
 
+/*老人列表*/
+-(void)requestOldpersonlist:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOldPersonListMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*人脸采集*/
+-(void)requestFaceCollect:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                  failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFaceCollectMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*人脸识别*/
+-(void)requestFaceRecognition:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                      failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFaceRecognitionMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
 @end

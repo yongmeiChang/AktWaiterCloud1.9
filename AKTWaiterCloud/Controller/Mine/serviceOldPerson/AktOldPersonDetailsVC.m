@@ -9,7 +9,11 @@
 #import "AktOldPersonDetailsVC.h"
 
 @interface AktOldPersonDetailsVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *labName;
+@property (weak, nonatomic) IBOutlet UILabel *labIDCard;
 @property (weak, nonatomic) IBOutlet UILabel *labPhone;
+@property (weak, nonatomic) IBOutlet UILabel *labAddress;
+
 @property (weak, nonatomic) IBOutlet UIImageView *imgClick;
 
 @end
@@ -22,6 +26,13 @@
     //导航栏
     [self setNavTitle:@"老人信息"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    
+    // 老人信息
+    self.labName.text = kString(self.oldPresondetailsModel.customerName);
+    self.labIDCard.text = kString(self.oldPresondetailsModel.customerNo);
+    self.labPhone.text = kString(self.oldPresondetailsModel.customerMobile);
+    self.labAddress.text = kString(self.oldPresondetailsModel.customerAddress);
+    
 }
 #pragma mark - click
 - (IBAction)btnfaceInsert:(UIButton *)sender {
@@ -49,10 +60,25 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self.imgClick setImage:image];
-   
+    //上传
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"识别中..."];
+    NSDictionary * parameters =@{@"customerName":kString(self.oldPresondetailsModel.customerName),@"customerNo":kString(self.oldPresondetailsModel.customerNo),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
+    [[AktVipCmd sharedTool] requestFaceCollect:parameters type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSLog(@"---%@",responseObject);
+        [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
+        [[AppDelegate sharedDelegate] hidHUD];
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+        [[AppDelegate sharedDelegate] hidHUD];
+    }];
+//    [self.imgClick setImage:image];
 }
-
+#pragma mark - UIImage图片转成Base64字符串
+-(NSString *)imageToBaseString:(UIImage *)image{
+    NSData *data = UIImageJPEGRepresentation(image, 0.5f);
+    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return encodedImageStr;
+}
 
 /*
 #pragma mark - Navigation

@@ -9,8 +9,9 @@
 #import "AktOrderScanVC.h"
 #import "SignoutController.h"
 
-@interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate>
+@interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
+    UIImageView *imgFace; // 人脸照片
     BOOL isOpen;// 是否 打开手电筒
     BOOL isFace; // 是否刷脸 1是 0否
 }
@@ -336,6 +337,36 @@
     }
 }
 
+#pragma mark - face
+-(void)facePhoto{
+    UIButton *btnSelect = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-120)/2, 100, 120, 50)];
+    [btnSelect setTitle:@"拍照识别" forState:UIControlStateNormal];
+    [btnSelect addTarget:self action:@selector(checkFacePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnSelect];
+    
+    imgFace = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-120)/2, btnSelect.frame.origin.y+btnSelect.frame.size.height+30, 120, 120)];
+    [self.view addSubview:imgFace];
+}
+
+-(void)checkFacePhotoClick:(UIButton *)sender{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePickerController.delegate = self;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }else{
+        [[AppDelegate sharedDelegate] showTextOnly:@"您暂时没有拍照权限，请打开照相机权限！"];
+    }
+}
+#pragma mark - image picker delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [imgFace setImage:image];
+    NSLog(@"拍照之后 需要上传的图片");
+}
 
 /*
 #pragma mark - Navigation

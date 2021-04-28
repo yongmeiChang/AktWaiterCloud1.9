@@ -8,9 +8,14 @@
 
 #import "AktServicOldPersonVC.h"
 #import "AktOldPersonDetailsVC.h"
+#import "AktOldPersonModel.h"
 #import "AktTitleCell.h"
 
-@interface AktServicOldPersonVC ()
+@interface AktServicOldPersonVC (){
+    int pageNum; // 页数
+    NSMutableArray * dataArray;//数据源
+    AktOldPersonModel *oldmodel;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableOldPerson;
 @property (weak, nonatomic) IBOutlet UITextField *tfOldPersonCode;
 @property (weak, nonatomic) IBOutlet UIButton *btnSearch;
@@ -23,10 +28,48 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //导航栏
-    [self setNavTitle:@"老人"];
+    [self setNavTitle:@"用户列表"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    pageNum = 1;
+    dataArray = [NSMutableArray array];
+    self.tableOldPerson.mj_header = self.mj_header;
+    self.tableOldPerson.mj_footer = self.mj_footer;
+    [self.tableOldPerson.mj_header beginRefreshing];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+#pragma mark - request
+-(void)checkNetWork{
+    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"pageSize":AktPageSize,@"pageNum":[NSString stringWithFormat:@"%d",pageNum]}; // @"waiterId":[LoginModel gets].uuid,
+    [[AktVipCmd sharedTool] requestOldpersonlist:parameters type:HttpRequestTypeGet success:^(id responseObject) {
+        NSDictionary * dic = responseObject;
+        NSNumber * code = [dic objectForKey:ResponseCode];
+        if (pageNum == 1) {
+            [dataArray removeAllObjects];
+        }
+        if([code intValue]==1){
+            oldmodel = [[AktOldPersonModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
+            [dataArray addObjectsFromArray:oldmodel.list];
+            [self.tableOldPerson reloadData];
+        }
+        [[AppDelegate sharedDelegate] hidHUD];
+    }failure:^(NSError *error) {
+        [[AppDelegate sharedDelegate] hidHUD];
+    }];
+}
+#pragma mark - mj
+-(void)loadHeaderData:(MJRefreshGifHeader*)mj{
+    pageNum = 1;
+    [self checkNetWork];
+    [self.tableOldPerson.mj_header endRefreshing];
 }
 
+-(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+    pageNum = pageNum+1;
+    [self checkNetWork];
+    [self.tableOldPerson.mj_footer endRefreshing];
+}
 #pragma mark - btn click
 - (IBAction)btnSearchClick:(UIButton *)sender {
     NSLog(@"---%@",self.tfOldPersonCode.text);
@@ -40,7 +83,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return dataArray.count;
 }
 
 ////设置分割线上下去边线，顶头缩进15
@@ -62,9 +105,11 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"AktTitleCell" owner:self options:nil] objectAtIndex:0];
     }
-    cell.labName.text = @"老人姓名";
-    cell.labvalue.text = @"13671827222";
+    AktOldPersonDetailsModel *deltaismodel = [dataArray objectAtIndex:indexPath.row];
+    cell.labName.text = kString(deltaismodel.customerName);
+    cell.labvalue.text = kString(deltaismodel.customerMobile);
     cell.labValueConstraint.constant = 100;
+    cell.imageValue.hidden = YES;
     return cell;
 }
 #pragma mark - table delegate
@@ -78,6 +123,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     AktOldPersonDetailsVC *detailsvc = [[AktOldPersonDetailsVC alloc] init];
+    detailsvc.oldPresondetailsModel = [dataArray objectAtIndex:indexPath.row];
     detailsvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailsvc animated:YES];
 }
