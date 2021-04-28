@@ -44,7 +44,6 @@
         
         UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw+10)*i, 0, btnw, 20)];
         labPhone.textColor = kColor(@"C7");
-        labPhone.backgroundColor = [UIColor blueColor];
         labPhone.font = [UIFont systemFontOfSize:14];
         labPhone.textAlignment = NSTextAlignmentLeft;
         labPhone.text = [NSString stringWithFormat:@"%@",kString([aryPhone objectAtIndex:i])];
