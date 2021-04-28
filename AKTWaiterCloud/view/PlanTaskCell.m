@@ -37,13 +37,14 @@
     
     for (int i =0; i<aryPhone.count; i++) {// 手机号
         NSInteger btnw = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",[aryPhone objectAtIndex:i]] font:15 limitWidth:0].width;
-        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
+        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake((btnw+10)*i, 0, btnw, 20)];
         [btnPhone addTarget:self action:@selector(btnPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
         btnPhone.tag = i;
         [self.viewPhone addSubview:btnPhone];
         
-        UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
+        UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw+10)*i, 0, btnw, 20)];
         labPhone.textColor = kColor(@"C7");
+        labPhone.backgroundColor = [UIColor blueColor];
         labPhone.font = [UIFont systemFontOfSize:14];
         labPhone.textAlignment = NSTextAlignmentLeft;
         labPhone.text = [NSString stringWithFormat:@"%@",kString([aryPhone objectAtIndex:i])];
