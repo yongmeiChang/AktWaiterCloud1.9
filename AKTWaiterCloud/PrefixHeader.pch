@@ -114,7 +114,7 @@ _Pragma("clang diagnostic pop") \
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
 #define HR_appid @"DZ6Rd8aAApEmSUvJUDXMRwVFPBUEW5uUP6NyEwjm8xdx" // 虹软ID
 #define HR_SDKkey @"52Ps3PRkiRxrHVh7M871NJ8tcJb8h8BBWkhdS777T57B" // 虹软SDKkey
-
+#define AktPageSize @"10" // 每页条数
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -124,12 +124,12 @@ _Pragma("clang diagnostic pop") \
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
+//#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
  
 // 测试环境
 //#define SERVICEURL @"http://test.ankangtong.com"
 // 本地环境
-//#define SERVICEURL @"http://172.16.6.105"
+#define SERVICEURL @"http://172.16.6.48"
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

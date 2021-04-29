@@ -311,13 +311,13 @@
         if(resCode == 0){
             appDelegate.Registration_ID = registrationID;
         }
-        NSDictionary * dic =@{@"waiterUkey":name,@"password":pwd,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-             [[AppDelegate sharedDelegate] hidHUD];
-        } failure:^(NSError *error) {
-             [[AppDelegate sharedDelegate] hidHUD];
-            [self showTextOnly:error.domain];
-        }];
+//        NSDictionary * dic =@{@"waiterUkey":name,@"password":pwd,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
+//        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+//             [[AppDelegate sharedDelegate] hidHUD];
+//        } failure:^(NSError *error) {
+//             [[AppDelegate sharedDelegate] hidHUD];
+//            [self showTextOnly:error.domain];
+//        }];
     }];
 }
 

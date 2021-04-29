@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,34 +39,34 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGL-YE-MsV">
-                    <rect key="frame" x="30" y="107" width="44" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGL-YE-MsV">
+                    <rect key="frame" x="30" y="107" width="44" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="eIj-kD-wbY"/>
                     </constraints>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" image="sign_phone"/>
                     <connections>
                         <action selector="btnPhoneClick:" destination="-1" eventType="touchUpInside" id="WoB-CW-tEc"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="139282299990" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMM-ct-kZM">
-                    <rect key="frame" x="82" y="107" width="302" height="30"/>
+                    <rect key="frame" x="82" y="107" width="302" height="22"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBj-fl-FCG">
-                    <rect key="frame" x="30" y="145" width="44" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBj-fl-FCG">
+                    <rect key="frame" x="30" y="137" width="44" height="22"/>
+                    <state key="normal" image="addressblue"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海普陀区" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sXq-bH-2Ht">
-                    <rect key="frame" x="82" y="145" width="302" height="18"/>
+                    <rect key="frame" x="82" y="137" width="302" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLw-qP-mdg">
-                    <rect key="frame" x="30" y="193" width="354" height="40"/>
+                    <rect key="frame" x="30" y="185" width="354" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="qsP-oh-Rd9"/>
                     </constraints>
@@ -77,14 +76,14 @@
                     </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o1z-DQ-WnU">
-                    <rect key="frame" x="50" y="293" width="314" height="128"/>
+                    <rect key="frame" x="50" y="285" width="314" height="128"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="W3b-aJ-dOn"/>
                     </constraints>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="FtA-B7-ACJ" secondAttribute="trailing" constant="30" id="4V2-CT-9ct"/>
                 <constraint firstItem="o1z-DQ-WnU" firstAttribute="top" secondItem="rLw-qP-mdg" secondAttribute="bottom" constant="60" id="63s-K4-n2K"/>
@@ -115,8 +114,7 @@
         </view>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="addressblue" width="12.5" height="15.5"/>
+        <image name="sign_phone" width="13.5" height="20"/>
     </resources>
 </document>

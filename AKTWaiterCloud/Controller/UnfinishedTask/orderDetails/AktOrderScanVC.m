@@ -15,6 +15,7 @@
     BOOL isOpen;// 是否 打开手电筒
     BOOL isFace; // 是否刷脸 1是 0否
 }
+@property (weak, nonatomic) IBOutlet UIView *faceBgView;
 @property(nonatomic,strong) SignoutController * sgController;
 
 @property (nonatomic) float QRCodeWidth;//正方形边长
@@ -94,6 +95,8 @@
 }
 -(void)SearchBarClick{
     if (isFace) {
+        [self beginScanning];//开始扫二维码
+        self.faceBgView.hidden = YES;
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNavTitle:@"扫码签入"];
         }else{
@@ -102,6 +105,8 @@
         [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
         isFace = false;
     }else{
+        [_session stopRunning];
+        self.faceBgView.hidden = NO;
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNomalRightNavTilte:@"" RightTitleTwo:@"扫码签入"];
         }else{
@@ -337,15 +342,15 @@
     }
 }
 
-#pragma mark - face
+#pragma mark - face info
 -(void)facePhoto{
     UIButton *btnSelect = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-120)/2, 100, 120, 50)];
-    [btnSelect setTitle:@"拍照识别" forState:UIControlStateNormal];
+    [btnSelect setTitle:@"点击拍照识别" forState:UIControlStateNormal];
     [btnSelect addTarget:self action:@selector(checkFacePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btnSelect];
+    [self.faceBgView addSubview:btnSelect];
     
     imgFace = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-120)/2, btnSelect.frame.origin.y+btnSelect.frame.size.height+30, 120, 120)];
-    [self.view addSubview:imgFace];
+    [self.faceBgView addSubview:imgFace];
 }
 
 -(void)checkFacePhotoClick:(UIButton *)sender{
@@ -364,8 +369,31 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [imgFace setImage:image];
+ 
     NSLog(@"拍照之后 需要上传的图片");
+    [[AktVipCmd sharedTool] requestFaceRecognition:@{@"customerImg":[self imageToBaseString:image],@"imgType":@"png"} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        
+        // 扫码完成之后 进入到签入 签出页面
+        _sgController.isnewLation = self.isnewLation;
+        _sgController.isnewlate = self.isnewlate;
+        _sgController.isnewearly = self.isnewearly;
+        _sgController.isnewserviceTime = self.isnewserviceTime;
+        _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
+        _sgController.orderinfo = self.orderinfo;
+        _sgController.findAdmodel = self.detailsModel;
+        [self.navigationController pushViewController:_sgController animated:YES];
+        
+        [imgFace setImage:image];
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+#pragma mark - UIImage图片转成Base64字符串
+-(NSString *)imageToBaseString:(UIImage *)image{
+    NSData *data = UIImageJPEGRepresentation(image, 0.5f);
+    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return encodedImageStr;
 }
 
 /*
