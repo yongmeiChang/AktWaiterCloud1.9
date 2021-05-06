@@ -397,9 +397,28 @@
                 
                 
                 
-                
+                if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
+                    // 终止 orderId  工单id   stopReason  终止原因
+                    NSString *strReason;
+                    if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
+                        strReason = @"定位异常终止工单";
+                    }else if ([model.earlyAbnormal isEqualToString:@"0"]){
+                        strReason = @"早退异常终止工单";
+                    }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
+                        strReason = @"最低服务时长异常终止工单";
+                    }else{
+                        strReason = @"服务时长异常终止工单";
+                    }
+                    [[AppDelegate sharedDelegate] showTextOnly:strReason];
+                    [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
+//                                [self.navigationController popViewControllerAnimated:YES];
+                    } failure:^(NSError *error) {
+                        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+                    }];
 
-                if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
+                }
+
+                else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"2"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"2"]))) {
 
                             BOOL bollation = ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"2"]));
                             BOOL bolearly = ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"2"]));
@@ -425,29 +444,12 @@
                             _sgController.findAdmodel = model;
                             [self.navigationController pushViewController:_sgController animated:YES];
                     }
-                        }else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
+                        }
+                else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
 
                             [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
-                        }else if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
-                            // 终止 orderId  工单id   stopReason  终止原因
-                            NSString *strReason;
-                            if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
-                                strReason = @"定位异常终止工单";
-                            }else if ([model.earlyAbnormal isEqualToString:@"0"]){
-                                strReason = @"早退异常终止工单";
-                            }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
-                                strReason = @"最低服务时长异常终止工单";
-                            }else{
-                                strReason = @"服务时长异常终止工单";
-                            }
-                            [[AppDelegate sharedDelegate] showTextOnly:strReason];
-                            [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
-//                                [self.navigationController popViewControllerAnimated:YES];
-                            } failure:^(NSError *error) {
-                                [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-                            }];
-
-                        }else{
+                        }
+                else{
                             if ([model.codeScanSignOut isEqualToString:@"1"] || [model.faceSwipingSignOut isEqualToString:@"1"]) {// 扫码签出 或者刷脸签出
                                 AktOrderScanVC *scanOrder = [AktOrderScanVC new];
                                 scanOrder.ordertype = @"2";
@@ -472,7 +474,21 @@
                        bollateSignin = (labs(mtime) - [model.maxLateTime integerValue])>0; // 超出最大迟到时间
                    }
 
-                   if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
+                   if ((([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"0"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"0"])))){
+                       NSLog(@"返回首页");
+                       // 终止 orderId  工单id   stopReason  终止原因
+                       NSString *strReason;
+                       if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
+                           strReason = @"定位异常终止工单";
+                       }else{
+                           strReason = @"迟到异常终止工单";
+                       }
+                       [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
+                           [self.navigationController popViewControllerAnimated:YES];
+                       } failure:^(NSError *error) {
+                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+                       }];
+                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
                        NSLog(@"弹框");
 
                        BOOL bollation = ([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && [model.locationAbnormalSignIn isEqualToString:@"2"]); // 定位弹框
@@ -546,21 +562,7 @@
                    }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
                        NSLog(@"暂停");
                        [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
-                   }else if ((([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"0"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"0"])))){
-                       NSLog(@"返回首页");
-                       // 终止 orderId  工单id   stopReason  终止原因
-                       NSString *strReason;
-                       if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
-                           strReason = @"定位异常终止工单";
-                       }else{
-                           strReason = @"迟到异常终止工单";
-                       }
-                       [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePut success:^(id responseObject) {
-                           [self.navigationController popViewControllerAnimated:YES];
-                       } failure:^(NSError *error) {
-                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-                       }];
-                   }else if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){ // 请求新的接口
+                   }else  if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){ // 请求新的接口
                        [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
                            NSDictionary *dic = responseObject;
                            NSString *strcode = [dic objectForKey:ResponseCode];

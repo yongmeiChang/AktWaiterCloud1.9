@@ -179,7 +179,7 @@ static AFNetWorkingRequest * aq_instance = nil;
     }];
 }
 
-/*新增接口 */
+/*新增接口 工单签入 签出 配置权限*/
 -(void)requestFindAdvantage:(NSDictionary *)param type:(HttpRequestType)type
 success:(void (^)(id responseObject))success
                     failure:(void (^)(NSError *error))failure{
@@ -190,7 +190,7 @@ success:(void (^)(id responseObject))success
     }];
 }
 
-/*新增接口 工单签入 签出 配置*/
+/*新增接口 无法签入 签出。上传原因*/
 -(void)requestOrderStop:(NSDictionary *)param
                        type:(HttpRequestType)type
                     success:(void (^)(id responseObject))success
