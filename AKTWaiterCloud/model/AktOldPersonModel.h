@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString<Optional>* customerMobile;  // 用户手机
 @property (strong, nonatomic) NSString<Optional>* customerAddress; // 用户地址
 @property (strong, nonatomic) NSString<Optional>* customerNo;   // 用户档案号
+@property (strong, nonatomic) NSString<Optional>* customerUkey;   // 老人唯一码
+
 @end
 
 NS_ASSUME_NONNULL_END

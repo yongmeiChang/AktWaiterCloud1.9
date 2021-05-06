@@ -40,8 +40,9 @@
     [super viewWillAppear:animated];
 }
 #pragma mark - request
--(void)checkNetWork{
-    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"pageSize":AktPageSize,@"pageNum":[NSString stringWithFormat:@"%d",pageNum]}; // @"waiterId":[LoginModel gets].uuid,
+-(void)checkNetWork:(NSString *)ukey{
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"加载中..."];
+    NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"pageSize":AktPageSize,@"pageNum":[NSString stringWithFormat:@"%d",pageNum],@"customerUkey":ukey}; // @"waiterId":[LoginModel gets].uuid,
     [[AktVipCmd sharedTool] requestOldpersonlist:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSNumber * code = [dic objectForKey:ResponseCode];
@@ -61,18 +62,19 @@
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     pageNum = 1;
-    [self checkNetWork];
+    [self checkNetWork:kString(self.tfOldPersonCode.text)];
     [self.tableOldPerson.mj_header endRefreshing];
 }
 
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
     pageNum = pageNum+1;
-    [self checkNetWork];
+    [self checkNetWork:kString(self.tfOldPersonCode.text)];
     [self.tableOldPerson.mj_footer endRefreshing];
 }
 #pragma mark - btn click
 - (IBAction)btnSearchClick:(UIButton *)sender {
     NSLog(@"---%@",self.tfOldPersonCode.text);
+    [self.tableOldPerson.mj_header beginRefreshing];
 }
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];

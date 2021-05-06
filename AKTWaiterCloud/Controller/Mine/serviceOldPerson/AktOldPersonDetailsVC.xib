@@ -40,9 +40,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGL-YE-MsV">
-                    <rect key="frame" x="30" y="107" width="44" height="22"/>
+                    <rect key="frame" x="30" y="107" width="19" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="44" id="eIj-kD-wbY"/>
+                        <constraint firstAttribute="width" constant="19" id="04q-3L-A3R"/>
                     </constraints>
                     <state key="normal" image="sign_phone"/>
                     <connections>
@@ -50,17 +50,17 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="139282299990" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMM-ct-kZM">
-                    <rect key="frame" x="82" y="107" width="302" height="22"/>
+                    <rect key="frame" x="57" y="107" width="327" height="22"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBj-fl-FCG">
-                    <rect key="frame" x="30" y="137" width="44" height="22"/>
+                    <rect key="frame" x="30" y="137" width="19" height="22"/>
                     <state key="normal" image="addressblue"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海普陀区" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sXq-bH-2Ht">
-                    <rect key="frame" x="82" y="137" width="302" height="18"/>
+                    <rect key="frame" x="57" y="137" width="327" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

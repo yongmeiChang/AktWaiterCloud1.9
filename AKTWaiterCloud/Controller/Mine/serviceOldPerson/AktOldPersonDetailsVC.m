@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = kColor(@"C3");
     //导航栏
     [self setNavTitle:@"老人信息"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
@@ -39,7 +40,7 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
         imagePickerController.allowsEditing = YES;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera; // 暂时使用相册 后台修改分辨率之后再更改拍照
         imagePickerController.delegate = self;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }else{
@@ -61,8 +62,8 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     //上传
-    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"识别中..."];
-    NSDictionary * parameters =@{@"customerName":kString(self.oldPresondetailsModel.customerName),@"customerNo":kString(self.oldPresondetailsModel.customerNo),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"采集中..."];
+    NSDictionary * parameters =@{@"customerName":kString(self.oldPresondetailsModel.customerName),@"customerUkey":kString(self.oldPresondetailsModel.customerUkey),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
     [[AktVipCmd sharedTool] requestFaceCollect:parameters type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSLog(@"---%@",responseObject);
         [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];

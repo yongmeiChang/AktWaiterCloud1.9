@@ -151,7 +151,7 @@
     cell.titlelabel.text = self.dataSourceArray[index];
     switch (index) {
         case 0:
-            cell.imageview.image = [UIImage imageNamed:@"notice"];
+            cell.imageview.image = [UIImage imageNamed:@"facePerson"];
             break;
         case 1:
             cell.imageview.image = [UIImage imageNamed:@"notice"];
