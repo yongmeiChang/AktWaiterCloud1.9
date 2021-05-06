@@ -110,10 +110,6 @@
             NSDictionary * dic = responseObject;
             if([dic[@"code"] intValue]==1){
                 NSMutableDictionary * dicc = [dic objectForKey:ResponseData];
-                NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                NSString * updateBy = [updateBydic objectForKey:@"id"];
-                [dicc removeObjectForKey:@"updateBy"];
-                [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                 NSDictionary * objdic = (NSDictionary*)dicc;
                 OrderInfo * orderinfo = [[OrderInfo alloc] initWithDictionary:objdic error:nil];
                 MinuteTaskController * mtController = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];

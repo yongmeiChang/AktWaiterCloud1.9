@@ -107,10 +107,6 @@
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {
-                  NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                  NSString * updateBy = [updateBydic objectForKey:@"id"];
-                  [dicc removeObjectForKey:@"updateBy"];
-                  [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                   NSDictionary * objdic = (NSDictionary*)dicc;
                   OrderInfo * orderinfo;
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){

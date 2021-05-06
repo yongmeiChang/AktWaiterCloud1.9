@@ -33,48 +33,31 @@
                         QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
                         [qvcontroller.session startRunning];
                     }];
-                }else if(arr.count==1){//getOrderTaskByWorkNo
+                }else if(arr.count==1){//getOrderTaskByWorkNo 当前用户只有一个工单 直接跳转到任务详情页面
                     OrderInfo * orderinfo;
                     NSMutableDictionary * object = [arr objectAtIndex:0];
-                    [object setObject:[[object objectForKey:@"updateBy"] objectForKey:@"id"] forKey:@"updateBy"];
-                 
                     orderinfo = [[OrderInfo alloc] initWithDictionary:object error:nil];
                     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
                     minuteTaskContoller.type = @"0";
                     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
-//                    if([AppInfoDefult sharedClict].islongLocation == 1){
-//                        minuteTaskContoller.lm = qv.unfinishController.locationManager;
-//                    }
                     [qv.unfinishController.navigationController pushViewController:minuteTaskContoller animated:YES];
                 }else{
                     qv.unfinishController.taskTableview.hidden = NO;
                     qv.unfinishController.netWorkErrorView.hidden = YES;
                     NSMutableArray * editArray =[NSMutableArray array];
                     for (NSMutableDictionary * dicc in arr) {
-                        NSDictionary * updateBydic = [dicc objectForKey:@"updateBy"];
-                        NSString * updateBy = [updateBydic objectForKey:@"id"];
-                        [dicc removeObjectForKey:@"updateBy"];
-                        [dicc setObject:updateBy forKeyedSubscript:@"updateBy"];
                         NSDictionary * objdic = (NSDictionary*)dicc;
-
                         OrderInfo * orderinfo;
                         //判断工单是否本地有缓存,有缓存则更新，没缓存则添加至缓存
                         if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
-//                            if([orderinfo.workStatus isEqualToString:@"11"]){
-//                                [editArray addObject:orderinfo];
-//                            }else{
-                                [qv.unfinishController.dataArray addObject:orderinfo];
-//                            }
+                            [qv.unfinishController.dataArray addObject:orderinfo];
                         }else{
                             orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
                             orderinfo.tid = orderinfo.id;
-//                            if([orderinfo.workStatus isEqualToString:@"11"]){
-//                                [editArray addObject:orderinfo];
-//                            }else{
-                                [qv.unfinishController.dataArray addObject:orderinfo];
-//                            }
+                            [qv.unfinishController.dataArray addObject:orderinfo];
+
                         }
                     }
                     if(editArray.count>0){
@@ -86,7 +69,6 @@
                     [qv.navigationController popViewControllerAnimated:YES];
                 }
             }else{
-                //[controller.navigationController popToRootViewControllerAnimated:YES];
                 [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
                     QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
                     [qvcontroller.session startRunning];
@@ -95,7 +77,6 @@
             [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
             [[AppDelegate sharedDelegate] hidHUD];
-            //[controller.navigationController popToRootViewControllerAnimated:YES];
             [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
                 QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
                 [qvcontroller.session startRunning];
