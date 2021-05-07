@@ -15,8 +15,8 @@
 @interface UnfinifshController ()<UITableViewDataSource,UITableViewDelegate,AktSearchDelegate>{
     int pageSize;
     BOOL ishidden;
-    int tableviewtype;//是显示全部数据还是某天数据  0全部 1某天
-     NSString *searchKey;
+
+    NSString *searchKey;
     NSString *searchAddress; // 服务地址
     NSString *searchBTime; // 服务开始时间
     NSString *searchETime; // 服务结束时间
@@ -25,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableTop;
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
-@property(nonatomic,strong) NSMutableArray * dateArray;//日历选中某天的数据源
 @property(nonatomic,strong) IBOutlet NSLayoutConstraint *topConstant;
 
 @end
@@ -46,7 +45,7 @@
 
     pageSize = 1;
     self.dataArray = [[NSMutableArray alloc] init];
-    self.dateArray = [[NSMutableArray alloc] init];
+
     //显示的title
     NSArray * titleArr = @[@"待完成任务",@"进行中任务",@"已完成任务"];
     self.title = titleArr[_bid];
@@ -66,9 +65,7 @@
     [self.view bringSubviewToFront:self.netWorkErrorView];
     self.taskTableview.hidden = YES;
     self.netWorkErrorView.hidden = YES;
-    if(self.bid==3){
-        return;
-    }
+  
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -79,7 +76,6 @@
 
 - (void)showAllBtnClicked:(id)sender
 {
-    tableviewtype = 0;
     [self RightBarClick];
     [self requestTask];
 }
@@ -87,7 +83,7 @@
 #pragma mark - notice
 -(void)searchNoticeDate:(NSNotification *)searchDate{
     if (searchDate) {
-     NSDictionary *dicDate = [searchDate object];
+        NSDictionary *dicDate = [searchDate object];
         searchBTime = kString([dicDate objectForKey:@"beginDate"]);
         searchETime = kString([dicDate objectForKey:@"endDate"]);
         [self.taskTableview.mj_header beginRefreshing];
@@ -147,12 +143,8 @@
 
 #pragma mark - request
 -(void)requestTask{
-    tableviewtype = 0;
     //status：状态(1：未完成 2：服务中 3：已完成)
     NSArray * typeArr = @[@"1",@"2",@"3",@""];
-    if (pageSize == 1) {
-        [self.dataArray removeAllObjects];
-    }
     NSLog(@"%@",[LoginModel gets]);
     LoginModel *model = [LoginModel gets];
     NSDictionary * parameters =@{@"status":typeArr[self.bid], @"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceDate":kString(searchBTime),@"serviceDateEnd":kString(searchETime),@"workNo":kString(searchWorkNo)};
@@ -161,6 +153,9 @@
         NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
         if([code intValue]==1){
+            if (pageSize == 1) {
+                [self.dataArray removeAllObjects];
+            }
             NSArray * arr = [NSArray array];
             NSDictionary * obj = [dic objectForKey:ResponseData];
             arr = obj[@"list"];
@@ -175,16 +170,9 @@
                     for (NSMutableDictionary * dicc in arr) {
                         NSDictionary * objdic = (NSDictionary*)dicc;
                         OrderInfo * orderinfo;
-                        if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil||!orderinfo.tid){
-                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-                            orderinfo.tid = orderinfo.id;
-                            [_dataArray addObject:orderinfo];
-                            
-                        }else{
-                            orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-                            orderinfo.tid = orderinfo.id;
-                            [_dataArray addObject:orderinfo];
-                        }
+                        orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                        orderinfo.tid = orderinfo.id;
+                        [_dataArray addObject:orderinfo];
                     }
                     
                     [self.taskTableview reloadData];
@@ -223,11 +211,7 @@
 #pragma mark - tableview设置
 /**段数*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if(tableviewtype==0){
-        return _dataArray.count;
-    }else{
-        return _dateArray.count;
-    }
+    return _dataArray.count;
 }
 
 /**行数*/;
@@ -239,7 +223,7 @@
     OrderInfo * orderinfo = _dataArray[indexPath.section];
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
-    
+
     CGFloat itemF = [AktUtil getNewTextSize:itemName font:14 limitWidth:(SCREEN_WIDTH-30)].height-14; // 项目名称的高度
     CGFloat itemAddress = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",orderinfo.serviceAddress] font:14 limitWidth:(SCREEN_WIDTH-50)].height; // 项目名称的高度
     return 215.0f+itemF+itemAddress;
@@ -262,11 +246,8 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PlanTaskCell" owner:self options:nil] objectAtIndex:0];
     }
     NSArray * arr = [NSArray array];
-    if(tableviewtype==0){
-        arr = _dataArray;
-    }else{
-        arr = _dateArray;
-    }
+    arr = _dataArray;
+
     if(arr.count>0){
         OrderInfo * orderinfo = arr[indexPath.section];
         [cell setOrderList:orderinfo Type:1];
