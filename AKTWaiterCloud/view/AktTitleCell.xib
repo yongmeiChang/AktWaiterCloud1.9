@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,6 +29,17 @@
                         <color key="textColor" red="0.24313725490196078" green="0.38823529411764707" blue="0.73725490196078436" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xz7-8a-KR0">
+                        <rect key="frame" x="274" y="8" width="20" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="nII-wT-ALU"/>
+                        </constraints>
+                        <state key="normal" image="phone" catalog="system"/>
+                        <connections>
+                            <action selector="phoneClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hkn-wt-ldh"/>
+                        </connections>
+                    </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultuserhead" translatesAutoresizingMaskIntoConstraints="NO" id="A5J-o9-cEd">
                         <rect key="frame" x="248" y="5.5" width="45" height="45"/>
                         <constraints>
@@ -43,13 +54,17 @@
                     <constraint firstItem="5r8-Q8-5Y5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ULE-is-3BW"/>
                     <constraint firstItem="vqT-Mc-E0j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="X5d-Xn-qvf"/>
                     <constraint firstAttribute="bottom" secondItem="vqT-Mc-E0j" secondAttribute="bottom" id="YJ4-Wt-ilG"/>
+                    <constraint firstAttribute="bottom" secondItem="Xz7-8a-KR0" secondAttribute="bottom" constant="8" id="fYk-6y-nUq"/>
                     <constraint firstAttribute="bottom" secondItem="5r8-Q8-5Y5" secondAttribute="bottom" id="gvb-m6-k0O"/>
                     <constraint firstAttribute="trailing" secondItem="A5J-o9-cEd" secondAttribute="trailing" constant="9" id="i39-m5-5ES"/>
+                    <constraint firstItem="Xz7-8a-KR0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="rAm-3y-76I"/>
                     <constraint firstAttribute="trailing" secondItem="5r8-Q8-5Y5" secondAttribute="trailing" constant="9" id="tra-XJ-F3Z"/>
+                    <constraint firstAttribute="trailing" secondItem="Xz7-8a-KR0" secondAttribute="trailing" constant="8" id="uLg-0D-S1E"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="btnPhone" destination="Xz7-8a-KR0" id="epM-0g-ggC"/>
                 <outlet property="imageValue" destination="A5J-o9-cEd" id="cs0-Us-dWV"/>
                 <outlet property="labName" destination="vqT-Mc-E0j" id="RxX-AB-iqS"/>
                 <outlet property="labValueConstraint" destination="tra-XJ-F3Z" id="npU-5K-ugU"/>
@@ -59,6 +74,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="defaultuserhead" width="66" height="66"/>
+        <image name="defaultuserhead" width="45" height="45"/>
+        <image name="phone" catalog="system" width="128" height="115"/>
     </resources>
 </document>

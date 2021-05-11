@@ -79,5 +79,21 @@
             break;
     }
 }
+-(void)setOldpeopleCallPhone:(NSString *)phone oldName:(NSString *)name{
+    self.labName.text = kString(name);
+    self.labvalue.text = kString(phone);
+    self.labValueConstraint.constant = 100;
+    self.imageValue.hidden = YES;
+    self.btnPhone.hidden = NO;
+    self.btnPhone.tag = [phone intValue];
+}
+#pragma mark - UIButton Click
+
+- (IBAction)phoneClick:(UIButton *)sender {
+    NSString *strphone = [NSString stringWithFormat:@"%ld",(long)sender.tag];
+    if ([_delegate respondsToSelector:@selector(didSelectCallPhone:)]) {
+        [_delegate didSelectCallPhone:strphone];
+     }
+}
 
 @end

@@ -11,7 +11,7 @@
 #import "AktOldPersonModel.h"
 #import "AktTitleCell.h"
 
-@interface AktServicOldPersonVC (){
+@interface AktServicOldPersonVC ()<AktOldPeoplePhoneDelegate>{
     int pageNum; // 页数
     NSMutableArray * dataArray;//数据源
     AktOldPersonModel *oldmodel;
@@ -59,6 +59,7 @@
         [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
+
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
     pageNum = 1;
@@ -71,14 +72,15 @@
     [self checkNetWork:kString(self.tfOldPersonCode.text)];
     [self.tableOldPerson.mj_footer endRefreshing];
 }
+
 #pragma mark - btn click
-- (IBAction)btnSearchClick:(UIButton *)sender {
-    NSLog(@"---%@",self.tfOldPersonCode.text);
+- (IBAction)btnSearchClick:(UIButton *)sender { // 搜索
     [self.tableOldPerson.mj_header beginRefreshing];
 }
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 #pragma mark - table delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -108,10 +110,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"AktTitleCell" owner:self options:nil] objectAtIndex:0];
     }
     AktOldPersonDetailsModel *deltaismodel = [dataArray objectAtIndex:indexPath.row];
-    cell.labName.text = kString(deltaismodel.customerName);
-    cell.labvalue.text = kString(deltaismodel.customerMobile);
-    cell.labValueConstraint.constant = 100;
-    cell.imageValue.hidden = YES;
+    [cell setOldpeopleCallPhone:kString(deltaismodel.customerMobile) oldName:kString(deltaismodel.customerName)];
     return cell;
 }
 #pragma mark - table delegate
@@ -128,6 +127,12 @@
     detailsvc.oldPresondetailsModel = [dataArray objectAtIndex:indexPath.row];
     detailsvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailsvc animated:YES];
+}
+
+#pragma mark - phone
+-(void)didSelectCallPhone:(NSString *)phone{
+    NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",kString(phone)];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:@{} completionHandler:nil];
 }
 
 /*

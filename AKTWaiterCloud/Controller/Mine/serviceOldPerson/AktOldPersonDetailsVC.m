@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labAddress;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgClick;
+@property (weak, nonatomic) IBOutlet UIButton *btnFace;
 
 @end
 
@@ -33,6 +34,10 @@
     self.labIDCard.text = kString(self.oldPresondetailsModel.customerNo);
     self.labPhone.text = kString(self.oldPresondetailsModel.customerMobile);
     self.labAddress.text = kString(self.oldPresondetailsModel.customerAddress);
+    // 人脸采集按钮
+    self.btnFace.backgroundColor = kColor(@"C8");
+    self.btnFace.layer.masksToBounds = YES;
+    self.btnFace.layer.cornerRadius = 4;
     
 }
 #pragma mark - click
@@ -69,14 +74,16 @@
         [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
         [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError * _Nonnull error) {
-        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
         [[AppDelegate sharedDelegate] hidHUD];
     }];
 //    [self.imgClick setImage:image];
 }
+
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
     NSData *data = UIImageJPEGRepresentation(image, 0.5f);
+    NSData *datapng = UIImagePNGRepresentation(image);
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
 }

@@ -129,13 +129,11 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
-    [self.taskTableview.mj_header beginRefreshing];
     pageSize = 1;
     [self requestTask];
     [self.taskTableview.mj_header endRefreshing];
 }
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
-    [self.taskTableview.mj_footer beginRefreshing];
     pageSize = pageSize+1;
     [self requestTask];
     [self.taskTableview.mj_footer endRefreshing];
@@ -245,11 +243,8 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PlanTaskCell" owner:self options:nil] objectAtIndex:0];
     }
-    NSArray * arr = [NSArray array];
-    arr = _dataArray;
-
-    if(arr.count>0){
-        OrderInfo * orderinfo = arr[indexPath.section];
+    if(_dataArray.count>0){
+        OrderInfo * orderinfo = _dataArray[indexPath.section];
         [cell setOrderList:orderinfo Type:1];
     }
     cell.grabSingleBtn.hidden = YES;
