@@ -71,7 +71,7 @@ static AFNetWorkingTool * a_instance = nil;
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    if([URLString isEqualToString:@"getWorkOrderImages"]){
+    if([URLString isEqualToString:@"getWorkOrderImages"] || [URLString isEqualToString:@"faceCollect"] || [URLString isEqualToString:@"faceRecognition"]){
         manager.requestSerializer.timeoutInterval = 300.f;
     }else{
         manager.requestSerializer.timeoutInterval = 20.0f;
