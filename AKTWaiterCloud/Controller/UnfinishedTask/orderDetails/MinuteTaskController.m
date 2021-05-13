@@ -412,12 +412,12 @@
                 /**实际服务时间 与 最低服务时间的差值 **/
                 NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
                 NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
-                NSInteger Ltime = Stime-mtime;
+                NSInteger Ltime = Stime-mtime; // 大于0表示 计划服务时长大于实际服务时长
                 if (mtime>Stime){ // 实际大于应该
                     Ltime = 0;
                 }
 
-                BOOL bollateSignOut = (Ltime-[model.maxEarlyTime integerValue])<0; //
+                BOOL bollateSignOut = (Ltime-[model.maxEarlyTime integerValue])>0; // 确定早退的逻辑:实际早退的时差 大于 配置的早退的时长
                 /* 签入时间与当前时间的差值 是否 满足最低服务时长*/
 //                NSInteger mtimeless = [AktUtil getMinuteFrom:[formatter dateFromString:[AktUtil getNowDateAndTime]] To:[formatter dateFromString:self.orderinfo.actualBegin]]; // 服务开始时间与当前时间的差值 负数是正常
                 BOOL bollateSignOutLess = (mtime-[model.minServiceLength integerValue])<0; // 实际服务小于最低
@@ -429,7 +429,7 @@
                     return;
                 }
 
-             if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
+                 if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
 
                             [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
                         }else if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"])) || ([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"])) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
@@ -516,6 +516,9 @@
                       } failure:^(NSError *error) {
                           [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                       }];
+                  }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
+                      NSLog(@"暂停");
+                      [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"2"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"2"]))) {
                        NSLog(@"弹框");
 
@@ -587,9 +590,6 @@
                             }
                        }
 
-                   }else if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"3"])) || ([model.recordLate isEqualToString:@"1"] && ((bollateSignin == YES) && [model.lateAbnormal isEqualToString:@"3"]))){
-                       NSLog(@"暂停");
-                       [[AppDelegate sharedDelegate] showTextOnly:@"订单异常，暂无法操作！"];
                    }else if ([model.timeConflict isEqualToString:@"3"] || [model.timeConflict isEqualToString:@"0"] || [model.timeConflict isEqualToString:@"2"]){ // 请求新的接口
                        [[AFNetWorkingRequest sharedTool] requestCheckSignInStatus:@{} type:HttpRequestTypeGet success:^(id responseObject) {
                            NSDictionary *dic = responseObject;

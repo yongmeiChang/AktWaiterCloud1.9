@@ -70,13 +70,19 @@
            _sgController.type = 0;
        }
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_session startRunning];
+    
+}
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self endScanning];
+    [_session stopRunning];
 }
 
 #pragma mark - click back
+
 -(void)LeftBarClick{
     if([self.controller_type isEqualToString:@"logincontoller"]){
         [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -94,7 +100,7 @@
         botView.hidden = NO;
         scanWindow.hidden = NO;
         toplabel.hidden = NO;
-        [self beginScanning];//开始扫二维码
+        [_session startRunning];//开始扫二维码
         // 人脸
         self.faceBgView.hidden = YES;
         if ([self.ordertype isEqualToString:@"1"]) {
@@ -112,7 +118,7 @@
         botView.hidden = YES;
         scanWindow.hidden = YES;
         toplabel.hidden = YES;
-        [self endScanning]; // 停止扫描
+        [_session stopRunning];// 停止扫描
         // 人脸
         self.faceBgView.hidden = NO;
         [self facePhoto];
