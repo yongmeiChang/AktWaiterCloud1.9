@@ -34,7 +34,8 @@
         
         self.leftLabel.text = @"服务项目";
     }else if (path.row == 1){
-        self.leftLabel.text = @"服务站点";
+        self.leftlabW.constant = 100;
+        self.leftLabel.text = @"服务站(服务商)";
     }else if (path.row == 2){
         self.leftLabel.text = @"开始日期";
     }else if (path.row == 3){
