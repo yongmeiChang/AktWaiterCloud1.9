@@ -24,6 +24,9 @@
     // 人脸相关视图
     BOOL isOpen;// 是否 打开手电筒
     BOOL isFace; // 是否刷脸 1是 0否
+    BOOL isOldpeopleface; // 是否人脸采集 1是 0否
+    
+    NSString *strOldpeople;
 }
 @property (weak, nonatomic) IBOutlet UIView *faceBgView; // 人脸识别背景
 @property(nonatomic,strong) SignoutController * sgController;
@@ -43,6 +46,8 @@
     // Do any additional setup after loading the view from its nib.
      isOpen = false;
      isFace = false;
+    isOldpeopleface = false;
+    strOldpeople = [[NSString alloc] init];
         self.view.backgroundColor = [UIColor whiteColor];
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         
@@ -74,11 +79,18 @@
 {
     [super viewWillAppear:animated];
     [_session startRunning];
-    
+    [self requestOldpeopleInfo];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [_session stopRunning];
+}
+#pragma mark - faceinfo
+-(void)requestOldpeopleInfo{
+    [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
+        isOldpeopleface = [responseObject objectForKey:@"existFlag"];
+        strOldpeople = [responseObject objectForKey:@"message"];
+    } failure:nil];
 }
 
 #pragma mark - click back
@@ -93,23 +105,28 @@
 }
 -(void)SearchBarClick{
     if (isFace) {
-        // 扫码
-        topView.hidden = NO;
-        leftView.hidden = NO;
-        rightView.hidden = NO;
-        botView.hidden = NO;
-        scanWindow.hidden = NO;
-        toplabel.hidden = NO;
-        [_session startRunning];//开始扫二维码
-        // 人脸
-        self.faceBgView.hidden = YES;
-        if ([self.ordertype isEqualToString:@"1"]) {
-            [self setNavTitle:@"扫码签入"];
+        if (isOldpeopleface) {
+            // 扫码
+            topView.hidden = NO;
+            leftView.hidden = NO;
+            rightView.hidden = NO;
+            botView.hidden = NO;
+            scanWindow.hidden = NO;
+            toplabel.hidden = NO;
+            [_session startRunning];//开始扫二维码
+            // 人脸
+            self.faceBgView.hidden = YES;
+            if ([self.ordertype isEqualToString:@"1"]) {
+                [self setNavTitle:@"扫码签入"];
+            }else{
+                [self setNavTitle:@"扫码签出"];
+            }
+            [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
+            isFace = false;
         }else{
-            [self setNavTitle:@"扫码签出"];
+            [[AppDelegate sharedDelegate] showTextOnly:strOldpeople];
         }
-        [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
-        isFace = false;
+        
     }else{
         // 扫码
         topView.hidden = YES;

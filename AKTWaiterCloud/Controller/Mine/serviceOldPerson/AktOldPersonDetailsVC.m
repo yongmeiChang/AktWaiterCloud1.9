@@ -83,7 +83,6 @@
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
     NSData *data = UIImageJPEGRepresentation(image, 0.5f);
-    NSData *datapng = UIImagePNGRepresentation(image);
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
 }

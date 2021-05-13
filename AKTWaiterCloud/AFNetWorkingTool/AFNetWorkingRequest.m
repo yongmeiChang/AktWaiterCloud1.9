@@ -212,4 +212,16 @@ success:(void (^)(id responseObject))success
           failure(error);
       }];
 }
+/* 判断老人是否进行了人脸识别*/
+-(void)requestOldPeoPleAtTheFaceInfo:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                             failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOldPeopleFaceOrNoMethod parameters:param type:type success:^(id responseObject) {
+          success(responseObject);
+      } failure:^(NSError *error) {
+          failure(error);
+      }];
+}
+
 @end
