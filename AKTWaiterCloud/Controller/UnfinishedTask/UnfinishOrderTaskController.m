@@ -59,16 +59,14 @@
 -(void)initTaskTableView{
     self.taskTableview.delegate = self;
     self.taskTableview.dataSource = self;
-//    //去除没有数据时的分割线
-//    self.taskTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    //去除没有数据时的分割线
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
     [self.taskTableview.mj_header beginRefreshing];
 
 }
 #pragma mark - nav click
--(void)RightBarClick{
-    DDLogInfo(@"点击了扫码功能");
+-(void)RightBarClick{ // 扫码
     QRCodeViewController * qrcodeController = [[QRCodeViewController alloc]initWithQRCode:self Type:@"unfinishedcontroller"];
     qrcodeController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrcodeController animated:YES];
@@ -93,7 +91,6 @@
         }
         searchWorkNo = orderid; // 单号
         [self.navigationController popViewControllerAnimated:YES];
-        [self.taskTableview.mj_header beginRefreshing];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -101,13 +98,22 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
+    [self loadNewData];
+}
+-(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+    [self loadMoreDataFooter];
+}
+// 下拉刷新
+-(void)loadNewData
+{
     // 马上进入刷新状态
-    self.strCustmerUkey = @"";
     pageSize = 1;
     [self checkNetWork];
     [self.taskTableview.mj_header endRefreshing];
 }
--(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+// 上拉加载
+-(void)loadMoreDataFooter
+{
     pageSize = pageSize+1;
     [self checkNetWork];
     [self.taskTableview.mj_footer endRefreshing];
@@ -125,7 +131,6 @@
 #pragma mark - 请求工单列表
 -(void)requestUnFinishedTask{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
-    NSLog(@"---%@",model);
     model = [LoginModel gets];
     NSDictionary * parameters =@{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceDate":kString(searchBTime),@"serviceDateEnd":kString(searchETime),@"workNo":kString(searchWorkNo),@"customerUkey":kString(self.strCustmerUkey)}; // @"waiterId":kString(model.uuid),
 
@@ -134,28 +139,20 @@
         NSNumber * code = [dic objectForKey:@"code"];
         
         if([code intValue]==1){
-            NSArray * arr = [NSArray array];
             NSDictionary * obj = [dic objectForKey:ResponseData];
-            arr = obj[@"list"];
             // 分页数据判断
             if (pageSize == 1) {
                 [_dataArray removeAllObjects];
             }
-            
             self.taskTableview.hidden = NO;
             self.netWorkErrorView.hidden = YES;
-            for (NSMutableDictionary * dicc in arr) {
-                NSDictionary * objdic = (NSDictionary*)dicc;
-                OrderListModel * orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
-                orderinfo.tid = orderinfo.id;
-                [_dataArray addObject:orderinfo];
-            }
-            
+
+            AktOrderModel *ordermodel = [[AktOrderModel alloc] initWithDictionary:obj error:nil];
+            [_dataArray addObjectsFromArray:ordermodel.list];
             [self.taskTableview reloadData];
             
         }else if(pageSize == 1 && [code intValue]==2){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-            [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
@@ -168,17 +165,20 @@
         self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
     }];
 }
-#pragma mark -
+#pragma mark - 刷新
 -(void)labelClick{
-    DDLogInfo(@"点击了刷新按钮");
+    self.strCustmerUkey = @"";
+    searchKey = @"";
+    searchAddress = @"";
+    searchBTime = @"";
+    searchETime = @"";
+    searchWorkNo = @"";
     pageSize=1;
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         self.netWorkErrorView.hidden = NO;
     }
     
-    self.netWorkErrorLabel.text = Loading;
-    [self requestUnFinishedTask];
-    self.netWorkErrorView.userInteractionEnabled = false;
+    [self loadNewData];
 }
 
 #pragma mark - tableview设置

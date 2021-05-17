@@ -19,63 +19,10 @@
     LoginModel *model = [LoginModel gets];
     if(self.type == 0){//扫码查询工单 签入 签出
         QRCodeViewController * qv = (QRCodeViewController *)controller;
-        NSDictionary * param = @{@"customerUkey":str,@"waiterId":model.uuid,@"tenantsId":kString(model.tenantId)};
-        
-        qv.unfinishController.taskTableview.hidden = NO;
-        qv.unfinishController.netWorkErrorView.hidden = YES;
         qv.unfinishController.strCustmerUkey = kString(str);
         qv.unfinishController.pushType=@"1";
         [qv.navigationController popViewControllerAnimated:YES];
-        
-//        [[AFNetWorkingRequest sharedTool] requestWithScanWorkOrderParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
-//            NSDictionary * dic = responseObject;
-//            NSString * message = [dic objectForKey:@"message"];
-//            NSNumber * code = [dic objectForKey:@"code"];
-//            if([code longValue]==1){
-//
-//                NSArray * arr = [[NSArray alloc] init];
-//                arr = [dic objectForKey:ResponseData];
-//                if(arr.count==0){
-//                    [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
-//                        QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
-//                        [qvcontroller.session startRunning];
-//                    }];
-//                }else if(arr.count==1){//getOrderTaskByWorkNo 当前用户只有一个工单 直接跳转到任务详情页面
-//                    OrderInfo * orderinfo;
-//                    NSMutableDictionary * object = [arr objectAtIndex:0];
-//                    orderinfo = [[OrderInfo alloc] initWithDictionary:object error:nil];
-//                    MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
-//                    minuteTaskContoller.type = @"0";
-//                    minuteTaskContoller.hidesBottomBarWhenPushed = YES;
-//                    [qv.unfinishController.navigationController pushViewController:minuteTaskContoller animated:YES];
-//                }else{
-//                    qv.unfinishController.taskTableview.hidden = NO;
-//                    qv.unfinishController.netWorkErrorView.hidden = YES;
-//                    qv.unfinishController.strCustmerUkey = kString(str);
-//                    for (NSMutableDictionary * dicc in arr) {
-//                        NSDictionary * objdic = (NSDictionary*)dicc;
-//                        OrderInfo *orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
-//                        orderinfo.tid = orderinfo.id;
-//                        [qv.unfinishController.dataArray addObject:orderinfo];
-//                    }
-//                    qv.unfinishController.pushType=@"1";
-//                    [qv.navigationController popViewControllerAnimated:YES];
-//                }
-//            }else{
-//                [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
-//                    QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
-//                    [qvcontroller.session startRunning];
-//                }];
-//            }
-//            [[AppDelegate sharedDelegate] hidHUD];
-//        } failure:^(NSError *error) {
-//            [[AppDelegate sharedDelegate] hidHUD];
-//            [controller showMessageAlertWithController:controller title:@"提示" Message:@"当前没有工单!" canelBlock:^{
-//                QRCodeViewController * qvcontroller = (QRCodeViewController *)controller;
-//                [qvcontroller.session startRunning];
-//            }];
-//        }];
-        
+ 
     }else if(self.type==1){//扫码添加工单
         NSDictionary * param = @{@"customerUkey":str,@"tenantsId":kString(model.tenantId)};
         [[AFNetWorkingRequest sharedTool] requestWithStartOrderFormParameters:param type:HttpRequestTypeGet success:^(id responseObject) {

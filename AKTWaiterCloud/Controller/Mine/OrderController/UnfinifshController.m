@@ -181,7 +181,6 @@
             }
         }else if(pageSize == 1 && [code integerValue] == 1){
             self.netWorkErrorLabel.text = @"暂无数据,轻触重新加载";
-            [self showMessageAlertWithController:self Message:@"暂无数据"];
             self.taskTableview.hidden = YES;
             self.netWorkErrorView.hidden = NO;
             self.netWorkErrorView.userInteractionEnabled = YES;
