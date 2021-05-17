@@ -30,11 +30,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xz7-8a-KR0">
-                        <rect key="frame" x="274" y="8" width="20" height="40"/>
+                        <rect key="frame" x="258" y="8" width="44" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="nII-wT-ALU"/>
+                            <constraint firstAttribute="width" constant="44" id="nII-wT-ALU"/>
                         </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-25" maxY="0.0"/>
                         <state key="normal" image="phone" catalog="system"/>
                         <connections>
                             <action selector="phoneClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hkn-wt-ldh"/>
@@ -59,7 +60,7 @@
                     <constraint firstAttribute="trailing" secondItem="A5J-o9-cEd" secondAttribute="trailing" constant="9" id="i39-m5-5ES"/>
                     <constraint firstItem="Xz7-8a-KR0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="rAm-3y-76I"/>
                     <constraint firstAttribute="trailing" secondItem="5r8-Q8-5Y5" secondAttribute="trailing" constant="9" id="tra-XJ-F3Z"/>
-                    <constraint firstAttribute="trailing" secondItem="Xz7-8a-KR0" secondAttribute="trailing" constant="8" id="uLg-0D-S1E"/>
+                    <constraint firstAttribute="trailing" secondItem="Xz7-8a-KR0" secondAttribute="trailing" id="uLg-0D-S1E"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

@@ -85,7 +85,7 @@
     self.labValueConstraint.constant = 100;
     self.imageValue.hidden = YES;
     self.btnPhone.hidden = NO;
-    self.btnPhone.tag = [phone intValue];
+    self.btnPhone.tag = [phone integerValue];
 }
 #pragma mark - UIButton Click
 
