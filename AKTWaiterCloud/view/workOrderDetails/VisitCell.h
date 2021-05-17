@@ -15,5 +15,5 @@
 @property(weak,nonatomic) IBOutlet UILabel * satisfactorylabel;
 @property(weak,nonatomic) IBOutlet UILabel * visitaboutlabel;
 
--(void)setVisitInfo:(OrderInfo *)orderinfo; // 任务详情 回访情况
+-(void)setVisitInfo:(OrderListModel *)orderinfo; // 任务详情 回访情况
 @end

@@ -130,7 +130,7 @@
 
 @implementation SignoutController
 
--(id)initSignoutControllerWithOrderInfo:(OrderInfo *)orderinfo{
+-(id)initSignoutControllerWithOrderInfo:(OrderListModel *)orderinfo{
     if(self = [super init]){
         self.orderinfo = orderinfo;
         return self;

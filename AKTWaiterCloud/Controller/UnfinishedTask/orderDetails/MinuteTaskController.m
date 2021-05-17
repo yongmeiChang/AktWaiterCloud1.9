@@ -33,7 +33,7 @@
     double distanceSingout; // 签出定位误差
 }
 
-@property(nonatomic,strong) OrderInfo * orderinfo;
+@property(nonatomic,strong) OrderListModel * orderinfo;
 @property(weak,nonatomic) IBOutlet UITableView * minuteTaskTableView;
 
 //@property(nonatomic,strong) UILabel * signinDateLabel;//签入日期
@@ -60,7 +60,7 @@
 
 @implementation MinuteTaskController
 
--(id)initMinuteTaskControllerwithOrderInfo:(OrderInfo *)orderinfo{
+-(id)initMinuteTaskControllerwithOrderInfo:(OrderListModel *)orderinfo{
     if(self = [super init]){
         self.orderinfo = orderinfo;
         return self;
@@ -380,7 +380,7 @@
     [self.navigationController pushViewController:_sgController animated:YES];
 }
 
-+(NSString *)startClassLate:(AktFindAdvanceModel *)model OrderInfoMode:(OrderInfo *)orderInfoModel{
++(NSString *)startClassLate:(AktFindAdvanceModel *)model OrderInfoMode:(OrderListModel *)orderInfoModel{
     if ([model.recordLate integerValue] == 1) {// 记录迟到
         // 确认超出迟到时长
         NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:orderInfoModel.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值: mtime<0 迟到
@@ -533,7 +533,7 @@
                                        [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
                                            if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                                                AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                               scanOrder.ordertype = @"2";
+                                               scanOrder.ordertype = @"1";
                                                scanOrder.detailsModel = model;
                                                scanOrder.orderinfo = self.orderinfo;
                                                scanOrder.isnewLation = bollation;
@@ -555,7 +555,7 @@
                                }else{
                                    if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                                        AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                       scanOrder.ordertype = @"2";
+                                       scanOrder.ordertype = @"1";
                                        scanOrder.detailsModel = model;
                                        scanOrder.orderinfo = self.orderinfo;
                                        scanOrder.isnewLation = bollation;
@@ -574,7 +574,7 @@
                        }else{
                        if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                             AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                            scanOrder.ordertype = @"2";
+                            scanOrder.ordertype = @"1";
                             scanOrder.detailsModel = model;
                             scanOrder.orderinfo = self.orderinfo;
                             scanOrder.isnewLation = bollation;
@@ -599,7 +599,7 @@
                                    [[AppDelegate sharedDelegate] showAlertView:@"温馨提示" des:@"您当前有其他正在进行的工单，\n 也要记得完成哦~" cancel:@"" action:@"确定" acHandle:^(UIAlertAction *action) {
                                        if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                                            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                           scanOrder.ordertype = @"2";
+                                           scanOrder.ordertype = @"1";
                                            scanOrder.detailsModel = model;
                                            scanOrder.orderinfo = self.orderinfo;
                                            [self.navigationController pushViewController:scanOrder animated:YES];
@@ -617,7 +617,7 @@
                            }else{
                                if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                                    AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                                   scanOrder.ordertype = @"2";
+                                   scanOrder.ordertype = @"1";
                                    scanOrder.detailsModel = model;
                                    scanOrder.orderinfo = self.orderinfo;
                                    [self.navigationController pushViewController:scanOrder animated:YES];
@@ -633,7 +633,7 @@
                        NSLog(@"继续");
                        if ([model.codeScanSignIn isEqualToString:@"1"] || [model.faceSwipingSignIn isEqualToString:@"1"]) {// 扫码签入 或者刷脸签入
                            AktOrderScanVC *scanOrder = [AktOrderScanVC new];
-                           scanOrder.ordertype = @"2";
+                           scanOrder.ordertype = @"1";
                            scanOrder.detailsModel = model;
                            scanOrder.orderinfo = self.orderinfo;
                            [self.navigationController pushViewController:scanOrder animated:YES];

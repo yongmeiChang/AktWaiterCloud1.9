@@ -25,7 +25,7 @@
     self.continuityLocation(sender);
 }
 #pragma mark - 任务列表
--(void)setOrderList:(OrderInfo *)orderinfo  Type:(NSInteger)type{
+-(void)setOrderList:(OrderListModel *)orderinfo  Type:(NSInteger)type{
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     

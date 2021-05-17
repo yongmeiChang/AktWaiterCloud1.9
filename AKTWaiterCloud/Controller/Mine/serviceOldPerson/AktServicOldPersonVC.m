@@ -109,6 +109,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"AktTitleCell" owner:self options:nil] objectAtIndex:0];
     }
+    cell.delegate = self;
     AktOldPersonDetailsModel *deltaismodel = [dataArray objectAtIndex:indexPath.row];
     [cell setOldpeopleCallPhone:kString(deltaismodel.customerMobile) oldName:kString(deltaismodel.customerName)];
     return cell;

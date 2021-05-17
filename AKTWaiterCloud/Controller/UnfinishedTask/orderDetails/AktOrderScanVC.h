@@ -12,12 +12,12 @@
 #import <AVFoundation/AVFoundation.h> // 扫码
 
 NS_ASSUME_NONNULL_BEGIN
-@class OrderInfo;
+@class OrderListModel;
 
 @interface AktOrderScanVC : WorkBaseViewController
 @property(nonatomic,strong)NSString *ordertype; // 1签入  2签出
 
-@property (nonatomic,strong) OrderInfo * orderinfo;
+@property (nonatomic,strong) OrderListModel * orderinfo;
 @property (nonatomic,strong) AktFindAdvanceModel * detailsModel;
 
 @property (nonatomic,strong)AVCaptureSession *session; // 扫码

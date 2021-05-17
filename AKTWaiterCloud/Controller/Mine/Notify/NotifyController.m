@@ -111,7 +111,7 @@
             if([dic[@"code"] intValue]==1){
                 NSMutableDictionary * dicc = [dic objectForKey:ResponseData];
                 NSDictionary * objdic = (NSDictionary*)dicc;
-                OrderInfo * orderinfo = [[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                OrderListModel * orderinfo = [[OrderListModel alloc] initWithDictionary:objdic error:nil];
                 MinuteTaskController * mtController = [[MinuteTaskController alloc] initMinuteTaskControllerwithOrderInfo:orderinfo];
                 [self.navigationController pushViewController:mtController animated:YES];
             }

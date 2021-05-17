@@ -20,7 +20,7 @@
 
     // Configure the view for the selected state
 }
--(void)setVisitInfo:(OrderInfo *)orderinfo{
+-(void)setVisitInfo:(OrderListModel *)orderinfo{
     // 回访人
     NSMutableAttributedString *strName = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"回访人：%@",kString(orderinfo.visitUserName).length == 0 ? @"无":orderinfo.visitUserName] attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13],NSForegroundColorAttributeName:kColor(@"C1")}];
        [strName addAttributes:@{NSForegroundColorAttributeName:kColor(@"C7")} range:NSMakeRange(0, 3)];

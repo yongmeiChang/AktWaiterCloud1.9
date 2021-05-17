@@ -17,7 +17,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 }
--(void)setSignInInfo:(OrderInfo *)orderinfo{
+-(void)setSignInInfo:(OrderListModel *)orderinfo{
     self.singOutServiceLengthLab.hidden = YES;
     self.remarklab.hidden = YES;
     // 时间
@@ -53,7 +53,7 @@
     self.signInAddressLabel.attributedText = stAddress;
 }
 
--(void)setSignOutInfo:(OrderInfo *)orderinfo{
+-(void)setSignOutInfo:(OrderListModel *)orderinfo{
     self.singOutServiceLengthLab.hidden = NO;
     self.remarklab.hidden = NO;
     self.titleLabel.text = @"签出情况";

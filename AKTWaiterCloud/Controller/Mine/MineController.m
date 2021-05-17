@@ -100,33 +100,35 @@
 #pragma mark - 工单数量
 -(void)resetWorkNumber{
     NSDictionary * params = @{@"waiterId":kString(modelUser.uuid),@"tenantsId":kString(modelUser.tenantId)};
-       [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
-       //显示登陆时请求的各状态工单数
-       self.unfinishBtn.shouldHideBadgeAtZero = YES;
-       self.ongoingBtn.shouldHideBadgeAtZero = YES;
-       self.finishBtn.shouldHideBadgeAtZero = YES;
-    NSString *strUnfinish;
-    NSString *strDoing;
-    NSString *strFinish;
-       if ([appDelegate.unfinish integerValue]>99) { // 超过99 显示99+
-           strUnfinish = [NSString stringWithFormat:@"99+"];
-       }else{
-           strUnfinish = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
-       }
-       if ([appDelegate.doing integerValue]>99) {
-           strDoing = [NSString stringWithFormat:@"99+"];
-       }else{
-           strDoing = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
-       }
-       if ([appDelegate.finish integerValue]>99) {
-           strFinish = [NSString stringWithFormat:@"99+"];
-       }else{
-           strFinish = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
-       }
-    self.unfinishBtn.badgeValue = strUnfinish;
-    self.ongoingBtn.badgeValue = strDoing;
-    self.finishBtn.badgeValue = strFinish;
+       [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {
+           
+           //显示登陆时请求的各状态工单数
+           self.unfinishBtn.shouldHideBadgeAtZero = YES;
+           self.ongoingBtn.shouldHideBadgeAtZero = YES;
+           self.finishBtn.shouldHideBadgeAtZero = YES;
+        NSString *strUnfinish;
+        NSString *strDoing;
+        NSString *strFinish;
+           if ([appDelegate.unfinish integerValue]>99) { // 超过99 显示99+
+               strUnfinish = [NSString stringWithFormat:@"99+"];
+           }else{
+               strUnfinish = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
+           }
+           if ([appDelegate.doing integerValue]>99) {
+               strDoing = [NSString stringWithFormat:@"99+"];
+           }else{
+               strDoing = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
+           }
+           if ([appDelegate.finish integerValue]>99) {
+               strFinish = [NSString stringWithFormat:@"99+"];
+           }else{
+               strFinish = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
+           }
+        self.unfinishBtn.badgeValue = strUnfinish;
+        self.ongoingBtn.badgeValue = strDoing;
+        self.finishBtn.badgeValue = strFinish;
 
+       } failure:^(NSError *error) {}];
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图

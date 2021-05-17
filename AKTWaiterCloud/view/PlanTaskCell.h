@@ -35,5 +35,5 @@ typedef void(^ContinuityLocation)(UIButton*);
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemNameH; // 服务项目名称高度
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentBottom; // 服务内容底部距离
 
--(void)setOrderList:(OrderInfo *)orderinfo Type:(NSInteger)type; // 任务列表 2任务详情 1 其他
+-(void)setOrderList:(OrderListModel *)orderinfo Type:(NSInteger)type; // 任务列表 2任务详情 1 其他
 @end

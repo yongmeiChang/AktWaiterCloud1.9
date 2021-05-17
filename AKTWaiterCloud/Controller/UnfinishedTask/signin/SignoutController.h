@@ -13,7 +13,7 @@
 @class OrderInfo;
 @interface SignoutController : WorkBaseViewController
 @property (nonatomic,assign) int type;// 0签入 1签出 (签出有录音,照片一张  ------ 该逻辑在4.0中废弃)
-@property (nonatomic,strong) OrderInfo * orderinfo;
+@property (nonatomic,strong) OrderListModel * orderinfo;
 @property (nonatomic, strong) AktFindAdvanceModel *findAdmodel;
 
 /*新增逻辑*/
@@ -23,5 +23,5 @@
 @property (nonatomic)BOOL isnewserviceTimeLess; // 最低服务时长弹框
 @property (nonatomic)BOOL isnewserviceTime; // 服务时长弹框
 
--(id)initSignoutControllerWithOrderInfo:(OrderInfo *)orderinfo;
+-(id)initSignoutControllerWithOrderInfo:(OrderListModel *)orderinfo;
 @end

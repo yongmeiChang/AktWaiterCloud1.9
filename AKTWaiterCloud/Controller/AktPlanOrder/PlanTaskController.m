@@ -108,13 +108,13 @@
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {
                   NSDictionary * objdic = (NSDictionary*)dicc;
-                  OrderInfo * orderinfo;
+                  OrderListModel * orderinfo;
                   if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
-                      orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                      orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
                       [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
                   }else{
-                      orderinfo=[[OrderInfo alloc] initWithDictionary:objdic error:nil];
+                      orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
                      [_dataArray addObject:orderinfo];
                       orderinfo.tid = orderinfo.id;
                   }
@@ -151,7 +151,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OrderInfo * orderinfo = _dataArray[indexPath.section];
+    OrderListModel * orderinfo = _dataArray[indexPath.section];
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     
@@ -175,7 +175,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PlanTaskCell" owner:self options:nil] objectAtIndex:0];
     }
     if(_dataArray.count>0){
-        OrderInfo * orderinfo = _dataArray[indexPath.section];
+        OrderListModel * orderinfo = _dataArray[indexPath.section];
         [cell setOrderList:orderinfo Type:1];
     }
     return cell;
@@ -183,7 +183,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrderInfo * orderinfo = [_dataArray objectAtIndex:indexPath.section];
+    OrderListModel * orderinfo = [_dataArray objectAtIndex:indexPath.section];
     MinuteTaskController * minuteTaskContoller = [[MinuteTaskController alloc]initMinuteTaskControllerwithOrderInfo:self.dataArray[indexPath.section]];
     minuteTaskContoller.type = @"2";
     minuteTaskContoller.hidesBottomBarWhenPushed = YES;
