@@ -240,7 +240,7 @@
         [[SaveDocumentArray sharedInstance] removefmdb];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:Token];
 //        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
     }];
