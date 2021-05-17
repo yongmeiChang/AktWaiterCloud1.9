@@ -106,23 +106,23 @@
            self.unfinishBtn.shouldHideBadgeAtZero = YES;
            self.ongoingBtn.shouldHideBadgeAtZero = YES;
            self.finishBtn.shouldHideBadgeAtZero = YES;
-        NSString *strUnfinish;
-        NSString *strDoing;
-        NSString *strFinish;
-           if ([appDelegate.unfinish integerValue]>99) { // 超过99 显示99+
+        NSString *strUnfinish = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count1"])];
+        NSString *strDoing = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count2"])];
+        NSString *strFinish = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count3"])];
+           if ([strUnfinish integerValue]>99) { // 超过99 显示99+
                strUnfinish = [NSString stringWithFormat:@"99+"];
            }else{
-               strUnfinish = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
+               strUnfinish = [NSString stringWithFormat:@"%@",kString(strUnfinish)];
            }
-           if ([appDelegate.doing integerValue]>99) {
+           if ([strDoing integerValue]>99) {
                strDoing = [NSString stringWithFormat:@"99+"];
            }else{
-               strDoing = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
+               strDoing = [NSString stringWithFormat:@"%@",kString(strDoing)];
            }
-           if ([appDelegate.finish integerValue]>99) {
+           if ([strFinish integerValue]>99) {
                strFinish = [NSString stringWithFormat:@"99+"];
            }else{
-               strFinish = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
+               strFinish = [NSString stringWithFormat:@"%@",kString(strFinish)];
            }
         self.unfinishBtn.badgeValue = strUnfinish;
         self.ongoingBtn.badgeValue = strDoing;

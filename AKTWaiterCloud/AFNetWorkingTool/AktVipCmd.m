@@ -66,20 +66,9 @@ static AktVipCmd * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOrderTypeNumberMethod parameters:param type:type success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSDictionary * map = [dic objectForKey:ResponseData];
-        NSNumber * code = [dic objectForKey:ResponseCode];
-        if([code longValue]==1){
-            appDelegate.unfinish = map[@"count1"];
-            appDelegate.doing =map[@"count2"];
-            appDelegate.finish = map[@"count3"];
-        }else{
-            appDelegate.unfinish = 0;
-            appDelegate.finish = 0;
-            appDelegate.doing = 0;
-        }
+        success(map);
     } failure:^(NSError *error) {
-        appDelegate.unfinish = 0;
-        appDelegate.finish = 0;
-        appDelegate.doing = 0;
+        failure(error);
     }];
 }
 
