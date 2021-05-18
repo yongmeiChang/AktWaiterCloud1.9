@@ -62,8 +62,7 @@
     //去除没有数据时的分割线
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
-    [self.taskTableview.mj_header beginRefreshing];
-
+    [self loadNewData];
 }
 #pragma mark - nav click
 -(void)RightBarClick{ // 扫码
@@ -98,6 +97,13 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
+    self.strCustmerUkey = @"";
+    searchKey = @"";
+    searchAddress = @"";
+    searchBTime = @"";
+    searchETime = @"";
+    searchWorkNo = @"";
+    pageSize=1;
     [self loadNewData];
 }
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
