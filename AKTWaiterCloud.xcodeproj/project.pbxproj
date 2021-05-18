@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0C65D826539786004414B2 /* AktOldPeopleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0C65D626539786004414B2 /* AktOldPeopleView.h */; };
+		4C0C65D926539786004414B2 /* AktOldPeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0C65D726539786004414B2 /* AktOldPeopleView.m */; };
+		4C0C65DA26539786004414B2 /* AktOldPeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0C65D726539786004414B2 /* AktOldPeopleView.m */; };
+		4C0C65DB26539786004414B2 /* AktOldPeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0C65D726539786004414B2 /* AktOldPeopleView.m */; };
 		4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3124207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3224207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
@@ -509,6 +513,8 @@
 
 /* Begin PBXFileReference section */
 		295155AC8DB18CEFF65CCC5D /* Pods-AKTWaiterCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.debug.xcconfig"; sourceTree = "<group>"; };
+		4C0C65D626539786004414B2 /* AktOldPeopleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOldPeopleView.h; sourceTree = "<group>"; };
+		4C0C65D726539786004414B2 /* AktOldPeopleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPeopleView.m; sourceTree = "<group>"; };
 		4C17AD2E24207CFD0006C45F /* AktLoginCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktLoginCmd.h; sourceTree = "<group>"; };
 		4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktLoginCmd.m; sourceTree = "<group>"; };
 		4C25C29D24C9644F007AF277 /* WSPlaceholderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSPlaceholderTextView.h; sourceTree = "<group>"; };
@@ -1137,18 +1143,20 @@
 		4CD228D3252192220089F433 /* vipcell */ = {
 			isa = PBXGroup;
 			children = (
-				4CD228D4252192220089F433 /* SettingsTableViewCell.m */,
-				4CD228D5252192220089F433 /* MineCell.m */,
-				4CD228D6252192220089F433 /* SettingsTableViewCell.xib */,
-				4CD228D7252192220089F433 /* MineCell.xib */,
-				4CD228D8252192220089F433 /* NotifyCell.xib */,
-				4CD228D9252192220089F433 /* NotifyCell.m */,
-				4CD228DA252192220089F433 /* MineCell.h */,
 				4CD228DB252192220089F433 /* SettingsTableViewCell.h */,
+				4CD228D4252192220089F433 /* SettingsTableViewCell.m */,
+				4CD228D6252192220089F433 /* SettingsTableViewCell.xib */,
+				4CD228DA252192220089F433 /* MineCell.h */,
+				4CD228D5252192220089F433 /* MineCell.m */,
+				4CD228D7252192220089F433 /* MineCell.xib */,
 				4CD228DC252192220089F433 /* NotifyCell.h */,
+				4CD228D9252192220089F433 /* NotifyCell.m */,
+				4CD228D8252192220089F433 /* NotifyCell.xib */,
 				4C553672265355A2004B9DE2 /* AktOldPeopelCell.h */,
 				4C553673265355A2004B9DE2 /* AktOldPeopelCell.m */,
 				4C553674265355A2004B9DE2 /* AktOldPeopelCell.xib */,
+				4C0C65D626539786004414B2 /* AktOldPeopleView.h */,
+				4C0C65D726539786004414B2 /* AktOldPeopleView.m */,
 			);
 			path = vipcell;
 			sourceTree = "<group>";
@@ -1554,6 +1562,7 @@
 				4C81843F2639021E005F85E3 /* AktOldPersonModel.h in Headers */,
 				4C553675265355A2004B9DE2 /* AktOldPeopelCell.h in Headers */,
 				4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */,
+				4C0C65D826539786004414B2 /* AktOldPeopleView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1970,6 +1979,7 @@
 				4CD229552521B3570089F433 /* PlanTaskController.m in Sources */,
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
+				4C0C65D926539786004414B2 /* AktOldPeopleView.m in Sources */,
 				4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4C8184402639021E005F85E3 /* AktOldPersonModel.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,
@@ -2058,6 +2068,7 @@
 				4C9B974C240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
 				4C553677265355A2004B9DE2 /* AktOldPeopelCell.m in Sources */,
 				4C3D75B824A88ABF00D0F79A /* SettingsController.m in Sources */,
+				4C0C65DA26539786004414B2 /* AktOldPeopleView.m in Sources */,
 				4C9B9767240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4CD674F622E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
 				4C9B975E240CCF1D00576F7C /* FSCalendarCollectionViewLayout.m in Sources */,
@@ -2163,6 +2174,7 @@
 				4C9B974D240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
 				4C553678265355A2004B9DE2 /* AktOldPeopelCell.m in Sources */,
 				4C3D75B924A88ABF00D0F79A /* SettingsController.m in Sources */,
+				4C0C65DB26539786004414B2 /* AktOldPeopleView.m in Sources */,
 				4C9B9768240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4CD674F722E94CDF00AB76AF /* QBImagePickerController.m in Sources */,
 				4C9B975F240CCF1D00576F7C /* FSCalendarCollectionViewLayout.m in Sources */,

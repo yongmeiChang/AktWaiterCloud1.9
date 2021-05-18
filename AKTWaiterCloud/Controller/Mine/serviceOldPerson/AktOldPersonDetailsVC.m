@@ -7,8 +7,9 @@
 //
 
 #import "AktOldPersonDetailsVC.h"
+#import "AktOldPeopleView.h"
 
-@interface AktOldPersonDetailsVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface AktOldPersonDetailsVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,AktOldInfoCancelAppDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labName;
 @property (weak, nonatomic) IBOutlet UILabel *labIDCard;
 @property (weak, nonatomic) IBOutlet UILabel *labPhone;
@@ -16,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgClick;
 @property (weak, nonatomic) IBOutlet UIButton *btnFace;
+@property (weak, nonatomic) IBOutlet UIView *peopleBgView;
+@property (weak, nonatomic) IBOutlet UIButton *btnInfo;
 
 @end
 
@@ -24,10 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = kColor(@"C3");
+    self.view.backgroundColor = kColor(@"B1");
     //导航栏
     [self setNavTitle:@"老人信息"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+    // 背景
+    self.peopleBgView.layer.masksToBounds = YES;
+    self.peopleBgView.layer.cornerRadius = 5;
     
     // 老人信息
     self.labName.text = kString(self.oldPresondetailsModel.customerName);
@@ -37,7 +43,12 @@
     // 人脸采集按钮
     self.btnFace.backgroundColor = kColor(@"C8");
     self.btnFace.layer.masksToBounds = YES;
-    self.btnFace.layer.cornerRadius = 4;
+    self.btnFace.layer.cornerRadius = 5;
+    
+    // 信息录入
+    self.btnInfo.backgroundColor = kColor(@"C8");
+    self.btnInfo.layer.masksToBounds = YES;
+    self.btnInfo.layer.cornerRadius = 5;
     
 }
 #pragma mark - click
@@ -59,6 +70,18 @@
 
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)btnPeopleInfo:(UIButton *)sender {
+    // 弹框
+    AktOldPeopleView *alterV = [[AktOldPeopleView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    alterV.delegate = self;
+    alterV.tag = 103;
+    [[UIApplication sharedApplication].keyWindow addSubview:alterV];
+}
+
+#pragma mark - delegate
+-(void)didOldInfoCancelAppClose:(NSInteger)type{
+    [[[UIApplication sharedApplication].keyWindow  viewWithTag:103] removeFromSuperview];
 }
 
 #pragma mark - image picker delegate

@@ -166,7 +166,7 @@
     [tvRemark addSubview:placeHolderLabel];
     [tvRemark setValue:placeHolderLabel forKey:@"_placeholderLabel"];
     labNumber = [[UILabel alloc] init];
-    labNumber.textColor = kColor(@"C18");
+    labNumber.textColor = kColor(@"C16");
     labNumber.font = [UIFont systemFontOfSize:13];
     labNumber.text = @"0/200";
     [viewRemark addSubview:labNumber];

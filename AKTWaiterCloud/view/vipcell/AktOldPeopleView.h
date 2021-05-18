@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@protocol AktOldInfoCancelAppDelegate <NSObject>
+-(void)didOldInfoCancelAppClose:(NSInteger)type;
 
+@end
 @interface AktOldPeopleView : UIView
-
+@property(weak,nonatomic)id <AktOldInfoCancelAppDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END
