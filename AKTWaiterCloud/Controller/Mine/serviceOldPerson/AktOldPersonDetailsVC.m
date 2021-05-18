@@ -36,10 +36,10 @@
     self.peopleBgView.layer.cornerRadius = 5;
     
     // 老人信息
-    self.labName.text = kString(self.oldPresondetailsModel.customerName);
-    self.labIDCard.text = kString(self.oldPresondetailsModel.customerNo);
-    self.labPhone.text = kString(self.oldPresondetailsModel.customerMobile);
-    self.labAddress.text = kString(self.oldPresondetailsModel.customerAddress);
+    self.labName.text = kString([self.oldPresondetailsDic objectForKey:@"customerName"]);
+    self.labIDCard.text = kString([self.oldPresondetailsDic objectForKey:@"customerUkey"]);
+    self.labPhone.text = kString([self.oldPresondetailsDic objectForKey:@"customerPhone"]);
+    self.labAddress.text = kString([self.oldPresondetailsDic objectForKey:@"serviceAddress"]);
     // 人脸采集按钮
     self.btnFace.backgroundColor = kColor(@"C8");
     self.btnFace.layer.masksToBounds = YES;
@@ -91,7 +91,7 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     //上传
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"采集中..."];
-    NSDictionary * parameters =@{@"customerName":kString(self.oldPresondetailsModel.customerName),@"customerUkey":kString(self.oldPresondetailsModel.customerUkey),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
+    NSDictionary * parameters =@{@"customerName":kString([self.oldPresondetailsDic objectForKey:@"customerName"]),@"customerUkey":kString([self.oldPresondetailsDic objectForKey:@"customerUkey"]),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
     [[AktVipCmd sharedTool] requestFaceCollect:parameters type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSLog(@"---%@",responseObject);
         [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];

@@ -8,6 +8,7 @@
 
 #import "AktOrderScanVC.h"
 #import "SignoutController.h"
+#import "AktOldPersonDetailsVC.h"
 
 @interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -24,7 +25,7 @@
     // 人脸相关视图
     BOOL isOpen;// 是否 打开手电筒
     BOOL isFace; // 是否刷脸 1是 0否
-    BOOL isOldpeopleface; // 是否人脸采集 1是 0否
+    NSString *isOldpeopleface; // 是否人脸采集 1是 0否
     
     NSString *strOldpeople;
 }
@@ -46,7 +47,7 @@
     // Do any additional setup after loading the view from its nib.
      isOpen = false;
      isFace = false;
-    isOldpeopleface = false;
+    isOldpeopleface = [[NSString alloc] init];
     strOldpeople = [[NSString alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -88,7 +89,7 @@
 #pragma mark - faceinfo
 -(void)requestOldpeopleInfo{
     [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
-        isOldpeopleface = (BOOL)[responseObject objectForKey:@"existFlag"];
+        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existFlag"]];
         strOldpeople = [responseObject objectForKey:@"message"];
     } failure:nil];
 }
@@ -104,30 +105,27 @@
     }
 }
 -(void)SearchBarClick{
-    if (isFace) {
-        if (isOldpeopleface) {
-            // 扫码
-            topView.hidden = NO;
-            leftView.hidden = NO;
-            rightView.hidden = NO;
-            botView.hidden = NO;
-            scanWindow.hidden = NO;
-            toplabel.hidden = NO;
-            [_session startRunning];//开始扫二维码
-            // 人脸
-            self.faceBgView.hidden = YES;
-            if ([self.ordertype isEqualToString:@"1"]) {
-                [self setNavTitle:@"扫码签入"];
-            }else{
-                [self setNavTitle:@"扫码签出"];
-            }
-            [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
-            isFace = false;
+    if (isFace) { // 开启扫码操作
+        // 扫码
+        topView.hidden = NO;
+        leftView.hidden = NO;
+        rightView.hidden = NO;
+        botView.hidden = NO;
+        scanWindow.hidden = NO;
+        toplabel.hidden = NO;
+        [_session startRunning];//开始扫二维码
+        // 人脸
+        self.faceBgView.hidden = YES;
+        if ([self.ordertype isEqualToString:@"1"]) {
+            [self setNavTitle:@"扫码签入"];
         }else{
-            [[AppDelegate sharedDelegate] showTextOnly:strOldpeople];
+            [self setNavTitle:@"扫码签出"];
         }
+        [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
+        isFace = false;
+       
         
-    }else{
+    }else{// 开启刷脸操作
         // 扫码
         topView.hidden = YES;
         leftView.hidden = YES;
@@ -147,6 +145,7 @@
         }
         [self setNavTitle:@"人脸识别"];
         isFace =true;
+        
     }
 }
 
@@ -385,14 +384,28 @@
 }
 
 -(void)checkFacePhotoClick:(UIButton *)sender{
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;// 暂时使用相册 后台修改分辨率之后再更改拍照
-        imagePickerController.delegate = self;
-        [self presentViewController:imagePickerController animated:YES completion:nil];
+    if ([isOldpeopleface isEqualToString:@"1"]) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+            imagePickerController.allowsEditing = YES;
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;// 暂时使用相册 后台修改分辨率之后再更改拍照
+            imagePickerController.delegate = self;
+            [self presentViewController:imagePickerController animated:YES completion:nil];
+        }else{
+            [[AppDelegate sharedDelegate] showTextOnly:@"您暂时没有拍照权限，请打开照相机权限！"];
+        }
+    
     }else{
-        [[AppDelegate sharedDelegate] showTextOnly:@"您暂时没有拍照权限，请打开照相机权限！"];
+        [[AppDelegate sharedDelegate] showAlertView:@"提示" des:[NSString stringWithFormat:@"用户%@%@",self.orderinfo.customerName,strOldpeople] cancel:@"" action:@"前往采集" acHandle:^(UIAlertAction *action) {
+            AktOldPersonDetailsVC *olddetailsVC = [[AktOldPersonDetailsVC alloc] init];
+            olddetailsVC.oldPresondetailsDic = @{@"customerId":kString(self.orderinfo.customerId),
+                                                 @"customerName":kString(self.orderinfo.customerName),
+                                                 @"customerUkey":kString(self.orderinfo.customerUkey),
+                                                 @"customerNo":kString(self.orderinfo.customerUkey),
+                                                 @"customerPhone":kString(self.orderinfo.customerPhone),
+                                                 @"serviceAddress":kString(self.orderinfo.serviceAddress)};
+            [self.navigationController pushViewController:olddetailsVC animated:YES];
+        }];
     }
 }
 #pragma mark - image picker delegate

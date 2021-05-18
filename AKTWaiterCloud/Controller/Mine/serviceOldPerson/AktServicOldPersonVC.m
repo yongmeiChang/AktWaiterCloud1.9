@@ -129,8 +129,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    AktOldPersonDetailsModel *deltaismodel = [dataArray objectAtIndex:indexPath.row];
     AktOldPersonDetailsVC *detailsvc = [[AktOldPersonDetailsVC alloc] init];
-    detailsvc.oldPresondetailsModel = [dataArray objectAtIndex:indexPath.row];
+    detailsvc.oldPresondetailsDic = @{@"customerId":kString(deltaismodel.customerId),
+                                         @"customerName":kString(deltaismodel.customerName),
+                                         @"customerUkey":kString(deltaismodel.customerUkey),
+                                         @"customerNo":kString(deltaismodel.customerNo),
+                                         @"customerPhone":kString(deltaismodel.customerMobile),
+                                         @"serviceAddress":kString(deltaismodel.customerAddress)};
+    
     detailsvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailsvc animated:YES];
 }
