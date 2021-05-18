@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="65" id="KGk-i7-Jjw" customClass="AktOldPeopelCell">
+            <rect key="frame" x="0.0" y="0.0" width="357" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="357" height="65"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8h-Nx-S0D">
+                        <rect key="frame" x="15" y="15" width="33" height="35"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12345678901" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lb4-rr-i5G">
+                        <rect key="frame" x="222" y="0.0" width="120" height="65"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.36862745099999999" green="0.52156862749999999" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rna-0M-sSJ">
+                        <rect key="frame" x="222" y="0.0" width="120" height="65"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="P9S-fY-LDj"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleColor" red="0.36862745099999999" green="0.52156862749999999" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FU6-Xd-E7V"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WNY-eQ-ekK">
+                        <rect key="frame" x="199" y="15" width="15" height="35"/>
+                        <state key="normal" image="phone_OldPeople"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Rna-0M-sSJ" secondAttribute="bottom" id="2Rh-6U-cbx"/>
+                    <constraint firstItem="i8h-Nx-S0D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="49P-T8-7Oo"/>
+                    <constraint firstItem="WNY-eQ-ekK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="AsT-Ti-JhB"/>
+                    <constraint firstAttribute="trailing" secondItem="Rna-0M-sSJ" secondAttribute="trailing" constant="15" id="Gqa-9p-cCx"/>
+                    <constraint firstItem="i8h-Nx-S0D" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="TJR-CG-XIo"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="bottom" secondItem="Lb4-rr-i5G" secondAttribute="bottom" id="YN6-L0-nES"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="leading" secondItem="WNY-eQ-ekK" secondAttribute="trailing" constant="8" id="ZkX-Jr-f41"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="leading" secondItem="Lb4-rr-i5G" secondAttribute="leading" id="axF-dP-Mf1"/>
+                    <constraint firstAttribute="bottom" secondItem="WNY-eQ-ekK" secondAttribute="bottom" constant="15" id="bHQ-FU-cZJ"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="trailing" secondItem="Lb4-rr-i5G" secondAttribute="trailing" id="hSs-mq-1j5"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="top" secondItem="Lb4-rr-i5G" secondAttribute="top" id="jt2-jq-Cri"/>
+                    <constraint firstAttribute="bottom" secondItem="i8h-Nx-S0D" secondAttribute="bottom" constant="15" id="r4e-wy-OhL"/>
+                    <constraint firstItem="Rna-0M-sSJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xKd-lh-tFF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="LabName" destination="i8h-Nx-S0D" id="QxH-g1-NGt"/>
+                <outlet property="btnImage" destination="WNY-eQ-ekK" id="Fxi-hS-zjy"/>
+                <outlet property="btnValue" destination="Rna-0M-sSJ" id="vWE-me-v43"/>
+                <outlet property="labValue" destination="Lb4-rr-i5G" id="IgO-Zb-6lP"/>
+            </connections>
+            <point key="canvasLocation" x="167.39130434782609" y="131.58482142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="phone_OldPeople" width="15" height="15"/>
+    </resources>
+</document>

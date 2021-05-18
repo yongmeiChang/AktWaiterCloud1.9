@@ -48,10 +48,10 @@
      isFace = false;
     isOldpeopleface = false;
     strOldpeople = [[NSString alloc] init];
-        self.view.backgroundColor = [UIColor whiteColor];
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
         
-        self.netWorkErrorView.hidden = YES;
+    self.netWorkErrorView.hidden = YES;
     
     _QRCodeWidth = SCREEN_WIDTH*0.7;
     [self setupMaskView];//设置扫描区域之外的阴影视图
@@ -88,7 +88,7 @@
 #pragma mark - faceinfo
 -(void)requestOldpeopleInfo{
     [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
-        isOldpeopleface = [responseObject objectForKey:@"existFlag"];
+        isOldpeopleface = (BOOL)[responseObject objectForKey:@"existFlag"];
         strOldpeople = [responseObject objectForKey:@"message"];
     } failure:nil];
 }

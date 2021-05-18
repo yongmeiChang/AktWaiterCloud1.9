@@ -9,7 +9,7 @@
 #import "AktServicOldPersonVC.h"
 #import "AktOldPersonDetailsVC.h"
 #import "AktOldPersonModel.h"
-#import "AktTitleCell.h"
+#import "AktOldPeopelCell.h"
 
 @interface AktServicOldPersonVC ()<AktOldPeoplePhoneDelegate>{
     int pageNum; // 页数
@@ -17,6 +17,7 @@
     AktOldPersonModel *oldmodel;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableOldPerson;
+@property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet UITextField *tfOldPersonCode;
 @property (weak, nonatomic) IBOutlet UIButton *btnSearch;
 
@@ -35,6 +36,8 @@
     self.tableOldPerson.mj_header = self.mj_header;
     self.tableOldPerson.mj_footer = self.mj_footer;
     [self.tableOldPerson.mj_header beginRefreshing];
+    // 搜索栏
+    self.searchView.layer.cornerRadius = 6;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -62,9 +65,7 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
-    pageNum = 1;
-    [self checkNetWork:kString(self.tfOldPersonCode.text)];
-    [self.tableOldPerson.mj_header endRefreshing];
+    [self loadNewData];
 }
 
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
@@ -72,7 +73,11 @@
     [self checkNetWork:kString(self.tfOldPersonCode.text)];
     [self.tableOldPerson.mj_footer endRefreshing];
 }
-
+-(void)loadNewData{
+    pageNum = 1;
+    [self checkNetWork:kString(self.tfOldPersonCode.text)];
+    [self.tableOldPerson.mj_header endRefreshing];
+}
 #pragma mark - btn click
 - (IBAction)btnSearchClick:(UIButton *)sender { // 搜索
     [self.tableOldPerson.mj_header beginRefreshing];
@@ -104,10 +109,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentify = @"settingscell";
-    AktTitleCell *cell = (AktTitleCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
+    static NSString *cellidentify = @"oldcell";
+    AktOldPeopelCell *cell = (AktOldPeopelCell *)[tableView dequeueReusableCellWithIdentifier:cellidentify];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"AktTitleCell" owner:self options:nil] objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"AktOldPeopelCell" owner:self options:nil] objectAtIndex:0];
     }
     cell.delegate = self;
     AktOldPersonDetailsModel *deltaismodel = [dataArray objectAtIndex:indexPath.row];
@@ -135,7 +140,13 @@
     NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",kString(phone)];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:@{} completionHandler:nil];
 }
-
+#pragma mark - text delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self loadNewData];
+    [self.tfOldPersonCode resignFirstResponder];
+    return YES;
+}
 /*
 #pragma mark - Navigation
 

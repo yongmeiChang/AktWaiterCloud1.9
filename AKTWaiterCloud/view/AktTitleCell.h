@@ -10,11 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AktOldPeoplePhoneDelegate <NSObject>
--(void)didSelectCallPhone:(NSString *)phone;
-
-@end
-
 @interface AktTitleCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *labName;
 @property (weak, nonatomic) IBOutlet UILabel *labvalue;
@@ -22,10 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *btnPhone;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labValueConstraint;
-@property(weak,nonatomic)id <AktOldPeoplePhoneDelegate> delegate;
 
 -(void)setUserInfoDetails:(UserInfo *)userInfo indexPath:(NSIndexPath *)indexpath IconImage:(UIImage *)iconIamge;
--(void)setOldpeopleCallPhone:(NSString *)phone oldName:(NSString *)name;
 
 @end
 
