@@ -79,7 +79,7 @@
         [user saveUser];
         //刷新当前页面头像
         if ([user.icon containsString:@"http"]) {
-            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(modelUser.icon)]]]];
+            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(user.icon)]]]];
         }else{
             self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
         }
