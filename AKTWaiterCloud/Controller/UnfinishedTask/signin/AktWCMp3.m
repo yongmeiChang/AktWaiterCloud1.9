@@ -23,6 +23,8 @@
 @implementation AktWCMp3
 -(void)startRecordMp3FilePathName; // 开始录音
 {
+    self.filePathname = [[NSString alloc] init]; // 初始化文件路径
+    
     if(isclickStop){
         [[SaveDocumentArray sharedInstance] readFileName:_filePathname];
         isclickStop = false;
@@ -67,7 +69,7 @@
     Date = [Date stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     NSString * filename = [NSString stringWithFormat:@"%@%@.wav",[LoginModel gets].uuid,Date];
     
-    _filePathname = [filePath stringByAppendingString:filename];
+    self.filePathname = [filePath stringByAppendingString:filename];
     [[FileManagerUtil sharedTool] createDirectoryAtPath:filePath];
     NSURL * url =  [NSURL URLWithString:_filePathname];
     self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:setting error:nil];
@@ -79,6 +81,9 @@
     }else{
         NSLog(@"音频格式和文件存储格式不匹配,无法初始化Recorder");
     }
+    // 保存路径
+    [[NSUserDefaults standardUserDefaults] setObject:self.filePathname forKey:@"filePathName"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void)stopRecordMp3FilePathName;  // 结束录音
@@ -91,14 +96,15 @@
 }
 #pragma mark - mp3转字符串
 -(NSString *)mp3ToBASE64{
+    self.filePathname = [[NSUserDefaults standardUserDefaults] objectForKey:@"filePathName"];
      if ([_filePathname isEqualToString:@"nil"] || [_filePathname isKindOfClass:[NSNull class]] || _filePathname.length ==0) {
-          
+
       }else{
-          _filePathname = [AktUtil convertToMp3SouceFilePathName:_filePathname];
+          self.filePathname = [AktUtil convertToMp3SouceFilePathName:self.filePathname];
       }
-    NSData *mp3Data = [NSData dataWithContentsOfFile:_filePathname];
+    NSData *mp3Data = [NSData dataWithContentsOfFile:self.filePathname];
     NSString *_encodedImageStr = [mp3Data base64Encoding];
-    NSLog(@"===Encoded image:\n%@", _encodedImageStr);
+    NSLog(@"===Encoded MP3:\n%@  \n data:%@",_encodedImageStr,mp3Data);
     return _encodedImageStr;
 }
 
