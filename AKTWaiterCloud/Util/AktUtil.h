@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取 临时 路径 该目录保存文件 程序退出后会被清除
 + (NSString *)getTemPath:(NSString *)_fileName;
 
-+ (NSString *)convertToMp3SouceFilePathName:(NSString *)pathName;  // 转换录音格式 mp3
++ (NSString *)convertToMp3SouceFilePathName:(NSString *)sourcePath isDeleteSourchFile:(BOOL)isDelete;  // 转换录音格式 mp3
 // 获取 当前毫秒
 +(NSString *)getNowTimes;
 // 获取当前时间

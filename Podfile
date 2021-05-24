@@ -23,5 +23,6 @@ target 'AKTWaiterCloud' do
 #    pod 'lame'
     pod 'SDWebImage','~> 4.0.0'
     pod 'IQKeyboardManager'  #键盘
+    pod 'GTMBase64'  # 加密格式
     
 end

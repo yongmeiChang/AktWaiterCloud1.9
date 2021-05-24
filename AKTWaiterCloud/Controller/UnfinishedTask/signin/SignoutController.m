@@ -1107,7 +1107,7 @@
 //录音按钮
 -(IBAction)trapBtnClick:(id)sender{
     if(!isclick){
-        [[[AktWCMp3 alloc] init] startRecordMp3FilePathName];
+        [[[AktWCMp3 alloc] init] startRecordcase];
         isclick = YES;
         [self.trapBtn setImage:[UIImage imageNamed:@"luyinzhong"] forState:UIControlStateNormal];
         self.trapBtn.imageView.image = [UIImage imageNamed:@"luyingzhong"];
@@ -1125,7 +1125,7 @@
         if (longtime<intTimeAll) {
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"录音时长最少不能少于%ld秒",(long)intTimeAll]];
         }else{
-            [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
+            [[[AktWCMp3 alloc] init] endRecord];
               isclick = NO;
               [timer invalidate];
               _timerLabel.hidden = YES;
@@ -1322,7 +1322,7 @@
     
     if(self.type==1){//签出
         if([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
@@ -1372,7 +1372,7 @@
         
     }else{
         if([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
