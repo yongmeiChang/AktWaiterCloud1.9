@@ -424,10 +424,10 @@
 
                 /**判断当前工单是否在服务有效期内**/
                 formatter.dateFormat = @"yyyy-MM-dd";
-                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
-                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
-                    return;
-                }
+//                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
+//                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
+//                    return;
+//                }
 
                  if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"]) && Ltime>0) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
 

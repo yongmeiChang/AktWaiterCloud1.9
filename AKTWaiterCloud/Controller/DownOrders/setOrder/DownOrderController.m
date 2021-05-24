@@ -161,6 +161,7 @@
         _eDate = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
         _bTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
         _eTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceEnd) substringWithRange:NSMakeRange(11, 8)]];
+        _stationInfo = [datamodel.station objectAtIndex:0];
     }
     
 }
@@ -245,11 +246,11 @@
         [[AppDelegate sharedDelegate] showTextOnly:@"请选择服务结束时间"];
         return;
     }
-
-//    if(strArea.length==0){
-//        [[AppDelegate sharedDelegate] showTextOnly:@"服务区域不能为空"];
-//        return;
-//    }
+    
+    if(_stationInfo.name.length==0){
+        [[AppDelegate sharedDelegate] showTextOnly:@"服务站不能为空"];
+        return;
+    }
 //    if(strAddress.length==0){
 //        [[AppDelegate sharedDelegate] showTextOnly:@"服务地址不能为空"];
 //        return;
@@ -269,7 +270,7 @@
     NSMutableDictionary *paremeter = [NSMutableDictionary dictionary];
     [paremeter addUnEmptyString:_customerUkey forKey:@"customerUkey"];
     [paremeter addUnEmptyString:_servicepojInfo.id forKey:@"serviceItemId"];
-    [paremeter addUnEmptyString:_servicepojInfo.showName forKey:@"serviceItemName"];
+    [paremeter addUnEmptyString:_servicepojInfo.fullName forKey:@"serviceItemName"];
     [paremeter addUnEmptyString:userInfoModel.serviceAddress forKey:@"serviceAddress"];
     [paremeter addUnEmptyString:_Date forKey:@"serviceDate"];
     [paremeter addUnEmptyString:_bTime forKey:@"serviceBegin"];
