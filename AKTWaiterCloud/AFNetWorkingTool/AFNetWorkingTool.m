@@ -38,8 +38,9 @@ static AFNetWorkingTool * a_instance = nil;
     NSData *retData = responseObj;
     NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
     NSDictionary *retDict = [result toDictionaryWithError:&err];
-    NSLog(@" requst:%@ \n 参数:%@ \n response:%@",url,p,result);
-    
+    NSLog(@" requst:%@",url);
+    NSLog(@" 参数:%@",p);
+    NSLog(@" response:%@",result);
     if (err) {
         failure(err);
         return;

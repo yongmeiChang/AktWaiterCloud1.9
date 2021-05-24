@@ -8,6 +8,7 @@
 
 #import "AktOldPersonDetailsVC.h"
 #import "AktOldPeopleView.h"
+#import "UIImage+Color.h"
 
 @interface AktOldPersonDetailsVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,AktOldInfoCancelAppDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labName;
@@ -87,8 +88,10 @@
 #pragma mark - image picker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil); // 照片存储到相册
     //上传
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"采集中..."];
     NSDictionary * parameters =@{@"customerName":kString([self.oldPresondetailsDic objectForKey:@"customerName"]),@"customerUkey":kString([self.oldPresondetailsDic objectForKey:@"customerUkey"]),@"customerImg":[self imageToBaseString:image],@"imgType":@"png"};
@@ -103,15 +106,9 @@
 //    [self.imgClick setImage:image];
 }
 
-#pragma mark - UIImage图片转成Base64字符串
--(NSString *)imageToBaseString:(UIImage *)image{
-//    NSData *data = UIImageJPEGRepresentation(image, 0.5f); // 图片质量压缩
-    NSData *data = UIImagePNGRepresentation([self imageCompressForWidth:image targetWidth:100]);
-    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    return encodedImageStr;
-}
+#pragma mark - 图片压缩方式
 -(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth
-{ // 图片大小压缩
+{ // 图片 大小尺寸压缩
     CGSize imageSize = sourceImage.size;
     CGFloat width = imageSize.width;
     CGFloat height = imageSize.height;
@@ -123,6 +120,21 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+#pragma mark - UIImage图片转成Base64字符串
+-(NSString *)imageToBaseString:(UIImage *)image{
+//    NSData *data = UIImageJPEGRepresentation(image, 0.5f); // 图片质量压缩
+    NSData *data = UIImagePNGRepresentation([self imageCompressForWidth:image targetWidth:100]);
+    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return encodedImageStr;
+}
+
+#pragma mark - 保存图片
+//此方法就在UIImageWriteToSavedPhotosAlbum的上方
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    NSLog(@"已保存");
+}
+
 
 /*
 #pragma mark - Navigation
