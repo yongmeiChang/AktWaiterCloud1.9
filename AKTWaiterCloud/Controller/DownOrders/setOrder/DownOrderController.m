@@ -145,6 +145,7 @@
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     
     [self initTableview];
+    _stationInfo = [datamodel.station objectAtIndex:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -161,7 +162,7 @@
         _eDate = [NSString stringWithFormat:@"%@",kString(userInfoModel.serviceDate)];
         _bTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceBegin) substringWithRange:NSMakeRange(11, 8)]];
         _eTime = [NSString stringWithFormat:@"%@",[kString(userInfoModel.serviceEnd) substringWithRange:NSMakeRange(11, 8)]];
-        _stationInfo = [datamodel.station objectAtIndex:0];
+        [_tableview reloadData];
     }
     
 }
