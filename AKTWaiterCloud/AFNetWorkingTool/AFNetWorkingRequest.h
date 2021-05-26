@@ -25,9 +25,10 @@
 #define AKTUploadLocationInfoMethod @"uploadLocateInformation" // 上传连续定位信息
 #define AKTUploadWorkNodeMethod @"uploadWorkNode" // 上传工单节点
 //#define AKTOrderDetailsMethod @"" // 工单详情 目前还没有使用
-#define AKTFindAdvancedMethod @"findAdvanced" // 工单签入 签出配置
-#define AKTOrderStopMethod @"stopOrder" // 工单终止
+#define AKTFindAdvancedMethod @"findAdvanced" // 工单签入 签出配置 权限
+#define AKTOrderStopMethod @"stopOrder" // 工单终止 上传原因
 #define AKTCheckSignInStatusMethod @"checkSignInStatus" // 判断是否有签入工单
+#define AKTOldPeopleFaceOrNoMethod @"existFace" // 查询老人老人是否人脸采集
 
 
 @interface AFNetWorkingRequest : NSObject
@@ -106,7 +107,7 @@
                     success:(void (^)(id responseObject))success
                     failure:(void (^)(NSError *error))failure;
 
-/*新增接口 工单签入 签出 配置*/
+/*新增接口 无法签入 签出。上传原因*/
 -(void)requestOrderStop:(NSDictionary *)param
                        type:(HttpRequestType)type
                     success:(void (^)(id responseObject))success
@@ -117,6 +118,13 @@
                        type:(HttpRequestType)type
                     success:(void (^)(id responseObject))success
                     failure:(void (^)(NSError *error))failure;
+
+/* 判断老人是否进行了人脸识别*/
+-(void)requestOldPeoPleAtTheFaceInfo:(NSDictionary *)param
+                       type:(HttpRequestType)type
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure;
+
 
 @end
 

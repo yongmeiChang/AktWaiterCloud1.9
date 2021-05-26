@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labValue;
 @property (weak, nonatomic) IBOutlet UIView *viewBg;
 @property (weak, nonatomic) IBOutlet UILabel *labLine;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftlabW;
 
 -(void)setOrderInfo:(NSIndexPath *)path; // 添加工单
 

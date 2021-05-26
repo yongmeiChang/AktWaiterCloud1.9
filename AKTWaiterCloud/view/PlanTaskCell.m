@@ -25,7 +25,7 @@
     self.continuityLocation(sender);
 }
 #pragma mark - 任务列表
--(void)setOrderList:(OrderInfo *)orderinfo{
+-(void)setOrderList:(OrderListModel *)orderinfo  Type:(NSInteger)type{
     NSString * itemName = orderinfo.serviceItemName;
     itemName = [itemName stringByReplacingOccurrencesOfString:@"->" withString:@"  >  "];//▶
     
@@ -37,12 +37,12 @@
     
     for (int i =0; i<aryPhone.count; i++) {// 手机号
         NSInteger btnw = [AktUtil getNewTextSize:[NSString stringWithFormat:@"%@",[aryPhone objectAtIndex:i]] font:15 limitWidth:0].width;
-        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
+        UIButton *btnPhone = [[UIButton alloc] initWithFrame:CGRectMake((btnw+10)*i, 0, btnw, 20)];
         [btnPhone addTarget:self action:@selector(btnPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
         btnPhone.tag = i;
         [self.viewPhone addSubview:btnPhone];
         
-        UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw)*i, 0, btnw, 20)];
+        UILabel *labPhone = [[UILabel alloc] initWithFrame:CGRectMake((btnw+10)*i, 0, btnw, 20)];
         labPhone.textColor = kColor(@"C7");
         labPhone.font = [UIFont systemFontOfSize:14];
         labPhone.textAlignment = NSTextAlignmentLeft;
@@ -57,6 +57,18 @@
     self.workNolabel.text = [NSString stringWithFormat:@"%@",orderinfo.workNo];// 工单号
 
     self.titlelabel.text = itemName; // 服务项目名称
+    NSString *strContent = [NSString stringWithFormat:@"%@", orderinfo.serviceContent]; // 服务内容
+    if(type == 2){
+        self.contentBottom.constant = 8;
+        self.contentTitle.text = @"服务内容:";
+        if (strContent.length>0) {
+            self.contentLabel.text = strContent;
+        }else{
+            self.contentLabel.text = @"未填写";
+        }
+    }else{
+        self.contentBottom.constant = 0;
+    }
     if([orderinfo.workStatus isEqualToString:@"1"]){
         self.bgimageview.image = [UIImage imageNamed:@"undo"];
     }else if([orderinfo.workStatus isEqualToString:@"2"]){

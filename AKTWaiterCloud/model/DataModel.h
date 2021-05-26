@@ -37,6 +37,8 @@
 
 @end
 #pragma mark --- 用户信息
+
+
 @interface UserInfo : JSONModel
 
 @property(nonatomic,strong) NSString <Optional>*  uuid; // 与用户id一样
@@ -63,7 +65,15 @@
 
 
 #pragma mark --- 我的工单
-@interface OrderInfo : JSONModel
+@protocol OrderListModel
+@end
+
+@interface AktOrderModel : JSONModel
+@property(nonatomic,strong) NSString  <Optional>*total; // 工单总数量
+@property(nonatomic,strong) NSArray <OrderListModel>* list; // 工单列表
+@end
+
+@interface OrderListModel : JSONModel
 @property(nonatomic,strong) NSString  <Optional>* tid;//
 @property(nonatomic,strong) NSString  <Optional>* id;//
 @property(nonatomic,strong) NSString  <Optional>* total;
@@ -76,7 +86,7 @@
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaName;//服务区域
 @property(nonatomic,strong) NSString  <Optional>* serviceAreaFullPath;//区域全路径
 @property(nonatomic,strong) NSString  <Optional>* workNo;//工单号
-@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  1  未开始   2 进行中  3 已结束（未回访）  4已回访
+@property(nonatomic,strong) NSString  <Optional>* workStatus;//工单状态  1  未开始   2 进行中  3 已结束
 //@property(nonatomic,strong) NSString  <Optional>* nodeName; // 工单状态 待签入=未开始   待签出=进行中，其他都是已完成
 @property(nonatomic,strong) NSString  <Optional>* workStatusName;//
 @property(nonatomic,strong) NSString  <Optional>* customerId;//服务用户ID
@@ -132,8 +142,6 @@
 @property(nonatomic,strong) NSString <Optional>* field11;//
 @property(nonatomic,strong) NSString <Optional>* field12;//
 @property(nonatomic,strong) NSString <Optional>* field13;//
-@property(nonatomic,strong) NSString <Optional>* createBy;
-@property(nonatomic,strong) NSString <Optional>* updateBy;
 @property(nonatomic,strong) NSString <Optional>* serviceFullPath;
 //update 2016-12-26 15:59:06
 @property(nonatomic,strong) NSString  <Optional>* signInLocation;//签入地点
@@ -142,7 +150,7 @@
 @property(nonatomic,strong) NSString  <Optional>* signOutStatus;//签出状态
 @property(nonatomic,strong) NSString  <Optional>* visitUserName;//回访人
 @property(nonatomic,strong) NSString  <Optional>* serviceVisit;//回访情况
-@property(nonatomic,strong) NSString  <Optional>* customerSatisfactionName;//回访满意度
+@property(nonatomic,strong) NSString  <Optional>* customerSatisfactionName;//回访满意度 1非常满意、2满意、3一般、4不满意
 @property(nonatomic,strong) NSString  <Optional>* visitDate;//回访时间
 @property(nonatomic,strong) NSString  <Optional>* signInDistance;//签入距离
 @property(nonatomic,strong) NSString  <Optional>* signOutDistance;//签出距离
@@ -153,7 +161,6 @@
 @property(nonatomic,strong) NSString  <Optional>* actualEnd;//签出时间
 @property(nonatomic,strong) NSString  <Optional>* isEarly;//是否早退(0:正常1:早退)
 
--(void)getOrderTaskByWorkNo:(NSString *)workNo tid:(NSString *)tid total:(NSString *)total isTrue:(NSString *)isTrue  createDate:(NSString *)createDate  begin:(NSString *)begin  updateDate:(NSString *)updateDate  delFlag:(NSString *)delFlag  affixFlag:(NSString *)affixFlag  serviceAreaName:(NSString *)serviceAreaName  serviceAreaFullPath:(NSString *)serviceAreaFullPath  workStatus:(NSString *)workStatus  workStatusName:(NSString *)workStatusName  customerId:(NSString *)customerId  customerNo:(NSString *)customerNo  machineNo:(NSString *)machineNo  customerName:(NSString *)customerName  customerPhone:(NSString *)customerPhone  serviceAddress:(NSString *)serviceAddress  serviceLocationX:(NSString *)serviceLocationX  serviceLocationY:(NSString *)serviceLocationY  serviceAreaId:(NSString *)serviceAreaId  serviceContent:(NSString *)serviceContent  serviceMoney:(NSString *)serviceMoney  serviceDate:(NSString *)serviceDate  serviceBegin:(NSString *)serviceBegin  serviceEnd:(NSString *)serviceEnd  serviceLength:(NSString *)serviceLength  serviceItemId:(NSString *)serviceItemId  serviceItemName:(NSString *)serviceItemName  stationId:(NSString *)stationId  stationName:(NSString *)stationName  stationPhone:(NSString *)stationPhone  stationAddress:(NSString *)stationAddress  waiterId:(NSString *)waiterId  waiterName:(NSString *)waiterName  waiterPhone:(NSString *)waiterPhone  waiterLocation:(NSString *)waiterLocation  processInstanceId:(NSString *)processInstanceId  processKey:(NSString *)processKey  processKeyName:(NSString *)processKeyName  orderUserId:(NSString *)orderUserId  orderUserName:(NSString *)orderUserName  orderDate:(NSString *)orderDate  sendUserId:(NSString *)sendUserId  sendUserName:(NSString *)sendUserName  sendDate:(NSString *)sendDate  stationUserId:(NSString *)stationUserId  stationUserName:(NSString *)stationUserName  stationDate:(NSString *)stationDate serviceTimeLength:(NSString *)serviceTimeLength unitType:(NSString *)unitType  unitTypeName:(NSString *)unitTypeName  abnormalFlag:(NSString *)abnormalFlag  abnormalFlagName:(NSString *)abnormalFlagName  lessFlagName:(NSString *)lessFlagName  lessFlag:(NSString *)lessFlag  businessType:(NSString *)businessType    field11:(NSString *)field11  field12:(NSString *)field12  field13:(NSString *)field13  createBy:(NSString *)createBy  updateBy:(NSString *)updateBy  serviceFullPath:(NSString *)serviceFullPath  signInLocation:(NSString *)signInLocation  signInStatus:(NSString *)signInStatus  signOutLocation:(NSString *)signOutLocation  signOutStatus:(NSString *)signOutStatus visitUserName:(NSString *)visitUserName signInDistance:(NSString *)signInDistance serviceResult:(NSString *)serviceResult  serviceVisit:(NSString *)serviceVisit CustomerSatisfactionName:(NSString *)CustomerSatisfactionName VisitDate:(NSString *)VisitDate actualCharge:(NSString *)actualCharge actrueBegin:(NSString *)actrueBegin isLate:(NSString *)isLate isAbnormal:(NSString *)isAbnormal actrueEnd:(NSString *)actrueEnd isEarly:(NSString *)isEarly;
 @end
 
 #pragma mark - 下单

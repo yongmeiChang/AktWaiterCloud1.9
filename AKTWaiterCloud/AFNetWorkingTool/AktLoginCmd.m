@@ -89,10 +89,6 @@ static AktLoginCmd * aq_instance = nil;
                         } failure:^(NSError * _Nonnull error) {
                             [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                         }];
-                        
-                        //获取各类工单数量
-                        NSDictionary * params = @{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId)};
-                        [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
                     }
            success(responseObject);
        } failure:^(NSError *error) {

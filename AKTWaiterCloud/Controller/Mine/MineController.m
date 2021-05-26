@@ -15,6 +15,8 @@
 #import "EditUserInfoController.h"
 #import "UIButton+Badge.h"
 #import "NotifyController.h"
+#import "AktServicOldPersonVC.h"
+
 @interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     UserInfo *modelUser;
 }
@@ -51,7 +53,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = @"个人资料";
-    self.dataSourceArray = @[@"通知",@"设置"];
+    self.dataSourceArray = @[@"信息采集",@"消息通知",@"系统设置"];
     [self collectionViewinit];
     
     //给整个编辑资料视图添加手势以便用户点击
@@ -77,7 +79,7 @@
         [user saveUser];
         //刷新当前页面头像
         if ([user.icon containsString:@"http"]) {
-            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(modelUser.icon)]]]];
+            self.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",kString(user.icon)]]]];
         }else{
             self.headImageView.image = [UIImage imageNamed:@"defaultuserhead"];
         }
@@ -98,33 +100,35 @@
 #pragma mark - 工单数量
 -(void)resetWorkNumber{
     NSDictionary * params = @{@"waiterId":kString(modelUser.uuid),@"tenantsId":kString(modelUser.tenantId)};
-       [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {} failure:^(NSError *error) {}];
-       //显示登陆时请求的各状态工单数
-       self.unfinishBtn.shouldHideBadgeAtZero = YES;
-       self.ongoingBtn.shouldHideBadgeAtZero = YES;
-       self.finishBtn.shouldHideBadgeAtZero = YES;
-    NSString *strUnfinish;
-    NSString *strDoing;
-    NSString *strFinish;
-       if ([appDelegate.unfinish integerValue]>99) { // 超过99 显示99+
-           strUnfinish = [NSString stringWithFormat:@"99+"];
-       }else{
-           strUnfinish = [NSString stringWithFormat:@"%@",kString(appDelegate.unfinish)];
-       }
-       if ([appDelegate.doing integerValue]>99) {
-           strDoing = [NSString stringWithFormat:@"99+"];
-       }else{
-           strDoing = [NSString stringWithFormat:@"%@",kString(appDelegate.doing)];
-       }
-       if ([appDelegate.finish integerValue]>99) {
-           strFinish = [NSString stringWithFormat:@"99+"];
-       }else{
-           strFinish = [NSString stringWithFormat:@"%@",kString(appDelegate.finish)];
-       }
-    self.unfinishBtn.badgeValue = strUnfinish;
-    self.ongoingBtn.badgeValue = strDoing;
-    self.finishBtn.badgeValue = strFinish;
+       [[AktVipCmd sharedTool] requestfindToBeHandleCount:params type:HttpRequestTypeGet success:^(id responseObject) {
+           
+           //显示登陆时请求的各状态工单数
+           self.unfinishBtn.shouldHideBadgeAtZero = YES;
+           self.ongoingBtn.shouldHideBadgeAtZero = YES;
+           self.finishBtn.shouldHideBadgeAtZero = YES;
+        NSString *strUnfinish = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count1"])];
+        NSString *strDoing = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count2"])];
+        NSString *strFinish = [NSString stringWithFormat:@"%@",kString([responseObject objectForKey:@"count3"])];
+           if ([strUnfinish integerValue]>99) { // 超过99 显示99+
+               strUnfinish = [NSString stringWithFormat:@"99+"];
+           }else{
+               strUnfinish = [NSString stringWithFormat:@"%@",kString(strUnfinish)];
+           }
+           if ([strDoing integerValue]>99) {
+               strDoing = [NSString stringWithFormat:@"99+"];
+           }else{
+               strDoing = [NSString stringWithFormat:@"%@",kString(strDoing)];
+           }
+           if ([strFinish integerValue]>99) {
+               strFinish = [NSString stringWithFormat:@"99+"];
+           }else{
+               strFinish = [NSString stringWithFormat:@"%@",kString(strFinish)];
+           }
+        self.unfinishBtn.badgeValue = strUnfinish;
+        self.ongoingBtn.badgeValue = strDoing;
+        self.finishBtn.badgeValue = strFinish;
 
+       } failure:^(NSError *error) {}];
 }
 #pragma mark - 跳转编辑视图
 //跳转编辑视图
@@ -149,9 +153,12 @@
     cell.titlelabel.text = self.dataSourceArray[index];
     switch (index) {
         case 0:
-            cell.imageview.image = [UIImage imageNamed:@"notice"];
+            cell.imageview.image = [UIImage imageNamed:@"facePerson"];
             break;
         case 1:
+            cell.imageview.image = [UIImage imageNamed:@"notice"];
+            break;
+        case 2:
             cell.imageview.image = [UIImage imageNamed:@"system"];
             break;
         default:
@@ -164,14 +171,20 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = indexPath.item;
    switch (index) {
-       case 0:{/*
+       case 0:{
+           AktServicOldPersonVC *oldPerson = [[AktServicOldPersonVC alloc] init];
+           oldPerson.hidesBottomBarWhenPushed = YES;
+           [self.navigationController pushViewController:oldPerson animated:YES];
+       }
+           break;
+       case 1:{/*
            NotifyController * notifyController = [[NotifyController alloc]init];
            notifyController.hidesBottomBarWhenPushed = YES;
            [self.navigationController pushViewController:notifyController animated:YES];*/
            [[AppDelegate sharedDelegate] showTextOnly:@"该功能正在开发中！敬请期待"];
-           break;
        }
-       case 1:{
+           break;
+       case 2:{
            SettingsController * settingsController = [[SettingsController alloc]init];
            settingsController.hidesBottomBarWhenPushed = YES;
            [self.navigationController pushViewController:settingsController animated:YES];

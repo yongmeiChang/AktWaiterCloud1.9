@@ -66,20 +66,9 @@ static AktVipCmd * aq_instance = nil;
     [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOrderTypeNumberMethod parameters:param type:type success:^(id responseObject) {
         NSDictionary * dic = responseObject;
         NSDictionary * map = [dic objectForKey:ResponseData];
-        NSNumber * code = [dic objectForKey:ResponseCode];
-        if([code longValue]==1){
-            appDelegate.unfinish = map[@"count1"];
-            appDelegate.doing =map[@"count2"];
-            appDelegate.finish = map[@"count3"];
-        }else{
-            appDelegate.unfinish = 0;
-            appDelegate.finish = 0;
-            appDelegate.doing = 0;
-        }
+        success(map);
     } failure:^(NSError *error) {
-        appDelegate.unfinish = 0;
-        appDelegate.finish = 0;
-        appDelegate.doing = 0;
+        failure(error);
     }];
 }
 
@@ -116,6 +105,36 @@ static AktVipCmd * aq_instance = nil;
 -(void)requestChangePhone:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
                   failure:(void (^)(NSError *error))failure{
     [[AFNetWorkingTool sharedTool] requestWithURLString:AKTChangePhoneMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*老人列表*/
+-(void)requestOldpersonlist:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                    failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTOldPersonListMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*人脸采集*/
+-(void)requestFaceCollect:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                  failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFaceCollectMethod parameters:param type:type success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+/*人脸识别*/
+-(void)requestFaceRecognition:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+                      failure:(void (^)(NSError *error))failure{
+    [[AFNetWorkingTool sharedTool] requestWithURLString:AKTFaceRecognitionMethod parameters:param type:type success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         failure(error);

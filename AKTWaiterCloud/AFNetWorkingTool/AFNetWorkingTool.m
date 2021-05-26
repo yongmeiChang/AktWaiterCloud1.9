@@ -38,8 +38,9 @@ static AFNetWorkingTool * a_instance = nil;
     NSData *retData = responseObj;
     NSString *result =  [[NSString alloc]initWithData:retData encoding:NSUTF8StringEncoding];
     NSDictionary *retDict = [result toDictionaryWithError:&err];
-    NSLog(@" requst:%@ \n 参数:%@ \n response:%@",url,p,result);
-    
+    NSLog(@" requst:%@",url);
+    NSLog(@" 参数:%@",p);
+    NSLog(@" response:%@",result);
     if (err) {
         failure(err);
         return;
@@ -49,7 +50,7 @@ static AFNetWorkingTool * a_instance = nil;
             [[SaveDocumentArray sharedInstance] removefmdb];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:Token];
 //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
+//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
         }];
@@ -71,7 +72,7 @@ static AFNetWorkingTool * a_instance = nil;
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    if([URLString isEqualToString:@"getWorkOrderImages"]){
+    if([URLString isEqualToString:@"getWorkOrderImages"] || [URLString isEqualToString:@"faceCollect"] || [URLString isEqualToString:@"faceRecognition"]){
         manager.requestSerializer.timeoutInterval = 300.f;
     }else{
         manager.requestSerializer.timeoutInterval = 20.0f;

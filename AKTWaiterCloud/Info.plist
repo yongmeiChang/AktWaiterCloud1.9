@@ -50,6 +50,8 @@
 	<string>是否允许开启定位服务获取您当前的位置，用于签入、签出等功能的使用。</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>开启麦克风权限可以使用语音录制等更多功能</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>是否允许将拍照所得到的图片存放到您的图片库</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>请点击“好”以允许访问。如果不允许，您将无法发送系统相册里的照片。</string>
 	<key>UIBackgroundModes</key>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -52,7 +53,7 @@
                                 <state key="normal" image="goto"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="bUE-hb-spu" firstAttribute="top" secondItem="3WM-ox-N9J" secondAttribute="top" id="2lA-h7-HE3"/>
                             <constraint firstAttribute="trailing" secondItem="3E0-zG-Z3D" secondAttribute="trailing" constant="16" id="7A5-Z1-vDq"/>
@@ -82,6 +83,7 @@
                 <outlet property="labLine" destination="kML-mQ-93T" id="HLg-Uw-ilF"/>
                 <outlet property="labValue" destination="bUE-hb-spu" id="Fgt-iX-7a5"/>
                 <outlet property="leftLabel" destination="nlD-we-9zT" id="6AX-r6-gML"/>
+                <outlet property="leftlabW" destination="F7b-hR-OMG" id="F4f-xo-F9d"/>
                 <outlet property="viewBg" destination="3WM-ox-N9J" id="9dN-f4-22H"/>
             </connections>
             <point key="canvasLocation" x="132.80000000000001" y="156.97151424287858"/>
@@ -89,5 +91,8 @@
     </objects>
     <resources>
         <image name="goto" width="9.5" height="15"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

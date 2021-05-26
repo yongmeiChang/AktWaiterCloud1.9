@@ -170,7 +170,7 @@
         
         // 在当前日期(去掉了时分秒)基础上加上差的天数
         NSDateComponents *firstDayComp = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:now];
-        [firstDayComp setDay:day + firstDiff];
+        [firstDayComp setDay:day + firstDiff + 1];
         NSDate *firstDayOfWeek= [calendar dateFromComponents:firstDayComp];
         
         NSDateComponents *lastDayComp = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:now];

@@ -58,6 +58,8 @@
 
     //注册高德地图
     [AMapServices sharedServices].apiKey = GAODEAPPKEY;
+    // 虹软sdk激活
+    [self ArcSoftFace];
     
     //日志初始化
     [self initCocoaLumberjack];
@@ -79,6 +81,19 @@
     
 
     return YES;
+}
+#pragma mark - arcSoftFace
+-(void)ArcSoftFace{
+    ArcSoftFaceEngine *engine = [[ArcSoftFaceEngine alloc] init];
+    MRESULT mr = [engine activeWithAppId:HR_appid SDKKey:HR_SDKkey];
+    if (mr == ASF_MOK) {
+        NSLog(@"SDK激活成功");
+    } else if(mr == MERR_ASF_ALREADY_ACTIVATED){
+        NSLog(@"SDK已激活");
+    } else {
+        NSString *result = [NSString stringWithFormat:@"SDK激活失败：%ld", mr];
+        NSLog(@"%@",result);
+    }
 }
 #pragma mark - show login
 - (void)showLoginPage{
@@ -296,13 +311,13 @@
         if(resCode == 0){
             appDelegate.Registration_ID = registrationID;
         }
-        NSDictionary * dic =@{@"waiterUkey":name,@"password":pwd,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
-        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
-             [[AppDelegate sharedDelegate] hidHUD];
-        } failure:^(NSError *error) {
-             [[AppDelegate sharedDelegate] hidHUD];
-            [self showTextOnly:error.domain];
-        }];
+//        NSDictionary * dic =@{@"waiterUkey":name,@"password":pwd,@"registrationId":appDelegate.Registration_ID,@"channel":@"2"};
+//        [[AktLoginCmd sharedTool] requestLoginParameters:dic type:HttpRequestTypePost success:^(id responseObject) {
+//             [[AppDelegate sharedDelegate] hidHUD];
+//        } failure:^(NSError *error) {
+//             [[AppDelegate sharedDelegate] hidHUD];
+//            [self showTextOnly:error.domain];
+//        }];
     }];
 }
 

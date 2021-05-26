@@ -35,7 +35,8 @@
 #import "MBProgressHUD.h"
 #import <JPUSHService.h>
 #import <Bugly/Bugly.h>
-
+#import <ArcSoftFaceEngine/ArcSoftFaceEngine.h> // 虹软
+#import <GTMBase64/GTMBase64.h>
 
 // 系统文件
 #import <objc/runtime.h> // ios13之后使用runtime更改placeholder文字颜色
@@ -112,6 +113,9 @@ _Pragma("clang diagnostic pop") \
 #define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
 #define Bugly_AppId @"d5a027a07b"  // 个人账号，每一个APP对应唯一的AppKey
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
+#define HR_appid @"DZ6Rd8aAApEmSUvJUDXMRwVFPBUEW5uUP6NyEwjm8xdx" // 虹软ID
+#define HR_SDKkey @"52Ps3PRkiRxrHVh7M871NJ8tcJb8h8BBWkhdS777T57B" // 虹软SDKkey
+#define AktPageSize @"10" // 每页条数
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -124,8 +128,9 @@ _Pragma("clang diagnostic pop") \
 #define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
  
 // 测试环境
-//#define SERVICEURL @"http://192.168.1.126"
-//#define SERVICEURL @"http://182v06o030.imwork.net"
+//#define SERVICEURL @"https://test.ankangtong.com"
+// 本地环境
+//#define SERVICEURL @"http://172.16.220.252"
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

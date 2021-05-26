@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *labName;
 @property (weak, nonatomic) IBOutlet UILabel *labvalue;
 @property (weak, nonatomic) IBOutlet UIImageView *imageValue;
+@property (weak, nonatomic) IBOutlet UIButton *btnPhone;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labValueConstraint;
 
 -(void)setUserInfoDetails:(UserInfo *)userInfo indexPath:(NSIndexPath *)indexpath IconImage:(UIImage *)iconIamge;

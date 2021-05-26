@@ -20,9 +20,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCheckImage; // 查看图片
 @property (weak, nonatomic) IBOutlet UILabel *lateLabel;
 
--(void)setSignInInfo:(OrderInfo *)orderinfo; // 签入情况
+-(void)setSignInInfo:(OrderListModel *)orderinfo; // 签入情况
 
--(void)setSignOutInfo:(OrderInfo *)orderinfo; // 签出情况
+-(void)setSignOutInfo:(OrderListModel *)orderinfo; // 签出情况
 
 
 @end

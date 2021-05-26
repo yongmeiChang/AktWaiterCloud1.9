@@ -13,6 +13,7 @@
 @property(weak,nonatomic) IBOutlet UITableView * taskTableview;
 @property(nonatomic,strong) NSMutableArray * dataArray;//数据源
 @property(nonatomic,strong) NSString * pushType;//1为扫码有数据时跳转来
+@property(nonatomic,strong) NSString * strCustmerUkey; // 扫码获取的老人唯一码
 
 @end
 

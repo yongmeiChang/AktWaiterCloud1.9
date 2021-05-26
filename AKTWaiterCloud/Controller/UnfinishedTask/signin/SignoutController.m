@@ -130,7 +130,7 @@
 
 @implementation SignoutController
 
--(id)initSignoutControllerWithOrderInfo:(OrderInfo *)orderinfo{
+-(id)initSignoutControllerWithOrderInfo:(OrderListModel *)orderinfo{
     if(self = [super init]){
         self.orderinfo = orderinfo;
         return self;
@@ -444,6 +444,7 @@
     [timer setFireDate:[NSDate distantFuture]];
     [[AppDelegate sharedDelegate] hidHUD];
 }
+
 #pragma mark - service time
 -(void)ComputeServiceTime{
     self.ShowSingOutServiceTimelabel.hidden = NO;
@@ -478,11 +479,13 @@
     }
     
     /**最低服务时长**/
-    if (strActrueSt<([self.findAdmodel.minServiceLength integerValue] *60)) {
+    if ([self.findAdmodel.recordServiceLength isEqualToString:@"1"] && [self.findAdmodel.recordMinServiceLength isEqualToString:@"1"] && strActrueSt<([self.findAdmodel.minServiceLength integerValue] *60)) {
 //        self.viewAddressHeightConstraint.constant = 167;
         self.labTimeless.text = [NSString stringWithFormat:@"%@分钟",self.findAdmodel.minServiceLength];
     }else{
         self.labTimeless.hidden = YES;
+        self.viewTimeless.hidden = YES;
+        self.viewTimeLessH.constant = 0;
 //        self.viewAddressHeightConstraint.constant = 137;
     }
 }
@@ -493,11 +496,18 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
-    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
+    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]]; // 实际服务时长
     long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
     
     if(self.type==0){
-        if ([AktUtil isNewTimestatus:self.orderinfo.serviceBegin] == 0) {
+        /***/
+        NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值
+        BOOL bollateSignin = NO; // yes超出最大时长 No没有超出最大时长
+        if (mtime<0) {// mtime<0 迟到
+            bollateSignin = (labs(mtime) - [self.findAdmodel.maxLateTime integerValue])>0; // 超出最大迟到时间
+        }
+        /***/
+        if (bollateSignin == NO) { // 判断签入迟到的逻辑：超出时长 大于 后台配置的时长
             self.orderinfo.isLate = @"0";
             self.latelabel.text = @"正常";
         }else{
@@ -511,7 +521,14 @@
         }
         
     }else{
-            if(strServiceSt>strActrueSt){// 判断早退的逻辑是：设定服务时长差 与 实际服务时长差相对比
+        /***/
+         NSInteger Ltime = strServiceSt-strActrueSt; // 设定服务时长差 与 实际服务时长差相 : 大于0 表示早退
+        if (strActrueSt>strServiceSt){ // 实际大于应该
+            Ltime = 0;
+        }
+         BOOL bollateSignOut = (Ltime-[self.findAdmodel.maxEarlyTime integerValue])>0; //yes 确定早退  no 不早退  
+        /***/
+            if(bollateSignOut == YES){// 判断早退的逻辑是：实际早退的时间 大于 后台配置的早退的时间
                 self.orderinfo.isEarly = @"1";
                 self.latelabel.textColor = [UIColor redColor];
                 self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil getTimeFrom:[nowDate substringFromIndex:11] To:self.orderinfo.serviceEnd]];
@@ -1090,7 +1107,7 @@
 //录音按钮
 -(IBAction)trapBtnClick:(id)sender{
     if(!isclick){
-        [[[AktWCMp3 alloc] init] startRecordMp3FilePathName];
+        [[[AktWCMp3 alloc] init] startRecordcase];
         isclick = YES;
         [self.trapBtn setImage:[UIImage imageNamed:@"luyinzhong"] forState:UIControlStateNormal];
         self.trapBtn.imageView.image = [UIImage imageNamed:@"luyingzhong"];
@@ -1108,7 +1125,7 @@
         if (longtime<intTimeAll) {
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"录音时长最少不能少于%ld秒",(long)intTimeAll]];
         }else{
-            [[[AktWCMp3 alloc] init] stopRecordMp3FilePathName];
+            [[[AktWCMp3 alloc] init] endRecord];
               isclick = NO;
               [timer invalidate];
               _timerLabel.hidden = YES;
@@ -1301,11 +1318,11 @@
     [param addUnEmptyString:self.orderinfo.waiterName forKey:@"waiterName"];
     /**2020 7 22 新增字段**/
     
-    [param addUnEmptyString:@"mp3" forKey:@"recordType"]; // 录音格式
+    [param addUnEmptyString:@"wav" forKey:@"recordType"]; // 录音格式
     
     if(self.type==1){//签出
         if([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
@@ -1355,7 +1372,7 @@
         
     }else{
         if([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] mp3ToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];

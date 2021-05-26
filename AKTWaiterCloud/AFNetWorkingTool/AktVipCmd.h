@@ -18,6 +18,9 @@
 #define AKTFeedBackMethod @"submitFeedBack" // 意见反馈
 #define AKTUserInfoMethod @"findWaiterById" // 个人信息
 #define AKTChangePhoneMethod @"editMobile" // 更换手机号
+#define AKTOldPersonListMethod @"findCusBindPageByWaiterId" // 老人列表
+#define AKTFaceCollectMethod @"faceCollect" // 人脸采集
+#define AKTFaceRecognitionMethod @"faceRecognition" // 人脸识别
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -59,6 +62,19 @@ failure:(void (^)(NSError *error))failure;
 /*更换手机号*/
 -(void)requestChangePhone:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
 failure:(void (^)(NSError *error))failure;
+
+/*老人列表*/
+-(void)requestOldpersonlist:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
+/*人脸采集*/
+-(void)requestFaceCollect:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
+/*人脸识别*/
+-(void)requestFaceRecognition:(NSDictionary *)param type:(HttpRequestType)type success:(void (^)(id responseObject))success
+failure:(void (^)(NSError *error))failure;
+
 
 @end
 

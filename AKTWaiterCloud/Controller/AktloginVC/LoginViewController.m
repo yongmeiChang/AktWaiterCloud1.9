@@ -80,6 +80,7 @@
     }else{
         self.unameText.text = [NSString stringWithFormat:@"%@",kString([[NSUserDefaults standardUserDefaults] objectForKey:AKTName])];
     }
+    self.upswText.text = [NSString stringWithFormat:@"%@",kString([[NSUserDefaults standardUserDefaults] objectForKey:AKTPwd])];
 }
 #pragma mark - 隐私
 -(void)initAgreementView{
