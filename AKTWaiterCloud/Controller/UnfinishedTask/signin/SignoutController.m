@@ -1322,7 +1322,7 @@
     
     if(self.type==1){//签出
         if([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] recordToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
@@ -1372,7 +1372,7 @@
         
     }else{
         if([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] recordToBASE64];
+            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];

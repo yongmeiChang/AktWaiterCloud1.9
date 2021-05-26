@@ -113,6 +113,9 @@
 -(void)startRecordcase{
     //删除上次生成的文件，保留最新文件
    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([NSTemporaryDirectory() stringByAppendingString:@"myselfRecord.mp3"]) {
+        [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingString:@"myselfRecord.mp3"] error:nil];
+      }
    //默认就是wav格式，是无损的
 if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]) {
     [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"] error:nil];
@@ -230,23 +233,23 @@ player = nil;
     }
 }
 #pragma mark - 加密
--(NSString *)recordToBASE64; // 源文件 加密
+-(NSString *)recordToBASE64; // 源文件 base64转码
 {
     NSData * wavData = [NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]];
-    NSString * encodedImageStr = [GTMBase64 stringByEncodingData:wavData];
-    return encodedImageStr;
+    NSString * encodedRecordStr = [wavData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    return encodedRecordStr;
 }
 -(NSString *)recordmp3ToBASE64; // mp3 加密
 {
-    NSData * wavData = [NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]; // 获取录音文件
-    
-//    NSString *strdata = [[NSString alloc] initWithData:wavData encoding:NSUTF8StringEncoding]; // 转成string
-    NSString *strdatamp3 = [AktUtil convertToMp3SouceFilePathName:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"] isDeleteSourchFile:NO]; // 转成MP3
+//    NSData * wavData = [NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]; // 获取录音文件
+
+    NSString *strdatamp3 = [AktUtil convertToMp3SouceFilePathName:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"] isDeleteSourchFile:YES]; // 转成MP3
     NSData *mp3Data = [NSData dataWithContentsOfFile:strdatamp3];
     
-    NSString * encodedImageStr = [GTMBase64 stringByEncodingData:mp3Data];
+    NSString * encodedRecordStr = [mp3Data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     
-    return encodedImageStr;
+    return encodedRecordStr;
 }
 
 @end
