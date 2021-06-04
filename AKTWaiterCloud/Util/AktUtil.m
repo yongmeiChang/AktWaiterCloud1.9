@@ -260,7 +260,18 @@
     
     return timeSAll;
 }
-
+// 秒转换成X时X分X秒
++(NSString *)secondChangeTime:(NSInteger)second{
+    //format of hour
+    NSString *str_hour = [NSString stringWithFormat:@"%02ld",second/3600];
+    //format of minute
+    NSString *str_minute = [NSString stringWithFormat:@"%02ld",(second%3600)/60];
+    //format of second
+    NSString *str_second = [NSString stringWithFormat:@"%02ld",second%60];
+    //format of time
+    NSString *format_time = [NSString stringWithFormat:@"%@小时%@分%@秒",str_hour,str_minute,str_second];
+    return format_time;
+}
 #pragma mark - 签出 出勤状态
 +(NSUInteger)isstatus:(NSString *)serviceEnd{
     // 截止时间data格式

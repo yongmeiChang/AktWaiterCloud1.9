@@ -218,7 +218,13 @@
              [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
              [[AppDelegate sharedDelegate] hidHUD];
-            [self showMessageAlertWithController:self Message:error.domain];
+            NSLog(@"%@ \n  %ld \n %@",error.domain,(long)error.code,error.userInfo);
+            
+//            if (error.code == -1001) {
+//                [[AppDelegate sharedDelegate] showTextOnly:@"网络异常，请稍后重试"];
+//            }else{
+                [self showMessageAlertWithController:self Message:error.domain];
+//            }
         }];
     }];
 }
