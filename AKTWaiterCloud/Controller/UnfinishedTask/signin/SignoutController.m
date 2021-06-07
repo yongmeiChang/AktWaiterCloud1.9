@@ -1476,8 +1476,8 @@
     //删除上次生成的文件，保留最新文件
    NSFileManager *fileManager = [NSFileManager defaultManager];
    //默认就是wav格式，是无损的
-    if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]) {
-        [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"] error:nil];
+    if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"]]) {
+        [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"] error:nil];
     
     }
     //录音设置
@@ -1485,19 +1485,20 @@
    //设置录音格式 AVFormatIDKey==kAudioFormatLinearPCM
     [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）, 采样率必须要设为11025才能使转化成mp3格式后不会失真
-     [recordSetting setValue:[NSNumber numberWithFloat:16000] forKey:AVSampleRateKey];
+     [recordSetting setValue:[NSNumber numberWithFloat:8000] forKey:AVSampleRateKey];
      //录音通道数 1 或 2 ，要转换成mp3格式必须为双通道
      [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
     //线性采样位数 8、16、24、32
     [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
     //录音的质量
-    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsNonInterleaved]; //交叉的
     // 设置录制音频采用高位优先的记录格式
-    [recordSetting setValue:[NSNumber numberWithBool:YES] forKey:AVLinearPCMIsBigEndianKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
     // 设置采样信号采用浮点数
-    [recordSetting setValue:[NSNumber numberWithBool:YES] forKey:AVLinearPCMIsFloatKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     //存储录音文件
-    NSURL * recordUrl = [NSURL URLWithString:[NSTemporaryDirectory()stringByAppendingPathComponent:@"recordAudio.wav"]];
+    NSURL * recordUrl = [NSURL URLWithString:[NSTemporaryDirectory()stringByAppendingPathComponent:@"serviceClound.WAV"]];
     //初始化录音对象
     NSError * error;
     self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:recordUrl settings:recordSetting error:&error];
@@ -1534,17 +1535,17 @@
 #pragma mark - 加密
 -(NSString *)recordToBASE64; // 源文件 base64转码
 {
-    NSData * wavData = [[NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]] base64EncodedDataWithOptions:0];
+    NSData * wavData = [[NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"]] base64EncodedDataWithOptions:0];
     NSString * encodedRecordStr = [[NSString alloc]initWithData:wavData encoding:NSUTF8StringEncoding];
     return encodedRecordStr;
 }
 -(NSString *)recordmp3ToBASE64; // mp3 加密
 {
 //    NSData * wavData = [NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]; // 获取录音文件
-    NSString *strdatamp3 = [AktUtil convertToMp3SouceFilePathName:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"] isDeleteSourchFile:YES]; // 转成MP3
-    NSData *mp3Data = [NSData dataWithContentsOfFile:strdatamp3];
+    NSString *strdatamp3 = [AktUtil convertToMp3SouceFilePathName:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"] isDeleteSourchFile:YES]; // 转成MP3
+    NSData *mp3Data = [[NSData dataWithContentsOfFile:strdatamp3] base64EncodedDataWithOptions:0];
     
-    NSString * encodedRecordStr = [mp3Data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString * encodedRecordStr = [[NSString alloc]initWithData:mp3Data encoding:NSUTF8StringEncoding];
     
     return encodedRecordStr;
 }

@@ -39,7 +39,7 @@
         NSLog(@"文件不存在");
     }
     // 输出路径
-    NSString *outPath = [[sourcePath stringByDeletingPathExtension] stringByAppendingString:@".mp3"];
+    NSString *outPath = [[sourcePath stringByDeletingPathExtension] stringByAppendingString:@".MP3"];
     @try {
         int read, write;
         
@@ -53,8 +53,12 @@
         unsigned char mp3_buffer[MP3_SIZE];
         
         lame_t lame = lame_init();
-        lame_set_in_samplerate(lame, 11025.0);
+        lame_set_in_samplerate(lame, 8000);// 采样率
+        lame_set_num_channels(lame, 2);//通道
+        lame_set_quality(lame, 0);//质量
         lame_set_VBR(lame, vbr_default);
+        lame_set_brate(lame, 8);
+//        lame_set_mode(lame, 3);
         lame_init_params(lame);
         
         do {
