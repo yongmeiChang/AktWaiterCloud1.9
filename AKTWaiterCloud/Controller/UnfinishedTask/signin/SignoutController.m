@@ -36,8 +36,8 @@
 #define DefaultReGeocodeTimeout 5
 
 @interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,AMapLocationManagerDelegate,AMapSearchDelegate,AVAudioRecorderDelegate,AVAudioPlayerDelegate> {
-    NSURL * recordUrl;
-    AVAudioPlayer * player;//必须为全局变量
+
+    AVAudioPlayer * player;// 音频播放
     long unservicetime;//记录服务时长不足的时间 秒
     
     long SSunservicetime;//记录服务时长不足毫秒gr
@@ -62,7 +62,7 @@
     NSString *strService; // 服务时长原因
     BOOL isSoundRecord; // 是否录音
 }
-@property (nonatomic,strong) AVAudioRecorder * audioRecorder;
+@property (nonatomic,strong) AVAudioRecorder * audioRecorder; // 音频
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
 @property (strong, nonatomic) LxGridViewFlowLayout *layout;
@@ -1549,4 +1549,5 @@
     
     return encodedRecordStr;
 }
+
 @end

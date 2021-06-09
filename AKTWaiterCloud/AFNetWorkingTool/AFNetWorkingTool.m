@@ -52,7 +52,7 @@ static AFNetWorkingTool * a_instance = nil;
 //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
 //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeRootViewController object:nil];
         }];
         return;
         

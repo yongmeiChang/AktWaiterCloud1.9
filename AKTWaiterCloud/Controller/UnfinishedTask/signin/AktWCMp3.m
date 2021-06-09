@@ -35,7 +35,7 @@ if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathC
    //设置录音格式 AVFormatIDKey==kAudioFormatLinearPCM
     [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）, 采样率必须要设为11025才能使转化成mp3格式后不会失真
-     [recordSetting setValue:[NSNumber numberWithFloat:16000] forKey:AVSampleRateKey];
+     [recordSetting setValue:[NSNumber numberWithFloat:11025] forKey:AVSampleRateKey];
      //录音通道数 1 或 2 ，要转换成mp3格式必须为双通道
      [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
  //线性采样位数 8、16、24、32
