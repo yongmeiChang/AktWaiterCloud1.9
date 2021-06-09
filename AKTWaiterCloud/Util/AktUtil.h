@@ -82,7 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(BOOL)checkTelNumberAndPhone:(NSString *)tel;
 //邮箱验证
 +(BOOL)checkEmail:(NSString *)email;
-
+// 图片压缩
++ (NSData *)resetSizeOfImageData:(UIImage *)sourceImage maxSize:(NSInteger)maxSize;
 
 @end
 
