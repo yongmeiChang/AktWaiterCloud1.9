@@ -436,26 +436,11 @@
         [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
-#pragma mark - 图片压缩方式
--(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth
-{ // 图片 大小尺寸压缩
-    CGSize imageSize = sourceImage.size;
-    CGFloat width = imageSize.width;
-    CGFloat height = imageSize.height;
-    CGFloat targetWidth = defineWidth;
-    CGFloat targetHeight = (targetWidth / width) * height;
-    UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
-    [sourceImage drawInRect:CGRectMake(0,0,targetWidth,  targetHeight)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
 //    NSData *data = UIImageJPEGRepresentation(image, 0.5f);
-    NSData *data = UIImagePNGRepresentation([self imageCompressForWidth:image targetWidth:100]);
-    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *encodedImageStr = [[AktUtil resetSizeOfImageData:image maxSize:100] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
 }
 
