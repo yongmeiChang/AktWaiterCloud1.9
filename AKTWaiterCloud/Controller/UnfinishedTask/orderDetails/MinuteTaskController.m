@@ -445,7 +445,7 @@
                             }
                             [[AppDelegate sharedDelegate] showTextOnly:strReason];
                             [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
-//                                [self.navigationController popViewControllerAnimated:YES];
+                                [self.navigationController popViewControllerAnimated:YES];
                             } failure:^(NSError *error) {
                                 [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                             }];
