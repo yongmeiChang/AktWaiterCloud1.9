@@ -149,7 +149,7 @@
 //扫码登录
 -(IBAction)qrCodeBtnClick:(id)sender{
     QRCodeViewController * qrcodeController = [[QRCodeViewController alloc]initWithQRCode:self Type:@"logincontoller"];
-    [self.navigationController pushViewController:qrcodeController animated:nil];
+    [self.navigationController pushViewController:qrcodeController animated:YES];
 }
 /**登陆按钮*/
 -(IBAction)loginBtnClick:(id)sender{
@@ -193,10 +193,10 @@
          [[AppDelegate sharedDelegate] showTextOnly:@"请输入密码!"];
         return;
     }
-    [self RequestLogin];
+    [self postDataToService];
 }
 
--(void)RequestLogin{
+-(void)postDataToService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     //返回极光的id
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
@@ -218,13 +218,7 @@
              [[AppDelegate sharedDelegate] hidHUD];
         } failure:^(NSError *error) {
              [[AppDelegate sharedDelegate] hidHUD];
-            NSLog(@"%@ \n  %ld \n %@",error.domain,(long)error.code,error.userInfo);
-            
-//            if (error.code == -1001) {
-//                [[AppDelegate sharedDelegate] showTextOnly:@"网络异常，请稍后重试"];
-//            }else{
                 [self showMessageAlertWithController:self Message:error.domain];
-//            }
         }];
     }];
 }

@@ -163,10 +163,6 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
       }
-//    if (kString(self.tfID.text).length == 0) {
-//          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];// 苹果审核不能将此项目作为必填
-//          return;
-//      }
     if (kString(self.TFcode.text).length == 0) {
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写验证码！"];
           return;
@@ -185,12 +181,12 @@
         }
     
     if (isAgreement) {
-          [self requestSigninInfo];
+          [self postDataToService];
       }else{
           [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
       }
 }
--(void)requestSigninInfo{ // orgId
+-(void)postDataToService{ // orgId
     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.tenantId,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text,@"orgId":self.selectZuhuDetailsInfo.orgId};
     [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
         

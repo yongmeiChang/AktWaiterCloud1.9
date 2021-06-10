@@ -30,20 +30,8 @@
     [self setNavTitle:@"忘记密码"];
     [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
 }
-#pragma mark - click
--(void)LeftBarClick{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
--(IBAction)clickRightBtn:(id)sender{
-    if(![AktUtil isMobileNumber:self.mobleField.text]){
-        [self showMessageAlertWithController:self Message:@"手机格式不符合"];
-        return;
-    }
-    if([self.waiterField.text isEqualToString:@""]){
-        [self showMessageAlertWithController:self Message:@"唯一码不能为空"];
-        return;
-    }
+-(void)postDataToService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@""];
     NSDictionary * dic = @{@"mobile":self.mobleField.text,@"waiterUkey":self.waiterField.text};
     [[AktVipCmd sharedTool] requestWithForgetPasswordParameters:dic type:HttpRequestTypeGet success:^(id responseObject) {
@@ -59,6 +47,23 @@
         [self showMessageAlertWithController:self Message:error.domain];
     }];
     [[AppDelegate sharedDelegate] hidHUD];
+}
+
+#pragma mark - click
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(IBAction)clickRightBtn:(id)sender{
+    if(![AktUtil isMobileNumber:self.mobleField.text]){
+        [self showMessageAlertWithController:self Message:@"手机格式不符合"];
+        return;
+    }
+    if([self.waiterField.text isEqualToString:@""]){
+        [self showMessageAlertWithController:self Message:@"唯一码不能为空"];
+        return;
+    }
+    [self postDataToService];
 }
 
 #pragma mark TextFieldDelgate

@@ -33,11 +33,11 @@
     _flagArray  = [[NSMutableArray alloc] init];
 
     modellist = [[SigninListInfo alloc] init];
-    [self reloadListZuhu];
+    [self requestLoadData];
 }
 
 #pragma mark - request
--(void)reloadListZuhu{
+-(void)requestLoadData{
     [[AktLoginCmd sharedTool] requestTenantsListParameters:@{} type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *code = [dic objectForKey:@"code"];
