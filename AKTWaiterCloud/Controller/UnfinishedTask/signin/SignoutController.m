@@ -1335,7 +1335,6 @@
         }
         /**临时创建文件**/
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
-        NSLog(@"录音字符串:   %@",wavStr);
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
         // remarks、serviceLength、signOutLocationStatus
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signOutLocationX"];

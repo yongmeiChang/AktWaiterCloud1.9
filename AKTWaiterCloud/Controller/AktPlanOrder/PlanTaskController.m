@@ -63,14 +63,21 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
+    [self loadNewDataHeader];
+}
+
+-(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+    [self loadMoreDataFooter];
+}
+
+-(void)loadNewDataHeader{
     pageSize = 1;
     [self checkNetWork];
     [self.taskTableview.mj_header endRefreshing];
 }
 
--(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
+-(void)loadMoreDataFooter{
     pageSize = pageSize+1;
-//    [self.taskTableview.mj_footer beginRefreshing];
     [self checkNetWork];
     [self.taskTableview.mj_footer endRefreshing];
 }
@@ -80,7 +87,7 @@
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         [self showMessageAlertWithController:self Message:NetWorkMessage];
     }else{
-        [self requestUnFinishedTask];
+        [self requestLoadData];
     }
 }
 
@@ -92,7 +99,7 @@
     [self.navigationController pushViewController:sdController animated:YES];
 }
 
--(void)requestUnFinishedTask{
+-(void)requestLoadData{
     NSDictionary * parameters =@{@"waiterId":kString([LoginModel gets].uuid),@"tenantsId":kString([LoginModel gets].tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"serviceDate":searchBTime,@"serviceDateEnd":searchETime}; // @"waiterId":[LoginModel gets].uuid,
     [[AFNetWorkingRequest sharedTool] requesttoBeHandle:parameters type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary * dic = responseObject;
@@ -108,16 +115,9 @@
             self.netWorkErrorView.hidden = YES;
               for (NSMutableDictionary * dicc in arr) {
                   NSDictionary * objdic = (NSDictionary*)dicc;
-                  OrderListModel * orderinfo;
-                  if([orderinfo.tid isEqualToString:@"nil"]||orderinfo.tid == nil){
-                      orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
-                      [_dataArray addObject:orderinfo];
-                      orderinfo.tid = orderinfo.id;
-                  }else{
-                      orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
-                     [_dataArray addObject:orderinfo];
-                      orderinfo.tid = orderinfo.id;
-                  }
+                  OrderListModel *orderinfo=[[OrderListModel alloc] initWithDictionary:objdic error:nil];
+                  [_dataArray addObject:orderinfo];
+                  orderinfo.tid = orderinfo.id;
               }
               [self.taskTableview reloadData];
         }else  if(pageSize == 1 && [code integerValue] == 2){

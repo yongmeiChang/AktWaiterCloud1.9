@@ -62,7 +62,7 @@
     //去除没有数据时的分割线
     self.taskTableview.mj_header = self.mj_header;
     self.taskTableview.mj_footer = self.mj_footer;
-    [self loadNewData];
+    [self loadNewDataHeader];
 }
 #pragma mark - nav click
 -(void)RightBarClick{ // 扫码
@@ -104,15 +104,14 @@
     searchETime = @"";
     searchWorkNo = @"";
     pageSize=1;
-    [self loadNewData];
+    [self loadNewDataHeader];
 }
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
     [self loadMoreDataFooter];
 }
 // 下拉刷新
--(void)loadNewData
+-(void)loadNewDataHeader
 {
-    // 马上进入刷新状态
     pageSize = 1;
     [self checkNetWork];
     [self.taskTableview.mj_header endRefreshing];
@@ -130,12 +129,12 @@
     if([[ReachbilityTool internetStatus] isEqualToString:@"notReachable"]){
         self.netWorkErrorView.hidden = NO;
     }else{
-        [self requestUnFinishedTask];
+        [self requestLoadData];
     }
 }
 
 #pragma mark - 请求工单列表
--(void)requestUnFinishedTask{
+-(void)requestLoadData{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
     model = [LoginModel gets];
     NSDictionary * parameters =@{@"waiterId":kString(model.uuid),@"tenantsId":kString(model.tenantId),@"pageNumber":[NSString stringWithFormat:@"%d",pageSize],@"customerName":kString(searchKey),@"serviceAddress":kString(searchAddress),@"serviceDate":kString(searchBTime),@"serviceDateEnd":kString(searchETime),@"workNo":kString(searchWorkNo),@"customerUkey":kString(self.strCustmerUkey)}; // @"waiterId":kString(model.uuid),
@@ -184,7 +183,7 @@
         self.netWorkErrorView.hidden = NO;
     }
     
-    [self loadNewData];
+    [self loadNewDataHeader];
 }
 
 #pragma mark - tableview设置
