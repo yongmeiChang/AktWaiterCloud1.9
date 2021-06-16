@@ -78,7 +78,7 @@
 - (void)showAllBtnClicked:(id)sender
 {
     [self RightBarClick];
-    [self requestTask];
+    [self requestOrderListLoadData];
 }
 
 #pragma mark - notice
@@ -137,18 +137,18 @@
 -(void)loadNewData
 {
     pageSize = 1;
-    [self requestTask];
+    [self requestOrderListLoadData];
     [self.taskTableview.mj_header endRefreshing];
 }
 // 上拉加载
 -(void)loadMoreDataFooter
 {
     pageSize = pageSize+1;
-    [self requestTask];
+    [self requestOrderListLoadData];
     [self.taskTableview.mj_footer endRefreshing];
 }
 #pragma mark - request
--(void)requestTask{
+-(void)requestOrderListLoadData{
     //status：状态(1：未完成 2：服务中 3：已完成)
     NSArray * typeArr = @[@"1",@"2",@"3",@""];
     LoginModel *model = [LoginModel gets];
@@ -158,9 +158,7 @@
         NSString * message = [dic objectForKey:@"message"];
         NSNumber * code = [dic objectForKey:@"code"];
         if([code intValue]==1){
-            NSArray * arr = [NSArray array];
             NSDictionary * obj = [dic objectForKey:ResponseData];
-            arr = obj[@"list"];
             // 分页判断
             if (pageSize == 1) {
                 [orderListAry removeAllObjects];
@@ -201,7 +199,7 @@
         [self showMessageAlertWithController:self Message:NetWorkMessage];
     }
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:Loading];
-    [self requestTask];
+    [self requestOrderListLoadData];
 }
 
 #pragma mark - tableview设置

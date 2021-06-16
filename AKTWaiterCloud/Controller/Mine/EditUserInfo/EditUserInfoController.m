@@ -144,7 +144,7 @@
 }
 
 #pragma mark - save
--(void)saveClick{
+-(void)postDataToService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
@@ -174,7 +174,7 @@
 -(void)SearchBarClick{
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"imageUser"]; // 删除
     [[NSUserDefaults standardUserDefaults] synchronize];
-     [self saveClick];
+     [self postDataToService];
 }
 #pragma mark - sex delegate
 -(void)theSexviewClose{
