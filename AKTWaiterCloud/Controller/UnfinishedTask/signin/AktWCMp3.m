@@ -42,9 +42,9 @@ if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathC
     [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
     //录音的质量
 [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
-// 设置录制音频采用高位优先的记录格式
+// 设置录制音频采用高位优先的记录格式 YES
 [recordSetting setValue:[NSNumber numberWithBool:YES] forKey:AVLinearPCMIsBigEndianKey];
-// 设置采样信号采用浮点数
+// 设置采样信号采用浮点数 YES
 [recordSetting setValue:[NSNumber numberWithBool:YES] forKey:AVLinearPCMIsFloatKey];
 //存储录音文件
 NSURL * recordUrl = [NSURL URLWithString:[NSTemporaryDirectory()stringByAppendingPathComponent:@"recordAudio.wav"]];

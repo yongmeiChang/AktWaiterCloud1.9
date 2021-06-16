@@ -74,12 +74,6 @@
 		4C3D75BA24A88ABF00D0F79A /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D756C24A88ABF00D0F79A /* SettingsController.xib */; };
 		4C3D75BB24A88ABF00D0F79A /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D756C24A88ABF00D0F79A /* SettingsController.xib */; };
 		4C3D75BC24A88ABF00D0F79A /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D756C24A88ABF00D0F79A /* SettingsController.xib */; };
-		4C3D75C624A88ABF00D0F79A /* NotifyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D757324A88ABF00D0F79A /* NotifyController.xib */; };
-		4C3D75C724A88ABF00D0F79A /* NotifyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D757324A88ABF00D0F79A /* NotifyController.xib */; };
-		4C3D75C824A88ABF00D0F79A /* NotifyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3D757324A88ABF00D0F79A /* NotifyController.xib */; };
-		4C3D75CF24A88ABF00D0F79A /* NotifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757724A88ABF00D0F79A /* NotifyController.m */; };
-		4C3D75D024A88ABF00D0F79A /* NotifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757724A88ABF00D0F79A /* NotifyController.m */; };
-		4C3D75D124A88ABF00D0F79A /* NotifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757724A88ABF00D0F79A /* NotifyController.m */; };
 		4C3D75D224A88ABF00D0F79A /* MineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757924A88ABF00D0F79A /* MineController.m */; };
 		4C3D75D324A88ABF00D0F79A /* MineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757924A88ABF00D0F79A /* MineController.m */; };
 		4C3D75D424A88ABF00D0F79A /* MineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D757924A88ABF00D0F79A /* MineController.m */; };
@@ -548,9 +542,6 @@
 		4C3D756924A88ABF00D0F79A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		4C3D756B24A88ABF00D0F79A /* AktFeedBackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AktFeedBackVC.h; sourceTree = "<group>"; };
 		4C3D756C24A88ABF00D0F79A /* SettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
-		4C3D757324A88ABF00D0F79A /* NotifyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotifyController.xib; sourceTree = "<group>"; };
-		4C3D757624A88ABF00D0F79A /* NotifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyController.h; sourceTree = "<group>"; };
-		4C3D757724A88ABF00D0F79A /* NotifyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifyController.m; sourceTree = "<group>"; };
 		4C3D757924A88ABF00D0F79A /* MineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineController.m; sourceTree = "<group>"; };
 		4C3D757C24A88ABF00D0F79A /* UnfinifshController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnfinifshController.xib; sourceTree = "<group>"; };
 		4C3D757D24A88ABF00D0F79A /* UnfinifshController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnfinifshController.m; sourceTree = "<group>"; };
@@ -915,7 +906,6 @@
 				4C3D757924A88ABF00D0F79A /* MineController.m */,
 				4C3D755624A88ABF00D0F79A /* MineController.xib */,
 				4C3D755724A88ABF00D0F79A /* Settings */,
-				4C3D757224A88ABF00D0F79A /* Notify */,
 				4C3D757B24A88ABF00D0F79A /* OrderController */,
 				4C3D758D24A88ABF00D0F79A /* EditUserInfo */,
 			);
@@ -966,16 +956,6 @@
 				4C3D756824A88ABF00D0F79A /* AKTChangePhoneVC.xib */,
 			);
 			path = ChangePhone;
-			sourceTree = "<group>";
-		};
-		4C3D757224A88ABF00D0F79A /* Notify */ = {
-			isa = PBXGroup;
-			children = (
-				4C3D757624A88ABF00D0F79A /* NotifyController.h */,
-				4C3D757724A88ABF00D0F79A /* NotifyController.m */,
-				4C3D757324A88ABF00D0F79A /* NotifyController.xib */,
-			);
-			path = Notify;
 			sourceTree = "<group>";
 		};
 		4C3D757B24A88ABF00D0F79A /* OrderController */ = {
@@ -1729,7 +1709,6 @@
 				4CD2297D2521B3820089F433 /* LoginViewController.xib in Resources */,
 				4C553679265355A2004B9DE2 /* AktOldPeopelCell.xib in Resources */,
 				4C3D75AB24A88ABF00D0F79A /* EditPassWordController.xib in Resources */,
-				4C3D75C624A88ABF00D0F79A /* NotifyController.xib in Resources */,
 				4C37974C242205EE00DC9EFB /* NoDateCell.xib in Resources */,
 				4CD229802521B3820089F433 /* AktWSigninListVC.xib in Resources */,
 				4CD22A762521D7760089F433 /* AktServiceStationListVC.xib in Resources */,
@@ -1769,7 +1748,6 @@
 				4CD228EA252192220089F433 /* NotifyCell.xib in Resources */,
 				4CD228E7252192220089F433 /* MineCell.xib in Resources */,
 				4CD22A9A2521DA880089F433 /* AktOrderScanVC.xib in Resources */,
-				4C3D75C724A88ABF00D0F79A /* NotifyController.xib in Resources */,
 				4CD229782521B3820089F433 /* FindPswController.xib in Resources */,
 				4CD22A6E2521D7760089F433 /* ServicePojController.xib in Resources */,
 				4CD22A5C2521D7760089F433 /* DownOrdersController.xib in Resources */,
@@ -1818,7 +1796,6 @@
 				4CD228EB252192220089F433 /* NotifyCell.xib in Resources */,
 				4CD228E8252192220089F433 /* MineCell.xib in Resources */,
 				4CD22A9B2521DA880089F433 /* AktOrderScanVC.xib in Resources */,
-				4C3D75C824A88ABF00D0F79A /* NotifyController.xib in Resources */,
 				4CD229792521B3820089F433 /* FindPswController.xib in Resources */,
 				4CD22A6F2521D7760089F433 /* ServicePojController.xib in Resources */,
 				4CD22A5D2521D7760089F433 /* DownOrdersController.xib in Resources */,
@@ -1894,7 +1871,6 @@
 				4CD674E022E94CDF00AB76AF /* HMAddImagesView.m in Sources */,
 				AD5F488B1FA06BEB00A0C201 /* SaveDocumentArray.m in Sources */,
 				4C3D75DB24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
-				4C3D75CF24A88ABF00D0F79A /* NotifyController.m in Sources */,
 				4C9B9772240CCF1D00576F7C /* FSCalendarHeaderView.m in Sources */,
 				4C9B976C240CCF1D00576F7C /* FSCalendarConstants.m in Sources */,
 				4C9B974E240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
@@ -2068,7 +2044,6 @@
 				4CD228BF2521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B974F240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
 				4CD22A682521D7760089F433 /* AktServiceStationListVC.m in Sources */,
-				4C3D75D024A88ABF00D0F79A /* NotifyController.m in Sources */,
 				4CDAD74F240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FA24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DC24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
@@ -2174,7 +2149,6 @@
 				4CD228C02521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B9750240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
 				4CD22A692521D7760089F433 /* AktServiceStationListVC.m in Sources */,
-				4C3D75D124A88ABF00D0F79A /* NotifyController.m in Sources */,
 				4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
 				4C3D75FB24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DD24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
