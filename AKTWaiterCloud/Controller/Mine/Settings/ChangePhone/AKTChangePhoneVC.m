@@ -56,32 +56,44 @@
         [self.btnCode setTitle:[NSString stringWithFormat:@"%d",self.second] forState:UIControlStateNormal];
     }
 }
+#pragma mark - request
+-(void)postDataToService{
+    NSDictionary *parma = @{@"tenantsId":kString([LoginModel gets].tenantId),@"mobile":kString(self.tfPhone.text),@"checkCode":self.tfCode.text};
+    [[[AktVipCmd alloc] init] requestChangePhone:parma type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
+        NSDictionary *dic = responseObject;
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
+}
+-(void)postDataToServiceCode{
+    //原始数据
+    NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
+    //使用字符串格式的公钥加密
+    NSString *encryptStr = [RSAEncryptor encryptString:phoneAndDataStr publicKey:RSA_Public_KEY];
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":encryptStr};
+   [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
+       if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
+           self.second = 60;
+           [self.btnCode setTitle:@"60秒后重发" forState:UIControlStateNormal];
+           [self.btnCode setTitleColor:kColor(@"C3") forState:UIControlStateNormal];
+           [self.btnCode setBackgroundColor:kColor(@"C5")];
+           
+           [self.btnCode setEnabled:NO];
+           self.coldTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doTimer) userInfo:nil repeats:YES];
+       }
+       
+       [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
+   } failure:^(NSError *error) {
+       [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+   }];
+}
 #pragma mark - click
 -(void)LeftBarClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)getPhoneCodeClick:(id)sender {
-    //原始数据
-    NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
-    //使用字符串格式的公钥加密
-    NSString *encryptStr = [RSAEncryptor encryptString:phoneAndDataStr publicKey:RSA_Public_KEY];
-    
-     NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":encryptStr};
-    [[AktLoginCmd sharedTool] requestCheckCodeParameters:param type:HttpRequestTypeGet success:^(id responseObject) {
-        if ([[responseObject objectForKey:@"code"] integerValue] == 1) {
-            self.second = 60;
-            [self.btnCode setTitle:@"60秒后重发" forState:UIControlStateNormal];
-            [self.btnCode setTitleColor:kColor(@"C3") forState:UIControlStateNormal];
-            [self.btnCode setBackgroundColor:kColor(@"C5")];
-            
-            [self.btnCode setEnabled:NO];
-            self.coldTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doTimer) userInfo:nil repeats:YES];
-        }
-        
-        [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-    }];
+    [self postDataToServiceCode]; // 获取验证码
 }
 - (IBAction)PostSureNewPhoneClick:(UIButton *)sender {
     
@@ -93,13 +105,7 @@
         [[AppDelegate sharedDelegate] showTextOnly:@"请填写验证码"];
         return;
     }
-    NSDictionary *parma = @{@"tenantsId":kString([LoginModel gets].tenantId),@"mobile":kString(self.tfPhone.text),@"checkCode":self.tfCode.text};
-    [[[AktVipCmd alloc] init] requestChangePhone:parma type:HttpRequestTypePut success:^(id  _Nonnull responseObject) {
-        NSDictionary *dic = responseObject;
-        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[dic objectForKey:@"message"]]];
-    } failure:^(NSError * _Nonnull error) {
-        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-    }];
+    [self postDataToService];
 }
 
 /*

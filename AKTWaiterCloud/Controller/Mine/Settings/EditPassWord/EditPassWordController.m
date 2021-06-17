@@ -41,42 +41,7 @@
     succseView.tag = 101;
     succseView.delegate = self;
 }
-
-#pragma mark - click
--(void)LeftBarClick{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(IBAction)editPswClick:(id)sender{
-    DDLogInfo(@"点击了修改密码");
-    if(self.oldPswField.text == nil || self.oldPswField.text.length == 0){
-        [[AppDelegate sharedDelegate] showTextOnly:@"请输入原始密码!"];
-        return;
-    }
-    if(self.oldPswField.text.length < 6 || self.oldPswField.text.length > 12){
-        [[AppDelegate sharedDelegate] showTextOnly:@"原始密码长度不符合要求!"];
-        return;
-    }
-    
-    if(self.nPswField.text == nil || self.nPswField.text.length ==0 ){
-        [[AppDelegate sharedDelegate] showTextOnly:@"请输入新密码!"];
-        return;
-    }
-    
-    if(self.nPswField.text.length < 6 || self.nPswField.text.length > 12 ){
-        [[AppDelegate sharedDelegate] showTextOnly:@"新密码长度不符合要求!"];
-        return;
-    }
-    
-    if(self.nPswAgainField.text == nil || self.nPswAgainField.text.length == 0){
-        [[AppDelegate sharedDelegate] showTextOnly:@"请再次输入新密码!"];
-        return;
-    }
-    
-    if(self.nPswAgainField.text.length < 6 || self.nPswAgainField.text.length > 12){
-        [[AppDelegate sharedDelegate] showTextOnly:@"确认密码长度不符合要求!"];
-        return;
-    }
+-(void)postDataToService{
     NSString * oldPsw = self.oldPswField.text;
     NSString * nPsw = self.nPswField.text;
     NSString * nPswAgain = self.nPswAgainField.text;
@@ -113,6 +78,44 @@
     }];
 }
 
+#pragma mark - click
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(IBAction)editPswClick:(id)sender{
+    DDLogInfo(@"点击了修改密码");
+    if(self.oldPswField.text == nil || self.oldPswField.text.length == 0){
+        [[AppDelegate sharedDelegate] showTextOnly:@"请输入原始密码!"];
+        return;
+    }
+    if(self.oldPswField.text.length < 6 || self.oldPswField.text.length > 12){
+        [[AppDelegate sharedDelegate] showTextOnly:@"原始密码长度不符合要求!"];
+        return;
+    }
+    
+    if(self.nPswField.text == nil || self.nPswField.text.length ==0 ){
+        [[AppDelegate sharedDelegate] showTextOnly:@"请输入新密码!"];
+        return;
+    }
+    
+    if(self.nPswField.text.length < 6 || self.nPswField.text.length > 12 ){
+        [[AppDelegate sharedDelegate] showTextOnly:@"新密码长度不符合要求!"];
+        return;
+    }
+    
+    if(self.nPswAgainField.text == nil || self.nPswAgainField.text.length == 0){
+        [[AppDelegate sharedDelegate] showTextOnly:@"请再次输入新密码!"];
+        return;
+    }
+    
+    if(self.nPswAgainField.text.length < 6 || self.nPswAgainField.text.length > 12){
+        [[AppDelegate sharedDelegate] showTextOnly:@"确认密码长度不符合要求!"];
+        return;
+    }
+    [self postDataToService];
+}
+
 #pragma mark - delegate
 -(void)didSelectClose{
     [[[UIApplication sharedApplication].keyWindow  viewWithTag:101] removeFromSuperview];
@@ -120,8 +123,6 @@
     //注销登录删除用户数据
     [[SaveDocumentArray sharedInstance] removefmdb];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:Token];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
 }

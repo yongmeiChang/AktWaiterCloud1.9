@@ -111,11 +111,7 @@
                         }
                         
                         [[SDImageCache sharedImageCache] clearMemory];
-                        [[SDImageCache
-                          sharedImageCache]clearDiskOnCompletion:^{
-//                            appDelegate.isclean = true;
-                            
-                        }];
+                        [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{ }];
                     }];
                     UIAlertAction * canelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     }];
@@ -202,8 +198,6 @@
         //注销登录删除用户数据
         [[SaveDocumentArray sharedInstance] removefmdb];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:Token];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
 
