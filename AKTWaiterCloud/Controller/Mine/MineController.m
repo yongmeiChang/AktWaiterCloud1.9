@@ -14,7 +14,6 @@
 #import "UnfinifshController.h"
 #import "EditUserInfoController.h"
 #import "UIButton+Badge.h"
-#import "AktServicOldPersonVC.h"
 
 @interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     UserInfo *modelUser;
@@ -52,7 +51,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = @"个人资料";
-    self.dataSourceArray = @[@"信息采集",@"消息通知",@"系统设置"];
+    self.dataSourceArray = @[@"消息通知",@"系统设置"];
     [self collectionViewinit];
     
     //给整个编辑资料视图添加手势以便用户点击
@@ -171,22 +170,15 @@
     NSInteger index = indexPath.item;
    switch (index) {
        case 0:{
-           AktServicOldPersonVC *oldPerson = [[AktServicOldPersonVC alloc] init];
-           oldPerson.hidesBottomBarWhenPushed = YES;
-           [self.navigationController pushViewController:oldPerson animated:YES];
-       }
-           break;
-       case 1:{
            [[AppDelegate sharedDelegate] showTextOnly:@"该功能正在开发中！敬请期待"];
        }
            break;
-       case 2:{
+       case 1:{
            SettingsController * settingsController = [[SettingsController alloc]init];
            settingsController.hidesBottomBarWhenPushed = YES;
            [self.navigationController pushViewController:settingsController animated:YES];
        }
            break;
-           
        default:
            break;
    }

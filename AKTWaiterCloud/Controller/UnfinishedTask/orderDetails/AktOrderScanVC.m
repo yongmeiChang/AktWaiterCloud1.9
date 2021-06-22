@@ -60,13 +60,23 @@
     [self setupScanWindowView];//设置扫描二维码区域的视图
 
     [self beginScanning];//开始扫二维码
-
+    if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"1"]) {//扫码、 刷脸  权限打开
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNavTitle:@"二维码扫描签入"];
         }else{
             [self setNavTitle:@"二维码扫描签出"];
         }
         [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
+    }else if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"0"]){//扫码 权限打开
+        if ([self.ordertype isEqualToString:@"1"]) {
+            [self setNavTitle:@"二维码扫描签入"];
+        }else{
+            [self setNavTitle:@"二维码扫描签出"];
+        }
+    }else{
+        [self setNavTitle:@"人脸识别"];
+    }
+        
 
     /*签入 签出页面*/
     _sgController = [[SignoutController alloc] init];
