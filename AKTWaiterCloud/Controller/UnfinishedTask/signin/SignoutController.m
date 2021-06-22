@@ -29,13 +29,15 @@
 #import "AktWCMp3.h" // 录音
 #import "AddWaterMark.h" // 水印
 #import "WSPlaceholderTextView.h" // 自定义textview
+#import <AVFoundation/AVFoundation.h>
 
 #define PI 3.1415926
 #define DefaultLocationTimeout 10
 #define DefaultReGeocodeTimeout 5
 
-@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,AMapLocationManagerDelegate,AMapSearchDelegate> {
-    
+@interface SignoutController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,AMapLocationManagerDelegate,AMapSearchDelegate,AVAudioRecorderDelegate,AVAudioPlayerDelegate> {
+
+    AVAudioPlayer * player;// 音频播放
     long unservicetime;//记录服务时长不足的时间 秒
     
     long SSunservicetime;//记录服务时长不足毫秒gr
@@ -60,6 +62,7 @@
     NSString *strService; // 服务时长原因
     BOOL isSoundRecord; // 是否录音
 }
+@property (nonatomic,strong) AVAudioRecorder * audioRecorder; // 音频
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) LxGridView *collectionView;//选取图片按钮界面
 @property (strong, nonatomic) LxGridViewFlowLayout *layout;
@@ -453,7 +456,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
     long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]];
-    long strServiceSt = [AktUtil getTimeSDifferenceValueFrome:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceBegin)] ToTime:[NSString stringWithFormat:@"%@",kString(self.orderinfo.serviceEnd)]];
+    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",kString(self.orderinfo.serviceDate),kString(self.orderinfo.serviceBegin)]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",kString(self.orderinfo.serviceDateEnd),kString(self.orderinfo.serviceEnd)]]];
     if(strServiceSt>strActrueSt){ //servicetime>=ordertime
         SSunservicetime = (strServiceSt - strActrueSt)*1000;
         isLess = @"1";
@@ -496,12 +499,12 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *nowDate = [AktUtil getNowDateAndTime];
-    long strActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]]; // 实际服务时长
-    long strServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.serviceBegin] To:[formatter dateFromString:self.orderinfo.serviceEnd]];
+    long strActrueSt = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]]; // 实际服务时长
+    long strServiceSt = [AktUtil getMinuteFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDate,self.orderinfo.serviceBegin]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDateEnd,self.orderinfo.serviceEnd]]]; // 预约服务时长
     
     if(self.type==0){
         /***/
-        NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 签入时间与当前时间的差值
+        NSInteger mtime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceBegin ToTime:[[AktUtil getNowDateAndTime] substringFromIndex:11]]; // 预约签入时间与当前时间的差值
         BOOL bollateSignin = NO; // yes超出最大时长 No没有超出最大时长
         if (mtime<0) {// mtime<0 迟到
             bollateSignin = (labs(mtime) - [self.findAdmodel.maxLateTime integerValue])>0; // 超出最大迟到时间
@@ -529,9 +532,15 @@
          BOOL bollateSignOut = (Ltime-[self.findAdmodel.maxEarlyTime integerValue])>0; //yes 确定早退  no 不早退  
         /***/
             if(bollateSignOut == YES){// 判断早退的逻辑是：实际早退的时间 大于 后台配置的早退的时间
+                long secondActrueSt = [AktUtil getSecondFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:nowDate]]; // 实际服务时长
+                long secondServiceSt = [AktUtil getSecondFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDate,self.orderinfo.serviceBegin]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDateEnd,self.orderinfo.serviceEnd]]]; // 预约服务时长
+                NSInteger secondtime = secondServiceSt-secondActrueSt;
+                
                 self.orderinfo.isEarly = @"1";
                 self.latelabel.textColor = [UIColor redColor];
-                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil getTimeFrom:[nowDate substringFromIndex:11] To:self.orderinfo.serviceEnd]];
+//                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil getTimeFrom:[nowDate substringFromIndex:11] To:self.orderinfo.serviceEnd]];
+                self.latelabel.text = [NSString stringWithFormat:@"早退%@",[AktUtil secondChangeTime:secondtime]];
+                
                 leaveOuttime = (strServiceSt-strActrueSt)*1000;
             }else{
                 self.orderinfo.isEarly = @"0";
@@ -1107,7 +1116,7 @@
 //录音按钮
 -(IBAction)trapBtnClick:(id)sender{
     if(!isclick){
-        [[[AktWCMp3 alloc] init] startRecordcase];
+        [self startRecordcase];
         isclick = YES;
         [self.trapBtn setImage:[UIImage imageNamed:@"luyinzhong"] forState:UIControlStateNormal];
         self.trapBtn.imageView.image = [UIImage imageNamed:@"luyingzhong"];
@@ -1125,7 +1134,7 @@
         if (longtime<intTimeAll) {
             [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"录音时长最少不能少于%ld秒",(long)intTimeAll]];
         }else{
-            [[[AktWCMp3 alloc] init] endRecord];
+            [self endRecord];
               isclick = NO;
               [timer invalidate];
               _timerLabel.hidden = YES;
@@ -1322,8 +1331,9 @@
     
     if(self.type==1){//签出
         if([self.findAdmodel.soundRecordingSignOut isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
+            wavStr = [self recordmp3ToBASE64];
         }
+        /**临时创建文件**/
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:model.tenantId forKey:@"tenantsId"];
         // remarks、serviceLength、signOutLocationStatus
@@ -1372,7 +1382,7 @@
         
     }else{
         if([self.findAdmodel.soundRecordingSignIn isEqualToString:@"1"]){
-            wavStr = [[[AktWCMp3 alloc] init] recordmp3ToBASE64];
+            wavStr = [self recordmp3ToBASE64];
         }
         [param addUnEmptyString:wavStr forKey:@"recordData"]; // 录音文件
         [param addUnEmptyString:self.locaitonLongitude forKey:@"signInLocationX"];
@@ -1403,7 +1413,7 @@
                [self.navigationController popToRootViewControllerAnimated:YES];
             }];
         } failure:^(NSError *error) {
-            [self showMessageAlertWithController:self title:@"" Message:@"签入失败" canelBlock:^{
+            [self showMessageAlertWithController:self title:[NSString stringWithFormat:@"%ld",(long)error.code] Message:[NSString stringWithFormat:@"%@",error.domain] canelBlock:^{
                 [self.navigationController popToRootViewControllerAnimated:YES];
              }];
             [[AppDelegate sharedDelegate] hidHUD];
@@ -1459,4 +1469,84 @@
     // 移除当前所有通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#pragma mark - 录音
+-(void)startRecordcase{
+    //删除上次生成的文件，保留最新文件
+   NSFileManager *fileManager = [NSFileManager defaultManager];
+   //默认就是wav格式，是无损的
+    if ([fileManager fileExistsAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"]]) {
+        [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"] error:nil];
+    
+    }
+    //录音设置
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+   //设置录音格式 AVFormatIDKey==kAudioFormatLinearPCM
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+   //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）, 采样率必须要设为11025才能使转化成mp3格式后不会失真
+     [recordSetting setValue:[NSNumber numberWithFloat:8000] forKey:AVSampleRateKey];
+     //录音通道数 1 或 2 ，要转换成mp3格式必须为双通道
+     [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
+    //线性采样位数 8、16、24、32
+    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    //录音的质量
+    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsNonInterleaved]; //交叉的
+    // 设置录制音频采用高位优先的记录格式
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    // 设置采样信号采用浮点数
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
+    //存储录音文件
+    NSURL * recordUrl = [NSURL URLWithString:[NSTemporaryDirectory()stringByAppendingPathComponent:@"serviceClound.WAV"]];
+    //初始化录音对象
+    NSError * error;
+    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:recordUrl settings:recordSetting error:&error];
+
+    if (error) {
+        NSLog(@"%@",error.description);
+        return;
+    }
+    self.audioRecorder.delegate = self;
+    //开启音量检测
+    self.audioRecorder.meteringEnabled = YES;
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance];//得到音频会话单例对象
+    //如果不是正在录音
+    if (![self.audioRecorder isRecording]) {
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];//设置类别,表示该应用同时支持播放和录音
+        [audioSession setActive:YES error:nil];//激活当前应用的音频会话,此时会阻断后台音乐的播放.
+        [self.audioRecorder prepareToRecord];//准备录音
+        [self.audioRecorder record];//开始录音
+        //暂停录音
+   //        [audioRecorder pause];
+    }
+}
+//结束录音
+- (void)endRecord
+{
+    [self.audioRecorder stop];  //录音停止
+}
+//录音结束后代理
+-(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];//一定要在录音停止以后再关闭音频会话管理（否则会报错），此时会延续后台音乐播放
+    if (!flag) return;
+}
+
+#pragma mark - 加密
+-(NSString *)recordToBASE64; // 源文件 base64转码
+{
+    NSData * wavData = [[NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"]] base64EncodedDataWithOptions:0];
+    NSString * encodedRecordStr = [[NSString alloc]initWithData:wavData encoding:NSUTF8StringEncoding];
+    return encodedRecordStr;
+}
+-(NSString *)recordmp3ToBASE64; // mp3 加密
+{
+//    NSData * wavData = [NSData dataWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordAudio.wav"]]; // 获取录音文件
+    NSString *strdatamp3 = [AktUtil convertToMp3SouceFilePathName:[NSTemporaryDirectory() stringByAppendingPathComponent:@"serviceClound.WAV"] isDeleteSourchFile:YES]; // 转成MP3
+    NSData *mp3Data = [[NSData dataWithContentsOfFile:strdatamp3] base64EncodedDataWithOptions:0];
+    
+    NSString * encodedRecordStr = [[NSString alloc]initWithData:mp3Data encoding:NSUTF8StringEncoding];
+    
+    return encodedRecordStr;
+}
+
 @end

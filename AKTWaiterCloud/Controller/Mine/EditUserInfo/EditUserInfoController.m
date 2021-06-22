@@ -144,7 +144,7 @@
 }
 
 #pragma mark - save
--(void)saveClick{
+-(void)postDataToService{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"提交中"];
     _headBaseStr = [self imageToBaseString:self.himage];
  
@@ -164,11 +164,7 @@
 
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
-    NSData *data = UIImageJPEGRepresentation(image, 0.5f);
-    //    NSString * mimeType = @"image/jpeg";
-    //    NSString *encodedImageStr = [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,[data base64EncodedStringWithOptions: 0]];
-    //NSLog(@"%@",encodedImageStr);
-    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *encodedImageStr = [[AktUtil resetSizeOfImageData:image maxSize:100] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
 }
 #pragma mark - nav click
@@ -178,7 +174,7 @@
 -(void)SearchBarClick{
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"imageUser"]; // 删除
     [[NSUserDefaults standardUserDefaults] synchronize];
-     [self saveClick];
+     [self postDataToService];
 }
 #pragma mark - sex delegate
 -(void)theSexviewClose{

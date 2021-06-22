@@ -130,7 +130,7 @@ _Pragma("clang diagnostic pop") \
 // 测试环境
 //#define SERVICEURL @"https://test.ankangtong.com"
 // 本地环境
-//#define SERVICEURL @"http://172.16.220.252"
+//#define SERVICEURL @"http://192.168.1.118"
 
 #define RGB(a,b,c) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:1.0]
 

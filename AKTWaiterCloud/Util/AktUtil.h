@@ -58,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSInteger)getTimeDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to; // 两个时间段相差分钟
 // 两个时间段的差值  秒单位
 +(NSInteger)getTimeSDifferenceValueFrome:(NSString *)from ToTime:(NSString *)to;
+// 秒转换成X时X分X秒
++(NSString *)secondChangeTime:(NSInteger)second;
 
 /**判断对象是否为空
  *  PS：nil、NSNil、@""、@0 以上4种返回YES
@@ -80,7 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(BOOL)checkTelNumberAndPhone:(NSString *)tel;
 //邮箱验证
 +(BOOL)checkEmail:(NSString *)email;
-
+// 图片压缩
++ (NSData *)resetSizeOfImageData:(UIImage *)sourceImage maxSize:(NSInteger)maxSize;
 
 @end
 

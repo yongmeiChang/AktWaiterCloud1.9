@@ -406,12 +406,13 @@
         if ([strcode integerValue] == 1) {
             AktFindAdvanceModel *model = [[AktFindAdvanceModel alloc] initWithDictionary:[dic objectForKey:ResponseData] error:nil];
             if([self.orderinfo.workStatus isEqualToString:@"2"]){// 签出逻辑判断
-                        distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
-                        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-                        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    distanceSingin = [model.maxLocationDistanceSignOut doubleValue]-[self.distancePost doubleValue]; // 签出相差距离
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                 /**实际服务时间 与 最低服务时间的差值 **/
                 NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
-                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
+//                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
+                NSInteger Stime = [AktUtil getMinuteFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDate,self.orderinfo.serviceEnd]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDateEnd,self.orderinfo.serviceBegin]]];// 计划服务的时长 分钟
                 NSInteger Ltime = Stime-mtime; // 大于0表示 计划服务时长大于实际服务时长
                 if (mtime>Stime){ // 实际大于应该
                     Ltime = 0;
@@ -424,10 +425,6 @@
 
                 /**判断当前工单是否在服务有效期内**/
                 formatter.dateFormat = @"yyyy-MM-dd";
-//                if ([AktUtil compareDate:[formatter dateFromString:[self.orderinfo.actualBegin substringToIndex:10]] End:[formatter dateFromString:[AktUtil getNowDate]]] != 0) { // 超出
-//                    [self showMessageAlertWithController:self title:@"温馨提示" Message:@"您的工单不在服务有效期内！" canelBlock:^{}];
-//                    return;
-//                }
 
                  if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"3"])) || ([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"3"])) || ([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"3"]) && Ltime>0) || ([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"3"]))){
 
@@ -448,7 +445,7 @@
                             }
                             [[AppDelegate sharedDelegate] showTextOnly:strReason];
                             [[AFNetWorkingRequest sharedTool] requestOrderStop:@{@"orderId":self.orderinfo.id,@"stopReason":strReason} type:HttpRequestTypePost success:^(id responseObject) {
-//                                [self.navigationController popViewControllerAnimated:YES];
+                                [self.navigationController popViewControllerAnimated:YES];
                             } failure:^(NSError *error) {
                                 [[AppDelegate sharedDelegate] showTextOnly:error.domain];
                             }];

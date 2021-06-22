@@ -52,7 +52,7 @@ static AFNetWorkingTool * a_instance = nil;
 //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTName];
 //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:AKTPwd];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [[NSNotificationCenter defaultCenter]postNotificationName:ChangeRootViewController object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeRootViewController object:nil];
         }];
         return;
         
@@ -75,7 +75,7 @@ static AFNetWorkingTool * a_instance = nil;
     if([URLString isEqualToString:@"getWorkOrderImages"] || [URLString isEqualToString:@"faceCollect"] || [URLString isEqualToString:@"faceRecognition"]){
         manager.requestSerializer.timeoutInterval = 300.f;
     }else{
-        manager.requestSerializer.timeoutInterval = 20.0f;
+        manager.requestSerializer.timeoutInterval = 100.0f;
     }
     //将token封装入请求头
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:Token];
@@ -97,7 +97,11 @@ static AFNetWorkingTool * a_instance = nil;
                 [self doOptionResponse:responseObject Url:url parameters:parameters success:success failure:failure];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if (failure) {
+                    if (error.code == -1001) {
+                        [[AppDelegate sharedDelegate] showTextOnly:@"网络异常，请稍后重试"];
+                    }else{
                     failure(error);
+                    }
                 }
                 [[AppDelegate sharedDelegate] hidHUD];
             }];
@@ -113,7 +117,11 @@ static AFNetWorkingTool * a_instance = nil;
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
                 if (failure) {
+                    if (error.code == -1001) {
+                        [[AppDelegate sharedDelegate] showTextOnly:@"网络异常，请稍后重试"];
+                    }else{
                     failure(error);
+                    }
                 }
                 [[AppDelegate sharedDelegate] hidHUD];
             }];
@@ -126,7 +134,11 @@ static AFNetWorkingTool * a_instance = nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                if (failure) {
-                    failure(error);
+                   if (error.code == -1001) {
+                       [[AppDelegate sharedDelegate] showTextOnly:@"网络异常，请稍后重试"];
+                   }else{
+                   failure(error);
+                   }
                 }
                 [[AppDelegate sharedDelegate] hidHUD];
             }];

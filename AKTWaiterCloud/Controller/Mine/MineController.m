@@ -14,7 +14,6 @@
 #import "UnfinifshController.h"
 #import "EditUserInfoController.h"
 #import "UIButton+Badge.h"
-#import "NotifyController.h"
 #import "AktServicOldPersonVC.h"
 
 @interface MineController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
@@ -177,10 +176,7 @@
            [self.navigationController pushViewController:oldPerson animated:YES];
        }
            break;
-       case 1:{/*
-           NotifyController * notifyController = [[NotifyController alloc]init];
-           notifyController.hidesBottomBarWhenPushed = YES;
-           [self.navigationController pushViewController:notifyController animated:YES];*/
+       case 1:{
            [[AppDelegate sharedDelegate] showTextOnly:@"该功能正在开发中！敬请期待"];
        }
            break;

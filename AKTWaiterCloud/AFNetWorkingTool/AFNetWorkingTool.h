@@ -11,13 +11,9 @@
  *  网络请求类型
  */
 typedef NS_ENUM(NSUInteger,HttpRequestType) {
-    /**
-     *  get请求
-     */
+    /*get请求*/
     HttpRequestTypeGet = 1,
-    /**
-     *  post请求
-     */
+    /*post请求*/
     HttpRequestTypePost = 2,
     /*PUT*/
     HttpRequestTypePut = 3,
@@ -27,9 +23,7 @@ typedef NS_ENUM(NSUInteger,HttpRequestType) {
 
 @interface AFNetWorkingTool : AFHTTPSessionManager
 
-/**
- 创建网络请求工具类的单例
- */
+/*创建网络请求工具类的单例*/
 + (instancetype)sharedTool;
 
 

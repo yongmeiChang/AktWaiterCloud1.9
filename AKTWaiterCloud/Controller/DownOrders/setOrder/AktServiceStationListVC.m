@@ -10,7 +10,7 @@
 #import "ServicePojCell.h"
 #import "DownOrderController.h"
 
-@interface AktServiceStationListVC ()<UITableViewDelegate, UITableViewDataSource>
+@interface AktServiceStationListVC ()<UITableViewDelegate, UITableViewDataSource,AktServiceStationDelegate>
 @property(nonatomic,strong) IBOutlet UITableView * tableview;
 @property (weak, nonatomic) IBOutlet UIImageView *imgNodata;
 @property (weak, nonatomic) IBOutlet UILabel *labNodata;
@@ -62,6 +62,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ServicePojCell" owner:self options:nil] lastObject];
     }
+    cell.delegate = self;
     ServiceStationInfo * spInfo = [self.aryStation objectAtIndex:indexPath.row];
     [cell setStationCellInfo:spInfo selectCellInf:self.stationInfo IndexPath:indexPath];
     return cell;
@@ -101,6 +102,15 @@
             scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
         }
     }
+}
+
+#pragma mark - self cell delegate
+-(void)didSelectStationClick:(NSInteger)path{
+    ServiceStationInfo * stationInfo = [self.aryStation objectAtIndex:path];
+    if(_DoContoller){
+        _DoContoller.stationInfo = stationInfo;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

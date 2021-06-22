@@ -56,12 +56,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectZuhuInfoDetails:) name:@"selectZuhu" object:nil];
 }
 #pragma mark - notice
--(void)selectZuhuInfoDetails:(NSNotification *)info{
-    if (info) {
-        _selectZuhuDetailsInfo = [info object];
-        self.tfzuhu.text = kString(_selectZuhuDetailsInfo.name);
-       }
-}
+
 #pragma mark - timer
 - (void)doTimer{
     self.second --;
@@ -78,22 +73,8 @@
         [self.btnCode setTitle:[NSString stringWithFormat:@"%d",self.second] forState:UIControlStateNormal];
     }
 }
-
-#pragma mark - click
--(void)LeftBarClick{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)getCodeClick:(UIButton *)sender {
-    if (kString(self.tfPhone.text).length == 0) {
-          [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
-          return;
-    }else{
-        if (![AktUtil checkTelNumberAndPhone:self.tfPhone.text]) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号!"];
-            return;
-        }
-    }
+#pragma mark - request
+-(void)postDataToServiceCode{
     //原始数据  手机号前三位+手机号后四位+&毫秒
     NSString *phoneAndDataStr = [NSString stringWithFormat:@"%@%@&%@",[self.tfPhone.text substringToIndex:3],[self.tfPhone.text substringFromIndex:7],[AktUtil getNowTimes]];
     //使用字符串格式的公钥加密
@@ -115,7 +96,39 @@
     } failure:^(NSError *error) {
         [[AppDelegate sharedDelegate] showTextOnly:error.domain];
     }];
-    
+}
+-(void)postDataToService{ // orgId
+    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.tenantId,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text,@"orgId":self.selectZuhuDetailsInfo.orgId};
+    [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
+        
+        if ([[responseObject objectForKey:ResponseCode] integerValue] == 1) {
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];
+        }
+        
+    } failure:^(NSError *error) {
+        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
+    }];
+}
+
+#pragma mark - click
+-(void)LeftBarClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)getCodeClick:(UIButton *)sender {
+    if (kString(self.tfPhone.text).length == 0) {
+          [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
+          return;
+    }else{
+        if (![AktUtil checkTelNumberAndPhone:self.tfPhone.text]) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"请填写正确的手机号!"];
+            return;
+        }
+    }
+    [self postDataToServiceCode];
 }
 
 - (IBAction)getShowPwd:(UIButton *)sender {
@@ -163,10 +176,6 @@
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写手机号！"];
           return;
       }
-//    if (kString(self.tfID.text).length == 0) {
-//          [[AppDelegate sharedDelegate] showTextOnly:@"请填写身份证！"];// 苹果审核不能将此项目作为必填
-//          return;
-//      }
     if (kString(self.TFcode.text).length == 0) {
           [[AppDelegate sharedDelegate] showTextOnly:@"请填写验证码！"];
           return;
@@ -185,25 +194,17 @@
         }
     
     if (isAgreement) {
-          [self requestSigninInfo];
+          [self postDataToService];
       }else{
           [[AppDelegate sharedDelegate] showTextOnly:@"请同意用户协议"];
       }
 }
--(void)requestSigninInfo{ // orgId
-    NSDictionary *param =@{@"mobile":kString(self.tfPhone.text),@"tenantsId":self.selectZuhuDetailsInfo.tenantId,@"name":kString(self.tfUserName.text),@"identifyNo":kString(self.tfID.text),@"password":kString(self.tfSurePwd.text),@"checkCode":self.TFcode.text,@"orgId":self.selectZuhuDetailsInfo.orgId};
-    [[AktLoginCmd sharedTool] requestRegisterParameters:param type:HttpRequestTypePost success:^(id responseObject) {
-        
-        if ([[responseObject objectForKey:ResponseCode] integerValue] == 1) {
-            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@ 请耐心等待审核，审核成功之后将会以短信的形式通知您！",[responseObject objectForKey:@"message"]]];
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"message"]]];
-        }
-        
-    } failure:^(NSError *error) {
-        [[AppDelegate sharedDelegate] showTextOnly:error.domain];
-    }];
+
+-(void)selectZuhuInfoDetails:(NSNotification *)info{
+    if (info) {
+        _selectZuhuDetailsInfo = [info object];
+        self.tfzuhu.text = kString(_selectZuhuDetailsInfo.name);
+       }
 }
 #pragma mark - tap
 -(void)checkZuhuList:(UITapGestureRecognizer *)tap{ // 选择租户

@@ -42,9 +42,16 @@
     }
 }
 -(void)setStationCellInfo:(ServiceStationInfo *)cellInfo selectCellInf:(ServiceStationInfo *)select IndexPath:(NSIndexPath *)indexpath{
+    self.btnSelect.tag = (NSInteger)indexpath.row;
     self.leftlabel.text = cellInfo.name;
     if ([cellInfo.id isEqualToString:select.id]) {
         self.btnSelect.selected = YES;
+    }
+}
+
+- (IBAction)btnSelectClickStation:(UIButton *)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectStationClick:)]) {
+        [_delegate didSelectStationClick:sender.tag];
     }
 }
 

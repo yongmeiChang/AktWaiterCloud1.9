@@ -65,18 +65,21 @@
 
 #pragma mark - mj
 -(void)loadHeaderData:(MJRefreshGifHeader*)mj{
-    [self loadNewData];
+    [self loadNewDataHeader];
 }
 
 -(void)loadFooterData:(MJRefreshAutoGifFooter *)mj{
-    pageNum = pageNum+1;
-    [self checkNetWork:kString(self.tfOldPersonCode.text)];
-    [self.tableOldPerson.mj_footer endRefreshing];
+    [self loadMoreDataFooter];
 }
--(void)loadNewData{
+-(void)loadNewDataHeader{
     pageNum = 1;
     [self checkNetWork:kString(self.tfOldPersonCode.text)];
     [self.tableOldPerson.mj_header endRefreshing];
+}
+-(void)loadMoreDataFooter{
+    pageNum = pageNum+1;
+    [self checkNetWork:kString(self.tfOldPersonCode.text)];
+    [self.tableOldPerson.mj_footer endRefreshing];
 }
 #pragma mark - btn click
 - (IBAction)btnSearchClick:(UIButton *)sender { // 搜索
@@ -150,7 +153,7 @@
 #pragma mark - text delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self loadNewData];
+    [self loadNewDataHeader];
     [self.tfOldPersonCode resignFirstResponder];
     return YES;
 }

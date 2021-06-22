@@ -33,11 +33,11 @@
     _flagArray  = [[NSMutableArray alloc] init];
 
     modellist = [[SigninListInfo alloc] init];
-    [self reloadListZuhu];
+    [self requestLoadData];
 }
 
 #pragma mark - request
--(void)reloadListZuhu{
+-(void)requestLoadData{
     [[AktLoginCmd sharedTool] requestTenantsListParameters:@{} type:HttpRequestTypeGet success:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *code = [dic objectForKey:@"code"];
@@ -96,8 +96,6 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    modellist = [[SigninListInfo alloc] initWithDictionary:[aryAll objectAtIndex:section] error:nil];
-    
     UIView *viewbg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     viewbg.tag = 100+section;
     
