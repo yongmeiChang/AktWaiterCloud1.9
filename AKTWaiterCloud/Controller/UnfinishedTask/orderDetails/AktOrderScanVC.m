@@ -10,7 +10,14 @@
 #import "SignoutController.h"
 #import "AktOldPersonDetailsVC.h"
 
-@interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "GLKitView.h"
+#import "Utility.h"
+#import "ASFVideoProcessor.h"
+#import <ArcSoftFaceEngine/ArcSoftFaceEngine.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreMedia/CoreMedia.h>
+
+@interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ASFVideoProcessorDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 {
     // 扫码相关视图
     UIView *topView;
@@ -25,9 +32,13 @@
     // 人脸相关视图
     BOOL isOpen;// 是否 打开手电筒
     BOOL isFace; // 是否刷脸 1是 0否
+    BOOL isback; // 0后摄像头 1前摄像头 默认后摄像头
     NSString *isOldpeopleface; // 是否人脸采集 1是 0否
     
     NSString *strOldpeople;
+    // 人脸识别
+    ASF_CAMERA_DATA*   _offscreenIn;
+    AVCaptureConnection *videoConnection;
 }
 @property (weak, nonatomic) IBOutlet UIView *faceBgView; // 人脸识别背景
 @property(nonatomic,strong) SignoutController * sgController;
@@ -37,6 +48,11 @@
 @property (nonatomic,strong) UILabel * lightLabel;
 @property (nonatomic,strong) AVCaptureSession * captureSession;
 @property (nonatomic,strong) AVCaptureDevice * captureDevice;
+//人脸识别
+@property (nonatomic, strong) ASFVideoProcessor* videoProcessor;
+@property (nonatomic, strong) NSMutableArray* arrayAllFaceRectView;
+@property (weak, nonatomic) IBOutlet GLKitView *glView;
+@property (weak, nonatomic) IBOutlet UIButton *btnChangefaceFrond;
 
 @end
 
@@ -47,6 +63,7 @@
     // Do any additional setup after loading the view from its nib.
      isOpen = false;
      isFace = false;
+     isback = false;
     isOldpeopleface = [[NSString alloc] init];
     strOldpeople = [[NSString alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -55,12 +72,14 @@
     self.netWorkErrorView.hidden = YES;
     
     _QRCodeWidth = SCREEN_WIDTH*0.7;
-    [self setupMaskView];//设置扫描区域之外的阴影视图
 
-    [self setupScanWindowView];//设置扫描二维码区域的视图
-
-    [self beginScanning];//开始扫二维码
     if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"1"]) {//扫码、 刷脸  权限打开
+        [self setupMaskView];//设置扫描区域之外的阴影视图
+
+        [self setupScanWindowView];//设置扫描二维码区域的视图
+
+        [self beginScanning];//开始扫二维码
+        
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNavTitle:@"二维码扫描签入"];
         }else{
@@ -68,13 +87,21 @@
         }
         [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
     }else if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"0"]){//扫码 权限打开
+        [self setupMaskView];//设置扫描区域之外的阴影视图
+
+        [self setupScanWindowView];//设置扫描二维码区域的视图
+
+        [self beginScanning];//开始扫二维码
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNavTitle:@"二维码扫描签入"];
         }else{
             [self setNavTitle:@"二维码扫描签出"];
         }
     }else{
+        self.glView.hidden = NO;
+        self.btnChangefaceFrond.hidden = NO;
         [self setNavTitle:@"人脸识别"];
+        [self setFaceCamera];
     }
         
 
@@ -89,19 +116,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [_session startRunning];
-    [self requestOldpeopleInfo];
+    
+    if (isFace) { // 开启扫码操作
+        [self startCaptureSession];
+    }else{
+        [_session startRunning];
+    }
+
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [_session stopRunning];
-}
-#pragma mark - faceinfo
--(void)requestOldpeopleInfo{
-    [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
-        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existFlag"]];
-        strOldpeople = [responseObject objectForKey:@"message"];
-    } failure:nil];
+    [self stopCaptureSession];
 }
 
 #pragma mark - click back
@@ -116,6 +142,9 @@
 }
 -(void)SearchBarClick{
     if (isFace) { // 开启扫码操作
+        self.glView.hidden = YES;
+        self.btnChangefaceFrond.hidden = YES;
+        [self stopCaptureSession];
         // 扫码
         topView.hidden = NO;
         leftView.hidden = NO;
@@ -136,6 +165,8 @@
        
         
     }else{// 开启刷脸操作
+        self.glView.hidden = NO;
+        self.btnChangefaceFrond.hidden = NO;
         // 扫码
         topView.hidden = YES;
         leftView.hidden = YES;
@@ -146,7 +177,8 @@
         [_session stopRunning];// 停止扫描
         // 人脸
         self.faceBgView.hidden = NO;
-        [self facePhoto];
+        [self setFaceCamera];
+        [self startCaptureSession];
        
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNomalRightNavTilte:@"" RightTitleTwo:@"扫码签入"];
@@ -157,6 +189,13 @@
         isFace =true;
         
     }
+}
+
+- (IBAction)btnChangeCamera:(UIButton *)sender {
+    [self stopCaptureSession];
+    [self startCaptureSession];
+    isback =! isback;
+    [self setupCaptureSession:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation] isFront:isback];
 }
 
 #pragma mark - AVCaptureSession
@@ -384,46 +423,8 @@
     }
 }
 
-#pragma mark - face info
--(void)facePhoto{
-    UIButton *btnSelect = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-120)/2, 100, 120, 50)];
-    [btnSelect setTitle:@"点击拍照识别" forState:UIControlStateNormal];
-    [btnSelect addTarget:self action:@selector(checkFacePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
-    btnSelect.backgroundColor = kColor(@"C8");
-    [self.faceBgView addSubview:btnSelect];
-}
-
--(void)checkFacePhotoClick:(UIButton *)sender{
-    if ([isOldpeopleface isEqualToString:@"1"]) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-            imagePickerController.allowsEditing = YES;
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;// 暂时使用相册 后台修改分辨率之后再更改拍照
-            imagePickerController.delegate = self;
-            [self presentViewController:imagePickerController animated:YES completion:nil];
-        }else{
-            [[AppDelegate sharedDelegate] showTextOnly:@"您暂时没有拍照权限，请打开照相机权限！"];
-        }
-    
-    }else{
-        [[AppDelegate sharedDelegate] showAlertView:@"提示" des:[NSString stringWithFormat:@"用户%@%@",self.orderinfo.customerName,strOldpeople] cancel:@"" action:@"前往采集" acHandle:^(UIAlertAction *action) {
-            AktOldPersonDetailsVC *olddetailsVC = [[AktOldPersonDetailsVC alloc] init];
-            olddetailsVC.oldPresondetailsDic = @{@"customerId":kString(self.orderinfo.customerId),
-                                                 @"customerName":kString(self.orderinfo.customerName),
-                                                 @"customerUkey":kString(self.orderinfo.customerUkey),
-                                                 @"customerNo":kString(self.orderinfo.customerUkey),
-                                                 @"customerPhone":kString(self.orderinfo.customerPhone),
-                                                 @"serviceAddress":kString(self.orderinfo.serviceAddress)};
-            [self.navigationController pushViewController:olddetailsVC animated:YES];
-        }];
-    }
-}
-#pragma mark - image picker delegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
+#pragma mark - post face info
+-(void)postImageData:(UIImage *)image{
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"识别中..."];
     [[AktVipCmd sharedTool] requestFaceRecognition:@{@"customerImg":[self imageToBaseString:image],@"imgType":@"png"} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSLog(@"---%@",responseObject);
@@ -439,19 +440,183 @@
             _sgController.findAdmodel = self.detailsModel;
             [self.navigationController pushViewController:_sgController animated:YES];
         }else{
-            [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+//            [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+            [self.navigationController popViewControllerAnimated:YES];
         }
         [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError * _Nonnull error) {
+//        [self  startCaptureSession];
         [[AppDelegate sharedDelegate] hidHUD];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
-
 #pragma mark - UIImage图片转成Base64字符串
 -(NSString *)imageToBaseString:(UIImage *)image{
 //    NSData *data = UIImageJPEGRepresentation(image, 0.5f);
     NSString *encodedImageStr = [[AktUtil resetSizeOfImageData:image maxSize:100] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return encodedImageStr;
+}
+
+#pragma mark - face camera info
+-(void)setFaceCamera{
+    UIInterfaceOrientation uiOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)uiOrientation;
+    
+    self.arrayAllFaceRectView = [NSMutableArray arrayWithCapacity:0];
+    
+    self.videoProcessor = [[ASFVideoProcessor alloc] init];
+    self.videoProcessor.delegate = self;
+    [self.videoProcessor initProcessor];
+    
+    [self setupCaptureSession:videoOrientation isFront:isback]; // 摄像权限
+}
+- (AVCaptureDevice *)videoDeviceWithPosition:(AVCaptureDevicePosition)position
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices)
+        if ([device position] == position)
+            return device;
+    
+    return nil;
+}
+- (BOOL) setupCaptureSession:(AVCaptureVideoOrientation)videoOrientation isFront:(BOOL)isFront
+{
+    self.captureSession = [[AVCaptureSession alloc] init];
+    
+    [self.captureSession beginConfiguration];
+    
+    AVCaptureDevice *videoDevice = [self videoDeviceWithPosition:isFront ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack];// 前、后摄像头
+    // 创建输入流
+    AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:nil];
+    if ([self.captureSession canAddInput:videoIn])
+        [self.captureSession addInput:videoIn];
+    
+    
+    // 创建输出流
+    AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
+    [videoOut setAlwaysDiscardsLateVideoFrames:YES];
+
+    //
+    AVCaptureVideoPreviewLayer *previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
+    [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    previewLayer.frame = CGRectMake(0, 0, 0, 0); //self.view.bounds
+    [self.view.layer insertSublayer:previewLayer atIndex:0];
+    previewLayer.cornerRadius = self.glView.frame.size.width/2;
+    
+#ifdef __OUTPUT_BGRA__
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+#else
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarFullRange] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+#endif
+    [videoOut setVideoSettings:dic];
+    
+    dispatch_queue_t videoCaptureQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,0);
+    [videoOut setSampleBufferDelegate:self queue:videoCaptureQueue];
+    
+    if ([self.captureSession canAddOutput:videoOut])
+        [self.captureSession addOutput:videoOut];
+    videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
+    
+    if (videoConnection.supportsVideoMirroring) {
+        [videoConnection setVideoMirrored:TRUE];
+    }
+    
+    if ([videoConnection isVideoOrientationSupported]) {
+        [videoConnection setVideoOrientation:videoOrientation];
+    }
+    
+    if ([self.captureSession canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
+        [self.captureSession setSessionPreset:AVCaptureSessionPreset1280x720];
+    }
+    
+    [self.captureSession commitConfiguration];
+    
+    return YES;
+}
+
+- (void) startCaptureSession
+{
+    if ( !self.captureSession )
+        return;
+    
+    if (!self.captureSession.isRunning )
+        [self.captureSession startRunning];
+}
+
+- (void) stopCaptureSession
+{
+    [self.captureSession stopRunning];
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
+{
+    CVImageBufferRef cameraFrame = CMSampleBufferGetImageBuffer(sampleBuffer);
+    ASF_CAMERA_DATA* cameraData = [Utility getCameraDataFromSampleBuffer:sampleBuffer];
+    NSArray *arrayFaceInfo = [self.videoProcessor process:cameraData];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        
+        [self.glView renderWithCVPixelBuffer:cameraFrame orientation:0 mirror:NO];
+        
+        if(self.arrayAllFaceRectView.count >= arrayFaceInfo.count)
+        {
+            for (NSUInteger face=arrayFaceInfo.count; face<self.arrayAllFaceRectView.count; face++) {
+                UIView *faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
+                faceRectView.hidden = YES;
+            }
+        }
+        else
+        {
+//            for (NSUInteger face=self.arrayAllFaceRectView.count; face<arrayFaceInfo.count; face++) {
+//                UIStoryboard *faceRectStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//                UIView *faceRectView = [faceRectStoryboard instantiateViewControllerWithIdentifier:@"FaceRectVideoController"].view;
+//                [self.view addSubview:faceRectView];
+//                [self.arrayAllFaceRectView addObject:faceRectView];
+//            }
+        }
+        
+        for (NSUInteger face = 0; face < arrayFaceInfo.count; face++) {
+//            UIView *faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
+            ASFVideoFaceInfo *faceInfo = [arrayFaceInfo objectAtIndex:face];
+//            faceRectView.hidden = NO;
+//            faceRectView.frame = [self dataFaceRect2ViewFaceRect:faceInfo.faceRect];
+//            UILabel* labelInfo = (UILabel*)[faceRectView viewWithTag:1];
+//            [labelInfo setTextColor:[UIColor yellowColor]];
+//            labelInfo.font = [UIFont boldSystemFontOfSize:15];
+//            MInt32 gender = faceInfo.gender;
+//            NSString *genderInfo = gender == 0 ? @"男" : (gender == 1 ? @"女" : @"不确定");
+//            NSString *liveness = faceInfo.liveness == 1 ? @"活体" : (faceInfo.liveness == 0) ? @"非活体":@"未知";
+//            labelInfo.text = [NSString stringWithFormat:@"age:%d gender:%@ live:%@", faceInfo.age, genderInfo, liveness];
+//            UILabel* labelFaceAngle = (UILabel*)[faceRectView viewWithTag:6];
+//            labelFaceAngle.font = [UIFont boldSystemFontOfSize:15];
+//            [labelFaceAngle setTextColor:[UIColor yellowColor]];
+//            if(faceInfo.face3DAngle.status == 0) {
+//                labelFaceAngle.text = [NSString stringWithFormat:@"r=%.2f y=%.2f p=%.2f", faceInfo.face3DAngle.rollAngle, faceInfo.face3DAngle.yawAngle, faceInfo.face3DAngle.pitchAngle];
+//            } else {
+//                labelFaceAngle.text = @"Failed face 3D Angle";
+//            }
+            if (faceInfo.face3DAngle.status == 0 &&faceInfo.liveness == 1) { // 正常 活体 
+                CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
+                UIImage *imgF = [UIImage imageWithCIImage:image];
+                [self stopCaptureSession];
+                [self postImageData:imgF];
+                NSLog(@"人脸识别成功!");
+                return;
+            }
+        }
+    });
+    [Utility freeCameraData:cameraData];
+}
+
+- (CGRect)dataFaceRect2ViewFaceRect:(MRECT)faceRect
+{
+    CGRect frameFaceRect = {0};
+    CGRect frameGLView = self.glView.frame;
+    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*(faceRect.right-faceRect.left)/SCREEN_WIDTH;
+    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*(faceRect.bottom-faceRect.top)/SCREEN_HEIGHT;
+    frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/SCREEN_WIDTH;
+    frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/SCREEN_HEIGHT;
+    
+    return frameFaceRect;
 }
 
 /*

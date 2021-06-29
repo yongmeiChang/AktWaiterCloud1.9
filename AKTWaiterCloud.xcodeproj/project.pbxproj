@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -95,6 +95,51 @@
 		4C3D75FF24A88ABF00D0F79A /* AktSexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D759424A88ABF00D0F79A /* AktSexView.m */; };
 		4C3D760024A88ABF00D0F79A /* AktSexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D759424A88ABF00D0F79A /* AktSexView.m */; };
 		4C3D760124A88ABF00D0F79A /* AktSexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D759424A88ABF00D0F79A /* AktSexView.m */; };
+		4C46F3B72689CF7300381C2B /* AFRCDVersion+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F39A2689CF7300381C2B /* AFRCDVersion+CoreDataClass.h */; };
+		4C46F3B82689CF7300381C2B /* ASFRManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39B2689CF7300381C2B /* ASFRManager.m */; };
+		4C46F3B92689CF7300381C2B /* ASFRManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39B2689CF7300381C2B /* ASFRManager.m */; };
+		4C46F3BA2689CF7300381C2B /* ASFRManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39B2689CF7300381C2B /* ASFRManager.m */; };
+		4C46F3BB2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39C2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m */; };
+		4C46F3BC2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39C2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m */; };
+		4C46F3BD2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39C2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m */; };
+		4C46F3BE2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F39D2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.h */; };
+		4C46F3BF2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39E2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m */; };
+		4C46F3C02689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39E2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m */; };
+		4C46F3C12689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F39E2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m */; };
+		4C46F3C22689CF7300381C2B /* ASFRCDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F39F2689CF7300381C2B /* ASFRCDManager.h */; };
+		4C46F3C32689CF7300381C2B /* ASFRPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3A02689CF7300381C2B /* ASFRPerson.h */; };
+		4C46F3C42689CF7300381C2B /* ASFRManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3A12689CF7300381C2B /* ASFRManager.h */; };
+		4C46F3C82689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A42689CF7300381C2B /* AFRCDVersion+CoreDataClass.m */; };
+		4C46F3C92689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A42689CF7300381C2B /* AFRCDVersion+CoreDataClass.m */; };
+		4C46F3CA2689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A42689CF7300381C2B /* AFRCDVersion+CoreDataClass.m */; };
+		4C46F3CB2689CF7300381C2B /* AFRCDPerson+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3A52689CF7300381C2B /* AFRCDPerson+CoreDataClass.h */; };
+		4C46F3CC2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A62689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m */; };
+		4C46F3CD2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A62689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m */; };
+		4C46F3CE2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A62689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m */; };
+		4C46F3CF2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3A72689CF7300381C2B /* AFRCDVersion+CoreDataProperties.h */; };
+		4C46F3D02689CF7300381C2B /* ASFRPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A82689CF7300381C2B /* ASFRPerson.m */; };
+		4C46F3D12689CF7300381C2B /* ASFRPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A82689CF7300381C2B /* ASFRPerson.m */; };
+		4C46F3D22689CF7300381C2B /* ASFRPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A82689CF7300381C2B /* ASFRPerson.m */; };
+		4C46F3D32689CF7300381C2B /* ASFRCDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A92689CF7300381C2B /* ASFRCDManager.m */; };
+		4C46F3D42689CF7300381C2B /* ASFRCDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A92689CF7300381C2B /* ASFRCDManager.m */; };
+		4C46F3D52689CF7300381C2B /* ASFRCDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3A92689CF7300381C2B /* ASFRCDManager.m */; };
+		4C46F3D72689CF7300381C2B /* GLKitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3AC2689CF7300381C2B /* GLKitView.h */; };
+		4C46F3D82689CF7300381C2B /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AD2689CF7300381C2B /* Utility.m */; };
+		4C46F3D92689CF7300381C2B /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AD2689CF7300381C2B /* Utility.m */; };
+		4C46F3DA2689CF7300381C2B /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AD2689CF7300381C2B /* Utility.m */; };
+		4C46F3DB2689CF7300381C2B /* ColorFormatUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3AE2689CF7300381C2B /* ColorFormatUtil.h */; };
+		4C46F3DC2689CF7300381C2B /* GLKitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AF2689CF7300381C2B /* GLKitView.m */; };
+		4C46F3DD2689CF7300381C2B /* GLKitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AF2689CF7300381C2B /* GLKitView.m */; };
+		4C46F3DE2689CF7300381C2B /* GLKitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3AF2689CF7300381C2B /* GLKitView.m */; };
+		4C46F3DF2689CF7300381C2B /* ColorFormatUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B02689CF7300381C2B /* ColorFormatUtil.m */; };
+		4C46F3E02689CF7300381C2B /* ColorFormatUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B02689CF7300381C2B /* ColorFormatUtil.m */; };
+		4C46F3E12689CF7300381C2B /* ColorFormatUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B02689CF7300381C2B /* ColorFormatUtil.m */; };
+		4C46F3E22689CF7300381C2B /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3B12689CF7300381C2B /* Utility.h */; };
+		4C46F3E92689CF7300381C2B /* ASFVideoProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */; };
+		4C46F3EA2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */; };
+		4C46F3EB2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */; };
+		4C46F3EC2689CF7300381C2B /* ASFVideoProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3B62689CF7300381C2B /* ASFVideoProcessor.h */; };
+		4C46F40D2689D32D00381C2B /* ArcSoftFaceEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C4AD7AC23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
 		4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
 		4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
@@ -120,10 +165,6 @@
 		4C6144A4263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
 		4C6144A5263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
 		4C6144A6263290D700E58FF0 /* AktServicOldPersonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */; };
-		4C6144AE2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; };
-		4C6144AF2632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; platformFilter = ios; };
-		4C6144B02632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; platformFilter = ios; };
-		4C6144B92632CACF00E58FF0 /* ArcSoftFaceEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */; };
 		4C61CEFE2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */; };
 		4C61CEFF2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */; };
@@ -492,13 +533,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4C6144B82632CA9900E58FF0 /* Embed Frameworks */ = {
+		4C46F4032689D29600381C2B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C6144B92632CACF00E58FF0 /* ArcSoftFaceEngine.framework in Embed Frameworks */,
+				4C46F40D2689D32D00381C2B /* ArcSoftFaceEngine.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,6 +595,29 @@
 		4C3D759324A88ABF00D0F79A /* EditUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserInfoController.m; sourceTree = "<group>"; };
 		4C3D759424A88ABF00D0F79A /* AktSexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AktSexView.m; sourceTree = "<group>"; };
 		4C3D759524A88ABF00D0F79A /* MineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineController.h; sourceTree = "<group>"; };
+		4C46F39A2689CF7300381C2B /* AFRCDVersion+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFRCDVersion+CoreDataClass.h"; sourceTree = "<group>"; };
+		4C46F39B2689CF7300381C2B /* ASFRManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFRManager.m; sourceTree = "<group>"; };
+		4C46F39C2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFRCDVersion+CoreDataProperties.m"; sourceTree = "<group>"; };
+		4C46F39D2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFRCDPerson+CoreDataProperties.h"; sourceTree = "<group>"; };
+		4C46F39E2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFRCDPerson+CoreDataClass.m"; sourceTree = "<group>"; };
+		4C46F39F2689CF7300381C2B /* ASFRCDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFRCDManager.h; sourceTree = "<group>"; };
+		4C46F3A02689CF7300381C2B /* ASFRPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFRPerson.h; sourceTree = "<group>"; };
+		4C46F3A12689CF7300381C2B /* ASFRManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFRManager.h; sourceTree = "<group>"; };
+		4C46F3A42689CF7300381C2B /* AFRCDVersion+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFRCDVersion+CoreDataClass.m"; sourceTree = "<group>"; };
+		4C46F3A52689CF7300381C2B /* AFRCDPerson+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFRCDPerson+CoreDataClass.h"; sourceTree = "<group>"; };
+		4C46F3A62689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFRCDPerson+CoreDataProperties.m"; sourceTree = "<group>"; };
+		4C46F3A72689CF7300381C2B /* AFRCDVersion+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFRCDVersion+CoreDataProperties.h"; sourceTree = "<group>"; };
+		4C46F3A82689CF7300381C2B /* ASFRPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFRPerson.m; sourceTree = "<group>"; };
+		4C46F3A92689CF7300381C2B /* ASFRCDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFRCDManager.m; sourceTree = "<group>"; };
+		4C46F3AC2689CF7300381C2B /* GLKitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKitView.h; sourceTree = "<group>"; };
+		4C46F3AD2689CF7300381C2B /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		4C46F3AE2689CF7300381C2B /* ColorFormatUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFormatUtil.h; sourceTree = "<group>"; };
+		4C46F3AF2689CF7300381C2B /* GLKitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLKitView.m; sourceTree = "<group>"; };
+		4C46F3B02689CF7300381C2B /* ColorFormatUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorFormatUtil.m; sourceTree = "<group>"; };
+		4C46F3B12689CF7300381C2B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ASFVideoProcessor.mm; sourceTree = "<group>"; };
+		4C46F3B62689CF7300381C2B /* ASFVideoProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFVideoProcessor.h; sourceTree = "<group>"; };
+		4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcSoftFaceEngine.framework; sourceTree = "<group>"; };
 		4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimePickerView.m; sourceTree = "<group>"; };
 		4C4AD7A923B08962005DEDE4 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
@@ -568,7 +632,6 @@
 		4C61449E263290D700E58FF0 /* AktServicOldPersonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktServicOldPersonVC.h; sourceTree = "<group>"; };
 		4C61449F263290D700E58FF0 /* AktServicOldPersonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktServicOldPersonVC.m; sourceTree = "<group>"; };
 		4C6144A0263290D700E58FF0 /* AktServicOldPersonVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktServicOldPersonVC.xib; sourceTree = "<group>"; };
-		4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcSoftFaceEngine.framework; sourceTree = "<group>"; };
 		4C61CEFA2635516000B2269C /* AktOldPersonDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktOldPersonDetailsVC.h; sourceTree = "<group>"; };
 		4C61CEFB2635516000B2269C /* AktOldPersonDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPersonDetailsVC.m; sourceTree = "<group>"; };
 		4C61CEFC2635516000B2269C /* AktOldPersonDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AktOldPersonDetailsVC.xib; sourceTree = "<group>"; };
@@ -828,7 +891,6 @@
 			files = (
 				ADD562C41FDFCF7B00898AC3 /* AVFoundation.framework in Frameworks */,
 				ADBB6A241F9841F000DDC01C /* Security.framework in Frameworks */,
-				4C6144AE2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				ADBB6A221F9841E700DDC01C /* UIKit.framework in Frameworks */,
 				ADBB6A201F9841E200DDC01C /* Foundation.framework in Frameworks */,
 				ADBB6A1E1F9841DA00DDC01C /* CoreGraphics.framework in Frameworks */,
@@ -846,7 +908,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6144AF2632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				4CD6753522EAF97400AB76AF /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -855,7 +916,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6144B02632BEAE00E58FF0 /* ArcSoftFaceEngine.framework in Frameworks */,
 				4CD6753622EAF97400AB76AF /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -980,6 +1040,59 @@
 				4C3D758E24A88ABF00D0F79A /* EditUserInfoController.xib */,
 			);
 			path = EditUserInfo;
+			sourceTree = "<group>";
+		};
+		4C46F3982689CF7300381C2B /* faceCamra */ = {
+			isa = PBXGroup;
+			children = (
+				4C46F3992689CF7300381C2B /* database */,
+				4C46F3AB2689CF7300381C2B /* util */,
+				4C46F3B42689CF7300381C2B /* engine */,
+			);
+			path = faceCamra;
+			sourceTree = "<group>";
+		};
+		4C46F3992689CF7300381C2B /* database */ = {
+			isa = PBXGroup;
+			children = (
+				4C46F3A12689CF7300381C2B /* ASFRManager.h */,
+				4C46F39B2689CF7300381C2B /* ASFRManager.m */,
+				4C46F3A72689CF7300381C2B /* AFRCDVersion+CoreDataProperties.h */,
+				4C46F39C2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m */,
+				4C46F39A2689CF7300381C2B /* AFRCDVersion+CoreDataClass.h */,
+				4C46F3A42689CF7300381C2B /* AFRCDVersion+CoreDataClass.m */,
+				4C46F39F2689CF7300381C2B /* ASFRCDManager.h */,
+				4C46F3A92689CF7300381C2B /* ASFRCDManager.m */,
+				4C46F3A02689CF7300381C2B /* ASFRPerson.h */,
+				4C46F3A82689CF7300381C2B /* ASFRPerson.m */,
+				4C46F3A52689CF7300381C2B /* AFRCDPerson+CoreDataClass.h */,
+				4C46F39E2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m */,
+				4C46F39D2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.h */,
+				4C46F3A62689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m */,
+			);
+			path = database;
+			sourceTree = "<group>";
+		};
+		4C46F3AB2689CF7300381C2B /* util */ = {
+			isa = PBXGroup;
+			children = (
+				4C46F3AC2689CF7300381C2B /* GLKitView.h */,
+				4C46F3AD2689CF7300381C2B /* Utility.m */,
+				4C46F3AE2689CF7300381C2B /* ColorFormatUtil.h */,
+				4C46F3AF2689CF7300381C2B /* GLKitView.m */,
+				4C46F3B02689CF7300381C2B /* ColorFormatUtil.m */,
+				4C46F3B12689CF7300381C2B /* Utility.h */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		4C46F3B42689CF7300381C2B /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				4C46F3B62689CF7300381C2B /* ASFVideoProcessor.h */,
+				4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */,
+			);
+			path = engine;
 			sourceTree = "<group>";
 		};
 		4C4AD7A723B08962005DEDE4 /* DatePicker */ = {
@@ -1238,6 +1351,7 @@
 		4CD22A812521DA880089F433 /* orderDetails */ = {
 			isa = PBXGroup;
 			children = (
+				4C46F3982689CF7300381C2B /* faceCamra */,
 				4CD22A852521DA880089F433 /* AktOrderScanVC.h */,
 				4CD22A892521DA880089F433 /* AktOrderScanVC.m */,
 				4CD22A832521DA880089F433 /* AktOrderScanVC.xib */,
@@ -1453,7 +1567,7 @@
 		ADD7890A1F7DF730008DEC55 = {
 			isa = PBXGroup;
 			children = (
-				4C6144AD2632BEAD00E58FF0 /* ArcSoftFaceEngine.framework */,
+				4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */,
 				AD93664320AA87D500EEB02C /* china_city_data.json */,
 				ADD09B531F998A1D00CFEC52 /* Images.xcassets */,
 				ADD789151F7DF730008DEC55 /* AKTWaiterCloud */,
@@ -1539,9 +1653,20 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C46F3BE2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.h in Headers */,
 				4C81843F2639021E005F85E3 /* AktOldPersonModel.h in Headers */,
+				4C46F3C22689CF7300381C2B /* ASFRCDManager.h in Headers */,
+				4C46F3C42689CF7300381C2B /* ASFRManager.h in Headers */,
+				4C46F3D72689CF7300381C2B /* GLKitView.h in Headers */,
 				4C553675265355A2004B9DE2 /* AktOldPeopelCell.h in Headers */,
+				4C46F3E22689CF7300381C2B /* Utility.h in Headers */,
+				4C46F3CF2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.h in Headers */,
 				4C61CEFD2635516000B2269C /* AktOldPersonDetailsVC.h in Headers */,
+				4C46F3EC2689CF7300381C2B /* ASFVideoProcessor.h in Headers */,
+				4C46F3DB2689CF7300381C2B /* ColorFormatUtil.h in Headers */,
+				4C46F3C32689CF7300381C2B /* ASFRPerson.h in Headers */,
+				4C46F3B72689CF7300381C2B /* AFRCDVersion+CoreDataClass.h in Headers */,
+				4C46F3CB2689CF7300381C2B /* AFRCDPerson+CoreDataClass.h in Headers */,
 				4C0C65D826539786004414B2 /* AktOldPeopleView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1559,7 +1684,7 @@
 				ADD789101F7DF730008DEC55 /* Frameworks */,
 				ADD789111F7DF730008DEC55 /* Resources */,
 				8A37833A4C58F838DEF01ED8 /* [CP] Copy Pods Resources */,
-				4C6144B82632CA9900E58FF0 /* Embed Frameworks */,
+				4C46F4032689D29600381C2B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1864,6 +1989,7 @@
 				4C3D75A824A88ABF00D0F79A /* EditPassWordController.m in Sources */,
 				4C9B975D240CCF1D00576F7C /* FSCalendarCollectionViewLayout.m in Sources */,
 				4CD22AC02521DA880089F433 /* UnfinishOrderTaskController.m in Sources */,
+				4C46F3BB2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */,
 				ADD835F720577F4D0003A1C5 /* DataManager.m in Sources */,
 				4CD2291A2521B0880089F433 /* AktAddOrderUserInfoCell.m in Sources */,
 				4CD228BE2521902E0089F433 /* SearchDateController.m in Sources */,
@@ -1876,12 +2002,14 @@
 				4C9B974E240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
 				4CD22A5E2521D7760089F433 /* DownOrdersController.m in Sources */,
 				ADBB6A2A1F9895BC00DDC01C /* BaseControllerViewController.m in Sources */,
+				4C46F3D02689CF7300381C2B /* ASFRPerson.m in Sources */,
 				4C3D75FC24A88ABF00D0F79A /* EditUserInfoController.m in Sources */,
 				4C9B976F240CCF1D00576F7C /* FSCalendarCalculator.m in Sources */,
 				ADD836092058F6560003A1C5 /* UIColor+Hex.m in Sources */,
 				4CD6750422E94CDF00AB76AF /* UIView+KIAdditions.m in Sources */,
 				4CD229742521B3820089F433 /* LoginViewController.m in Sources */,
 				4C9B9769240CCF1D00576F7C /* FSCalendar+Deprecated.m in Sources */,
+				4C46F3C82689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */,
 				4C4AD8FC23B34350005DEDE4 /* RangePickerCell.m in Sources */,
 				AD63865E1FD0EB4F00265AAB /* NSMutableDictionary+Utils.m in Sources */,
 				4C9B974B240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
@@ -1926,6 +2054,7 @@
 				4CD22A6A2521D7760089F433 /* QRCodeViewController.m in Sources */,
 				AD37AB3F1FF4E78A001D304C /* UITextView+Placeholder.m in Sources */,
 				4C9B9757240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
+				4C46F3B82689CF7300381C2B /* ASFRManager.m in Sources */,
 				AD37AB3E1FF4E78A001D304C /* ZYInputAlertView.m in Sources */,
 				4C9B9766240CCF1D00576F7C /* FSCalendarExtensions.m in Sources */,
 				4CC0AB7424C02DC200C57A0D /* AktOrderDetailsModel.m in Sources */,
@@ -1938,6 +2067,7 @@
 				4CD22AB42521DA880089F433 /* PhotoCell.m in Sources */,
 				4C61CEFE2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
 				4CDAD74E240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
+				4C46F3DF2689CF7300381C2B /* ColorFormatUtil.m in Sources */,
 				4CD22A702521D7760089F433 /* HandCodeController.m in Sources */,
 				4C25C29F24C9644F007AF277 /* WSPlaceholderTextView.m in Sources */,
 				4C9B9754240CCF1D00576F7C /* FSCalendarCell.m in Sources */,
@@ -1947,6 +2077,9 @@
 				AD576079206B3E0200991FFA /* RangeUtil.m in Sources */,
 				4CD674EC22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4C0C65D926539786004414B2 /* AktOldPeopleView.m in Sources */,
+				4C46F3CC2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */,
+				4C46F3BF2689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */,
+				4C46F3D82689CF7300381C2B /* Utility.m in Sources */,
 				4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4C8184402639021E005F85E3 /* AktOldPersonModel.m in Sources */,
 				4CD6754322EB067F00AB76AF /* AktUtil.m in Sources */,
@@ -1955,6 +2088,7 @@
 				4CD674FB22E94CDF00AB76AF /* QBImagePickerThumbnailView.m in Sources */,
 				4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */,
 				4C9B9760240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
+				4C46F3E92689CF7300381C2B /* ASFVideoProcessor.mm in Sources */,
 				4C379752242205EE00DC9EFB /* NoDateCell.m in Sources */,
 				4CD22A672521D7760089F433 /* AktServiceStationListVC.m in Sources */,
 				4C9B9751240CCF1D00576F7C /* FSCalendarDelegationFactory.m in Sources */,
@@ -1973,7 +2107,9 @@
 				ADD2E16F1F99E77D004DFE76 /* ButtonUtil.m in Sources */,
 				4CD22A9C2521DA880089F433 /* AktOrderDetailsCheckImageVC.m in Sources */,
 				4C3D75D224A88ABF00D0F79A /* MineController.m in Sources */,
+				4C46F3DC2689CF7300381C2B /* GLKitView.m in Sources */,
 				AD1739C71FD0ED6300DAC4A5 /* AFNetWorkingRequest.m in Sources */,
+				4C46F3D32689CF7300381C2B /* ASFRCDManager.m in Sources */,
 				4CD22A732521D7760089F433 /* ServicePojController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1989,7 +2125,11 @@
 				4CD2296F2521B3820089F433 /* AktAgreementVC.m in Sources */,
 				4C9B9761240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
 				4CD22A5F2521D7760089F433 /* DownOrdersController.m in Sources */,
+				4C46F3D42689CF7300381C2B /* ASFRCDManager.m in Sources */,
+				4C46F3BC2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */,
+				4C46F3E02689CF7300381C2B /* ColorFormatUtil.m in Sources */,
 				4C61CEFF2635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
+				4C46F3CD2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */,
 				4C9B975B240CCF1D00576F7C /* FSCalendar.m in Sources */,
 				4C3D75A024A88ABF00D0F79A /* AboutUsController.m in Sources */,
 				4CD6750222E94CDF00AB76AF /* QBAssetsCollectionViewLayout.m in Sources */,
@@ -2001,11 +2141,13 @@
 				4CD22AB82521DA880089F433 /* SignoutController.m in Sources */,
 				4CD674E722E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3B0C5B24BC01F800588D63 /* RSAEncryptor.m in Sources */,
+				4C46F3C92689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */,
 				4C6144A2263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */,
 				4CD22AB22521DA880089F433 /* AktWCMp3.m in Sources */,
 				4C9B9758240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C9B9776240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
 				4CD22AC12521DA880089F433 /* UnfinishOrderTaskController.m in Sources */,
+				4C46F3C02689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */,
 				4C3D75A624A88ABF00D0F79A /* AktFeedBackVC.m in Sources */,
 				4CD6750522E94CDF00AB76AF /* UIView+KIAdditions.m in Sources */,
 				4C3D75B224A88ABF00D0F79A /* AKTChangePhoneVC.m in Sources */,
@@ -2013,6 +2155,7 @@
 				4CD2291E2521B0880089F433 /* DownOrderCell.m in Sources */,
 				4CDAD746240F7E0E00CF9129 /* NSDictionary+Extension.m in Sources */,
 				4C31F099241F58FF0084AC82 /* AktVipCmd.m in Sources */,
+				4C46F3EA2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */,
 				4CD674ED22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CD22ACD2521DACE0089F433 /* QRCodeService.m in Sources */,
 				4CD2291B2521B0880089F433 /* AktAddOrderUserInfoCell.m in Sources */,
@@ -2032,6 +2175,7 @@
 				4C9B9752240CCF1D00576F7C /* FSCalendarDelegationFactory.m in Sources */,
 				4CD674F922E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD789301F7DF731008DEC55 /* AKTWaiterCloudTests.m in Sources */,
+				4C46F3D12689CF7300381C2B /* ASFRPerson.m in Sources */,
 				4C9B974C240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
 				4C553677265355A2004B9DE2 /* AktOldPeopelCell.m in Sources */,
 				4C3D75B824A88ABF00D0F79A /* SettingsController.m in Sources */,
@@ -2043,8 +2187,11 @@
 				4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4CD228BF2521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B974F240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
+				4C46F3DD2689CF7300381C2B /* GLKitView.m in Sources */,
+				4C46F3D92689CF7300381C2B /* Utility.m in Sources */,
 				4CD22A682521D7760089F433 /* AktServiceStationListVC.m in Sources */,
 				4CDAD74F240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
+				4C46F3B92689CF7300381C2B /* ASFRManager.m in Sources */,
 				4C3D75FA24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DC24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
 				4CD2296C2521B3820089F433 /* AktWSigninListVC.m in Sources */,
@@ -2094,7 +2241,11 @@
 				4CD229702521B3820089F433 /* AktAgreementVC.m in Sources */,
 				4C9B9762240CCF1D00576F7C /* FSCalendarScopeHandle.m in Sources */,
 				4CD22A602521D7760089F433 /* DownOrdersController.m in Sources */,
+				4C46F3D52689CF7300381C2B /* ASFRCDManager.m in Sources */,
+				4C46F3BD2689CF7300381C2B /* AFRCDVersion+CoreDataProperties.m in Sources */,
+				4C46F3E12689CF7300381C2B /* ColorFormatUtil.m in Sources */,
 				4C61CF002635516000B2269C /* AktOldPersonDetailsVC.m in Sources */,
+				4C46F3CE2689CF7300381C2B /* AFRCDPerson+CoreDataProperties.m in Sources */,
 				4C9B975C240CCF1D00576F7C /* FSCalendar.m in Sources */,
 				4C3D75A124A88ABF00D0F79A /* AboutUsController.m in Sources */,
 				4CD6750322E94CDF00AB76AF /* QBAssetsCollectionViewLayout.m in Sources */,
@@ -2106,11 +2257,13 @@
 				4CD22AB92521DA880089F433 /* SignoutController.m in Sources */,
 				4CD674E822E94CDF00AB76AF /* KIImagesPickerViewController.m in Sources */,
 				4C3B0C5C24BC01F800588D63 /* RSAEncryptor.m in Sources */,
+				4C46F3CA2689CF7300381C2B /* AFRCDVersion+CoreDataClass.m in Sources */,
 				4C6144A3263290D700E58FF0 /* AktServicOldPersonVC.m in Sources */,
 				4CD22AB32521DA880089F433 /* AktWCMp3.m in Sources */,
 				4C9B9759240CCF1D00576F7C /* FSCalendarStickyHeader.m in Sources */,
 				4C9B9777240CCF1D00576F7C /* FSCalendarTransitionCoordinator.m in Sources */,
 				4CD22AC22521DA880089F433 /* UnfinishOrderTaskController.m in Sources */,
+				4C46F3C12689CF7300381C2B /* AFRCDPerson+CoreDataClass.m in Sources */,
 				4C3D75A724A88ABF00D0F79A /* AktFeedBackVC.m in Sources */,
 				4CD6750622E94CDF00AB76AF /* UIView+KIAdditions.m in Sources */,
 				4C3D75B324A88ABF00D0F79A /* AKTChangePhoneVC.m in Sources */,
@@ -2118,6 +2271,7 @@
 				4CD2291F2521B0880089F433 /* DownOrderCell.m in Sources */,
 				4CDAD747240F7E0E00CF9129 /* NSDictionary+Extension.m in Sources */,
 				4C31F09A241F58FF0084AC82 /* AktVipCmd.m in Sources */,
+				4C46F3EB2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */,
 				4CD674EE22E94CDF00AB76AF /* QBAssetsCollectionFooterView.m in Sources */,
 				4CD22ACE2521DACE0089F433 /* QRCodeService.m in Sources */,
 				4CD2291C2521B0880089F433 /* AktAddOrderUserInfoCell.m in Sources */,
@@ -2137,6 +2291,7 @@
 				4C9B9753240CCF1D00576F7C /* FSCalendarDelegationFactory.m in Sources */,
 				4CD674FA22E94CDF00AB76AF /* QBAssetsCollectionCheckmarkView.m in Sources */,
 				ADD7893B1F7DF731008DEC55 /* AKTWaiterCloudUITests.m in Sources */,
+				4C46F3D22689CF7300381C2B /* ASFRPerson.m in Sources */,
 				4C9B974D240CCF1D00576F7C /* FSCalendarCollectionView.m in Sources */,
 				4C553678265355A2004B9DE2 /* AktOldPeopelCell.m in Sources */,
 				4C3D75B924A88ABF00D0F79A /* SettingsController.m in Sources */,
@@ -2148,8 +2303,11 @@
 				4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */,
 				4CD228C02521902E0089F433 /* SearchDateController.m in Sources */,
 				4C9B9750240CCF1D00576F7C /* FSCalendarDelegationProxy.m in Sources */,
+				4C46F3DE2689CF7300381C2B /* GLKitView.m in Sources */,
+				4C46F3DA2689CF7300381C2B /* Utility.m in Sources */,
 				4CD22A692521D7760089F433 /* AktServiceStationListVC.m in Sources */,
 				4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */,
+				4C46F3BA2689CF7300381C2B /* ASFRManager.m in Sources */,
 				4C3D75FB24A88ABF00D0F79A /* AktUserImageVC.m in Sources */,
 				4C3D75DD24A88ABF00D0F79A /* UnfinifshController.m in Sources */,
 				4CD2296D2521B3820089F433 /* AktWSigninListVC.m in Sources */,
@@ -2344,7 +2502,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2368,7 +2526,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
@@ -2450,7 +2608,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 47QX444MCT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2473,7 +2631,7 @@
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3/Lame",
 					"$(PROJECT_DIR)/AKTWaiterCloud/Util/mp3",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Objc",
