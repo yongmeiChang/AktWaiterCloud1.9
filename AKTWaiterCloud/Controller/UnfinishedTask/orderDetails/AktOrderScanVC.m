@@ -39,6 +39,7 @@
     // 人脸识别
     ASF_CAMERA_DATA*   _offscreenIn;
     AVCaptureConnection *videoConnection;
+    UIView *faceRectView;
 }
 @property (weak, nonatomic) IBOutlet UIView *faceBgView; // 人脸识别背景
 @property(nonatomic,strong) SignoutController * sgController;
@@ -53,6 +54,7 @@
 @property (nonatomic, strong) NSMutableArray* arrayAllFaceRectView;
 @property (weak, nonatomic) IBOutlet GLKitView *glView;
 @property (weak, nonatomic) IBOutlet UIButton *btnChangefaceFrond;
+@property (weak, nonatomic) IBOutlet UILabel *labFace;
 
 @end
 
@@ -100,6 +102,7 @@
     }else{
         self.glView.hidden = NO;
         self.btnChangefaceFrond.hidden = NO;
+        self.labFace.hidden = NO;
         [self setNavTitle:@"人脸识别"];
         [self setFaceCamera];
     }
@@ -144,6 +147,7 @@
     if (isFace) { // 开启扫码操作
         self.glView.hidden = YES;
         self.btnChangefaceFrond.hidden = YES;
+        self.labFace.hidden = YES;
         [self stopCaptureSession];
         // 扫码
         topView.hidden = NO;
@@ -167,6 +171,7 @@
     }else{// 开启刷脸操作
         self.glView.hidden = NO;
         self.btnChangefaceFrond.hidden = NO;
+        self.labFace.hidden = NO;
         // 扫码
         topView.hidden = YES;
         leftView.hidden = YES;
@@ -192,10 +197,11 @@
 }
 
 - (IBAction)btnChangeCamera:(UIButton *)sender {
-    [self stopCaptureSession];
-    [self startCaptureSession];
     isback =! isback;
+    [self stopCaptureSession];
+    
     [self setupCaptureSession:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation] isFront:isback];
+    [self startCaptureSession];
 }
 
 #pragma mark - AVCaptureSession
@@ -557,49 +563,42 @@
         
         [self.glView renderWithCVPixelBuffer:cameraFrame orientation:0 mirror:NO];
         
-        if(self.arrayAllFaceRectView.count >= arrayFaceInfo.count)
+        if(self.arrayAllFaceRectView.count >= arrayFaceInfo.count)//隐藏人脸
         {
             for (NSUInteger face=arrayFaceInfo.count; face<self.arrayAllFaceRectView.count; face++) {
-                UIView *faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
+                faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
                 faceRectView.hidden = YES;
             }
         }
         else
         {
-//            for (NSUInteger face=self.arrayAllFaceRectView.count; face<arrayFaceInfo.count; face++) {
-//                UIStoryboard *faceRectStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                UIView *faceRectView = [faceRectStoryboard instantiateViewControllerWithIdentifier:@"FaceRectVideoController"].view;
-//                [self.view addSubview:faceRectView];
-//                [self.arrayAllFaceRectView addObject:faceRectView];
-//            }
+            for (NSUInteger face=self.arrayAllFaceRectView.count; face<arrayFaceInfo.count; face++) {
+                UIStoryboard *faceRectStoryboard = [UIStoryboard storyboardWithName:@"AktFace" bundle:nil];
+                UIView *faceRectView = [faceRectStoryboard instantiateViewControllerWithIdentifier:@"FaceRectVC"].view;
+                [self.view addSubview:faceRectView];
+                [self.arrayAllFaceRectView addObject:faceRectView];
+            }
         }
         
         for (NSUInteger face = 0; face < arrayFaceInfo.count; face++) {
-//            UIView *faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
+            faceRectView = [self.arrayAllFaceRectView objectAtIndex:face];
             ASFVideoFaceInfo *faceInfo = [arrayFaceInfo objectAtIndex:face];
-//            faceRectView.hidden = NO;
-//            faceRectView.frame = [self dataFaceRect2ViewFaceRect:faceInfo.faceRect];
-//            UILabel* labelInfo = (UILabel*)[faceRectView viewWithTag:1];
-//            [labelInfo setTextColor:[UIColor yellowColor]];
-//            labelInfo.font = [UIFont boldSystemFontOfSize:15];
-//            MInt32 gender = faceInfo.gender;
-//            NSString *genderInfo = gender == 0 ? @"男" : (gender == 1 ? @"女" : @"不确定");
-//            NSString *liveness = faceInfo.liveness == 1 ? @"活体" : (faceInfo.liveness == 0) ? @"非活体":@"未知";
-//            labelInfo.text = [NSString stringWithFormat:@"age:%d gender:%@ live:%@", faceInfo.age, genderInfo, liveness];
-//            UILabel* labelFaceAngle = (UILabel*)[faceRectView viewWithTag:6];
-//            labelFaceAngle.font = [UIFont boldSystemFontOfSize:15];
-//            [labelFaceAngle setTextColor:[UIColor yellowColor]];
-//            if(faceInfo.face3DAngle.status == 0) {
-//                labelFaceAngle.text = [NSString stringWithFormat:@"r=%.2f y=%.2f p=%.2f", faceInfo.face3DAngle.rollAngle, faceInfo.face3DAngle.yawAngle, faceInfo.face3DAngle.pitchAngle];
-//            } else {
-//                labelFaceAngle.text = @"Failed face 3D Angle";
-//            }
+            faceRectView.hidden = NO;
+            faceRectView.frame = [self dataFaceRect2ViewFaceRect:faceInfo.faceRect];
+            
+            // 获取的图像的宽 高度  判断是否超出圆形区域
+             CGFloat faceimgeW = faceInfo.faceRect.right-faceInfo.faceRect.left;
+             CGFloat faceimgeH = faceInfo.faceRect.bottom-faceInfo.faceRect.top;
+            if (faceimgeH>220 || faceimgeH>220 ) { // 200 代表圆形的宽和高
+                faceRectView.hidden = YES;
+            }
+            // 判断是否是活体 并且状态正常
             if (faceInfo.face3DAngle.status == 0 &&faceInfo.liveness == 1) { // 正常 活体 
                 CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
                 UIImage *imgF = [UIImage imageWithCIImage:image];
-                [self stopCaptureSession];
-                [self postImageData:imgF];
-                NSLog(@"人脸识别成功!");
+//                [self stopCaptureSession];
+//                [self postImageData:imgF];
+                NSLog(@"人脸活体识别成功!");
                 return;
             }
         }
@@ -609,13 +608,25 @@
 
 - (CGRect)dataFaceRect2ViewFaceRect:(MRECT)faceRect
 {
-    CGRect frameFaceRect = {0};
-    CGRect frameGLView = self.glView.frame;
-    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*(faceRect.right-faceRect.left)/SCREEN_WIDTH;
-    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*(faceRect.bottom-faceRect.top)/SCREEN_HEIGHT;
-    frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/SCREEN_WIDTH;
-    frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/SCREEN_HEIGHT;
+    // 获取的图像的宽 高度
+     CGFloat faceimgeW = faceRect.right-faceRect.left;
+     CGFloat faceimgeH = faceRect.bottom-faceRect.top;
     
+    // 视图的位置 大小
+    CGRect frameGLView = self.glView.frame;
+    
+    // 计算后的人脸捕捉位置 大小
+    CGRect frameFaceRect = {0};
+    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*(faceRect.right-faceRect.left)/720;
+    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*(faceRect.bottom-faceRect.top)/1280;
+    frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/720;
+    frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/1280;
+    NSLog(@"%f  %f",(SCREEN_WIDTH-200)/2,(SCREEN_HEIGHT-200)/2);
+    if (frameFaceRect.size.width>200 || frameFaceRect.size.height>200 || frameFaceRect.origin.x<(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y<140|| frameFaceRect.origin.x>150+(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y>140+150) { // 200 代表圆形的宽和高
+        faceRectView.hidden = YES;
+    }else{
+        faceRectView.hidden = NO;
+    }
     return frameFaceRect;
 }
 

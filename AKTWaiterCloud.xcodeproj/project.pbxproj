@@ -476,6 +476,7 @@
 		4CDAD750240F7E0E00CF9129 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDAD741240F7E0E00CF9129 /* UIImage+Color.m */; };
 		4CE6A04A23AB0B1600C41114 /* AktSuccseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6A04923AB0B1600C41114 /* AktSuccseView.m */; };
 		4CE6A04D23AB268300C41114 /* AktResetAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6A04C23AB268300C41114 /* AktResetAppView.m */; };
+		4CE9A706268C0038001595C8 /* AktFace.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE9A705268C0038001595C8 /* AktFace.storyboard */; };
 		4CFE1F6524B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		4CFE1F6624B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
 		4CFE1F6724B31BDE003B058D /* NSString+JSONToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */; };
@@ -818,6 +819,7 @@
 		4CE6A04923AB0B1600C41114 /* AktSuccseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktSuccseView.m; sourceTree = "<group>"; };
 		4CE6A04B23AB268300C41114 /* AktResetAppView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktResetAppView.h; sourceTree = "<group>"; };
 		4CE6A04C23AB268300C41114 /* AktResetAppView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktResetAppView.m; sourceTree = "<group>"; };
+		4CE9A705268C0038001595C8 /* AktFace.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AktFace.storyboard; sourceTree = "<group>"; };
 		4CFE1F6324B31BDE003B058D /* NSString+JSONToDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSONToDictionary.m"; sourceTree = "<group>"; };
 		4CFE1F6424B31BDE003B058D /* NSString+JSONToDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSONToDictionary.h"; sourceTree = "<group>"; };
 		85608984DD85E9CE41839972 /* Pods-AKTWaiterCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTWaiterCloud.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKTWaiterCloud/Pods-AKTWaiterCloud.release.xcconfig"; sourceTree = "<group>"; };
@@ -1602,6 +1604,7 @@
 				ADD789161F7DF730008DEC55 /* AppDelegate.h */,
 				ADD789171F7DF730008DEC55 /* AppDelegate.m */,
 				ADD789211F7DF730008DEC55 /* LaunchScreen.storyboard */,
+				4CE9A705268C0038001595C8 /* AktFace.storyboard */,
 				ADD789241F7DF731008DEC55 /* Info.plist */,
 				ADD789251F7DF731008DEC55 /* main.m */,
 				ADD789611F7DFB74008DEC55 /* PrefixHeader.pch */,
@@ -1799,6 +1802,7 @@
 				4C3D75D824A88ABF00D0F79A /* UnfinifshController.xib in Resources */,
 				4CD22A5B2521D7760089F433 /* DownOrdersController.xib in Resources */,
 				4CD22A6D2521D7760089F433 /* ServicePojController.xib in Resources */,
+				4CE9A706268C0038001595C8 /* AktFace.storyboard in Resources */,
 				ADD789231F7DF730008DEC55 /* LaunchScreen.storyboard in Resources */,
 				4CD228E9252192220089F433 /* NotifyCell.xib in Resources */,
 				4CD229522521B3570089F433 /* PlanTaskController.xib in Resources */,

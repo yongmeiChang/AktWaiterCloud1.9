@@ -151,7 +151,7 @@
                 NSLog(@"process失败：%ld", mr);
                 break;
             }
-            
+            [self.arcsoftFace setLivenessThreshold:0.8f]; // 设置活体阈值
             ASF_Face3DAngle face3DAngle = {0};
             if(ASF_MOK != [self.arcsoftFace getFace3DAngle:&face3DAngle] || face3DAngle.num != multiFaceInfo.faceNum)
                 break;
