@@ -1185,22 +1185,21 @@
 }
 #pragma mark - 距离
 -(void)distanceBetween:(CLLocationDistance)distance{
-
-        if (distance>400){
-            if (self.type ==0) {
-                self.statusPost = @"签入定位异常";
-            }else{
-                self.statusPost = @"签出定位异常";
-            }
+    if (distance>400){
+        if (self.type ==0) {
+            self.statusPost = @"签入定位异常";
+        }else{
+            self.statusPost = @"签出定位异常";
+        }
         self.distanceLabel.textColor = [UIColor redColor];
         self.distanceLabel.text = [NSString stringWithFormat:@"超出%0.1f米",distance];
     }else{
-            if (self.type ==0) {
-                self.statusPost = @"签入定位正常";
-            }else{
-                self.statusPost = @"签出定位正常";
-            }
-         self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f米",distance];
+        if (self.type ==0) {
+            self.statusPost = @"签入定位正常";
+        }else{
+            self.statusPost = @"签出定位正常";
+        }
+     self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f米",distance];
     }
     self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
     if (isPostLocation) {

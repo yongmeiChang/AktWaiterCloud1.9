@@ -40,6 +40,7 @@
     ASF_CAMERA_DATA*   _offscreenIn;
     AVCaptureConnection *videoConnection;
     UIView *faceRectView;
+    CGFloat angle;
 }
 @property (weak, nonatomic) IBOutlet UIView *faceBgView; // 人脸识别背景
 @property(nonatomic,strong) SignoutController * sgController;
@@ -55,6 +56,7 @@
 @property (weak, nonatomic) IBOutlet GLKitView *glView;
 @property (weak, nonatomic) IBOutlet UIButton *btnChangefaceFrond;
 @property (weak, nonatomic) IBOutlet UILabel *labFace;
+@property (weak, nonatomic) IBOutlet UIImageView *imgFaceC;
 
 @end
 
@@ -74,7 +76,7 @@
     self.netWorkErrorView.hidden = YES;
     
     _QRCodeWidth = SCREEN_WIDTH*0.7;
-
+    angle = 0; // 旋转角度
     if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"1"]) {//扫码、 刷脸  权限打开
         [self setupMaskView];//设置扫描区域之外的阴影视图
 
@@ -100,11 +102,14 @@
             [self setNavTitle:@"二维码扫描签出"];
         }
     }else{
+        
         self.glView.hidden = NO;
         self.btnChangefaceFrond.hidden = NO;
         self.labFace.hidden = NO;
+        self.imgFaceC.hidden = NO;
         [self setNavTitle:@"人脸识别"];
         [self setFaceCamera];
+        [self startAnimation]; // 开始动画旋转
     }
         
 
@@ -160,6 +165,7 @@
         self.glView.hidden = YES;
         self.btnChangefaceFrond.hidden = YES;
         self.labFace.hidden = YES;
+        self.imgFaceC.hidden = YES;
         [self stopCaptureSession];
         // 扫码
         topView.hidden = NO;
@@ -184,6 +190,7 @@
         self.glView.hidden = NO;
         self.btnChangefaceFrond.hidden = NO;
         self.labFace.hidden = NO;
+        self.imgFaceC.hidden = NO;
         // 扫码
         topView.hidden = YES;
         leftView.hidden = YES;
@@ -196,7 +203,7 @@
         self.faceBgView.hidden = NO;
         [self setFaceCamera];
         [self startCaptureSession];
-       
+        [self startAnimation]; // 开始动画旋转
         if ([self.ordertype isEqualToString:@"1"]) {
             [self setNomalRightNavTilte:@"" RightTitleTwo:@"扫码签入"];
         }else{
@@ -638,7 +645,7 @@
                     }else{// 人脸采集
                         [self postFaceInfoDataToService:imgF];
                     }
-                    NSLog(@"人脸活体识别成功!");
+                    
                     return;
                 }
             }
@@ -664,15 +671,21 @@
     frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/720;
     frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/1280;
 
-//    if (frameFaceRect.size.width>200 || frameFaceRect.size.height>200 || frameFaceRect.origin.x<(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y<140|| frameFaceRect.origin.x>150+(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y>140+150) { // 200 代表圆形的宽和高
-//        faceRectView.hidden = YES;
-//    }else{
-//        faceRectView.hidden = NO;
-//    }
     return frameFaceRect;
     
 }
 
+#pragma mark - animation
+- (void)startAnimation{
+CGAffineTransform endAngle = CGAffineTransformMakeRotation(angle * (M_PI / 180.0f));
+[UIView animateWithDuration:0.03 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+ self.imgFaceC.transform = endAngle;
+} completion:^(BOOL finished) {
+    angle += 10;
+    [self startAnimation];
+}];
+
+}
 /*
 #pragma mark - Navigation
 

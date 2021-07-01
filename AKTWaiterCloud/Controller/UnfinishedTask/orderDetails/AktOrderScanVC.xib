@@ -14,6 +14,7 @@
                 <outlet property="btnChangefaceFrond" destination="Mpe-XH-3sq" id="JFU-SE-5wf"/>
                 <outlet property="faceBgView" destination="wQp-OU-xA7" id="EAl-wG-B7M"/>
                 <outlet property="glView" destination="mOy-YH-qgQ" id="DNZ-Bz-6Xg"/>
+                <outlet property="imgFaceC" destination="zGG-fS-oce" id="mid-bd-jAz"/>
                 <outlet property="labFace" destination="PGj-rJ-g5l" id="wgd-Dr-v7k"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -70,6 +71,9 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_c" translatesAutoresizingMaskIntoConstraints="NO" id="zGG-fS-oce">
+                            <rect key="frame" x="97" y="130" width="220" height="220"/>
+                        </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请将摄像头对准服务对象正脸" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGj-rJ-g5l">
                             <rect key="frame" x="0.0" y="64" width="414" height="36"/>
                             <constraints>
@@ -100,8 +104,10 @@
                         <constraint firstItem="eTi-df-XER" firstAttribute="leading" secondItem="wQp-OU-xA7" secondAttribute="leading" id="2bH-wU-KaQ"/>
                         <constraint firstItem="Eea-xO-6q0" firstAttribute="top" secondItem="eTi-df-XER" secondAttribute="bottom" id="4xQ-Sj-7eg"/>
                         <constraint firstItem="dJO-zx-7Qa" firstAttribute="leading" secondItem="Eea-xO-6q0" secondAttribute="trailing" id="7gQ-Id-zDW"/>
+                        <constraint firstItem="dJO-zx-7Qa" firstAttribute="top" secondItem="zGG-fS-oce" secondAttribute="top" constant="10" id="Af8-9C-7L4"/>
                         <constraint firstAttribute="bottom" secondItem="Mpe-XH-3sq" secondAttribute="bottom" constant="120" id="Bb3-Ua-yEQ"/>
                         <constraint firstItem="mOy-YH-qgQ" firstAttribute="top" secondItem="wQp-OU-xA7" secondAttribute="top" id="Ci2-n1-Neu"/>
+                        <constraint firstItem="dJO-zx-7Qa" firstAttribute="bottom" secondItem="zGG-fS-oce" secondAttribute="bottom" constant="-10" id="G5I-Ci-Er0"/>
                         <constraint firstAttribute="bottom" secondItem="Eea-xO-6q0" secondAttribute="bottom" id="GtD-Tg-yFb"/>
                         <constraint firstItem="IU3-fA-JJD" firstAttribute="leading" secondItem="dJO-zx-7Qa" secondAttribute="trailing" id="I6l-vm-DWG"/>
                         <constraint firstItem="FDj-zm-3GH" firstAttribute="leading" secondItem="Eea-xO-6q0" secondAttribute="trailing" id="ITy-kW-pxC"/>
@@ -111,9 +117,11 @@
                         <constraint firstItem="PGj-rJ-g5l" firstAttribute="top" secondItem="wQp-OU-xA7" secondAttribute="top" constant="64" id="LW9-yS-VVM"/>
                         <constraint firstItem="Eea-xO-6q0" firstAttribute="leading" secondItem="wQp-OU-xA7" secondAttribute="leading" id="Q9U-9K-nWe"/>
                         <constraint firstAttribute="trailing" secondItem="eTi-df-XER" secondAttribute="trailing" id="WSa-wN-B1x"/>
+                        <constraint firstItem="dJO-zx-7Qa" firstAttribute="leading" secondItem="zGG-fS-oce" secondAttribute="leading" constant="10" id="YOq-Tf-jWQ"/>
                         <constraint firstAttribute="trailing" secondItem="PGj-rJ-g5l" secondAttribute="trailing" id="Z0l-XT-bhZ"/>
                         <constraint firstItem="Mpe-XH-3sq" firstAttribute="centerX" secondItem="wQp-OU-xA7" secondAttribute="centerX" id="bBj-m8-bX3"/>
                         <constraint firstAttribute="bottom" secondItem="IU3-fA-JJD" secondAttribute="bottom" id="jGo-Fw-nJw"/>
+                        <constraint firstItem="dJO-zx-7Qa" firstAttribute="trailing" secondItem="zGG-fS-oce" secondAttribute="trailing" constant="-10" id="jPi-Eu-f2H"/>
                         <constraint firstAttribute="trailing" secondItem="IU3-fA-JJD" secondAttribute="trailing" id="kRN-gu-92z"/>
                         <constraint firstItem="mOy-YH-qgQ" firstAttribute="leading" secondItem="wQp-OU-xA7" secondAttribute="leading" id="lMy-iO-BBF"/>
                         <constraint firstAttribute="bottom" secondItem="mOy-YH-qgQ" secondAttribute="bottom" constant="52" id="qBA-cE-svt"/>
@@ -141,6 +149,7 @@
     <resources>
         <image name="face_bg-1" width="221" height="221"/>
         <image name="face_btn" width="56" height="56"/>
+        <image name="face_c" width="100" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
