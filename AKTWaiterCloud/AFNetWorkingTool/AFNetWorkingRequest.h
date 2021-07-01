@@ -28,7 +28,7 @@
 #define AKTFindAdvancedMethod @"findAdvanced" // 工单签入 签出配置 权限
 #define AKTOrderStopMethod @"stopOrder" // 工单终止 上传原因
 #define AKTCheckSignInStatusMethod @"checkSignInStatus" // 判断是否有签入工单
-#define AKTOldPeopleFaceOrNoMethod @"existFace" // 查询老人老人是否人脸采集
+#define AKTOldPeopleFaceOrNoMethod @"existFace" // 查询老人是否人脸采集
 
 
 @interface AFNetWorkingRequest : NSObject
@@ -119,7 +119,7 @@
                     success:(void (^)(id responseObject))success
                     failure:(void (^)(NSError *error))failure;
 
-/* 判断老人是否进行了人脸识别*/
+/* 判断老人是否进行了人脸采集*/
 -(void)requestOldPeoPleAtTheFaceInfo:(NSDictionary *)param
                        type:(HttpRequestType)type
                     success:(void (^)(id responseObject))success

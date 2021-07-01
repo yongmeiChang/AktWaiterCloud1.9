@@ -119,6 +119,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    // 获取老人采集信息
+    [self requestOldPeopleinfo];
     
     if (isFace) { // 开启扫码操作
         [self startCaptureSession];
@@ -131,6 +133,13 @@
     [super viewWillDisappear:animated];
     [_session stopRunning];
     [self stopCaptureSession];
+}
+#pragma mark - 获取老人是否进行了人脸采集
+-(void)requestOldPeopleinfo{
+    [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
+        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existflag"]]; // existflag 0未采集 1已采集
+        strOldpeople = [responseObject objectForKey:@"message"];
+    } failure:nil];
 }
 
 #pragma mark - click back
@@ -433,13 +442,13 @@
 }
 
 #pragma mark - post face info
--(void)postImageData:(UIImage *)image{
+-(void)postImageData:(UIImage *)image{ // 人脸识别
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"识别中..."];
     [[AktVipCmd sharedTool] requestFaceRecognition:@{@"customerImg":[self imageToBaseString:image],@"imgType":@"png"} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSLog(@"---%@",responseObject);
         [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
         if ([[responseObject objectForKey:@"customerUkey"] isEqualToString:kString(self.orderinfo.customerUkey)]) {
-            // 扫码完成之后 进入到签入 签出页面
+            // 人脸识别完成之后 进入到签入 签出页面
             _sgController.isnewLation = self.isnewLation;
             _sgController.isnewlate = self.isnewlate;
             _sgController.isnewearly = self.isnewearly;
@@ -457,6 +466,29 @@
 //        [self  startCaptureSession];
         [[AppDelegate sharedDelegate] hidHUD];
         [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+-(void)postFaceInfoDataToService:(UIImage *)oldImage{// 人脸采集
+    //上传
+    [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"采集中..."];
+    NSDictionary * parameters =@{@"customerName":kString(self.orderinfo.customerName),@"customerUkey":kString(self.orderinfo.customerUkey),@"customerImg":[self imageToBaseString:oldImage],@"imgType":@"png"};
+    [[AktVipCmd sharedTool] requestFaceCollect:parameters type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
+        NSLog(@"---%@",responseObject);
+        [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
+        [[AppDelegate sharedDelegate] hidHUD];
+        // 人脸采集完成之后 进入到签入 签出页面
+        _sgController.isnewLation = self.isnewLation;
+        _sgController.isnewlate = self.isnewlate;
+        _sgController.isnewearly = self.isnewearly;
+        _sgController.isnewserviceTime = self.isnewserviceTime;
+        _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
+        _sgController.orderinfo = self.orderinfo;
+        _sgController.findAdmodel = self.detailsModel;
+        [self.navigationController pushViewController:_sgController animated:YES];
+        
+    } failure:^(NSError * _Nonnull error) {
+        [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
+        [[AppDelegate sharedDelegate] hidHUD];
     }];
 }
 #pragma mark - UIImage图片转成Base64字符串
@@ -600,7 +632,12 @@
                     CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
                     UIImage *imgF = [UIImage imageWithCIImage:image];
                     [self stopCaptureSession];
-                    [self postImageData:imgF];
+                 
+                    if ([isOldpeopleface isEqualToString:@"1"]) {//人脸识别
+                        [self postImageData:imgF];
+                    }else{// 人脸采集
+                        [self postFaceInfoDataToService:imgF];
+                    }
                     NSLog(@"人脸活体识别成功!");
                     return;
                 }

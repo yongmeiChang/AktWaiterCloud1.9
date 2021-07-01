@@ -212,7 +212,7 @@ success:(void (^)(id responseObject))success
           failure(error);
       }];
 }
-/* 判断老人是否进行了人脸识别*/
+/* 判断老人是否进行了人脸采集*/
 -(void)requestOldPeoPleAtTheFaceInfo:(NSDictionary *)param
                        type:(HttpRequestType)type
                     success:(void (^)(id responseObject))success
