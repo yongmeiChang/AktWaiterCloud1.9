@@ -663,8 +663,8 @@
         
         NSUInteger sizeOrigin = finallImageData.length;
         NSUInteger sizeOriginKB = sizeOrigin / 1024;
-        NSLog(@"当前降到的质量：%ld", (unsigned long)sizeOriginKB);
-        NSLog(@"\nstart：%zd\nend：%zd\nindex：%zd\n压缩系数：%lf", start, end, (unsigned long)index, [arr[index] floatValue]);
+//        NSLog(@"当前降到的质量：%ld", (unsigned long)sizeOriginKB);
+//        NSLog(@"\nstart：%zd\nend：%zd\nindex：%zd\n压缩系数：%lf", start, end, (unsigned long)index, [arr[index] floatValue]);
         
         if (sizeOriginKB > maxSize) {
             start = index + 1;

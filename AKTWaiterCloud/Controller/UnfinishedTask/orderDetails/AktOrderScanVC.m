@@ -142,7 +142,7 @@
 #pragma mark - 获取老人是否进行了人脸采集
 -(void)requestOldPeopleinfo{
     [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
-        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existflag"]]; // existflag 0未采集 1已采集
+        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existFlag"]]; // existflag 0未采集 1已采集
         strOldpeople = [responseObject objectForKey:@"message"];
     } failure:nil];
 }

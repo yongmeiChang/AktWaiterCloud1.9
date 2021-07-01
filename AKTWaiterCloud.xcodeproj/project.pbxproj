@@ -14,6 +14,7 @@
 		4C17AD3024207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3124207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
 		4C17AD3224207CFD0006C45F /* AktLoginCmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */; };
+		4C22D799268DC35400545E81 /* ArcSoftFaceEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C22D798268DC35400545E81 /* ArcSoftFaceEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C25C29F24C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
 		4C25C2A024C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
 		4C25C2A124C9644F007AF277 /* WSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */; };
@@ -139,7 +140,6 @@
 		4C46F3EA2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */; };
 		4C46F3EB2689CF7300381C2B /* ASFVideoProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */; };
 		4C46F3EC2689CF7300381C2B /* ASFVideoProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46F3B62689CF7300381C2B /* ASFVideoProcessor.h */; };
-		4C46F40D2689D32D00381C2B /* ArcSoftFaceEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C4AD7AC23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
 		4C4AD7AD23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
 		4C4AD7AE23B08962005DEDE4 /* DateAndTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */; };
@@ -540,7 +540,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C46F40D2689D32D00381C2B /* ArcSoftFaceEngine.framework in Embed Frameworks */,
+				4C22D799268DC35400545E81 /* ArcSoftFaceEngine.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +553,7 @@
 		4C0C65D726539786004414B2 /* AktOldPeopleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktOldPeopleView.m; sourceTree = "<group>"; };
 		4C17AD2E24207CFD0006C45F /* AktLoginCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktLoginCmd.h; sourceTree = "<group>"; };
 		4C17AD2F24207CFD0006C45F /* AktLoginCmd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AktLoginCmd.m; sourceTree = "<group>"; };
+		4C22D798268DC35400545E81 /* ArcSoftFaceEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcSoftFaceEngine.framework; sourceTree = "<group>"; };
 		4C25C29D24C9644F007AF277 /* WSPlaceholderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSPlaceholderTextView.h; sourceTree = "<group>"; };
 		4C25C29E24C9644F007AF277 /* WSPlaceholderTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSPlaceholderTextView.m; sourceTree = "<group>"; };
 		4C31F096241F58FF0084AC82 /* AktVipCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AktVipCmd.h; sourceTree = "<group>"; };
@@ -618,7 +619,6 @@
 		4C46F3B12689CF7300381C2B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4C46F3B52689CF7300381C2B /* ASFVideoProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ASFVideoProcessor.mm; sourceTree = "<group>"; };
 		4C46F3B62689CF7300381C2B /* ASFVideoProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFVideoProcessor.h; sourceTree = "<group>"; };
-		4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcSoftFaceEngine.framework; sourceTree = "<group>"; };
 		4C4AD7A823B08962005DEDE4 /* DateAndTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimePickerView.m; sourceTree = "<group>"; };
 		4C4AD7A923B08962005DEDE4 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		4C4AD7AA23B08962005DEDE4 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
@@ -928,6 +928,7 @@
 		269E9CE103E1BCA8353D8E26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C22D798268DC35400545E81 /* ArcSoftFaceEngine.framework */,
 				ADD562C31FDFCF5B00898AC3 /* AVFoundation.framework */,
 				AD43DA321FA8134200D3FBAA /* libsqlite3.0.tbd */,
 				ADBB6A231F9841F000DDC01C /* Security.framework */,
@@ -1569,7 +1570,6 @@
 		ADD7890A1F7DF730008DEC55 = {
 			isa = PBXGroup;
 			children = (
-				4C46F40A2689D30300381C2B /* ArcSoftFaceEngine.framework */,
 				AD93664320AA87D500EEB02C /* china_city_data.json */,
 				ADD09B531F998A1D00CFEC52 /* Images.xcassets */,
 				ADD789151F7DF730008DEC55 /* AKTWaiterCloud */,

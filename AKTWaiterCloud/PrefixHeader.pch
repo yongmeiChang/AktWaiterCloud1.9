@@ -113,8 +113,8 @@ _Pragma("clang diagnostic pop") \
 #define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
 #define Bugly_AppId @"d5a027a07b"  // 个人账号，每一个APP对应唯一的AppKey
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
-#define HR_appid @"DZ6Rd8aAApEmSUvJUDXMRwVFPBUEW5uUP6NyEwjm8xdx" // 虹软ID
-#define HR_SDKkey @"52Ps3PRkiRxrHVh7M871NJ8tcJb8h8BBWkhdS777T57B" // 虹软SDKkey
+#define HR_appid @"8vcbkbVjwemYYeyBVMpNfnKfSgqw9S6tFokaRjLLTqjq" // 虹软ID  SDK3.0
+#define HR_SDKkey @"4ZSZsq5knvNNAr1g5cZYe4pJ5hjFLKxA3uCEqKEUkddL" // 虹软SDKkey  SDK3.0
 #define AktPageSize @"10" // 每页条数
 /**网络状态*/
 #define Logining @"登录中..."

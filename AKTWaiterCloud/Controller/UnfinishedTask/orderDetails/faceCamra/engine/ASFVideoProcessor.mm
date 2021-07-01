@@ -122,7 +122,7 @@
                                                          format:cameraData->u32PixelArrayFormat
                                                         faceRes:&multiFaceInfo];
             if(ASF_MOK != mr || multiFaceInfo.faceNum == 0) {
-                NSLog(@"FD结果：%ld", mr);
+//                NSLog(@"FD结果：%ld", mr);
                 
                 break;
             }
@@ -146,9 +146,9 @@
                                             faceRes:&multiFaceInfo
                                                mask:ASF_FACE3DANGLE | ASF_AGE | ASF_GENDER | ASF_LIVENESS];
             NSTimeInterval cost = [[NSDate date] timeIntervalSince1970] - begin;
-            NSLog(@"processTime=%dms", (int)(cost * 1000));
+//            NSLog(@"processTime=%dms", (int)(cost * 1000));
             if(ASF_MOK != mr) {
-                NSLog(@"process失败：%ld", mr);
+//                NSLog(@"process失败：%ld", mr);
                 break;
             }
             [self.arcsoftFace setLivenessThreshold:0.8f]; // 设置活体阈值
@@ -206,7 +206,7 @@
                                                                       faceInfo:&singleFaceInfo
                                                                        feature:&faceFeature];
                     NSTimeInterval cost = [[NSDate date] timeIntervalSince1970] - begin;
-                    NSLog(@"FRTime=%dms", (int)(cost * 1000));
+//                    NSLog(@"FRTime=%dms", (int)(cost * 1000));
                     if(mr == ASF_MOK)
                     {
 //                        ASFRPerson* currentPerson = [[ASFRPerson alloc] init];
