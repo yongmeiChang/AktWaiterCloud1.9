@@ -144,6 +144,9 @@
     }
 }
 -(void)SearchBarClick{
+    // 切换识别方式 移除人脸对焦
+    [faceRectView removeFromSuperview];
+    
     if (isFace) { // 开启扫码操作
         self.glView.hidden = YES;
         self.btnChangefaceFrond.hidden = YES;
@@ -574,7 +577,7 @@
         {
             for (NSUInteger face=self.arrayAllFaceRectView.count; face<arrayFaceInfo.count; face++) {
                 UIStoryboard *faceRectStoryboard = [UIStoryboard storyboardWithName:@"AktFace" bundle:nil];
-                UIView *faceRectView = [faceRectStoryboard instantiateViewControllerWithIdentifier:@"FaceRectVC"].view;
+                faceRectView = [faceRectStoryboard instantiateViewControllerWithIdentifier:@"FaceRectVC"].view;
                 [self.view addSubview:faceRectView];
                 [self.arrayAllFaceRectView addObject:faceRectView];
             }
@@ -586,21 +589,23 @@
             faceRectView.hidden = NO;
             faceRectView.frame = [self dataFaceRect2ViewFaceRect:faceInfo.faceRect];
             
-            // 获取的图像的宽 高度  判断是否超出圆形区域
-             CGFloat faceimgeW = faceInfo.faceRect.right-faceInfo.faceRect.left;
-             CGFloat faceimgeH = faceInfo.faceRect.bottom-faceInfo.faceRect.top;
-            if (faceimgeH>220 || faceimgeH>220 ) { // 200 代表圆形的宽和高
-                faceRectView.hidden = YES;
-            }
             // 判断是否是活体 并且状态正常
-            if (faceInfo.face3DAngle.status == 0 &&faceInfo.liveness == 1) { // 正常 活体 
-                CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
-                UIImage *imgF = [UIImage imageWithCIImage:image];
-//                [self stopCaptureSession];
-//                [self postImageData:imgF];
-                NSLog(@"人脸活体识别成功!");
-                return;
+            CGRect faceInView = {0};
+            faceInView = faceRectView.frame;
+            if (faceInView.size.width>200 || faceInView.size.height>200 || faceInView.origin.x<(SCREEN_WIDTH-200)/2 || faceInView.origin.y<140|| faceInView.origin.x>150+(SCREEN_WIDTH-200)/2 || faceInView.origin.y>140+150) { // 200 代表圆形的宽和高
+                faceRectView.hidden = YES;
+            }else{// 人脸在有效区域内 偏航角不超过10°
+                faceRectView.hidden = NO;
+                if (faceInfo.face3DAngle.pitchAngle < 10 && faceInfo.face3DAngle.rollAngle < 10 && faceInfo.face3DAngle.yawAngle < 10 && faceInfo.face3DAngle.status == 0 && faceInfo.liveness == 1) { // 正常 活体
+                    CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
+                    UIImage *imgF = [UIImage imageWithCIImage:image];
+                    [self stopCaptureSession];
+                    [self postImageData:imgF];
+                    NSLog(@"人脸活体识别成功!");
+                    return;
+                }
             }
+            
         }
     });
     [Utility freeCameraData:cameraData];
@@ -617,17 +622,18 @@
     
     // 计算后的人脸捕捉位置 大小
     CGRect frameFaceRect = {0};
-    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*(faceRect.right-faceRect.left)/720;
-    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*(faceRect.bottom-faceRect.top)/1280;
+    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*faceimgeW/720;
+    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*faceimgeH/1280;
     frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/720;
     frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/1280;
-    NSLog(@"%f  %f",(SCREEN_WIDTH-200)/2,(SCREEN_HEIGHT-200)/2);
-    if (frameFaceRect.size.width>200 || frameFaceRect.size.height>200 || frameFaceRect.origin.x<(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y<140|| frameFaceRect.origin.x>150+(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y>140+150) { // 200 代表圆形的宽和高
-        faceRectView.hidden = YES;
-    }else{
-        faceRectView.hidden = NO;
-    }
+
+//    if (frameFaceRect.size.width>200 || frameFaceRect.size.height>200 || frameFaceRect.origin.x<(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y<140|| frameFaceRect.origin.x>150+(SCREEN_WIDTH-200)/2 || frameFaceRect.origin.y>140+150) { // 200 代表圆形的宽和高
+//        faceRectView.hidden = YES;
+//    }else{
+//        faceRectView.hidden = NO;
+//    }
     return frameFaceRect;
+    
 }
 
 /*
