@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="btnChangefaceFrond" destination="Mpe-XH-3sq" id="JFU-SE-5wf"/>
                 <outlet property="faceBgView" destination="wQp-OU-xA7" id="EAl-wG-B7M"/>
+                <outlet property="faceCircleH" destination="I3f-xO-5dd" id="DJy-Zh-QkF"/>
                 <outlet property="glView" destination="mOy-YH-qgQ" id="DNZ-Bz-6Xg"/>
                 <outlet property="imgFaceC" destination="zGG-fS-oce" id="mid-bd-jAz"/>
                 <outlet property="labFace" destination="PGj-rJ-g5l" id="wgd-Dr-v7k"/>
@@ -29,15 +30,14 @@
                     <subviews>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mOy-YH-qgQ" customClass="GLKitView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
-                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" systemColor="systemRedColor"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_bg-1" translatesAutoresizingMaskIntoConstraints="NO" id="dJO-zx-7Qa">
-                            <rect key="frame" x="107" y="140" width="200" height="200"/>
+                            <rect key="frame" x="50" y="140" width="314" height="314"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="200" id="7DQ-tS-baw"/>
-                                <constraint firstAttribute="width" constant="200" id="eNg-wc-5nF"/>
+                                <constraint firstAttribute="height" constant="314" id="I3f-xO-5dd"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTi-df-XER">
@@ -51,28 +51,34 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eea-xO-6q0">
-                            <rect key="frame" x="0.0" y="140" width="107" height="712"/>
+                            <rect key="frame" x="0.0" y="140" width="50" height="712"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="mRd-tF-i6L"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IU3-fA-JJD">
-                            <rect key="frame" x="307" y="140" width="107" height="712"/>
+                            <rect key="frame" x="364" y="140" width="50" height="712"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="Olv-ro-tN2"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDj-zm-3GH">
-                            <rect key="frame" x="107" y="340" width="200" height="512"/>
+                            <rect key="frame" x="50" y="454" width="314" height="398"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_c" translatesAutoresizingMaskIntoConstraints="NO" id="zGG-fS-oce">
-                            <rect key="frame" x="97" y="130" width="220" height="220"/>
+                            <rect key="frame" x="40" y="130" width="334" height="334"/>
                         </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请将摄像头对准服务对象正脸" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGj-rJ-g5l">
                             <rect key="frame" x="0.0" y="64" width="414" height="36"/>
@@ -152,6 +158,9 @@
         <image name="face_c" width="100" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

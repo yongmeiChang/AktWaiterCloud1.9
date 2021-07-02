@@ -17,6 +17,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CoreMedia.h>
 
+#define imgeWidth 720
+#define imgeHight 1280
+
+#define AKT_FaceCircleW (SCREEN_WIDTH-150) // 设置人脸识别 圆框的直径
+#define AKT_Face3DAngle 10  // 设置人脸的偏航角度
+
 @interface AktOrderScanVC ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ASFVideoProcessorDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 {
     // 扫码相关视图
@@ -57,6 +63,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnChangefaceFrond;
 @property (weak, nonatomic) IBOutlet UILabel *labFace;
 @property (weak, nonatomic) IBOutlet UIImageView *imgFaceC;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *faceCircleH;
 
 @end
 
@@ -70,6 +77,7 @@
      isback = false;
     isOldpeopleface = [[NSString alloc] init];
     strOldpeople = [[NSString alloc] init];
+    self.faceCircleH.constant = SCREEN_WIDTH-100;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
         
@@ -127,7 +135,7 @@
     // 获取老人采集信息
     [self requestOldPeopleinfo];
     
-    if (isFace) { // 开启扫码操作
+    if (isFace) { // 开启刷脸操作
         [self startCaptureSession];
     }else{
         [_session startRunning];
@@ -631,11 +639,11 @@
             // 判断是否是活体 并且状态正常
             CGRect faceInView = {0};
             faceInView = faceRectView.frame;
-            if (faceInView.size.width>200 || faceInView.size.height>200 || faceInView.origin.x<(SCREEN_WIDTH-200)/2 || faceInView.origin.y<140|| faceInView.origin.x>150+(SCREEN_WIDTH-200)/2 || faceInView.origin.y>140+150) { // 200 代表圆形的宽和高
+            if (faceInView.size.width>AKT_FaceCircleW || faceInView.size.height>AKT_FaceCircleW || faceInView.origin.x<(SCREEN_WIDTH-AKT_FaceCircleW)/2 || faceInView.origin.y<140|| faceInView.origin.x>AKT_FaceCircleW+(SCREEN_WIDTH-AKT_FaceCircleW)/2 || faceInView.origin.y>140+AKT_FaceCircleW) {
                 faceRectView.hidden = YES;
             }else{// 人脸在有效区域内 偏航角不超过10°
                 faceRectView.hidden = NO;
-                if (faceInfo.face3DAngle.pitchAngle < 10 && faceInfo.face3DAngle.rollAngle < 10 && faceInfo.face3DAngle.yawAngle < 10 && faceInfo.face3DAngle.status == 0 && faceInfo.liveness == 1) { // 正常 活体
+                if (faceInfo.face3DAngle.pitchAngle < AKT_Face3DAngle && faceInfo.face3DAngle.rollAngle < AKT_Face3DAngle && faceInfo.face3DAngle.yawAngle < AKT_Face3DAngle && faceInfo.face3DAngle.status == 0 && faceInfo.liveness == 1) { // 正常 活体
                     CIImage *image = [CIImage imageWithCVPixelBuffer:cameraFrame];
                     UIImage *imgF = [UIImage imageWithCIImage:image];
                     [self stopCaptureSession];
@@ -666,10 +674,10 @@
     
     // 计算后的人脸捕捉位置 大小
     CGRect frameFaceRect = {0};
-    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*faceimgeW/720;
-    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*faceimgeH/1280;
-    frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/720;
-    frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/1280;
+    frameFaceRect.size.width = CGRectGetWidth(frameGLView)*faceimgeW/imgeWidth;
+    frameFaceRect.size.height = CGRectGetHeight(frameGLView)*faceimgeH/imgeHight;
+    frameFaceRect.origin.x = CGRectGetWidth(frameGLView)*faceRect.left/imgeWidth;
+    frameFaceRect.origin.y = CGRectGetHeight(frameGLView)*faceRect.top/imgeHight;
 
     return frameFaceRect;
     
