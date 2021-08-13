@@ -10,7 +10,7 @@
 #import "QRCodeService.h"
 #import "QRCodeViewController.h"
 
-#import "LoginViewController.h"
+//#import "LoginViewController.h"
 @interface HandCodeController ()
 @property(nonatomic,weak) IBOutlet UILabel * titleLabel;
 @property(nonatomic,weak) IBOutlet UIButton * submitBtn;
@@ -36,18 +36,18 @@
 }
 #pragma mark - back click
 -(void)LeftBarClick{
-    if(![self.type isEqualToString:@"logincontoller"]){
+//    if(![self.type isEqualToString:@"logincontoller"]){// 不是登录页面进入
 
         [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        for(UIViewController * vc in self.navigationController.viewControllers){
-            if([vc isKindOfClass: [LoginViewController class]]){
-                [self.navigationController setNavigationBarHidden:YES animated:YES];
-                [self.navigationController popToViewController:vc animated:YES];
-                break;
-            }
-        }
-    }
+//    }else{ // 登录页面进入 返回根目录
+//        for(UIViewController * vc in self.navigationController.viewControllers){
+//            if([vc isKindOfClass: [LoginViewController class]]){
+//                [self.navigationController setNavigationBarHidden:YES animated:YES];
+//                [self.navigationController popToViewController:vc animated:YES];
+//                break;
+//            }
+//        }
+//    }
 }
 
 #pragma mark - click

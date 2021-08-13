@@ -51,8 +51,8 @@
 @property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic,strong) AMapLocationManager * unfinishManager; // 地址管理
 @property (nonatomic,strong) AMapSearchAPI * searchAPI;  // 逆地理编码
-@property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标
-@property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标
+@property (nonatomic,strong) NSString * locaitonLatitude;//定位的当前坐标 纬度
+@property (nonatomic,strong) NSString * locaitonLongitude;//定位的当前坐标 经度
 @property (nonatomic,strong) NSString * distancePost; // 距离 单位米
 
 
@@ -175,6 +175,8 @@
         }
         else if (error != nil && error.code == AMapLocationErrorRiskOfFakeLocation)
         {
+            weakSelf.orderinfo.isAbnormal = @"1";
+            [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%ld-%@",(long)error.code,error.localizedDescription]];
             //存在虚拟定位的风险：此时location和regeocode没有返回值，不进行annotation的添加
             NSLog(@"存在虚拟定位的风险:{%ld - %@};", (long)error.code, error.localizedDescription);
             return;
@@ -182,10 +184,13 @@
         else
         {
             //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
+            weakSelf.locaitonLatitude = [NSString stringWithFormat:@"%f",location.coordinate.latitude]; // 当前位置 经度
+            weakSelf.locaitonLongitude = [NSString stringWithFormat:@"%f",location.coordinate.longitude]; // 当前位置 纬度
+            
         }
         //修改label显示内容
         if (regeocode)
-        {
+        {   weakSelf.orderinfo.isAbnormal = @"0";
             //返回用户经纬度，计算两点间的距离
             [weakSelf refurbishBtnClick];
         }

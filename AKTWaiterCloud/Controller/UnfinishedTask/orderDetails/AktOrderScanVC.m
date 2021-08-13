@@ -85,7 +85,7 @@
     
     _QRCodeWidth = SCREEN_WIDTH*0.7;
     angle = 0; // 旋转角度
-    if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"1"]) {//扫码、 刷脸  权限打开
+    if (([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"1"]) || ([self.detailsModel.codeScanSignOut isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignOut isEqualToString:@"1"])) {//扫码、 刷脸  权限打开 签入
         [self setupMaskView];//设置扫描区域之外的阴影视图
 
         [self setupScanWindowView];//设置扫描二维码区域的视图
@@ -98,7 +98,7 @@
             [self setNavTitle:@"二维码扫描签出"];
         }
         [self setNomalRightNavTilte:@"" RightTitleTwo:@"人脸识别"];
-    }else if ([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"0"]){//扫码 权限打开
+    }else if (([self.detailsModel.codeScanSignIn isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignIn isEqualToString:@"0"]) || ([self.detailsModel.codeScanSignOut isEqualToString:@"1"] && [self.detailsModel.faceSwipingSignOut isEqualToString:@"0"])){//扫码 权限打开 签入
         [self setupMaskView];//设置扫描区域之外的阴影视图
 
         [self setupScanWindowView];//设置扫描二维码区域的视图
@@ -109,15 +109,23 @@
         }else{
             [self setNavTitle:@"二维码扫描签出"];
         }
+        [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
     }else{
         
         self.glView.hidden = NO;
         self.btnChangefaceFrond.hidden = NO;
         self.labFace.hidden = NO;
         self.imgFaceC.hidden = NO;
-        [self setNavTitle:@"人脸识别"];
+        
+        // 人脸
+        self.faceBgView.hidden = NO;
         [self setFaceCamera];
+        [self startCaptureSession];
         [self startAnimation]; // 开始动画旋转
+        [self setNavTitle:@"人脸识别"];
+        [self setNomalRightNavTilte:@"" RightTitleTwo:@""];
+        isFace =true;
+        
     }
         
 
@@ -150,7 +158,7 @@
 #pragma mark - 获取老人是否进行了人脸采集
 -(void)requestOldPeopleinfo{
     [[AFNetWorkingRequest sharedTool] requestOldPeoPleAtTheFaceInfo:@{@"customerUkey":kString(self.orderinfo.customerUkey)} type:HttpRequestTypePost success:^(id responseObject) {
-        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existFlag"]]; // existflag 0未采集 1已采集
+        isOldpeopleface = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"existFlag"]]; // existFlag 0未采集 1已采集
         strOldpeople = [responseObject objectForKey:@"message"];
     } failure:nil];
 }
@@ -461,24 +469,30 @@
     [[AppDelegate sharedDelegate] showLoadingHUD:self.view msg:@"识别中..."];
     [[AktVipCmd sharedTool] requestFaceRecognition:@{@"customerImg":[self imageToBaseString:image],@"imgType":@"png"} type:HttpRequestTypePost success:^(id  _Nonnull responseObject) {
         NSLog(@"---%@",responseObject);
-        [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
-        if ([[responseObject objectForKey:@"customerUkey"] isEqualToString:kString(self.orderinfo.customerUkey)]) {
-            // 人脸识别完成之后 进入到签入 签出页面
-            _sgController.isnewLation = self.isnewLation;
-            _sgController.isnewlate = self.isnewlate;
-            _sgController.isnewearly = self.isnewearly;
-            _sgController.isnewserviceTime = self.isnewserviceTime;
-            _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
-            _sgController.orderinfo = self.orderinfo;
-            _sgController.findAdmodel = self.detailsModel;
-            [self.navigationController pushViewController:_sgController animated:YES];
+        NSString *strcode = [NSString stringWithFormat:@"%@",[responseObject objectForKey:ResponseCode]];
+        if ([strcode isEqualToString:@"1"]) {
+            if ([[responseObject objectForKey:@"customerUkey"] isEqualToString:kString(self.orderinfo.customerUkey)]) {
+                [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
+                // 人脸识别完成之后 进入到签入 签出页面
+                _sgController.isnewLation = self.isnewLation;
+                _sgController.isnewlate = self.isnewlate;
+                _sgController.isnewearly = self.isnewearly;
+                _sgController.isnewserviceTime = self.isnewserviceTime;
+                _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
+                _sgController.orderinfo = self.orderinfo;
+                _sgController.findAdmodel = self.detailsModel;
+                [self.navigationController pushViewController:_sgController animated:YES];
+            }else{
+                [[AppDelegate sharedDelegate] showTextOnly:@"人脸信息不一致！"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }else{
-//            [[AppDelegate sharedDelegate] showTextOnly:@"服务客户不一致！"];
+            [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
             [self.navigationController popViewControllerAnimated:YES];
         }
+        
         [[AppDelegate sharedDelegate] hidHUD];
     } failure:^(NSError * _Nonnull error) {
-//        [self  startCaptureSession];
         [[AppDelegate sharedDelegate] hidHUD];
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -491,16 +505,21 @@
         NSLog(@"---%@",responseObject);
         [[AppDelegate sharedDelegate] showTextOnly:[responseObject objectForKey:@"message"]];
         [[AppDelegate sharedDelegate] hidHUD];
+        NSString *strcode = [NSString stringWithFormat:@"%@",[responseObject objectForKey:ResponseCode]];
         // 人脸采集完成之后 进入到签入 签出页面
-        _sgController.isnewLation = self.isnewLation;
-        _sgController.isnewlate = self.isnewlate;
-        _sgController.isnewearly = self.isnewearly;
-        _sgController.isnewserviceTime = self.isnewserviceTime;
-        _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
-        _sgController.orderinfo = self.orderinfo;
-        _sgController.findAdmodel = self.detailsModel;
-        [self.navigationController pushViewController:_sgController animated:YES];
-        
+        if ([strcode isEqualToString:@"1"]) {
+            _sgController.isnewLation = self.isnewLation;
+            _sgController.isnewlate = self.isnewlate;
+            _sgController.isnewearly = self.isnewearly;
+            _sgController.isnewserviceTime = self.isnewserviceTime;
+            _sgController.isnewserviceTimeLess = self.isnewserviceTimeLess;
+            _sgController.orderinfo = self.orderinfo;
+            _sgController.findAdmodel = self.detailsModel;
+            [self.navigationController pushViewController:_sgController animated:YES];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+       
     } failure:^(NSError * _Nonnull error) {
         [[AppDelegate sharedDelegate] showTextOnly:[NSString stringWithFormat:@"%@",error]];
         [[AppDelegate sharedDelegate] hidHUD];

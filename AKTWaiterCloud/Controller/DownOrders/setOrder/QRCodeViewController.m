@@ -8,7 +8,7 @@
 
 #import "QRCodeViewController.h"
 #import "LoginViewController.h"
-#import "HandCodeController.h"
+//#import "HandCodeController.h"
 #import "DownOrdersController.h"
 #import "DownOrderController.h"
 #import "QRCodeService.h"

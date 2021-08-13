@@ -113,9 +113,9 @@ _Pragma("clang diagnostic pop") \
 #define JgPushAppKey @"e0e6c303ecdc92616e523397" // 公司账号，过期需要重新提交推送证书。建议每次缴费之后查看一下该证书。
 #define Bugly_AppId @"d5a027a07b"  // 个人账号，每一个APP对应唯一的AppKey
 #define RSA_Public_KEY @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJxz6rsMSFJpzaT4xVUcPxDxX79J2CrrE7Qgs/QChJiwzbflJfQoWFCoeD/EjkDbFSvPOk9EKzstW/SW1gUpyjwNIjTfVOujQYFIcYJ1Syuqsq9wnbTWf+GEYKJ4pevjVWQFgOGGcoG71M5yhGRENTYooPKPCYerNm1p24hfPowIDAQAB" // RSA 公钥 服务器生成
-#define HR_appid @"8vcbkbVjwemYYeyBVMpNfnKfSgqw9S6tFokaRjLLTqjq" // 虹软ID  SDK3.0
+#define HR_appid @"8vcbkbVjwemYYeyBVMpNfnKfSgqw9S6tFokaRjLLTqjq" // 虹软ID  免费SDK3.0 每年需要更换一下
 #define HR_SDKkey @"4ZSZsq5knvNNAr1g5cZYe4pJ5hjFLKxA3uCEqKEUkddL" // 虹软SDKkey  SDK3.0
-#define AktPageSize @"10" // 每页条数
+#define AktPageSize @"10" // 每页条数 
 /**网络状态*/
 #define Logining @"登录中..."
 #define Loading @"努力加载中..."
@@ -125,10 +125,10 @@ _Pragma("clang diagnostic pop") \
 #define NetWorkMessage @"网络状态不佳，请稍后再试。"
 
 //正式环境
-#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
+//#define SERVICEURL @"http://cloud.ankangtong.com" // 正式环境
  
 // 测试环境
-//#define SERVICEURL @"https://test.ankangtong.com"
+#define SERVICEURL @"https://test.ankangtong.com"
 // 本地环境
 //#define SERVICEURL @"http://192.168.1.118"
 
