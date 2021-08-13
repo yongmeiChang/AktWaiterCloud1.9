@@ -417,7 +417,7 @@
                 /**实际服务时间 与 最低服务时间的差值 **/
                 NSInteger mtime = [AktUtil getMinuteFrom:[formatter dateFromString:self.orderinfo.actualBegin] To:[formatter dateFromString:[AktUtil getNowDateAndTime]]]; // 实际服务的时长 to-from
 //                NSInteger Stime = [AktUtil getTimeDifferenceValueFrome:self.orderinfo.serviceEnd ToTime:self.orderinfo.serviceBegin]; // 应该服务的时长
-                NSInteger Stime = [AktUtil getMinuteFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDate,self.orderinfo.serviceEnd]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDateEnd,self.orderinfo.serviceBegin]]];// 计划服务的时长 分钟
+                NSInteger Stime = [AktUtil getMinuteFrom:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDate,self.orderinfo.serviceBegin]] To:[formatter dateFromString:[NSString stringWithFormat:@"%@ %@",self.orderinfo.serviceDateEnd,self.orderinfo.serviceEnd]]];// 计划服务的时长 分钟
                 NSInteger Ltime = Stime-mtime; // 大于0表示 计划服务时长大于实际服务时长
                 if (mtime>Stime){ // 实际大于应该
                     Ltime = 0;
