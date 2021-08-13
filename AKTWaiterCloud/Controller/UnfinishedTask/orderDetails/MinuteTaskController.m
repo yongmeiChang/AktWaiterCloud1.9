@@ -439,11 +439,11 @@
                             NSLog(@"%d",([model.recordServiceLength isEqualToString:@"1"] && ([model.recordServiceLengthLess isEqualToString:@"1"] && [model.serviceLengthLessAbnormal isEqualToString:@"0"]) && Ltime>0));
                             // 终止 orderId  工单id   stopReason  终止原因
                             NSString *strReason;
-                            if ([model.locationAbnormalSignOut isEqualToString:@"0"]) {
+                            if (([model.recordLocationSignOut isEqualToString:@"1"] && [model.recordLocationAbnormalSignOut isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignOut isEqualToString:@"0"]))) {
                                 strReason = @"定位异常终止工单";
-                            }else if ([model.earlyAbnormal isEqualToString:@"0"]){
+                            }else if (([model.recordEarly isEqualToString:@"1"] && ((bollateSignOut == YES) && [model.earlyAbnormal isEqualToString:@"0"]))){
                                 strReason = @"早退异常终止工单";
-                            }else if ([model.minServiceLengthLessAbnormal isEqualToString:@"0"]){
+                            }else if (([model.recordMinServiceLength isEqualToString:@"1"] && ((bollateSignOutLess == YES) && [model.minServiceLengthLessAbnormal isEqualToString:@"0"]))){
                                 strReason = @"最低服务时长异常终止工单";
                             }else{
                                 strReason = @"服务时长异常终止工单";
@@ -510,7 +510,7 @@
                       NSLog(@"返回首页");
                       // 终止 orderId  工单id   stopReason  终止原因
                       NSString *strReason;
-                      if ([model.locationAbnormalSignIn isEqualToString:@"0"]) {
+                      if (([model.recordLocationSignIn isEqualToString:@"1"] && [model.recordLocationAbnormalSignIn isEqualToString:@"1"] && (distanceSingin<0 && [model.locationAbnormalSignIn isEqualToString:@"0"]))) {
                           strReason = @"定位异常终止工单";
                       }else{
                           strReason = @"迟到异常终止工单";
