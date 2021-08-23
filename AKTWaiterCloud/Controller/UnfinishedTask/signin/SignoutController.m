@@ -1266,6 +1266,14 @@
                 return;
             }
         }
+        if (self.isnewlate  && strEarly.length == 0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写迟到原因"];
+            return;
+        }
+        if (self.isnewLation && strlocation.length == 0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写签入定位异常原因"];
+            return;
+        }
     }else{ // 签出
         if ([self.findAdmodel.photographSignOut isEqualToString:@"1"]) {
             if ((_selectedPhotos.count)==0) {
@@ -1278,6 +1286,22 @@
             [[AppDelegate sharedDelegate] showTextOnly:@"必须上传录音文件"];
             return;
             }
+        }
+        if (self.isnewLation && strlocation.length == 0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写签出定位异常原因"];
+            return;
+        }
+        if (self.isnewserviceTimeLess && lessService.length == 0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写未达到最低服务时长原因"];
+            return;
+        }
+        if (self.isnewearly && strEarly.length ==0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写早退原因"];
+            return;
+        }
+        if (self.isnewserviceTime && strService.length == 0) {
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写未达到服务时长原因"];
+            return;
         }
     }
     
