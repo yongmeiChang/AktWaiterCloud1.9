@@ -55,6 +55,7 @@
     LoginModel *model;
     BOOL isPostLocation; // yes刷新定位完成； No刷新定位失败
     
+    NSMutableArray *arytitle; // 反馈原因总集合
     NSString *strNotice; // 建议反馈原因
     NSString *strlocation; // 定位原因
     NSString *strEarly; // 迟到 、早退原因
@@ -254,7 +255,7 @@
 #pragma mark - reson view
 -(void)reasonViewLoadAll{
     // 建议反馈// 定位异常反馈：//早退反馈：//未达到最低服务时长反馈栏：//未达到最低服务时长反馈栏：
-    NSMutableArray *arytitle = [[NSMutableArray alloc] init];
+    
     [arytitle addObject:@"建议反馈内容："];
     if (_type == 1) { // 签出
         [self setTitle:@"任务签出"];
@@ -399,6 +400,7 @@
     self.lccontentTextView.layer.borderWidth=1.0f;
     self.lccontentTextView.layer.borderColor = UIColor.lightGrayColor.CGColor;
     isSoundRecord = NO;
+    arytitle = [[NSMutableArray alloc] init];
     model = [LoginModel gets];
     /****/
     [self reasonViewLoadAll];
@@ -615,17 +617,30 @@
 
 #pragma mark - UITextViewDelegate
 -(void)textViewDidChange:(UITextView *)textView{
-     if (textView.tag == 0) {
-           strNotice=textView.text;
-       }else if (textView.tag == 1){
-           strlocation=textView.text;
-       }else if (textView.tag == 2){
-           strEarly=textView.text;
-       }else if (textView.tag == 3){
-           lessService=textView.text;
-       }else{
-           strService=textView.text;
-       }
+//     if (textView.tag == 0) {
+//           strNotice=textView.text;
+//       }else if (textView.tag == 1){
+//           strlocation=textView.text;
+//       }else if (textView.tag == 2){
+//           strEarly=textView.text;
+//       }else if (textView.tag == 3){
+//           lessService=textView.text;
+//       }else{
+//           strService=textView.text;
+//       }
+    NSInteger titleint = textView.tag;
+    NSLog(@"%@",[arytitle objectAtIndex:titleint]);
+        if ([[arytitle objectAtIndex:titleint] isEqualToString:@"迟到反馈："] || [[arytitle objectAtIndex:titleint] isEqualToString:@"早退反馈："]) {
+            strEarly=textView.text;
+        }else if ([[arytitle objectAtIndex:titleint] isEqualToString:@"定位异常反馈："]) {
+            strlocation=textView.text;
+        }else if ([[arytitle objectAtIndex:titleint] isEqualToString:@"未达到最低服务时长反馈栏："]) {
+            lessService=textView.text;
+        }else if ([[arytitle objectAtIndex:titleint] isEqualToString:@"未达到服务时长反馈栏："]) {
+            strService=textView.text;
+        }else {
+            strNotice=textView.text;
+        }
 }
 //- (void)textViewDidEndEditing:(UITextView *)textView
 //{
@@ -1204,7 +1219,7 @@
     self.distancePost = [NSString stringWithFormat:@"%0.1f",distance]; // 距离
     if (isPostLocation) {
         NSLog(@"---可以提交");
-        [self postDataAllInfo:@""];
+//        [self postDataAllInfo:@""];
     }
 }
 #pragma mark - AMapSearchAPI delegate
@@ -1267,11 +1282,11 @@
             }
         }
         if (self.isnewlate  && strEarly.length == 0) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写迟到原因"];
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写迟到原因!"];
             return;
         }
         if (self.isnewLation && strlocation.length == 0) {
-            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写签入定位异常原因"];
+            [[AppDelegate sharedDelegate] showTextOnly:@"必须填写签入定位异常原因!"];
             return;
         }
     }else{ // 签出
